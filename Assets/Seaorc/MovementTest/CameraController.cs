@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColonyCamTest : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
 
     [Header("Transforms")]
-    [SerializeField] PlayerControllerV3 Player;
+    [SerializeField] PlayerController Player;
     [SerializeField] Transform PlayerTransform;
     [SerializeField] Transform CamRig;
     [SerializeField] Transform Playercam;
