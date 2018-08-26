@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    static AudioManager manager;
+    static AudioManager manager = null;
     [SerializeField] Sound[] Clips;
     Dictionary<string, Sound> SoundDictionary;
     Sound CurrentSong;
@@ -38,36 +38,22 @@ public class AudioManager : MonoBehaviour
 
         if (SoundToPlay != null)
         {
-            if (!SoundToPlay.GetIsMusic())
-            {
-                SoundToPlay.PlaySound();
-            }
-            else
-                Debug.Log("The sound you tried to play is of type \"Music\" try calling PlayMusic insted");
+            SoundToPlay.PlaySound();
         }
-        else
-            Debug.Log("Sound Not Found");
     }
 
     public void PlayMusic(string _Sound)
     {
         Sound SongToPlay = SoundDictionary[_Sound];
 
-        if (SongToPlay != null)
+        if (SongToPlay != null && SongToPlay.GetSoundType() == SoundType.Music)
         {
-            if(SongToPlay.GetIsMusic())
-            {
-                if (CurrentSong != null)
-                    CurrentSong.StopSound();
+            if (CurrentSong != null)
+                CurrentSong.StopSound();
 
-                CurrentSong = SongToPlay;
-                SongToPlay.PlaySound();
-            }
-            else
-                Debug.Log("The sound you tried to play is of type \"Sound\" try calling PlaySound insted");
+            CurrentSong = SongToPlay;
+            SongToPlay.PlaySound();
         }
-        else
-            Debug.Log("Sound Not Found");
     }
 
     public static AudioManager GetInstance() { return manager; }
