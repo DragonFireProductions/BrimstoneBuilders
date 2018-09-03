@@ -22,8 +22,6 @@ public class WeaponClass : MonoBehaviour {
     private void OnTriggerEnter(Collider collider)
     {
        
-            Debug.Log("Object Name: " + weapon.objectName);
-            Debug.Log("Weapon Value: " + weapon.value);
     }
 
 }
