@@ -48,10 +48,7 @@ public class InventoryItemEditor : EditorWindow {
         {
             GUILayout.BeginHorizontal ();
             GUILayout.Space(10);
-            if (GUILayout.Button("Create New Item List", GUILayout.ExpandWidth(false))) 
-            {
-                CreateNewItemList();
-            }
+          
             if (GUILayout.Button("Open Existing Item List", GUILayout.ExpandWidth(false))) 
             {
                 OpenItemList();
@@ -192,21 +189,6 @@ public class InventoryItemEditor : EditorWindow {
         if (GUI.changed) 
         {
             EditorUtility.SetDirty(inventoryItemList);
-        }
-    }
-    
-    void CreateNewItemList () 
-    {
-        // There is no overwrite protection here!
-        // There is No "Are you sure you want to overwrite your existing object?" if it exists.
-        // This should probably get a string from the user to create a new name and pass it ...
-        viewIndex = 1;
-        inventoryItemList = CreateInventoryItemList.Create();
-        if (inventoryItemList) 
-        {
-            inventoryItemList.itemList = new List<InventoryItem>();
-            string relPath = AssetDatabase.GetAssetPath(inventoryItemList);
-            EditorPrefs.SetString("ObjectPath", relPath);
         }
     }
     
