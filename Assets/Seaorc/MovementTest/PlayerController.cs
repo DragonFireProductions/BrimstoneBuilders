@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControllerV3 : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] float WalkSpeed;
     [SerializeField] float RunSpeed;
