@@ -1,16 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
+using UnityEditor;
 
-public class CreateInventoryItemList : MonoBehaviour {
+public class CreateInventoryItemList
+{
+    [MenuItem("Assets/Create/Inventory Item List")]
+    public static InventoryItemList Create()
+    {
+        InventoryItemList asset = ScriptableObject.CreateInstance<InventoryItemList>();
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        AssetDatabase.CreateAsset(asset, "Assets/InventoryItemList.asset");
+        AssetDatabase.SaveAssets();
+        return asset;
+    }
 }

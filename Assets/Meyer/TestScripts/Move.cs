@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 
 public class Move : MonoBehaviour {
     private CharacterController controller;
     [SerializeField] private float speed;
+
+
 	// Use this for initialization
 	void Start () {
         controller = gameObject.GetComponent<CharacterController>();
@@ -37,5 +40,49 @@ public class Move : MonoBehaviour {
         }
         Vector3 velocity = direction * speed * Time.deltaTime;
         controller.Move(velocity);
+
+       
+	}
+
+    void OnTriggerEnter(Collider _collider)
+    {
+        if (_collider.tag == "Weapon")
+        {
+           InventoryPlayer.inventory.add(_collider.GetComponent<Weapon>().weapon);
+        }
+
     }
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
