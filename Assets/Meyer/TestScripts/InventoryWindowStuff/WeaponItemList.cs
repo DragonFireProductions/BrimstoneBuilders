@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
 
 [System.Serializable]
-public class InventoryItemList : ScriptableObject
+public class WeaponItemList : ScriptableObject
 {
-    public List<InventoryItem> itemList;
+    public List<WeaponItem> itemList;
 
-    public InventoryItem get_item(string name)
+    public WeaponItem get_item(string name)
     {
         for (int i = 0; i < itemList.Count; i++)
         {

@@ -41,7 +41,7 @@ public class Player : MonoBehaviour
 
     public void Move()
     {
-
+        
     }
 
     void Die()

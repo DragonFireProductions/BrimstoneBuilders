@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Weapon : MonoBehaviour
 {
    [HideInInspector]
-    public InventoryItem weapon;
+    public WeaponItem weapon;
 
     public string weaponName;
+    
 	// Use this for initialization
 	void Start ()
 	{
 	    gameObject.tag = "Weapon";
-	    weapon = InventoryPlayer.inventory.get_item(weaponName);
+	    weapon = PlayerInventory.inventory.get_item(weaponName);
 
 	}
 	

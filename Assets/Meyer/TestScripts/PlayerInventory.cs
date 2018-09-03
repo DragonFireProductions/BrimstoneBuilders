@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class InventoryPlayer : MonoBehaviour
+public class PlayerInventory : MonoBehaviour
 {
-    public static InventoryPlayer inventory = null;
-    public List<InventoryItem> weapons;
-    public InventoryItemList item;
+    public static PlayerInventory inventory = null;
+    public List<WeaponItem> weapons;
+    public WeaponItemList item;
 
-    public static List<InventoryItem> list;
+    public static List<WeaponItem> list;
     // Use this for initialization
     void Awake() {
         if (inventory == null)
@@ -23,7 +23,7 @@ public class InventoryPlayer : MonoBehaviour
 
         list = item.itemList;
     }
-    public InventoryItem get_item(string name)
+    public WeaponItem get_item(string name)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -41,7 +41,7 @@ public class InventoryPlayer : MonoBehaviour
 		
 	}
 
-    public void add(InventoryItem item)
+    public void add(WeaponItem item)
     {
         weapons.Add(item);
         Debug.Log("Item: " + item.objectName + " has been added!");

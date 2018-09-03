@@ -2,7 +2,7 @@
 using System.Collections;
 
 [System.Serializable] //  Our Representation of an InventoryItem
-public class InventoryItem
+public class WeaponItem
 {
     public enum EquipType
     {
@@ -19,7 +19,6 @@ public class InventoryItem
         Type3,
         Type4
     };
-    
         public string objectName;
         public int weight;
         public int durability;

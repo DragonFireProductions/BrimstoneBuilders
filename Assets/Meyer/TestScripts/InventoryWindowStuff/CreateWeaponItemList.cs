@@ -2,12 +2,12 @@
 using System.Collections;
 using UnityEditor;
 
-public class CreateInventoryItemList
+public class CreateWeaponItemList
 {
     [MenuItem("Assets/Create/Inventory Item List")]
-    public static InventoryItemList Create()
+    public static WeaponItemList Create()
     {
-        InventoryItemList asset = ScriptableObject.CreateInstance<InventoryItemList>();
+        WeaponItemList asset = ScriptableObject.CreateInstance<WeaponItemList>();
 
         AssetDatabase.CreateAsset(asset, "Assets/InventoryItemList.asset");
         AssetDatabase.SaveAssets();

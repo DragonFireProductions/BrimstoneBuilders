@@ -15,8 +15,7 @@ public class Move : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        RaycastHit hit;
-        float dist;
+	    float dist;
         var plane = new Plane(Vector3.up, gameObject.transform.position + Vector3.up);
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition); //sends a line according to the z and x axis
         
@@ -40,49 +39,13 @@ public class Move : MonoBehaviour {
         }
         Vector3 velocity = direction * speed * Time.deltaTime;
         controller.Move(velocity);
-
-       
 	}
 
     void OnTriggerEnter(Collider _collider)
     {
         if (_collider.tag == "Weapon")
         {
-           InventoryPlayer.inventory.add(_collider.GetComponent<Weapon>().weapon);
+           PlayerInventory.inventory.add(_collider.GetComponent<Weapon>().weapon);
         }
-
     }
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
