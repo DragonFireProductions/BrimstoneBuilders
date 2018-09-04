@@ -46,6 +46,7 @@ public class Move : MonoBehaviour {
         if (_collider.tag == "Weapon")
         {
            PlayerInventory.inventory.add(_collider.GetComponent<Weapon>().weapon);
+            Object.Destroy(_collider.gameObject);
         }
     }
 }

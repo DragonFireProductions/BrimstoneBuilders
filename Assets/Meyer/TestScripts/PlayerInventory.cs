@@ -20,7 +20,7 @@ public class PlayerInventory : MonoBehaviour
 
     public static GameObject UI;
     private GameObject itemSlot;
-    public List<GameObject> uiList;
+    private List<GameObject> uiList;
 
     private bool isActive = false;
     // Use this for initialization
@@ -42,6 +42,7 @@ public class PlayerInventory : MonoBehaviour
         Assert.IsNotNull(itemSlot, "itemSlot = null");
 
         UI.SetActive(isActive);
+        uiList = new List<GameObject>();
     }
     public WeaponItem get_item(string name)
     {
@@ -66,6 +67,7 @@ public class PlayerInventory : MonoBehaviour
             _itemSlot.transform.localScale = itemSlot.transform.localScale;
             pos.y = posy;
             _itemSlot.gameObject.transform.position = pos;
+
             _itemSlot.GetComponentInChildren<TextMeshProUGUI>().text = weapons[i].objectName;
             uiList.Add(_itemSlot);
         }
