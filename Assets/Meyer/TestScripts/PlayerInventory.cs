@@ -5,6 +5,8 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Experimental.UIElements;
+using Object = System.Object;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -15,8 +17,10 @@ public class PlayerInventory : MonoBehaviour
     public static List<WeaponItem> list;
 
 
+
     public static GameObject UI;
     private GameObject itemSlot;
+    public List<GameObject> uiList;
 
     private bool isActive = false;
     // Use this for initialization
@@ -63,6 +67,7 @@ public class PlayerInventory : MonoBehaviour
             pos.y = posy;
             _itemSlot.gameObject.transform.position = pos;
             _itemSlot.GetComponentInChildren<TextMeshProUGUI>().text = weapons[i].objectName;
+            uiList.Add(_itemSlot);
         }
     }
 
@@ -76,8 +81,22 @@ public class PlayerInventory : MonoBehaviour
             {
             displayInventoryUI();
             }
+
+            if (isActive == false)
+            {
+                clearInventory();
+            }
             
         }
+    }
+
+    public void clearInventory()
+    {
+        for (int i = 0; i < uiList.Count; i++)
+        {
+           UnityEngine.Object.Destroy(uiList[i].gameObject);
+        }
+        uiList.Clear();
     }
 
     public void add(WeaponItem item)
