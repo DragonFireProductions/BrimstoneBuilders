@@ -12,4 +12,6 @@ public class Item : ScriptableObject
     public string GetName() { return ItemName; }
 
     public int GetStackSize() { return StackSize; }
+
+    public Sprite GetIcon() { return Icon; }
 }

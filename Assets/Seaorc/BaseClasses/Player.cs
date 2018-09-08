@@ -6,29 +6,28 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] float Health;
-    [SerializeField] GameObject Object;
     [SerializeField] Animator Ani;
 
-    CharacterController Controller;
-    NavMeshAgent Agent;
+    //CharacterController Controller;
+    //NavMeshAgent Agent;
 
     private void Awake()
     {
-        if (GetComponent<CharacterController>())
-            Controller = GetComponent<CharacterController>();
-        else
-        {
-            gameObject.AddComponent<CharacterController>();
-            Controller = GetComponent<CharacterController>();
-        }
+        //if (GetComponent<CharacterController>())
+        //    Controller = GetComponent<CharacterController>();
+        //else
+        //{
+        //    gameObject.AddComponent<CharacterController>();
+        //    Controller = GetComponent<CharacterController>();
+        //}
 
-        if (GetComponent<NavMeshAgent>())
-            Agent = GetComponent<NavMeshAgent>();
-        else
-        {
-            gameObject.AddComponent<NavMeshAgent>();
-            Agent = GetComponent<NavMeshAgent>();
-        }
+        //if (GetComponent<NavMeshAgent>())
+        //    Agent = GetComponent<NavMeshAgent>();
+        //else
+        //{
+        //    gameObject.AddComponent<NavMeshAgent>();
+        //    Agent = GetComponent<NavMeshAgent>();
+        //}
     }
 
     public void Damage(float _damage)
@@ -48,4 +47,10 @@ public class Player : MonoBehaviour
     {
         // 
     }
+
+    public float GetHealth() { return Health; }
+    public void SetHealth(float NewHealth) { Health = NewHealth; }
+
+    public Animator GetAnimator() { return Ani; }
+    public void SetAnimator(Animator NewAnimator) { Ani = NewAnimator; }
 }
