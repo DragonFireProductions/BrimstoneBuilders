@@ -9,10 +9,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] float Damage;
     [SerializeField] float VeiwDistance;
+    [SerializeField] float WanderDistance;
+    [SerializeField] float WanderDelay;
 
     EnemyState State;
     Player player = null;
     NavMeshAgent Agent;
+    float Timer;
 
     void Awake()
     {
@@ -30,6 +33,7 @@ public class Enemy : MonoBehaviour
         }
 
         State = EnemyState.Idle;
+        Timer = Time.deltaTime;
     }
 
     void Update()
@@ -42,6 +46,15 @@ public class Enemy : MonoBehaviour
                     if (Vector3.Distance(transform.position, player.transform.position) < VeiwDistance)
                         State = EnemyState.Attacking;
                 }
+
+
+
+                if (Time.time >= Timer)
+                {
+                    Agent.destination = Random.insideUnitSphere * WanderDistance;
+                    Timer = Time.time + WanderDelay;
+                }
+
                 break;
             case EnemyState.Attacking:
                 if (player != null && Agent != null)
