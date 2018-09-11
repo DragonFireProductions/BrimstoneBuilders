@@ -87,8 +87,8 @@ namespace Assets.Meyer.TestScripts.Player
         {
             if (enemy != null)
             {
-                enemy.GetComponent<Enemy>().Damage(playerDamage);
-                enemyUI.text = "Enemy Health: " + enemy.GetComponent<Enemy>().GetHealth().ToString();
+                enemy.GetComponent<Kristal.Enemy>().Damage(playerDamage);
+                enemyUI.text = "Enemy Health: " + enemy.GetComponent<Kristal.Enemy>().GetHealth().ToString();
             }
 
             if (health <= 0)
