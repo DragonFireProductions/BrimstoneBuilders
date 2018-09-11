@@ -16,6 +16,7 @@ namespace Kristal
         [SerializeField] public float playerDistance = 3.0f;
 
         private bool distanceCheck = false;
+
         // Use this for initialization
         void Awake()
         {
@@ -36,7 +37,8 @@ namespace Kristal
                 {
                     float step = 0.5f * Time.deltaTime;
 
-                    Vector3 dir = Vector3.RotateTowards(transform.forward, Character.player.transform.forward, step, 0.0f);
+                    Vector3 dir = Vector3.RotateTowards(transform.forward, Character.player.transform.forward, step,
+                        0.0f);
 
                     transform.rotation = Quaternion.LookRotation(dir);
 
@@ -78,6 +80,7 @@ namespace Kristal
         {
             return health;
         }
+
         void EndAttack()
         {
             timer = 0.0f;
@@ -94,6 +97,4 @@ namespace Kristal
             Destroy(this.gameObject);
         }
     }
-
-
 }

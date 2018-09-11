@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Experimental.UIElements;
+using UnityEngine.UI;
 using Object = System.Object;
 
 public class PlayerInventory : MonoBehaviour
@@ -24,7 +25,8 @@ public class PlayerInventory : MonoBehaviour
 
     private bool isActive = false;
     // Use this for initialization
-    void Awake() {
+    void Awake()
+    {
         if (inventory == null)
         {
             inventory = this;
@@ -58,37 +60,75 @@ public class PlayerInventory : MonoBehaviour
     }
     private void displayInventoryUI()
     {
+        itemSlot.SetActive(false);
+
         Vector3 pos = itemSlot.gameObject.transform.position;
         float posy = itemSlot.gameObject.transform.position.y;
+        
         for (int i = 0; i < weapons.Count; i++)
         {
             GameObject _itemSlot = Instantiate(this.itemSlot);
             _itemSlot.transform.SetParent(itemSlot.transform.parent);
+            _itemSlot.SetActive(true);
+
             _itemSlot.transform.localScale = itemSlot.transform.localScale;
             pos.y = posy;
             _itemSlot.gameObject.transform.position = pos;
 
+
+            _itemSlot.GetComponentInChildren<RawImage>().texture = weapons[i].icon;
+
             _itemSlot.GetComponentInChildren<TextMeshProUGUI>().text = weapons[i].objectName;
+
+            Transform container = _itemSlot.transform.Find("InventoryContainerPanel");
+            TextMeshProUGUI[] transforms = container.GetComponentsInChildren<TextMeshProUGUI>();
+
+            for (int j = 0; j < transforms.Length; j++)
+            {
+                switch (transforms[j].name)
+                {
+                    case "ItemName":
+                        transforms[j].GetComponent<TextMeshProUGUI>().text = weapons[i].objectName.ToString();
+                        break;
+                    case "ItemValue":
+                        transforms[j].GetComponent<TextMeshProUGUI>().text = weapons[i].value.ToString();
+                        break;
+                    case "ItemWeight":
+                        transforms[j].GetComponent<TextMeshProUGUI>().text = weapons[i].weight.ToString();
+                        break;
+                    case "ItemDurability":
+                        transforms[j].GetComponent<TextMeshProUGUI>().text = weapons[i].durability.ToString();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             uiList.Add(_itemSlot);
+
         }
+
+
     }
 
+
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
         if (Input.GetKeyDown(KeyCode.I))
         {
             isActive = !isActive;
             UI.SetActive(isActive);
             if (isActive == true)
             {
-            displayInventoryUI();
+                displayInventoryUI();
             }
 
             if (isActive == false)
             {
                 clearInventory();
             }
-            
+
         }
     }
 
@@ -96,7 +136,7 @@ public class PlayerInventory : MonoBehaviour
     {
         for (int i = 0; i < uiList.Count; i++)
         {
-           UnityEngine.Object.Destroy(uiList[i].gameObject);
+            UnityEngine.Object.Destroy(uiList[i].gameObject);
         }
         uiList.Clear();
     }
@@ -105,7 +145,6 @@ public class PlayerInventory : MonoBehaviour
     {
         weapons.Add(item);
         Debug.Log("Item: " + item.objectName + " has been added!");
-        Debug.Log("Item's: attack speed is: " + item.attackSpeed);
     }
 
     public void remove(string name)

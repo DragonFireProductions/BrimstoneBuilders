@@ -22,5 +22,12 @@ public class Weapon : MonoBehaviour
 	void Update () {
 		
 	}
-
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.tag == "Player")
+        {
+            PlayerInventory.inventory.add(weapon);
+            Destroy(this.gameObject);
+        }
+    }
 }
