@@ -24,6 +24,8 @@ public class MainMenu : MonoBehaviour
         areYouSurePanel.SetActive(false);
 	}
 
+    //--------------------------Load Scenes----------------------------------------------------
+
     public void PlayClick()
     {
         menuAudio.clip = menuClick;
@@ -34,6 +36,13 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
+    public void PlayCredits()
+    {
+        SceneManager.LoadScene(2);
+    }
+
+    //-----------------------------------------------------------------------------------------
 
     //--------------------------Transition Checks----------------------------------------------
 
@@ -47,15 +56,15 @@ public class MainMenu : MonoBehaviour
         camAnimator.SetBool("settingsActive", false);
     }
 
-    public void MenuToCredits()
-    {
-        camAnimator.SetBool("creditsActive", true);
-    }
+    //public void MenuToCredits()
+    //{
+    //    camAnimator.SetBool("creditsActive", true);
+    //}
 
-    public void CreditsToMenu()
-    {
-        camAnimator.SetBool("creditsActive", false);
-    }
+    //public void CreditsToMenu()
+    //{
+    //    camAnimator.SetBool("creditsActive", false);
+    //}
 
     //-----------------------------------------------------------------------------------------
 
