@@ -24,7 +24,7 @@ namespace Assets.Meyer.TestScripts.Player
         private GameObject UI;
         private Text healthUI;
         private Text enemyUI;
-
+        
 
         // Use this for initialization
         void Awake()
@@ -103,12 +103,11 @@ namespace Assets.Meyer.TestScripts.Player
             health -= damage;
             Debug.Log("Player Health: " + health);
             healthUI.text = "Player Health: " + health.ToString();
-
         }
 
         void EndDeath()
         {
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
         }
     }
 }
