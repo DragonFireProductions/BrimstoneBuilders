@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class CameraController : MonoBehaviour
 {
@@ -30,6 +31,17 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         mode = CameraMode.Player;
+
+        CamRig = transform.parent.parent.transform;
+
+        Playercam = transform.parent.transform;
+
+        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        Assert.IsNotNull(Player, "Cannot find object with tag of player");
+        PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
+        ColonyCam = GameObject.Find("ColonyCam").transform;
+        Assert.IsNotNull(ColonyCam, "ColonyCam cannot be found!");
     }
 
     // Update is called once per frame
