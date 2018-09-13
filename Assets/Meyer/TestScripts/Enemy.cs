@@ -10,8 +10,8 @@ namespace Kristal
     {
         private float timer;
         private Animator animator;
-        private int health = 100;
 
+        [SerializeField] private int health = 100;
         [SerializeField] public float reactionTime = 3.0f;
         [SerializeField] public float playerDistance = 3.0f;
 

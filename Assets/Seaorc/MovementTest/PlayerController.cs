@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class PlayerController : MonoBehaviour
             gameObject.AddComponent<CharacterController>();
             Controller = GetComponent<CharacterController>();
         }
+
+        Cam = GameObject.Find("CamHolder").transform;
+        Assert.IsNotNull(Cam, "Camholder cannot be found!");
     }
 
     // Update is called once per frame
