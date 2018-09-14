@@ -45,8 +45,7 @@ public class PlayerInventory : MonoBehaviour
 
     void Start()
     {
-        UIInventory.instance.gameObject.SetActive(isActive);
-
+        UIInventory.instance.playerUI.SetActive(isActive);
     }
     public WeaponItem get_item(string name)
     {
@@ -69,12 +68,12 @@ public class PlayerInventory : MonoBehaviour
             isActive = !isActive;
             if (isActive == true)
             {
-                UIInventory.instance.gameObject.SetActive(true);
+                UIInventory.instance.playerUI.SetActive(true);
             }
 
             if (isActive == false)
             {
-               UIInventory.instance.gameObject.SetActive(false);
+               UIInventory.instance.playerUI.SetActive(false);
             }
         }
 
