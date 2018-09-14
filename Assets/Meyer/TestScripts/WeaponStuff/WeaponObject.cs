@@ -11,6 +11,8 @@ public class WeaponObject : MonoBehaviour
 
     [SerializeField] protected string weaponName; // references InventoryManager items
 
+
+
     protected virtual void Start()
     {
         weaponStats = PlayerInventory.inventory.get_item(weaponName);

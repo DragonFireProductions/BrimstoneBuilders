@@ -39,15 +39,14 @@ public class PlayerInventory : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         list = item.itemList;
-
-        UI = GameObject.FindGameObjectWithTag("UI");
-        Assert.IsNotNull(UI, "Inventory UI not found");
-
-        itemSlot = GameObject.Find("InventoryContainer");
-        Assert.IsNotNull(itemSlot, "itemSlot = null");
-
-        UI.SetActive(isActive);
+        
         uiList = new List<GameObject>();
+    }
+
+    void Start()
+    {
+        UIInventory.instance.gameObject.SetActive(isActive);
+
     }
     public WeaponItem get_item(string name)
     {
