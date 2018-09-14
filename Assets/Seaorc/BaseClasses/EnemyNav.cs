@@ -77,10 +77,8 @@ public class EnemyNav : MonoBehaviour
             default:
                 break;
         }
-
-
-
     }
+
 }
 
 public enum EnemyState { Idle, Attacking}
