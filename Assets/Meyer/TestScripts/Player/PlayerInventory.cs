@@ -9,21 +9,24 @@ using UnityEngine.Experimental.UIElements;
 using UnityEngine.UI;
 using Object = System.Object;
 
+
+
 public class PlayerInventory : MonoBehaviour
 {
-    public static PlayerInventory inventory = null;
-    public List<WeaponItem> weapons;
-    public WeaponItemList item;
+    public static PlayerInventory inventory = null; //Global variable
+    public List<WeaponObject> weapons; //Contains list of picked up WeaponObjects
+    public WeaponItemList item; // Holder for Unity defined weapons list
 
-    public static List<WeaponItem> list;
+    public static List<WeaponItem> list; //List of weapon stats defined by unity
 
+    public static GameObject UI; // UI stuff
+    private GameObject itemSlot; // Slots for items
+    private List<GameObject> uiList; // List of weaponItems currently picketUp
 
+    private bool isActive = false; 
 
-    public static GameObject UI;
-    private GameObject itemSlot;
-    private List<GameObject> uiList;
-
-    private bool isActive = false;
+    [SerializeField]
+    public static WeaponObject attachedWeapon; // Primary weapon holder
     // Use this for initialization
     void Awake()
     {
@@ -76,9 +79,9 @@ public class PlayerInventory : MonoBehaviour
             _itemSlot.gameObject.transform.position = pos;
 
 
-            _itemSlot.GetComponentInChildren<RawImage>().texture = weapons[i].icon;
+            _itemSlot.GetComponentInChildren<RawImage>().texture = weapons[i].WeaponStats.icon;
 
-            _itemSlot.GetComponentInChildren<TextMeshProUGUI>().text = weapons[i].objectName;
+            _itemSlot.GetComponentInChildren<TextMeshProUGUI>().text = weapons[i].WeaponStats.objectName;
 
             Transform container = _itemSlot.transform.Find("InventoryContainerPanel");
             TextMeshProUGUI[] transforms = container.GetComponentsInChildren<TextMeshProUGUI>();
@@ -88,16 +91,16 @@ public class PlayerInventory : MonoBehaviour
                 switch (transforms[j].name)
                 {
                     case "ItemName":
-                        transforms[j].GetComponent<TextMeshProUGUI>().text = weapons[i].objectName.ToString();
+                        transforms[j].GetComponent<TextMeshProUGUI>().text = weapons[i].WeaponStats.objectName.ToString();
                         break;
                     case "ItemValue":
-                        transforms[j].GetComponent<TextMeshProUGUI>().text = weapons[i].value.ToString();
+                        transforms[j].GetComponent<TextMeshProUGUI>().text = weapons[i].WeaponStats.value.ToString();
                         break;
                     case "ItemWeight":
-                        transforms[j].GetComponent<TextMeshProUGUI>().text = weapons[i].weight.ToString();
+                        transforms[j].GetComponent<TextMeshProUGUI>().text = weapons[i].WeaponStats.weight.ToString();
                         break;
                     case "ItemDurability":
-                        transforms[j].GetComponent<TextMeshProUGUI>().text = weapons[i].durability.ToString();
+                        transforms[j].GetComponent<TextMeshProUGUI>().text = weapons[i].WeaponStats.durability.ToString();
                         break;
                     default:
                         break;
@@ -128,7 +131,13 @@ public class PlayerInventory : MonoBehaviour
             {
                 clearInventory();
             }
+        }
 
+        //calls select() on wanted weapon
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            attachedWeapon.gameObject.SetActive(true);
+            attachedWeapon.Select();
         }
     }
 
@@ -141,17 +150,20 @@ public class PlayerInventory : MonoBehaviour
         uiList.Clear();
     }
 
-    public void add(WeaponItem item)
+    public void add(WeaponObject item)
     {
         weapons.Add(item);
-        Debug.Log("Item: " + item.objectName + " has been added!");
+        attachedWeapon = item;
+        item.gameObject.SetActive(false);
+
+        Debug.Log("Item: " + item.WeaponStats.objectName + " has been added!");
     }
 
     public void remove(string name)
     {
         for (int i = 0; i < weapons.Count; i++)
         {
-            if (weapons[i].objectName == name)
+            if (weapons[i].WeaponStats.objectName == name)
             {
                 weapons.RemoveAt(i);
             }
