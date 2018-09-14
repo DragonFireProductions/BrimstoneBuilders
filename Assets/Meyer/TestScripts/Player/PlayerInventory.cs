@@ -81,8 +81,8 @@ public class PlayerInventory : MonoBehaviour
         //calls select() on wanted weapon
         if (Input.GetKeyDown(KeyCode.L))
         {
+            attachedWeapon.GetComponent<Collider>().enabled = false;
             attachedWeapon.gameObject.SetActive(true);
-            attachedWeapon.Select();
         }
     }
     
