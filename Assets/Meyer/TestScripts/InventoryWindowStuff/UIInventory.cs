@@ -1,23 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public class Container
+{
+   
+}
+
 public class UIInventory : MonoBehaviour
 {
-
     public static UIInventory instance;
 
-    struct inventorySlot
-    {
-        private static GameObject InventoryContainer;
-        private static List<string> itemVariables;
-        private static RawImage image;
-    }
-    
+    [SerializeField] GameObject container;
+    [SerializeField] GameObject variables;
 
-	// Use this for initialization
-	void Awake () {
+    private Vector3 pos;
+
+    public List<GameObject> slots;
+    // Use this for initialization
+    void Awake () {
 	    if (instance == null)
 	    {
 	        instance = this;
@@ -25,10 +28,65 @@ public class UIInventory : MonoBehaviour
 	    else if (instance != this)
 	        Destroy(gameObject);
 	    DontDestroyOnLoad(gameObject);
+
+	}
+
+    void Start()
+    {
+        pos = container.gameObject.transform.position;
     }
-	
-	// Update is called once per frame
-	void Update () {
+    public void AddSlot(WeaponObject item)
+    {
+        GameObject newContainer = Instantiate(container);
+        newContainer.SetActive(true);
+        newContainer.transform.SetParent(container.transform.parent);
+        newContainer.transform.position = pos;
+        set(item, newContainer);
+        slots.Add(newContainer);
+    }
+
+    public void Remove(WeaponObject item)
+    {
+        for (int i = 0; i < slots.Count; i++)
+        {
+            if (slots[i].name == item.WeaponStats.objectName)
+            {
+                GameObject slot = slots[i].gameObject;
+                slots.RemoveAt(i);
+                Destroy(slot);
+            }
+        }
+    }
+    public void set(WeaponObject weapons, GameObject containerP)
+    {
+        TextMeshProUGUI[] transforms = containerP.GetComponentsInChildren<TextMeshProUGUI>();
+        containerP.name = weapons.name + "Slot";
+        for (int j = 0; j < transforms.Length; j++)
+        {
+            switch (transforms[j].name)
+            {
+                case "ItemName":
+                    transforms[j].GetComponent<TextMeshProUGUI>().text = weapons.WeaponStats.objectName.ToString();
+                    break;
+                case "ItemValue":
+                    transforms[j].GetComponent<TextMeshProUGUI>().text = weapons.WeaponStats.value.ToString();
+                    break;
+                case "ItemWeight":
+                    transforms[j].GetComponent<TextMeshProUGUI>().text = weapons.WeaponStats.weight.ToString();
+                    break;
+                case "ItemDurability":
+                    transforms[j].GetComponent<TextMeshProUGUI>().text = weapons.WeaponStats.durability.ToString();
+                    break;
+                default:
+                    break;
+            }
+        }
+        containerP.GetComponentInChildren<RawImage>().texture = weapons.WeaponStats.icon;
+    }
+
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 }

@@ -61,59 +61,6 @@ public class PlayerInventory : MonoBehaviour
         Debug.Log(name + ": ASSET NOT FOUND");
         return null;
     }
-    private void displayInventoryUI()
-    {
-        itemSlot.SetActive(false);
-
-        Vector3 pos = itemSlot.gameObject.transform.position;
-        float posy = itemSlot.gameObject.transform.position.y;
-        
-        for (int i = 0; i < weapons.Count; i++)
-        {
-            GameObject _itemSlot = Instantiate(this.itemSlot);
-            _itemSlot.transform.SetParent(itemSlot.transform.parent);
-            _itemSlot.SetActive(true);
-
-            _itemSlot.transform.localScale = itemSlot.transform.localScale;
-            pos.y = posy;
-            _itemSlot.gameObject.transform.position = pos;
-
-
-            _itemSlot.GetComponentInChildren<RawImage>().texture = weapons[i].WeaponStats.icon;
-
-            _itemSlot.GetComponentInChildren<TextMeshProUGUI>().text = weapons[i].WeaponStats.objectName;
-
-            Transform container = _itemSlot.transform.Find("InventoryContainerPanel");
-            TextMeshProUGUI[] transforms = container.GetComponentsInChildren<TextMeshProUGUI>();
-
-            for (int j = 0; j < transforms.Length; j++)
-            {
-                switch (transforms[j].name)
-                {
-                    case "ItemName":
-                        transforms[j].GetComponent<TextMeshProUGUI>().text = weapons[i].WeaponStats.objectName.ToString();
-                        break;
-                    case "ItemValue":
-                        transforms[j].GetComponent<TextMeshProUGUI>().text = weapons[i].WeaponStats.value.ToString();
-                        break;
-                    case "ItemWeight":
-                        transforms[j].GetComponent<TextMeshProUGUI>().text = weapons[i].WeaponStats.weight.ToString();
-                        break;
-                    case "ItemDurability":
-                        transforms[j].GetComponent<TextMeshProUGUI>().text = weapons[i].WeaponStats.durability.ToString();
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            uiList.Add(_itemSlot);
-
-        }
-
-
-    }
-
 
     // Update is called once per frame
     void Update()
@@ -121,15 +68,14 @@ public class PlayerInventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             isActive = !isActive;
-            UI.SetActive(isActive);
             if (isActive == true)
             {
-                displayInventoryUI();
+                UIInventory.instance.gameObject.SetActive(true);
             }
 
             if (isActive == false)
             {
-                clearInventory();
+               UIInventory.instance.gameObject.SetActive(false);
             }
         }
 
@@ -140,33 +86,13 @@ public class PlayerInventory : MonoBehaviour
             attachedWeapon.Select();
         }
     }
-
-    public void clearInventory()
-    {
-        for (int i = 0; i < uiList.Count; i++)
-        {
-            UnityEngine.Object.Destroy(uiList[i].gameObject);
-        }
-        uiList.Clear();
-    }
-
+    
     public void add(WeaponObject item)
     {
-        weapons.Add(item);
+        //weapons.Add(item);
         attachedWeapon = item;
         item.gameObject.SetActive(false);
-
+        UIInventory.instance.AddSlot(item);
         Debug.Log("Item: " + item.WeaponStats.objectName + " has been added!");
-    }
-
-    public void remove(string name)
-    {
-        for (int i = 0; i < weapons.Count; i++)
-        {
-            if (weapons[i].WeaponStats.objectName == name)
-            {
-                weapons.RemoveAt(i);
-            }
-        }
     }
 }
