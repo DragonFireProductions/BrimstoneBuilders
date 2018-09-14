@@ -27,6 +27,11 @@ public class WeaponObject : MonoBehaviour
         Debug.Log("Object has been selected!");
     }
 
+    public virtual void Attack()
+    {
+          Debug.Log("Object has been selected!");
+    }
+
     protected virtual void OnTriggerEnter(Collider collider)
     {
         if (collider.tag == "Player")

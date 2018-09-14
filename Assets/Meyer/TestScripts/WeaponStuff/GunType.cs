@@ -22,6 +22,7 @@ public class GunType : WeaponObject
     [SerializeField] protected int Ammo;
 
     bool CanFire = true;
+    bool Reloading = false;
 
     //TODO:2 See WeaponObject.cs
     public override void Select()
@@ -30,13 +31,17 @@ public class GunType : WeaponObject
     }
 
     //shoots gun
-    public virtual void Shoot()
+    public override void Attack()
     {
+        Debug.Log("Attacking");
         if (CanFire && Ammo > 0)
-            Fire(FireRate);
+            StartCoroutine(Fire());
+        else if (!Reloading && Ammo == 0)
+            StartCoroutine(Reload());
+
     }
 
-    IEnumerator Fire(float FireRate)
+    IEnumerator Fire()
     {
         CanFire = false;
 
@@ -47,6 +52,14 @@ public class GunType : WeaponObject
 
         yield return new WaitForSeconds(1 / FireRate);
         CanFire = true;
+    }
+
+    IEnumerator Reload()
+    {
+        Reloading = true;
+        yield return new WaitForSeconds(ReloadTime);
+        Ammo = Capacity;
+        Reloading = false;
     }
 
     ///Recommended functions

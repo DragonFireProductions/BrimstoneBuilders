@@ -96,6 +96,8 @@ namespace Assets.Meyer.TestScripts.Player
                 animator.SetBool("Dying", true);
             }
             animator.SetBool("Attacking", false);
+
+            PlayerInventory.inventory.GetWeapon().Attack();
         }
 
         public void Damage(int damage)

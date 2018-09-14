@@ -107,7 +107,7 @@ namespace Kristal
             Destroy(this.gameObject);
         }
 
-        List<GameObject> GetEnemies()
+        public List<GameObject> GetEnemies()
         {
             return enemies;
         }

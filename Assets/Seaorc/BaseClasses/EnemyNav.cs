@@ -6,17 +6,17 @@ using UnityEngine.Assertions;
 
 public class EnemyNav : MonoBehaviour
 {
-    [SerializeField] Animator animator;
-    [SerializeField] float VeiwDistance;
-    [SerializeField] float WanderDistance;
-    [SerializeField] float WanderDelay;
-    [SerializeField] float StoppingDistance;
-    [SerializeField] float MaintainAttackDistance;
+    [SerializeField] protected Animator animator;
+    [SerializeField] protected float VeiwDistance;
+    [SerializeField] protected float WanderDistance;
+    [SerializeField] protected float WanderDelay;
+    [SerializeField] protected float StoppingDistance;
+    [SerializeField] protected float MaintainAttackDistance;
 
-    EnemyState State;
-    GameObject player = null;
-    NavMeshAgent Agent;
-    float Timer;
+    protected EnemyState State;
+    protected GameObject player = null;
+    protected NavMeshAgent Agent;
+    protected float Timer;
 
     void Awake()
     {

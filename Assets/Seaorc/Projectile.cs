@@ -20,11 +20,11 @@ public class Projectile : MonoBehaviour
         transform.Translate(0, 0, Speed * Time.deltaTime);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.GetComponent<Enemy>())
+        if (other.gameObject.GetComponent<Enemy>())
         {
-            collision.gameObject.GetComponent<Enemy>().Damage(Damage);
+            other.gameObject.GetComponent<Enemy>().Damage(Damage);
         }
 
         Destroy(this.gameObject);
