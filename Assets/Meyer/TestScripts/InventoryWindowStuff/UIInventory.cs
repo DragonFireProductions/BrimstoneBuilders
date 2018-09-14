@@ -15,6 +15,8 @@ public class UIInventory : MonoBehaviour
 
     [SerializeField] GameObject container;
     [SerializeField] GameObject variables;
+    [SerializeField] private GameObject pause;
+    [SerializeField] public GameObject playerUI;
 
     private Vector3 pos;
 
@@ -41,6 +43,7 @@ public class UIInventory : MonoBehaviour
         newContainer.SetActive(true);
         newContainer.transform.SetParent(container.transform.parent);
         newContainer.transform.position = pos;
+        newContainer.transform.localScale = container.transform.localScale;
         set(item, newContainer);
         slots.Add(newContainer);
     }
@@ -84,9 +87,13 @@ public class UIInventory : MonoBehaviour
         containerP.GetComponentInChildren<RawImage>().texture = weapons.WeaponStats.icon;
     }
 
+    public void ShowPauseMenu(bool showPause)
+    {
+        pause.SetActive(showPause);
+    }
 
     // Update is called once per frame
     void Update () {
-		
+        
 	}
 }
