@@ -24,6 +24,8 @@ namespace Assets.Meyer.TestScripts.Player
         private GameObject UI;
         private Text healthUI;
         private Text enemyUI;
+
+        [SerializeField] public GameObject weaponAttach;
         
 
         // Use this for initialization
@@ -59,6 +61,7 @@ namespace Assets.Meyer.TestScripts.Player
             if (Input.GetKeyDown(KeyCode.C))
             {
                 animator.SetBool("Attacking", true);
+                PlayerInventory.attachedWeapon.PlayUsing();
                 enemy = FindClosestEnemy();
             }
         }
@@ -96,6 +99,7 @@ namespace Assets.Meyer.TestScripts.Player
                 animator.SetBool("Dying", true);
             }
             animator.SetBool("Attacking", false);
+            PlayerInventory.attachedWeapon.StopUsing();
 
             PlayerInventory.inventory.GetWeapon().Attack();
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -103,6 +104,7 @@ public class UIInventory : MonoBehaviour
     {
         Debug.Log(weapon.WeaponStats.objectName + "was clicked");
         PlayerInventory.attachedWeapon = weapon;
+        weapon.SelectItem();
     }
 
 
