@@ -46,6 +46,7 @@ public class EnemyNav : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log(Agent.destination);
         switch (State)
         {
             case EnemyState.Idle:
@@ -57,7 +58,8 @@ public class EnemyNav : MonoBehaviour
 
                 if (Time.time >= Timer)
                 {
-                    Agent.destination = Random.insideUnitSphere * WanderDistance;
+                    Vector3 des = Random.insideUnitSphere * WanderDistance;
+                    Agent.SetDestination(des);
                     Timer = Time.time + WanderDelay;
                 }
 
@@ -66,7 +68,7 @@ public class EnemyNav : MonoBehaviour
                 if (player != null && Agent != null)
                 {
                     if (Vector3.Distance(transform.position, player.transform.position) < MaintainAttackDistance)
-                        Agent.destination = player.transform.position;
+                        Agent.SetDestination(player.transform.position); 
                     else
                     {
                         State = EnemyState.Idle;

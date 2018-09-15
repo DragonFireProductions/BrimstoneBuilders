@@ -55,9 +55,12 @@ public class WeaponObject : MonoBehaviour
     {
         gameObject.SetActive(true);
         gameObject.GetComponent<BoxCollider>().enabled = false;
+
         gameObject.transform.position = Character.instance.weaponAttach.transform.position;
         gameObject.transform.rotation = Character.instance.weaponAttach.transform.rotation;
-        gameObject.transform.parent = Character.instance.gameObject.transform;
+
+        gameObject.transform.parent = Character.player.transform;
+
     }
     public WeaponItem WeaponStats
     {
