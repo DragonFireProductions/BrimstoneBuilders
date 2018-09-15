@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Container
@@ -30,7 +31,6 @@ public class UIInventory : MonoBehaviour
 	    else if (instance != this)
 	        Destroy(gameObject);
 	    DontDestroyOnLoad(gameObject);
-
 	}
 
     void Start()
@@ -60,6 +60,7 @@ public class UIInventory : MonoBehaviour
             }
         }
     }
+    
     public void set(WeaponObject weapons, GameObject containerP)
     {
         TextMeshProUGUI[] transforms = containerP.GetComponentsInChildren<TextMeshProUGUI>();
@@ -87,6 +88,7 @@ public class UIInventory : MonoBehaviour
         containerP.GetComponentInChildren<RawImage>().texture = weapons.WeaponStats.icon;
     }
 
+    
     public void ShowPauseMenu(bool showPause)
     {
         pause.SetActive(showPause);
@@ -94,6 +96,18 @@ public class UIInventory : MonoBehaviour
 
     // Update is called once per frame
     void Update () {
-        
+        ClickAndDrag();
 	}
+
+    public void selected(WeaponObject weapon)
+    {
+        Debug.Log(weapon.WeaponStats.objectName + "was clicked");
+        PlayerInventory.attachedWeapon = weapon;
+    }
+
+
+    void ClickAndDrag()
+    {
+
+    }
 }

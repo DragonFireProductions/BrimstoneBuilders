@@ -23,7 +23,8 @@ public class PlayerInventory : MonoBehaviour
     private GameObject itemSlot; // Slots for items
     private List<GameObject> uiList; // List of weaponItems currently picketUp
 
-    private bool isActive = false; 
+    private bool isActive = false;
+    public List<WeaponObject> objects;
 
     [SerializeField]
     public static WeaponObject attachedWeapon; // Primary weapon holder
@@ -60,6 +61,18 @@ public class PlayerInventory : MonoBehaviour
         return null;
     }
 
+    public WeaponObject get_weapon(string name)
+    {
+        for (int i = 0; i < objects.Count; i++)
+        {
+            if (objects[i].WeaponStats.objectName == name)
+            {
+                return objects[i];
+            }
+        }
+
+        return null;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -90,6 +103,7 @@ public class PlayerInventory : MonoBehaviour
         //weapons.Add(item);
         attachedWeapon = item;
         item.gameObject.SetActive(false);
+        objects.Add(item);
         UIInventory.instance.AddSlot(item);
         Debug.Log("Item: " + item.WeaponStats.objectName + " has been added!");
     }
