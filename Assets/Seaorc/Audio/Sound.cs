@@ -56,7 +56,9 @@ public class Sound
 
     public void PlaySound()
     {
+        Source.volume = 1.0f;
         Source.Play();
+        Debug.Log("Audio is playing");
     }
 
     public void StopSound()
