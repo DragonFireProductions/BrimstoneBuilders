@@ -93,8 +93,12 @@ public class PlayerInventory : MonoBehaviour
         //calls select() on wanted weapon
         if (Input.GetKeyDown(KeyCode.L))
         {
+            attachedWeapon.GetComponent<Collider>().enabled = false;
             attachedWeapon.gameObject.SetActive(true);
-            attachedWeapon.Select();
+            attachedWeapon.transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;
+            attachedWeapon.transform.rotation = GameObject.FindGameObjectWithTag("Player").transform.rotation;
+
+            attachedWeapon.gameObject.transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
         }
     }
     
@@ -106,5 +110,10 @@ public class PlayerInventory : MonoBehaviour
         objects.Add(item);
         UIInventory.instance.AddSlot(item);
         Debug.Log("Item: " + item.WeaponStats.objectName + " has been added!");
+    }
+
+    public WeaponObject GetWeapon()
+    {
+        return attachedWeapon;
     }
 }

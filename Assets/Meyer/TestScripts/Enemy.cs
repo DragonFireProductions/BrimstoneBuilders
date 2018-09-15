@@ -16,6 +16,7 @@ namespace Kristal
         [SerializeField] public float playerDistance = 3.0f;
 
         private bool distanceCheck = false;
+        static List<GameObject> enemies;
 
         // Use this for initialization
         void Awake()
@@ -23,6 +24,15 @@ namespace Kristal
             animator = gameObject.GetComponent<Animator>();
             timer = reactionTime;
 
+            if (enemies == null)
+                enemies = new List<GameObject>();
+
+            enemies.Add(gameObject);
+        }
+
+        private void OnDisable()
+        {
+            enemies.Remove(gameObject);
         }
 
         // Update is called once per frame
@@ -95,6 +105,11 @@ namespace Kristal
         void EndDeath()
         {
             Destroy(this.gameObject);
+        }
+
+        public List<GameObject> GetEnemies()
+        {
+            return enemies;
         }
     }
 }
