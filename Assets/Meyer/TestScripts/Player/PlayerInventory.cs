@@ -106,7 +106,7 @@ public class PlayerInventory : MonoBehaviour
     {
         //weapons.Add(item);
         attachedWeapon = item;
-        item.gameObject.SetActive(false);
+        //item.gameObject.SetActive(false);
         objects.Add(item);
         UIInventory.instance.AddSlot(item);
         Debug.Log("Item: " + item.WeaponStats.objectName + " has been added!");
