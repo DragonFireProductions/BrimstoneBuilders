@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine.Audio;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class AudioManager : MonoBehaviour
 {
-    static AudioManager manager = null;
+    public static AudioManager manager = null;
     [SerializeField] Sound[] Clips;
     Dictionary<string, Sound> SoundDictionary;
     Sound CurrentSong;
@@ -22,11 +23,11 @@ public class AudioManager : MonoBehaviour
         SoundDictionary = new Dictionary<string, Sound>();
         foreach (Sound sound in Clips)
         {
-            GameObject gameObject = new GameObject("Sound: " + sound.GetName());
+            GameObject GO = new GameObject("Sound: " + sound.GetName());
 
-            gameObject.transform.SetParent(this.transform);
+            GO.transform.SetParent(this.transform);
 
-            sound.SetSource(gameObject.AddComponent<AudioSource>());
+            sound.SetSource(GO.AddComponent<AudioSource>());
 
             SoundDictionary.Add(sound.GetName(), sound);
         }
@@ -36,9 +37,14 @@ public class AudioManager : MonoBehaviour
     {
         Sound SoundToPlay = SoundDictionary[_Sound];
 
+        Debug.Log(_Sound);
+
+        Assert.IsNotNull(SoundToPlay, "Sound is null");
+
         if (SoundToPlay != null)
         {
             SoundToPlay.PlaySound();
+
         }
     }
 

@@ -14,6 +14,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     AudioClip menuClick;
     // Use this for initialization
+    void Awake()
+    {
+        AudioManager.manager.PlayMusic("Theme");
+    }
     void Start ()
     {
         cam = Camera.main;
@@ -25,11 +29,10 @@ public class MainMenu : MonoBehaviour
 	}
 
     //--------------------------Load Scenes----------------------------------------------------
-
+   
     public void PlayClick()
     {
-        menuAudio.clip = menuClick;
-        menuAudio.Play();
+        AudioManager.manager.PlaySound("Click");
     }
 
     public void PlayGame()
