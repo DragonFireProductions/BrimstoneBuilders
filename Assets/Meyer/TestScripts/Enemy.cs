@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Meyer.TestScripts;
 using Assets.Meyer.TestScripts.Player;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Kristal
 {
@@ -18,6 +19,14 @@ namespace Kristal
         private bool distanceCheck = false;
         static List<GameObject> enemies;
 
+        [SerializeField] private GameObject attachedWeapon;
+
+
+        private bool attacking = false;
+        private float time = 0;
+
+        private Animation animation;
+
         // Use this for initialization
         void Awake()
         {
@@ -28,6 +37,7 @@ namespace Kristal
                 enemies = new List<GameObject>();
 
             enemies.Add(gameObject);
+            animation = attachedWeapon.GetComponent<Animation>();
         }
 
         private void OnDisable()
@@ -38,47 +48,68 @@ namespace Kristal
         // Update is called once per frame
         void Update()
         {
-            float distance = Vector3.Distance(Character.player.transform.position, transform.position);
-
-            if (distance < playerDistance)
+            if (Character.player)
             {
+                float distance = Vector3.Distance(Character.player.transform.position, transform.position);
 
-                if (!distanceCheck)
+                if (distance < playerDistance)
                 {
-                    float step = 0.5f * Time.deltaTime;
 
-                    Vector3 dir = Vector3.RotateTowards(transform.forward, Character.player.transform.forward, step,
-                        0.0f);
+                    if (!distanceCheck)
+                    {
+                        float step = 0.5f * Time.deltaTime;
 
-                    transform.rotation = Quaternion.LookRotation(dir);
+                        Vector3 dir = Vector3.RotateTowards(transform.forward, Character.player.transform.forward, step,
+                            0.0f);
 
-                    //warn player
+                        transform.rotation = Quaternion.LookRotation(dir);
 
-                    distanceCheck = true;
+                        //warn player
+
+                        distanceCheck = true;
+                    }
+                    else
+                    {
+                        timer -= Time.deltaTime;
+                    }
+
+                    if (timer <= 0.0f)
+                    {
+                        animator.SetBool("Attacking", true);
+                        animation.Play();
+                        attacking = true;
+                    }
                 }
+
                 else
                 {
-                    timer -= Time.deltaTime;
-                }
-
-                if (timer <= 0.0f)
-                {
-                    animator.SetBool("Attacking", true);
+                    animator.SetBool("Attacking", false);
+                    attacking = false;
+                    animation.Play("Idle");
+                    animation.Stop();
+                    distanceCheck = false;
+                    timer = reactionTime;
                 }
             }
 
-            else
+            if (attacking == true)
             {
+                timer += Time.deltaTime;
+            }
+
+            if (timer >= 0.4f)
+            {
+                attacking = false;
                 animator.SetBool("Attacking", false);
-                distanceCheck = false;
-                timer = reactionTime;
             }
         }
 
         public void Damage(int damage)
         {
             health -= damage;
-            Debug.Log("Enemy Health: " + health);
+            //Debug.Log("Enemy Health: " + health);
+           GameObject.Find("EnemyHealth").GetComponent<Text>().text = "Enemy Health: " + health;
+
 
             if (health <= 0.0f)
             {
@@ -94,12 +125,12 @@ namespace Kristal
         void EndAttack()
         {
             timer = 0.0f;
-            Character.instance.Damage(7);
+            Character.instance.Damage(1);
         }
 
         void StartAttack()
         {
-            Character.instance.Damage(5);
+            Character.instance.Damage(1);
         }
 
         void EndDeath()

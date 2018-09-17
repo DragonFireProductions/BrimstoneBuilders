@@ -13,11 +13,14 @@ public class EnemyNav : MonoBehaviour
     [SerializeField] float StoppingDistance;
     [SerializeField] float MaintainAttackDistance;
 
-    private GameObject location;
+    [SerializeField] private GameObject location;
     EnemyState State;
     GameObject player = null;
     NavMeshAgent Agent;
     private float Timer = 0;
+    private float timer1 = 0;
+
+    private bool hasReachedDestination = false;
 
     void Awake()
     {
@@ -44,7 +47,7 @@ public class EnemyNav : MonoBehaviour
 
         Agent.stoppingDistance = StoppingDistance;
 
-        location = GameObject.Find("Location");
+        
     }
 
     void Update()
@@ -69,11 +72,17 @@ public class EnemyNav : MonoBehaviour
             case EnemyState.Attacking:
                 if (player != null && Agent != null)
                 {
-                    if (Vector3.Distance(transform.position, player.transform.position) < MaintainAttackDistance)
+                    if (Vector3.Distance(transform.position, player.transform.position) < MaintainAttackDistance ||
+                        timer1 < 8.0f)
+                    {
                         Agent.destination = player.transform.position;
+                        timer1 += Time.deltaTime;
+                    }
+
                     else
                     {
                         State = EnemyState.Idle;
+                        timer1 = 0;
                     }
                 }
 

@@ -26,7 +26,7 @@ namespace Assets.Meyer.TestScripts.Player
         private Text enemyUI;
 
         [SerializeField] public GameObject weaponAttach;
-        
+      
 
         // Use this for initialization
         void Awake()
@@ -55,14 +55,15 @@ namespace Assets.Meyer.TestScripts.Player
             Assert.IsNotNull(enemyUI, "Missing player UI");
         }
 
-        // Update is called once per frame
+        // Update is called once per framed
         void Update()
         {
-            if (Input.GetButtonDown("Attack"))
+            if (Input.GetButtonDown("Attack") && PlayerInventory.attachedWeapon)
             {
                 animator.SetBool("Attacking", true);
                 PlayerInventory.attachedWeapon.PlayUsing();
                 enemy = FindClosestEnemy();
+                PlayerInventory.attachedWeapon.Attack();
             }
         }
 
@@ -91,7 +92,6 @@ namespace Assets.Meyer.TestScripts.Player
             if (enemy != null)
             {
                 enemy.GetComponent<Kristal.Enemy>().Damage(playerDamage);
-                enemyUI.text = "Enemy Health: " + enemy.GetComponent<Kristal.Enemy>().GetHealth().ToString();
             }
 
             if (health <= 0)
@@ -99,9 +99,10 @@ namespace Assets.Meyer.TestScripts.Player
                 animator.SetBool("Dying", true);
             }
             animator.SetBool("Attacking", false);
-            PlayerInventory.attachedWeapon.StopUsing();
-
-            PlayerInventory.inventory.GetWeapon().Attack();
+            if (PlayerInventory.attachedWeapon)
+            {
+                PlayerInventory.attachedWeapon.StopUsing();
+            }    
         }
 
         public void Damage(int damage)

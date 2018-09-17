@@ -11,12 +11,12 @@ public class WeaponObject : MonoBehaviour
     [SerializeField] protected WeaponItem weaponStats; // contains inventory information
 
     [SerializeField] protected string weaponName; // references InventoryManager items
-    protected Animator animator;
+    protected Animation animator;
 
 
     protected virtual void Start()
     {
-        animator = gameObject.GetComponent<Animator>();
+        animator = gameObject.GetComponent<Animation>();
         weaponStats = PlayerInventory.inventory.get_item(weaponName);
         Assert.IsNotNull(weaponStats, "WeaponItem name not added in inspector " + gameObject.name);
         weapon = this.gameObject;
@@ -24,12 +24,15 @@ public class WeaponObject : MonoBehaviour
 
     public void PlayUsing()
     {
-        animator.SetBool("Attacking", true);
+        if (animator)
+        {
+        animator.Play();
+
+        }
     }
 
     public void StopUsing()
     {
-        animator.SetBool("Attacking", false);
     }
     //TODO:2 Add function for selection in UI
     //Function should be called when player wants to select this as their primary object
@@ -48,6 +51,11 @@ public class WeaponObject : MonoBehaviour
         if (collider.tag == "Player")
         {
             PlayerInventory.inventory.add(this);
+            if (PlayerInventory.attachedWeapon == null)
+            {
+                
+                SelectItem();
+            }
         }
     }
 
