@@ -58,7 +58,7 @@ namespace Assets.Meyer.TestScripts.Player
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.C))
+            if (Input.GetButtonDown("Attack"))
             {
                 animator.SetBool("Attacking", true);
                 PlayerInventory.attachedWeapon.PlayUsing();
