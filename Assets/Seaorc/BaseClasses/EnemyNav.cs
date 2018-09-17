@@ -6,17 +6,18 @@ using UnityEngine.Assertions;
 
 public class EnemyNav : MonoBehaviour
 {
-    [SerializeField] protected Animator animator;
-    [SerializeField] protected float VeiwDistance;
-    [SerializeField] protected float WanderDistance;
-    [SerializeField] protected float WanderDelay;
-    [SerializeField] protected float StoppingDistance;
-    [SerializeField] protected float MaintainAttackDistance;
+    [SerializeField] Animator animator;
+    [SerializeField] float VeiwDistance;
+    [SerializeField] float WanderDistance;
+    [SerializeField] float WanderDelay;
+    [SerializeField] float StoppingDistance;
+    [SerializeField] float MaintainAttackDistance;
 
-    protected EnemyState State;
-    protected GameObject player = null;
-    protected NavMeshAgent Agent;
-    protected float Timer;
+    private GameObject location;
+    EnemyState State;
+    GameObject player = null;
+    NavMeshAgent Agent;
+    private float Timer = 0;
 
     void Awake()
     {
@@ -42,25 +43,26 @@ public class EnemyNav : MonoBehaviour
         Timer = Time.deltaTime;
 
         Agent.stoppingDistance = StoppingDistance;
+
+        location = GameObject.Find("Location");
     }
 
     void Update()
     {
-        //Debug.Log(Agent.destination);
+        Timer += Time.deltaTime;
         switch (State)
         {
             case EnemyState.Idle:
-                if(player != null)
+                if (player != null)
                 {
                     if (Vector3.Distance(transform.position, player.transform.position) < VeiwDistance)
                         State = EnemyState.Attacking;
                 }
 
-                if (Time.time >= Timer)
+                if (WanderDelay <= Timer)
                 {
-                    Vector3 des = Random.insideUnitSphere * WanderDistance;
-                    Agent.SetDestination(des);
-                    Timer = Time.time + WanderDelay;
+                    Agent.destination = Random.insideUnitSphere * WanderDistance + location.transform.position;
+                    Timer = 0;
                 }
 
                 break;
@@ -68,7 +70,7 @@ public class EnemyNav : MonoBehaviour
                 if (player != null && Agent != null)
                 {
                     if (Vector3.Distance(transform.position, player.transform.position) < MaintainAttackDistance)
-                        Agent.SetDestination(player.transform.position); 
+                        Agent.destination = player.transform.position;
                     else
                     {
                         State = EnemyState.Idle;
@@ -83,4 +85,4 @@ public class EnemyNav : MonoBehaviour
 
 }
 
-public enum EnemyState { Idle, Attacking}
+public enum EnemyState { Idle, Attacking }

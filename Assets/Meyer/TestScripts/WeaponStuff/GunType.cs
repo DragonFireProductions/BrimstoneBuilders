@@ -40,7 +40,7 @@ public class GunType : WeaponObject
             StartCoroutine(Reload());
 
     }
-
+    
     IEnumerator Fire()
     {
         CanFire = false;

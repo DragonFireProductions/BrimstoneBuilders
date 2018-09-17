@@ -53,6 +53,15 @@ public class WeaponObject : MonoBehaviour
 
     public void SelectItem()
     {
+        if (PlayerInventory.attachedWeapon != null)
+        {
+            UIInventory.instance.AddSlot(PlayerInventory.attachedWeapon);
+            PlayerInventory.attachedWeapon.gameObject.SetActive(false);
+            PlayerInventory.attachedWeapon = null;
+        }
+        PlayerInventory.attachedWeapon = this;
+
+        UIInventory.instance.Remove(this);
         gameObject.SetActive(true);
         gameObject.GetComponent<BoxCollider>().enabled = false;
 
@@ -60,8 +69,9 @@ public class WeaponObject : MonoBehaviour
         gameObject.transform.rotation = Character.instance.weaponAttach.transform.rotation;
 
         gameObject.transform.parent = Character.player.transform;
-
+    
     }
+    
     public WeaponItem WeaponStats
     {
         get { return weaponStats; }

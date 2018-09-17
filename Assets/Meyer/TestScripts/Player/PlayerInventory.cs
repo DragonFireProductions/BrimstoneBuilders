@@ -60,7 +60,7 @@ public class PlayerInventory : MonoBehaviour
         Debug.Log(name + ": ASSET NOT FOUND");
         return null;
     }
-
+    
     public WeaponObject get_weapon(string name)
     {
         for (int i = 0; i < objects.Count; i++)

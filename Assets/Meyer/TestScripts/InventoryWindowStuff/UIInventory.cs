@@ -53,7 +53,7 @@ public class UIInventory : MonoBehaviour
     {
         for (int i = 0; i < slots.Count; i++)
         {
-            if (slots[i].name == item.WeaponStats.objectName)
+            if (slots[i].name  == item.name + "Slot")
             {
                 GameObject slot = slots[i].gameObject;
                 slots.RemoveAt(i);
@@ -103,7 +103,6 @@ public class UIInventory : MonoBehaviour
     public void selected(WeaponObject weapon)
     {
         Debug.Log(weapon.WeaponStats.objectName + "was clicked");
-        PlayerInventory.attachedWeapon = weapon;
         weapon.SelectItem();
     }
 
