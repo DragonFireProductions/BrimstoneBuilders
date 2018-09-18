@@ -14,12 +14,14 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     AudioClip menuClick;
     // Use this for initialization
-    void Awake()
-    {
-        AudioManager.manager.PlayMusic("Theme");
-    }
+    //void Awake()
+    //{
+
+    //}
     void Start ()
     {
+        AudioManager.manager.PlayMusic("Theme");
+
         cam = Camera.main;
         cam.GetComponent<Animator>();
 
