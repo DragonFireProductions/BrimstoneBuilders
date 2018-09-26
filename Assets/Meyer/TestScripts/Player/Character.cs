@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+//using UnityEngine.AI;
 
 namespace Assets.Meyer.TestScripts.Player
 {
@@ -26,7 +27,15 @@ namespace Assets.Meyer.TestScripts.Player
         private Text enemyUI;
 
         [SerializeField] public GameObject weaponAttach;
-      
+
+        Vector3 new_position;
+
+        public float speed;
+
+        private void Start()
+        {
+            new_position = transform.position;
+        }
 
         // Use this for initialization
         void Awake()
@@ -64,6 +73,27 @@ namespace Assets.Meyer.TestScripts.Player
                 PlayerInventory.attachedWeapon.PlayUsing();
                 enemy = FindClosestEnemy();
                 PlayerInventory.attachedWeapon.Attack();
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                RaycastHit hit;
+
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                Vector3 direction = new Vector3(ray.direction.x, ray.direction.y, ray.direction.z);
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    //float distance = Mathf.Sqrt()
+                        //float step = speed * Time.deltaTime;
+       
+                        //transform.position = Vector3.Lerp(transform.position, hit.point, step);
+                        //transform.position = Vector3.MoveTowards(transform.position, hit.point, Time.deltaTime);
+
+                        //new_position = hit.point;
+                        //transform.position = new_position;
+                    
+                }
             }
         }
 
