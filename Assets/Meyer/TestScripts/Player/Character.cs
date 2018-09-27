@@ -25,6 +25,8 @@ namespace Assets.Meyer.TestScripts.Player
         private Text healthUI;
         private Text enemyUI;
 
+       
+
         [SerializeField] public GameObject weaponAttach;
       
 
@@ -60,14 +62,17 @@ namespace Assets.Meyer.TestScripts.Player
         {
             if (Input.GetButtonDown("Attack") && PlayerInventory.attachedWeapon)
             {
-                animator.SetBool("Attacking", true);
-                PlayerInventory.attachedWeapon.PlayUsing();
-                enemy = FindClosestEnemy();
-                PlayerInventory.attachedWeapon.Attack();
+                StartAttackMode();
+
             }
         }
 
-        GameObject FindClosestEnemy()
+
+        /// <summary>
+        /// Finds the closest enemy to player
+        /// </summary>
+        /// <returns>Closest enemy game object</returns>
+        public GameObject FindClosestEnemy()
         {
             GameObject[] gos;
             gos = GameObject.FindGameObjectsWithTag("Enemy");
@@ -87,6 +92,13 @@ namespace Assets.Meyer.TestScripts.Player
             return closest;
         }
 
+        public void StartAttackMode( ) {
+            TurnBased.Instance.Switch();
+        }
+
+        void SelectEnemy( ) {
+            
+        }
         public void EndAttack()
         {
             if (enemy != null)
@@ -116,5 +128,12 @@ namespace Assets.Meyer.TestScripts.Player
         {
             //Destroy(this.gameObject);
         }
+
+        public Animator GetAnimator( ) {
+            return animator;
+        }
+
+       
+        
     }
 }

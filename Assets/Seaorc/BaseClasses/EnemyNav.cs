@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using Assets.Meyer.TestScripts.Player;
+
 using UnityEngine.AI;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -62,7 +65,7 @@ public class EnemyNav : MonoBehaviour
                         State = EnemyState.Attacking;
                 }
 
-                if (WanderDelay <= Timer)
+                if (WanderDelay <= Timer && !TurnBased.Instance.AttackMode)
                 {
                     Agent.destination = Random.insideUnitSphere * WanderDistance + location.transform.position;
                     Timer = 0;
@@ -73,9 +76,9 @@ public class EnemyNav : MonoBehaviour
                 if (player != null && Agent != null)
                 {
                     if (Vector3.Distance(transform.position, player.transform.position) < MaintainAttackDistance ||
-                        timer1 < 8.0f)
+                        timer1 < 8.0f && !TurnBased.Instance.AttackMode)
                     {
-                        Agent.destination = player.transform.position;
+                       // Agent.destination = player.transform.position;
                         timer1 += Time.deltaTime;
                     }
 
@@ -90,6 +93,11 @@ public class EnemyNav : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void SetDestination(Vector3 des ) {
+        Agent.SetDestination( des );
+
     }
 
 }

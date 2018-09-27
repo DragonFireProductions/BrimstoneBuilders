@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using Assets.Meyer.TestScripts.Player;
+
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -27,9 +30,14 @@ public class CameraController : MonoBehaviour
     CameraMode mode;
     float Zoom;
 
+    public static CameraController controller;
+
+    void Awake( ) {
+        controller = this;
+    }
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
+
         mode = CameraMode.Player;
 
         CamRig = transform.parent.parent.transform;
@@ -51,7 +59,7 @@ public class CameraController : MonoBehaviour
         {
             SwitchMode();
         }
-
+   
         if (mode == CameraMode.Colony)
         {
             if (Input.GetKey(KeyCode.Mouse2))
@@ -97,7 +105,7 @@ public class CameraController : MonoBehaviour
 
             transform.position = new Vector3(transform.position.x, ColonyCam.position.y + Zoom, transform.position.z);
         }
-        else if (mode == CameraMode.Player)
+        if (mode == CameraMode.Player)
         {
             CamRig.position = PlayerTransform.position;
 
@@ -134,6 +142,15 @@ public class CameraController : MonoBehaviour
 
             transform.localPosition = new Vector3(0, 0, Zoom);
         }
+
+        if ( mode == CameraMode.EnemyAttacking ){
+
+        }
+
+        if ( mode == CameraMode.PlayerAttacking ){
+            
+        }
+       
     }
 
     void SwitchMode()
@@ -149,13 +166,52 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    public void PlayerAttack_Switch( ) {
+        if ( TurnBased.Instance.IsPlayerTurn ){
+            mode = CameraMode.Transition;
+            StartCoroutine( ToPlayer_Attack( ) );
+        }
+    }
+
+    public void EnemyAttack_Switch(GameObject Enemy ) {
+        if ( !TurnBased.Instance.IsPlayerTurn ){
+            mode = CameraMode.Transition;
+
+            StartCoroutine( ToEnemy_Attack( Enemy ) );
+        }
+    }
+
+    IEnumerator ToPlayer_Attack() {
+
+        while (Vector3.Distance(transform.position,  Character.player.transform.position + Character.player.transform.right * 5 ) > 10f){
+            transform.position = Vector3.Lerp( transform.position, Character.player.transform.position, 10 * Time.deltaTime);
+            transform.LookAt( Character.player.transform );
+
+            yield return new WaitForEndOfFrame( );
+        }
+        yield return new WaitForSeconds(2);
+
+        mode = CameraMode.PlayerAttacking;
+    }
+
+    IEnumerator ToEnemy_Attack(GameObject enemy ) {
+        mode = CameraMode.Transition;
+
+        while (transform.position !=  enemy.transform.position + enemy.transform.forward * 5){
+            //transform.position = Vector3.Lerp(transform.position, enemy.transform.position + enemy.transform.forward * 5, 15 * Time.deltaTime);
+            //transform.LookAt(enemy.transform);
+            yield return new WaitForEndOfFrame();;
+        }
+
+        mode = CameraMode.EnemyAttacking;
+    }
+
     IEnumerator ToColony()
     {
         mode = CameraMode.Transition;
 
         while (Vector3.Distance(transform.position, ColonyCam.position) > .5f)
         {
-
             transform.position = Vector3.Lerp(transform.position, ColonyCam.position, TransitionSpeed * Time.deltaTime);
             transform.rotation = Quaternion.Slerp(transform.rotation, ColonyCam.rotation, TransitionSpeed * Time.deltaTime);
             yield return new WaitForEndOfFrame();
@@ -167,6 +223,20 @@ public class CameraController : MonoBehaviour
         mode = CameraMode.Colony;
     }
 
+    /// <summary>
+    /// Controls camera for player attack
+    /// </summary>
+    /// <param name="enemy">the enemy to focus on</param>
+    public void EnemyAttacking(GameObject enemy ) {
+        mode = CameraMode.PlayerAttacking;
+        
+    }
+
+    public void PlayerAttacking(GameObject player)
+    {
+        
+        
+    }
     IEnumerator ToPlayer()
     {
         mode = CameraMode.Transition;
@@ -191,5 +261,5 @@ public class CameraController : MonoBehaviour
 
 enum CameraMode
 {
-    Colony, Player, Transition
+    Colony, Player, Transition, PlayerAttacking, EnemyAttacking
 }

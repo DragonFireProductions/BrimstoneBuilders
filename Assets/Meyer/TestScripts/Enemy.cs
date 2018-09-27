@@ -27,6 +27,10 @@ namespace Kristal
 
         private Animation animation;
 
+        private Vector3 startPosition;
+
+        private Quaternion startRotation;
+
         // Use this for initialization
         void Awake()
         {
@@ -38,6 +42,10 @@ namespace Kristal
 
             enemies.Add(gameObject);
             animation = attachedWeapon.GetComponent<Animation>();
+        }
+
+        private void Start( ) {
+            TurnBased.Instance.AddEnemy(this.gameObject);
         }
 
         private void OnDisable()
@@ -75,18 +83,15 @@ namespace Kristal
 
                     if (timer <= 0.0f)
                     {
-                        animator.SetBool("Attacking", true);
-                        animation.Play();
+                        CameraController.controller.EnemyAttack_Switch(this.gameObject);
+
                         attacking = true;
                     }
                 }
 
                 else
                 {
-                    animator.SetBool("Attacking", false);
                     attacking = false;
-                    animation.Play("Idle");
-                    animation.Stop();
                     distanceCheck = false;
                     timer = reactionTime;
                 }
@@ -100,13 +105,13 @@ namespace Kristal
             if (timer >= 0.4f)
             {
                 attacking = false;
-                animator.SetBool("Attacking", false);
             }
+
         }
 
-        public void Damage(int damage)
+        public void Damage(int _damage)
         {
-            health -= damage;
+            health -= _damage;
             //Debug.Log("Enemy Health: " + health);
            GameObject.Find("EnemyHealth").GetComponent<Text>().text = "Enemy Health: " + health;
 
@@ -115,24 +120,14 @@ namespace Kristal
             {
                 animator.SetBool("Dying", true);
             }
+
         }
 
         public int GetHealth()
         {
             return health;
         }
-
-        void EndAttack()
-        {
-            timer = 0.0f;
-            Character.instance.Damage(1);
-        }
-
-        void StartAttack()
-        {
-            Character.instance.Damage(1);
-        }
-
+        
         void EndDeath()
         {
             Destroy(this.gameObject);
@@ -142,7 +137,7 @@ namespace Kristal
         {
             return enemies;
         }
-
         
+
     }
 }

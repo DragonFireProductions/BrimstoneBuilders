@@ -13,15 +13,38 @@ using Object = System.Object;
 
 public class PlayerInventory : MonoBehaviour
 {
+    /// <summary>
+    /// Static instance of inventory object
+    /// </summary>
     public static PlayerInventory inventory = null; //Global variable
+
+    /// <summary>
+    /// Contains list of current weapons in player inventory
+    /// </summary>
     public List<WeaponObject> weapons; //Contains list of picked up WeaponObjects
+
+
+    /// <summary>
+    /// Contains list of items created using Editor Window
+    /// </summary>
     public WeaponItemList item; // Holder for Unity defined weapons list
+
 
     public static List<WeaponItem> list; //List of weapon stats defined by unity
 
+
+    /// <summary>
+    /// Static instance of UI game object
+    /// </summary>
     public static GameObject UI; // UI stuff
+
+    /// <summary>
+    /// Slots to be instantiated when object is picked up
+    /// </summary>
     private GameObject itemSlot; // Slots for items
-    private List<GameObject> uiList; // List of weaponItems currently picketUp
+
+
+    private List<GameObject> uiList; // List of weaponItems currently pickedUp
 
     private bool isActive = false;
     public List<WeaponObject> objects;
@@ -48,6 +71,12 @@ public class PlayerInventory : MonoBehaviour
     {
         UIInventory.instance.playerUI.SetActive(isActive);
     }
+
+    /// <summary>
+    /// Gets the item from list created by the Editor Window
+    /// </summary>
+    /// <param name="name">String to find</param>
+    /// <returns>Weapon item found</returns>
     public WeaponItem get_item(string name)
     {
         for (int i = 0; i < list.Count; i++)
@@ -61,6 +90,12 @@ public class PlayerInventory : MonoBehaviour
         return null;
     }
     
+
+    /// <summary>
+    /// Gets the weapon currently in player inventory while game is playing
+    /// </summary>
+    /// <param name="name">Weapon to find</param>
+    /// <returns>Weapon object </returns>
     public WeaponObject get_weapon(string name)
     {
         for (int i = 0; i < objects.Count; i++)
@@ -91,17 +126,22 @@ public class PlayerInventory : MonoBehaviour
         }
 
         //calls select() on wanted weapon
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            attachedWeapon.GetComponent<Collider>().enabled = false;
-            attachedWeapon.gameObject.SetActive(true);
-            attachedWeapon.transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;
-            attachedWeapon.transform.rotation = GameObject.FindGameObjectWithTag("Player").transform.rotation;
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    attachedWeapon.GetComponent<Collider>().enabled = false;
+        //    attachedWeapon.gameObject.SetActive(true);
+        //    attachedWeapon.transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;
+        //    attachedWeapon.transform.rotation = GameObject.FindGameObjectWithTag("Player").transform.rotation;
 
-            attachedWeapon.gameObject.transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
-        }
+        //    attachedWeapon.gameObject.transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
+        //}
     }
     
+
+    /// <summary>
+    /// Adds item picked up to inventory
+    /// </summary>
+    /// <param name="item">Name of item picked up</param>
     public void add(WeaponObject item)
     {
         //weapons.Add(item);
@@ -112,6 +152,10 @@ public class PlayerInventory : MonoBehaviour
         Debug.Log("Item: " + item.WeaponStats.objectName + " has been added!");
     }
 
+    /// <summary>
+    /// Returns current weapon attached to player
+    /// </summary>
+    /// <returns></returns>
     public WeaponObject GetWeapon()
     {
         return attachedWeapon;
