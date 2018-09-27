@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    ///<remarks>Set in Inspector</remarks>
     [SerializeField] Animator Ani;
     [SerializeField] float WalkSpeed;
     [SerializeField] float RunSpeed;
@@ -14,7 +15,9 @@ public class Player : MonoBehaviour
 
     CharacterController Controller;
     float Y;
-
+    /// <summary>
+    /// initilizes character controller
+    /// </summary>
     private void Awake()
     {
         if (GetComponent<CharacterController>())
@@ -26,7 +29,9 @@ public class Player : MonoBehaviour
         }
     }
     
-
+    /// <summary>
+    /// Moves player based on input
+    /// </summary>
     void Move()
     {
         float X = Input.GetAxis("Horizontal");

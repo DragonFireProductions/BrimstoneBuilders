@@ -5,6 +5,7 @@ using UnityEngine.Assertions;
 
 public class PlayerController : MonoBehaviour
 {
+    /// <remarks>Set in inspecor</remarks>
     [SerializeField] float WalkSpeed;
     [SerializeField] float RunSpeed;
     [SerializeField] float JumpForce;
@@ -15,7 +16,9 @@ public class PlayerController : MonoBehaviour
     bool Controlled = true;
     float Y;
 
-    // Use this for initialization
+    /// <summary>
+    /// intilizes variables that are not set in insepector
+    /// </summary>
     void Start()
     {
         if(GetComponent<CharacterController>() != null)
@@ -32,7 +35,9 @@ public class PlayerController : MonoBehaviour
         Assert.IsNotNull(Cam, "Camholder cannot be found!");
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Calles the move function onece per frame if character is currently controlled 
+    /// </summary>
     void Update()
     {
         if (Controlled)
@@ -41,6 +46,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Moves character based on current input
+    /// </summary>
     void Move()
     {
         float X = Input.GetAxis("Horizontal");
@@ -72,6 +80,10 @@ public class PlayerController : MonoBehaviour
         Controller.Move(Cam.TransformDirection(new Vector3(X, Y, Z) * Time.deltaTime));
     }
 
+    /// <summary>
+    /// Sets character controller
+    /// </summary>
+    /// <param name="_control"></param>
     public void SetControlled(bool _control)
     {
         Controlled = _control;

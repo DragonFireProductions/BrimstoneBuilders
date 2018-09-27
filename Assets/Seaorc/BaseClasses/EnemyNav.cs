@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 
 public class EnemyNav : MonoBehaviour
 {
+    /// <remarks>Set in Inspector</remarks>
     [SerializeField] Animator animator;
     [SerializeField] float VeiwDistance;
     [SerializeField] float WanderDistance;
@@ -22,6 +23,9 @@ public class EnemyNav : MonoBehaviour
 
     private bool hasReachedDestination = false;
 
+    /// <summary>
+    /// Initilizes all variables not set in inspector
+    /// </summary>
     void Awake()
     {
         //Get Player form level manager
@@ -50,6 +54,9 @@ public class EnemyNav : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Moves the agent based on current State
+    /// </summary>
     void Update()
     {
         Timer += Time.deltaTime;
