@@ -14,6 +14,26 @@ public class Line : MonoBehaviour
         {
             FormLine();
         }
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            SetActive(true);
+        }
+    }
+
+    public void SetActive(bool _Active)
+    {
+        Base.gameObject.SetActive(_Active);
+
+        foreach (Transform item in transforms)
+        {
+            item.gameObject.SetActive(_Active);
+        }
     }
 
     public void FormLine()
