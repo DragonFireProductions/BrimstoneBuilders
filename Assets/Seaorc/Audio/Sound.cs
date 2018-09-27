@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class Sound
 {
+    /// <remarks>Set in inspector</remarks>
     [SerializeField] AudioClip Clip;
     [SerializeField] string name;
     [SerializeField] SoundType Type;
@@ -17,6 +18,10 @@ public class Sound
 
     AudioSource Source;
 
+    /// <summary>
+    /// sets the audio source for the sound to be played from
+    /// </summary>
+    /// <param name="_source"></param>
     public void SetSource(AudioSource _source)
     {
         Source = _source;
@@ -39,6 +44,9 @@ public class Sound
         Source.pitch = Pitch;
     }
 
+    /// <summary>
+    /// Sets the valume to current valume settings
+    /// </summary>
     public void UpdateVolume()
     {
         switch (Type)
@@ -54,6 +62,9 @@ public class Sound
         }
     }
 
+    /// <summary>
+    /// Plays the set sound
+    /// </summary>
     public void PlaySound()
     {
         Source.volume = 1.0f;

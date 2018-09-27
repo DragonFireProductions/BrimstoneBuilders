@@ -7,7 +7,11 @@ public class Inventory : MonoBehaviour
     [SerializeField] float Capacity;
     [SerializeField] List<InventorySlot> Items;
 
-
+    /// <summary>
+    /// Adds an item to inventory
+    /// </summary>
+    /// <param name="_item"></param>
+    /// <returns></returns>
     public bool Add(Item _item)
     {
         for (int i = 0; i < Items.Count; i++)
@@ -35,6 +39,10 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Removes an item at current index
+    /// </summary>
+    /// <param name="Index"></param>
     public void Delete(int Index)
     {
         Items.RemoveAt(Index);
@@ -50,6 +58,9 @@ public class Inventory : MonoBehaviour
 
 }
 
+/// <summary>
+/// basic structure containing data for indevidual inventory slots
+/// </summary>
 public struct InventorySlot
 {
     Item SlotType;

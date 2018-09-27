@@ -11,6 +11,9 @@ public class AudioManager : MonoBehaviour
     Dictionary<string, Sound> SoundDictionary;
     Sound CurrentSong;
 
+    /// <summary>
+    /// Intilizes arrays and makes sure there is only one active audio manager
+    /// </summary>
     void Awake()
     {
         if (manager != null)
@@ -33,6 +36,10 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Plays a sound based on the passed in string
+    /// </summary>
+    /// <param name="_Sound"></param>
     public void PlaySound(string _Sound)
     {
         Sound SoundToPlay = SoundDictionary[_Sound];
@@ -48,6 +55,10 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Plays an audio clip based on the passed in string after stoping the last clip played though this function
+    /// </summary>
+    /// <param name="_Sound"></param>
     public void PlayMusic(string _Sound)
     {
         Sound SongToPlay = SoundDictionary[_Sound];
