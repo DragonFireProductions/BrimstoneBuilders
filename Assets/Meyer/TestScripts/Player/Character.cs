@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
-//using UnityEngine.AI;
+using UnityEngine.AI;
+using System.Collections;
 
 namespace Assets.Meyer.TestScripts.Player
 {
@@ -29,11 +30,14 @@ namespace Assets.Meyer.TestScripts.Player
         [SerializeField] public GameObject weaponAttach;
 
         Vector3 new_position;
-
+        //CharacterController controller;
+        Rigidbody rigid;
         public float speed;
 
         private void Start()
         {
+            rigid = GetComponent<Rigidbody>();
+            //controller = GetComponent<CharacterController>();
             new_position = transform.position;
         }
 
@@ -75,24 +79,35 @@ namespace Assets.Meyer.TestScripts.Player
                 PlayerInventory.attachedWeapon.Attack();
             }
 
-            if (Input.GetMouseButtonDown(0))
+            //if (Input.GetMouseButtonDown(0))
+            //{
+                
+            //    StartCoroutine("PointandWalk");
+            //}
+        }
+
+        IEnumerator PointandWalk()
+        {
+            RaycastHit hit;
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
             {
-                RaycastHit hit;
-
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                Vector3 direction = new Vector3(ray.direction.x, ray.direction.y, ray.direction.z);
-
-                if (Physics.Raycast(ray, out hit))
+                while (transform.position != hit.point)
                 {
-                    //float distance = Mathf.Sqrt()
-                        //float step = speed * Time.deltaTime;
-       
-                        //transform.position = Vector3.Lerp(transform.position, hit.point, step);
-                        //transform.position = Vector3.MoveTowards(transform.position, hit.point, Time.deltaTime);
 
-                        //new_position = hit.point;
-                        //transform.position = new_position;
-                    
+
+                    float step = speed * Time.deltaTime;
+
+
+                    //transform.position = Vector3.Lerp(transform.position, hit.point, step);
+                    transform.position = Vector3.MoveTowards(transform.position, hit.point, Time.deltaTime);
+                    rigid.AddForce(transform.position);
+
+                    //new_position = hit.point;
+                    //transform.position = new_position;
+                    yield return null;
                 }
             }
         }
