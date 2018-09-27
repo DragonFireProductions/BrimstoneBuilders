@@ -31,12 +31,12 @@ namespace Assets.Meyer.TestScripts.Player
 
         Vector3 new_position;
         //CharacterController controller;
-        Rigidbody rigid;
+        NavMeshAgent agent;
         public float speed;
 
         private void Start()
         {
-            rigid = GetComponent<Rigidbody>();
+            agent = GetComponent<NavMeshAgent>();
             //controller = GetComponent<CharacterController>();
             new_position = transform.position;
         }
@@ -71,6 +71,7 @@ namespace Assets.Meyer.TestScripts.Player
         // Update is called once per framed
         void Update()
         {
+
             if (Input.GetButtonDown("Attack") && PlayerInventory.attachedWeapon)
             {
                 animator.SetBool("Attacking", true);
@@ -78,12 +79,20 @@ namespace Assets.Meyer.TestScripts.Player
                 enemy = FindClosestEnemy();
                 PlayerInventory.attachedWeapon.Attack();
             }
+        
+            if (Input.GetMouseButtonDown(0))
+            {
+                //RaycastHit hit;
+                //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            //if (Input.GetMouseButtonDown(0))
-            //{
-                
-            //    StartCoroutine("PointandWalk");
-            //}
+                //if (Physics.Raycast(ray, out hit))
+                //{
+                //    float step = speed * Time.deltaTime;
+                //    transform.position = Vector3.Lerp(transform.position, hit.point, step);
+                    
+                //}
+                StartCoroutine(PointandWalk());
+            }
         }
 
         IEnumerator PointandWalk()
@@ -94,22 +103,17 @@ namespace Assets.Meyer.TestScripts.Player
 
             if (Physics.Raycast(ray, out hit))
             {
-                while (transform.position != hit.point)
+                float step = speed;
+                float distance = Vector3.Distance(transform.position, hit.point);
+                while (distance > .5f)
                 {
-
-
-                    float step = speed * Time.deltaTime;
-
-
-                    //transform.position = Vector3.Lerp(transform.position, hit.point, step);
-                    transform.position = Vector3.MoveTowards(transform.position, hit.point, Time.deltaTime);
-                    rigid.AddForce(transform.position);
-
-                    //new_position = hit.point;
-                    //transform.position = new_position;
-                    yield return null;
+                    //transform.position = Vector3.Lerp(transform.position, hit.point, step * Time.deltaTime);
+                    agent.SetDestination(hit.point);
+                    yield return new WaitForEndOfFrame();
                 }
+                
             }
+                    yield return null;
         }
 
         GameObject FindClosestEnemy()
