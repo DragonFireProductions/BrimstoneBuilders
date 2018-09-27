@@ -17,7 +17,7 @@ public class Line : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            SetActive(true);
+            SetActive(false);
         }
 
         if (Input.GetKeyDown(KeyCode.F2))
