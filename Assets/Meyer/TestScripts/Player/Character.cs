@@ -15,9 +15,18 @@ namespace Assets.Meyer.TestScripts.Player
 
         [SerializeField] private float attackDistance = 5;
 
-
+        [SerializeField]
+        private int maxHealth = 200;
+        [SerializeField]
+        private int maxStamina;
+        [SerializeField]
+        private int strength;
+        [SerializeField]
+        private int Speed;
         [SerializeField]
         private int health = 200;
+        [SerializeField]
+        private int stamina;
 
         private Animator animator;
 
@@ -115,6 +124,36 @@ namespace Assets.Meyer.TestScripts.Player
         void EndDeath()
         {
             //Destroy(this.gameObject);
+        }
+
+        public int GetMaxHealth()
+        {
+            return maxHealth;
+        }
+
+        public int GetHealth()
+        {
+            return health;
+        }
+
+        public int GetMaxStamina()
+        {
+            return maxStamina;
+        }
+
+        public int GetStamina()
+        {
+            return stamina;
+        }
+
+        public int GetStrength()
+        {
+            return strength;
+        }
+
+        public int GetSpeed()
+        {
+            return Speed;
         }
     }
 }

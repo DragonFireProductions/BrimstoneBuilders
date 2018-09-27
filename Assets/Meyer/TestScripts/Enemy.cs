@@ -12,7 +12,19 @@ namespace Kristal
         private float timer;
         private Animator animator;
 
-        [SerializeField] private int health = 100;
+        [SerializeField]
+        private int maxHealth = 100;
+        [SerializeField]
+        private int maxStamina;
+        [SerializeField]
+        private int strength;
+        [SerializeField]
+        private int Speed;
+        [SerializeField]
+        private int health = 100;
+        [SerializeField]
+        private int stamina;
+
         [SerializeField] public float reactionTime = 3.0f;
         [SerializeField] public float playerDistance = 3.0f;
 
@@ -117,9 +129,34 @@ namespace Kristal
             }
         }
 
+        public int GetMaxHealth()
+        {
+            return maxHealth;
+        }
+
         public int GetHealth()
         {
             return health;
+        }
+
+        public int GetMaxStamina()
+        {
+            return maxStamina;
+        }
+
+        public int GetStamina()
+        {
+            return stamina;
+        }
+
+        public int GetStrength()
+        {
+            return strength;
+        }
+
+        public int GetSpeed()
+        {
+            return Speed;
         }
 
         void EndAttack()
