@@ -33,12 +33,12 @@ namespace Assets.Meyer.TestScripts.Player
         //CharacterController controller;
         NavMeshAgent agent;
         public float speed;
+        Vector3 tmppos;
 
         private void Start()
         {
             agent = GetComponent<NavMeshAgent>();
             //controller = GetComponent<CharacterController>();
-            new_position = transform.position;
         }
 
         // Use this for initialization
@@ -80,17 +80,8 @@ namespace Assets.Meyer.TestScripts.Player
                 PlayerInventory.attachedWeapon.Attack();
             }
         
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(1))
             {
-                //RaycastHit hit;
-                //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                //if (Physics.Raycast(ray, out hit))
-                //{
-                //    float step = speed * Time.deltaTime;
-                //    transform.position = Vector3.Lerp(transform.position, hit.point, step);
-                    
-                //}
                 StartCoroutine(PointandWalk());
             }
         }
@@ -105,15 +96,16 @@ namespace Assets.Meyer.TestScripts.Player
             {
                 float step = speed;
                 float distance = Vector3.Distance(transform.position, hit.point);
-                while (distance > .5f)
+                while (distance > 3.0f)
                 {
-                    //transform.position = Vector3.Lerp(transform.position, hit.point, step * Time.deltaTime);
-                    agent.SetDestination(hit.point);
+                    distance = Vector3.Distance(transform.position, hit.point);
+                    transform.position = Vector3.Lerp(transform.position, hit.point, step * Time.deltaTime);
+                    //agent.SetDestination(hit.point);
                     yield return new WaitForEndOfFrame();
                 }
-                
+                yield return null;
             }
-                    yield return null;
+                   
         }
 
         GameObject FindClosestEnemy()
