@@ -71,7 +71,9 @@ namespace Assets.Meyer.TestScripts.Player
         // Update is called once per framed
         void Update()
         {
-
+            tmppos = transform.position;
+            tmppos.y = 0.5f;
+            transform.position = tmppos;
             if (Input.GetButtonDown("Attack") && PlayerInventory.attachedWeapon)
             {
                 animator.SetBool("Attacking", true);
