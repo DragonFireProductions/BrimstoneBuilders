@@ -46,11 +46,7 @@ public class PlayerController : MonoBehaviour
              sneak = !isSneaking();
             //sneak = true;
         }
-        //else if (Input.GetKey(KeyCode.C))
-        //{
-        //    sneak = false;
-        //    //state = PlayerState.move;
-        //}
+       
 
         if (sneak)
             state = PlayerState.sneak;
@@ -62,14 +58,14 @@ public class PlayerController : MonoBehaviour
         switch (state)
         {
             case PlayerState.move:
-                Debug.Log("move");
+                //Debug.Log("move");
                 if (Controlled)
                 {
                     Move();
                 }
                 break;
             case PlayerState.sneak:
-                Debug.Log("sneaking");
+                //Debug.Log("sneaking");
                 if (Controlled)
                 {
                     Sneak();
