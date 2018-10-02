@@ -33,7 +33,6 @@ namespace Assets.Meyer.TestScripts.Player
         //CharacterController controller;
         NavMeshAgent agent;
         public float speed;
-        Vector3 tmppos;
 
         private void Start()
         {
@@ -71,9 +70,6 @@ namespace Assets.Meyer.TestScripts.Player
         // Update is called once per framed
         void Update()
         {
-            tmppos = transform.position;
-            tmppos.y = 0.5f;
-            transform.position = tmppos;
             if (Input.GetButtonDown("Attack") && PlayerInventory.attachedWeapon)
             {
                 animator.SetBool("Attacking", true);
@@ -102,7 +98,6 @@ namespace Assets.Meyer.TestScripts.Player
                 {
                     distance = Vector3.Distance(transform.position, hit.point);
                     transform.position = Vector3.Lerp(transform.position, hit.point, step * Time.deltaTime);
-                    //agent.SetDestination(hit.point);
                     yield return new WaitForEndOfFrame();
                 }
                 yield return null;

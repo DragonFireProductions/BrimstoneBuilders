@@ -9,14 +9,16 @@ public class Guard : MonoBehaviour
     NavMeshAgent agent;
     float stalk_distance;
 
-    GameObject player = null;
+    static GameObject player = null;
     float time = 0.0f;
     Vector3 prev_location;
 
     Vector3 from = new Vector3(0.0f, 120.0f, 0.0f);
     Vector3 to = new Vector3(0.0f, 210.0f, 0.0f);
 
-    enum GuardState { idle, stalk}; GuardState state;
+ 
+
+    enum GuardState { idle, stalk, caught}; GuardState state;
 	// Use this for initialization
 	void Start ()
     {
@@ -31,6 +33,7 @@ public class Guard : MonoBehaviour
         //agent.stoppingDistance = stalk_distance;
         player = GameObject.FindGameObjectWithTag("Player");
         Assert.IsNotNull(player, "player cannot be found");
+       
     }
 
     // Update is called once per frame
@@ -68,19 +71,24 @@ public class Guard : MonoBehaviour
                 if (Vector3.Distance(transform.position, player.transform.position) <= stalk_distance)
                 {
                     state = GuardState.idle;
-                    //agent.isStopped = true;
-                    //time += Time.deltaTime;
-                    //Debug.Log(time);
-
-                    //if (time > 5.0f)
-                    //{
-                    //    time = 0.0f;
-                    //    agent.SetDestination(prev_location);
-                    //}
                 }
+                break;
+            case GuardState.caught:
+                Transform target = player.transform;
+                Quaternion targetrotation = Quaternion.LookRotation(target.position - transform.position);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetrotation, 10.0f);
                 break;
             default:
                 break;
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            state = GuardState.caught;
+            Debug.Log("I kknow you're sneaking");
+        }
+    }
+
 }
