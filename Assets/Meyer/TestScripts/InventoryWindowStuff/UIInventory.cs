@@ -33,8 +33,14 @@ public class UIInventory : MonoBehaviour
     /// <summary>
     /// Player UI
     /// </summary>
-    [SerializeField] public GameObject playerUI;
+    [SerializeField] public GameObject PlayerUi;
 
+    /// <summary>
+    /// Dialog UI
+    /// </summary>
+    [ SerializeField ] public GameObject DialogUI;
+
+    [ SerializeField ] private TextMeshProUGUI DialogText;
     /// <summary>
     /// Controls where the new UI item will be located
     /// </summary>
@@ -58,8 +64,18 @@ public class UIInventory : MonoBehaviour
     void Start()
     {
         pos = container.gameObject.transform.position;
+        DialogWindowShow(false);
     }
 
+    public void ShowNotification(string _message ) {
+        UIInventory.instance.DialogWindowShow(true);
+
+        DialogText.text = _message;
+    }
+
+    public void DialogWindowShow(bool active ) {
+        DialogUI.SetActive(active);
+    }
     /// <summary>
     /// Adds a new item slot to UI
     /// </summary>
@@ -134,7 +150,6 @@ public class UIInventory : MonoBehaviour
 
     // Update is called once per frame
     void Update () {
-        ClickAndDrag();
 	}
     /// <summary>
     /// Selects the item in the UI to attach to player
@@ -147,8 +162,4 @@ public class UIInventory : MonoBehaviour
     }
 
 
-    void ClickAndDrag()
-    {
-
-    }
 }
