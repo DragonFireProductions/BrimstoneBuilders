@@ -91,6 +91,14 @@ public class Guard : MonoBehaviour
             case GuardState.city_danger:
                 agent.isStopped = false;
                 agent.SetDestination(enemy[currenemy].transform.position);
+                Collider[] col = Physics.OverlapSphere(center, radius);
+                for (int i = 0; i < col.Length; ++i)
+                {
+                    if (col[i].tag != "Enemy")
+                    {
+                        state = GuardState.idle;
+                    }
+                }
                 
                 break;
             default:
