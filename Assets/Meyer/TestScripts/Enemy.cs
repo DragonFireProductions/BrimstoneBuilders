@@ -12,7 +12,19 @@ namespace Kristal
         private float timer;
         private Animator animator;
 
-        [SerializeField] private int health = 100;
+        [SerializeField]
+        private int maxHealth = 100;
+        [SerializeField]
+        private int maxStamina;
+        [SerializeField]
+        private int strength;
+        [SerializeField]
+        private int Speed;
+        [SerializeField]
+        private int health = 100;
+        [SerializeField]
+        private int stamina;
+
         [SerializeField] public float reactionTime = 3.0f;
         [SerializeField] public float playerDistance = 3.0f;
 
@@ -27,6 +39,10 @@ namespace Kristal
 
         private Animation animation;
 
+        private Vector3 startPosition;
+
+        private Quaternion startRotation;
+
         // Use this for initialization
         void Awake()
         {
@@ -38,6 +54,10 @@ namespace Kristal
 
             enemies.Add(gameObject);
             animation = attachedWeapon.GetComponent<Animation>();
+        }
+
+        private void Start( ) {
+            TurnBased.Instance.AddEnemy(this.gameObject);
         }
 
         private void OnDisable()
@@ -75,18 +95,15 @@ namespace Kristal
 
                     if (timer <= 0.0f)
                     {
-                        animator.SetBool("Attacking", true);
-                        animation.Play();
+                        CameraController.controller.EnemyAttack_Switch(this.gameObject);
+
                         attacking = true;
                     }
                 }
 
                 else
                 {
-                    animator.SetBool("Attacking", false);
                     attacking = false;
-                    animation.Play("Idle");
-                    animation.Stop();
                     distanceCheck = false;
                     timer = reactionTime;
                 }
@@ -100,13 +117,13 @@ namespace Kristal
             if (timer >= 0.4f)
             {
                 attacking = false;
-                animator.SetBool("Attacking", false);
             }
+
         }
 
-        public void Damage(int damage)
+        public void Damage(int _damage)
         {
-            health -= damage;
+            health -= _damage;
             //Debug.Log("Enemy Health: " + health);
            GameObject.Find("EnemyHealth").GetComponent<Text>().text = "Enemy Health: " + health;
 
@@ -115,11 +132,37 @@ namespace Kristal
             {
                 animator.SetBool("Dying", true);
             }
+
+        }
+
+        public int GetMaxHealth()
+        {
+            return maxHealth;
         }
 
         public int GetHealth()
         {
             return health;
+        }
+
+        public int GetMaxStamina()
+        {
+            return maxStamina;
+        }
+
+        public int GetStamina()
+        {
+            return stamina;
+        }
+
+        public int GetStrength()
+        {
+            return strength;
+        }
+
+        public int GetSpeed()
+        {
+            return Speed;
         }
 
         void EndAttack()
@@ -142,7 +185,7 @@ namespace Kristal
         {
             return enemies;
         }
-
         
+
     }
 }

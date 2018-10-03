@@ -22,6 +22,10 @@ public class WeaponObject : MonoBehaviour
         weapon = this.gameObject;
     }
 
+
+    /// <summary>
+    /// Plays the animation attached to weapon
+    /// </summary>
     public void PlayUsing()
     {
         if (animator)
@@ -34,7 +38,7 @@ public class WeaponObject : MonoBehaviour
     public void StopUsing()
     {
     }
-    //TODO:2 Add function for selection in UI
+
     //Function should be called when player wants to select this as their primary object
     public virtual void Select()
     {
@@ -46,6 +50,11 @@ public class WeaponObject : MonoBehaviour
           Debug.Log("Object has attacked!");
     }
 
+
+    /// <summary>
+    /// Picks up item
+    /// </summary>
+    /// <param name="collider">Item it collides with</param>
     protected virtual void OnTriggerEnter(Collider collider)
     {
         if (collider.tag == "Player")
@@ -59,6 +68,10 @@ public class WeaponObject : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Attaches weapon to player transform and adds it to UI
+    /// </summary>
     public void SelectItem()
     {
         if (PlayerInventory.attachedWeapon != null)
@@ -80,6 +93,9 @@ public class WeaponObject : MonoBehaviour
     
     }
     
+    /// <summary>
+    /// Returns stats attached to this game object
+    /// </summary>
     public WeaponItem WeaponStats
     {
         get { return weaponStats; }

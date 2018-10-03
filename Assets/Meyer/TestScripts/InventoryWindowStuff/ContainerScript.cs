@@ -12,6 +12,10 @@ public class ContainerScript : MonoBehaviour, IPointerDownHandler
         
     }
 
+    /// <summary>
+    /// Is called when UI slot is selected
+    /// </summary>
+    /// <param name="data">Data captured by Unity API</param>
     public void OnPointerDown(PointerEventData data)
     {
         Debug.Log("OnPointerDownDelegate called.");

@@ -15,15 +15,26 @@ namespace Assets.Meyer.TestScripts.Player
 
         [SerializeField] private float attackDistance = 5;
 
-
+        [SerializeField]
+        private int maxHealth = 200;
+        [SerializeField]
+        private int maxStamina;
+        [SerializeField]
+        private int strength;
+        [SerializeField]
+        private int Speed;
         [SerializeField]
         private int health = 200;
+        [SerializeField]
+        private int stamina;
 
         private Animator animator;
 
         private GameObject UI;
         private Text healthUI;
         private Text enemyUI;
+
+       
 
         [SerializeField] public GameObject weaponAttach;
       
@@ -60,14 +71,17 @@ namespace Assets.Meyer.TestScripts.Player
         {
             if (Input.GetButtonDown("Attack") && PlayerInventory.attachedWeapon)
             {
-                animator.SetBool("Attacking", true);
-                PlayerInventory.attachedWeapon.PlayUsing();
-                enemy = FindClosestEnemy();
-                PlayerInventory.attachedWeapon.Attack();
+                StartAttackMode();
+
             }
         }
 
-        GameObject FindClosestEnemy()
+
+        /// <summary>
+        /// Finds the closest enemy to player
+        /// </summary>
+        /// <returns>Closest enemy game object</returns>
+        public GameObject FindClosestEnemy()
         {
             GameObject[] gos;
             gos = GameObject.FindGameObjectsWithTag("Enemy");
@@ -87,6 +101,13 @@ namespace Assets.Meyer.TestScripts.Player
             return closest;
         }
 
+        public void StartAttackMode( ) {
+            TurnBased.Instance.Switch();
+        }
+
+        void SelectEnemy( ) {
+            
+        }
         public void EndAttack()
         {
             if (enemy != null)
@@ -115,6 +136,36 @@ namespace Assets.Meyer.TestScripts.Player
         void EndDeath()
         {
             //Destroy(this.gameObject);
+        }
+
+        public int GetMaxHealth()
+        {
+            return maxHealth;
+        }
+
+        public int GetHealth()
+        {
+            return health;
+        }
+
+        public int GetMaxStamina()
+        {
+            return maxStamina;
+        }
+
+        public int GetStamina()
+        {
+            return stamina;
+        }
+
+        public int GetStrength()
+        {
+            return strength;
+        }
+
+        public int GetSpeed()
+        {
+            return Speed;
         }
     }
 }
