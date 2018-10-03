@@ -90,7 +90,7 @@ public class Guard : MonoBehaviour
                 break;
             case GuardState.city_danger:
                 agent.isStopped = false;
-                //agent.SetDestination(enemy.transform.position);
+                agent.SetDestination(enemy[currenemy].transform.position);
                 
                 break;
             default:
@@ -120,14 +120,20 @@ public class Guard : MonoBehaviour
                 state = GuardState.city_danger;
                 for (int j = 0; j < enemy.Length; ++j)
                 {
+                    currenemy = j;
                     float distance = Vector3.Distance(enemy[j].transform.position, center);
 
                     if (distance < radius)
                     {
-                        agent.SetDestination(enemy[j].transform.position);
+                        break;
+                        // agent.SetDestination(enemy[j].transform.position);
                     }
                 }
             }
+            //else
+            //{
+            //    state = GuardState.idle;
+            //}
         }
         
         //return false;
