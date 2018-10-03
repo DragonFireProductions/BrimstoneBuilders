@@ -26,9 +26,11 @@ public class EnemyNav : MonoBehaviour
 
     private bool hasReachedDestination = false;
 
-    /// <summary>
-    /// Initilizes all variables not set in inspector
-    /// </summary>
+    [SerializeField]
+    GameObject[] guard;
+
+    Vector3 s_location;
+
     void Awake()
     {
         //Get Player form level manager
@@ -43,6 +45,8 @@ public class EnemyNav : MonoBehaviour
             gameObject.AddComponent<NavMeshAgent>();
             Agent = GetComponent<NavMeshAgent>();
         }
+        guard = GameObject.FindGameObjectsWithTag("Guard");
+        Assert.IsNotNull(guard, "guard is not the guard");
 
         animator = gameObject.GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -54,7 +58,7 @@ public class EnemyNav : MonoBehaviour
 
         Agent.stoppingDistance = StoppingDistance;
 
-        
+        s_location = transform.position;
     }
 
     /// <summary>
@@ -63,6 +67,17 @@ public class EnemyNav : MonoBehaviour
     void Update()
     {
         Timer += Time.deltaTime;
+
+        for (int i = 0; i < guard.Length; ++i)
+        {
+            float distance = Vector3.Distance(transform.position, guard[i].transform.position);
+            //Debug.Log(distance);
+            if (distance < 1.0f)
+            {
+                State = EnemyState.retreat;
+            }
+        }
+        
         switch (State)
         {
             case EnemyState.Idle:
@@ -95,7 +110,16 @@ public class EnemyNav : MonoBehaviour
                         timer1 = 0;
                     }
                 }
-
+                break;
+            case EnemyState.retreat:
+                Agent.SetDestination(s_location);
+                float distance = Vector3.Distance(transform.position, s_location);
+                Debug.Log(distance);
+                if (distance < 3.0f)
+                {
+                    Debug.Log("Idle");
+                    State = EnemyState.Idle;
+                }
                 break;
             default:
                 break;
@@ -109,4 +133,4 @@ public class EnemyNav : MonoBehaviour
 
 }
 
-public enum EnemyState { Idle, Attacking }
+public enum EnemyState { Idle, Attacking, retreat }
