@@ -22,19 +22,28 @@ public class Guard : MonoBehaviour
     [SerializeField]
     GameObject[] enemy;
 
+    [SerializeField]
+    Transform[] patrols;
+    [SerializeField]
+    int currentwaypoint;
+
+    Transform targetwaypoint;
+
     int currenemy;
 
     Vector3 s_position;
 
- //overlapsphere();
+    [SerializeField]
+    int s_spot;
 
-    enum GuardState { idle, stalk, caught, city_danger}; GuardState state;
+    enum GuardState { idle, stalk, caught, city_danger, patrol}; GuardState state;
 	// Use this for initialization
 	void Start ()
     {
         agent = GetComponent<NavMeshAgent>();
         stalk_distance = 10.0f;
         enemy = GameObject.FindGameObjectsWithTag("Enemy");
+       // patrols = GameObject.FindGameObjectsWithTag("Patrol Point");
     }
 
     private void Awake()
@@ -99,7 +108,10 @@ public class Guard : MonoBehaviour
                         state = GuardState.idle;
                     }
                 }
+                break;
+            case GuardState.patrol:
                 
+                StartCoroutine(Patroling());
                 break;
             default:
                 break;
@@ -145,5 +157,25 @@ public class Guard : MonoBehaviour
         }
         
         //return false;
+    }
+
+    IEnumerator Patroling()
+    {
+        if (currentwaypoint < patrols.Length)
+        {
+            if (targetwaypoint == null)
+            {
+                targetwaypoint = patrols[currentwaypoint];
+                transform.position = Vector3.MoveTowards(transform.position, targetwaypoint.position, 4.0f * Time.deltaTime);
+
+                if (transform.position == targetwaypoint.position)
+                {
+                    ++currentwaypoint;
+                    targetwaypoint = patrols[currentwaypoint];
+                }
+                yield return new WaitForEndOfFrame();
+            }
+            yield return null;
+        }
     }
 }

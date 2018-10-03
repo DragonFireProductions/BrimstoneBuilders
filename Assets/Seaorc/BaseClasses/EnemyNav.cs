@@ -64,7 +64,7 @@ public class EnemyNav : MonoBehaviour
         for (int i = 0; i < guard.Length; ++i)
         {
             float distance = Vector3.Distance(transform.position, guard[i].transform.position);
-            Debug.Log(distance);
+            //Debug.Log(distance);
             if (distance < 1.0f)
             {
                 State = EnemyState.retreat;
@@ -106,6 +106,13 @@ public class EnemyNav : MonoBehaviour
                 break;
             case EnemyState.retreat:
                 Agent.SetDestination(s_location);
+                float distance = Vector3.Distance(transform.position, s_location);
+                Debug.Log(distance);
+                if (distance < 3.0f)
+                {
+                    Debug.Log("Idle");
+                    State = EnemyState.Idle;
+                }
                 break;
             default:
                 break;

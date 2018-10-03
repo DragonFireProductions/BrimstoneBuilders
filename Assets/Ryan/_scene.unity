@@ -446,6 +446,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: []
+  patrols: []
+  currentwaypoint: 0
+  s_spot: 2
 --- !u!195 &120185904
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -742,7 +745,7 @@ GameObject:
   - component: {fileID: 161401973}
   m_Layer: 0
   m_Name: GuardPoint (5)
-  m_TagString: Untagged
+  m_TagString: Patrol Point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1216,7 +1219,7 @@ GameObject:
   - component: {fileID: 396362999}
   m_Layer: 0
   m_Name: GuardPoint (1)
-  m_TagString: Untagged
+  m_TagString: Patrol Point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2875,6 +2878,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: []
+  patrols: []
+  currentwaypoint: 0
+  s_spot: 3
 --- !u!195 &1052077350
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3378,7 +3384,7 @@ GameObject:
   - component: {fileID: 1148419070}
   m_Layer: 0
   m_Name: GuardPoint (3)
-  m_TagString: Untagged
+  m_TagString: Patrol Point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3944,7 +3950,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f92ec2a350a5df94f92bd5d466a935e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: []
+  enemy:
+  - {fileID: 0}
+  - {fileID: 0}
+  patrols: []
+  currentwaypoint: 0
+  s_spot: 1
 --- !u!195 &1282343687
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4071,7 +4082,7 @@ GameObject:
   - component: {fileID: 1356882371}
   m_Layer: 0
   m_Name: GuardPoint (4)
-  m_TagString: Untagged
+  m_TagString: Patrol Point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4739,7 +4750,7 @@ GameObject:
   - component: {fileID: 1661599392}
   m_Layer: 0
   m_Name: GuardPoint (6)
-  m_TagString: Untagged
+  m_TagString: Patrol Point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4842,7 +4853,7 @@ GameObject:
   - component: {fileID: 1698572069}
   m_Layer: 0
   m_Name: GuardPoint
-  m_TagString: Untagged
+  m_TagString: Patrol Point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4939,7 +4950,7 @@ GameObject:
   - component: {fileID: 1747093739}
   m_Layer: 0
   m_Name: GuardPoint (2)
-  m_TagString: Untagged
+  m_TagString: Patrol Point
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5278,6 +5289,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: []
+  patrols: []
+  currentwaypoint: 0
+  s_spot: 0
 --- !u!195 &1934533775
 NavMeshAgent:
   m_ObjectHideFlags: 0
