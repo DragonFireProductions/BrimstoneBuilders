@@ -100,7 +100,6 @@ public class EnemyNav : MonoBehaviour
             case EnemyState.Attacking:
                 if (player != null && Agent != null && !TurnBased.Instance.AttackMode){
                     gameObject.GetComponent < Enemy >( ).Leader.GetComponent<EnemyGroup>().StartBattle();
-                    
                 }
                 break;
             case EnemyState.retreat:
@@ -113,6 +112,10 @@ public class EnemyNav : MonoBehaviour
                     State = EnemyState.Idle;
                 }
 
+                break;
+            case EnemyState.Battle:
+
+                
                 break;
             default:
                 break;
@@ -133,4 +136,4 @@ public class EnemyNav : MonoBehaviour
 
 }
 
-public enum EnemyState { Idle, Attacking, retreat }
+public enum EnemyState { Idle, Attacking, retreat, Battle }

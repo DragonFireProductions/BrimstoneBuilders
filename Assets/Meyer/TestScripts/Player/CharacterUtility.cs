@@ -11,6 +11,7 @@ namespace Assets.Meyer.TestScripts
     {
         public static CharacterUtility instance;
 
+        public TurnBased turnbased;
         public static bool isRotated;
         // Use this for initialization
         void Awake () {
@@ -21,6 +22,8 @@ namespace Assets.Meyer.TestScripts
             else if (instance != this)
                 Destroy(gameObject);
             DontDestroyOnLoad(gameObject);
+            
+            turnbased.enabled = false;
         }
 	
         // Update is called once per frame

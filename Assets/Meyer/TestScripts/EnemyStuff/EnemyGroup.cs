@@ -30,7 +30,7 @@ public class EnemyGroup : MonoBehaviour {
 	public void StartBattle( ) {
 		TurnBased.Instance.EnemyList = Groupies;
         TurnBased.Instance.AttackMode = true;
-		CameraController.controller.Mode = CameraMode.Battle;
+		CameraController.controller.SwitchMode(CameraMode.ToPlayerBattle);
 
 		GameObject[] obj = GameObject.FindGameObjectsWithTag( "Guard" );
 
@@ -42,7 +42,7 @@ public class EnemyGroup : MonoBehaviour {
     }
         foreach (var VARIABLE in Groupies)
         {
-            VARIABLE.GetComponent<EnemyNav>().SetState = EnemyState.Attacking;
+            VARIABLE.GetComponent<EnemyNav>().SetState = EnemyState.Battle;
         }
         StartCoroutine(TurnBased.Instance.lineUpLeader(leader, Groupies));
 		Character.player.GetComponent<CompanionGroup>().StartBattle();

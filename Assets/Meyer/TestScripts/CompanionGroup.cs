@@ -39,10 +39,17 @@ public class CompanionGroup : MonoBehaviour {
 		group.Add( ad );
 	}
 	public void StartBattle( ) {
-		TurnBased.Instance.lineUp(leader, group);
-		CharacterUtility.instance.EnableObstacle(Character.player);
-		Character.player.GetComponent < PlayerController >( ).enabled = false;
-		CameraController.controller.SwitchMode(CameraMode.Battle);
+
+
+		if ( CharacterUtility.instance.turnbased.enabled == false ){
+			UpdateState(CompanionNav.CompanionState.Attacking);
+			CharacterUtility.instance.turnbased.enabled = true;
+			TurnBased.Instance.lineUp( leader , group );
+			CharacterUtility.instance.EnableObstacle( Character.player );
+			Character.player.GetComponent < PlayerController >( ).enabled = false;
+			CameraController.controller.SwitchMode( CameraMode.Battle );
+			
+		}
 
 	}
     // Update is called once per frame
@@ -55,6 +62,16 @@ public class CompanionGroup : MonoBehaviour {
 			TurnBased.Instance.AttackMode = false;
 
 		}
+    }
+
+	public void UpdateState(CompanionNav.CompanionState state ) {
+        foreach (var VARIABLE in Group)
+        {
+	        if ( VARIABLE != Character.player ){
+		        VARIABLE.GetComponent<CompanionNav>().SetState = state;
+
+            }
+        }
     }
 
 	public void Remove(GameObject obj ) {
