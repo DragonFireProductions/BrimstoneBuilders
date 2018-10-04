@@ -9,6 +9,7 @@ using Kristal;
 using TMPro;
 
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyGroup : MonoBehaviour {
 
@@ -30,6 +31,15 @@ public class EnemyGroup : MonoBehaviour {
 		TurnBased.Instance.EnemyList = Groupies;
         TurnBased.Instance.AttackMode = true;
 		CameraController.controller.Mode = CameraMode.Battle;
+
+		GameObject[] obj = GameObject.FindGameObjectsWithTag( "Guard" );
+
+   for (int i = 0; i < obj.Length; i++){
+	     obj[ i ].GetComponent < Guard >( ).enabled = false;
+       if (Vector3.Distance(obj[i].transform.position, Character.player.transform.position) < 20){
+	          obj[ i ].GetComponent<NavMeshAgent>().destination = obj[ i ].transform.forward + (Vector3.forward * 30 );
+         }
+    }
         foreach (var VARIABLE in Groupies)
         {
             VARIABLE.GetComponent<EnemyNav>().SetState = EnemyState.Attacking;

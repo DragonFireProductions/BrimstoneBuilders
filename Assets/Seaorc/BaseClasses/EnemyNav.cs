@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+using Assets.Meyer.TestScripts;
 using Assets.Meyer.TestScripts.Player;
 
 using Kristal;
@@ -89,7 +90,7 @@ public class EnemyNav : MonoBehaviour
                         State = EnemyState.Attacking;
                 }
 
-                if (WanderDelay <= Timer && !TurnBased.Instance.AttackMode)
+                if (WanderDelay <= Timer && !TurnBased.Instance.AttackMode && CharacterUtility.instance.NavDistanceCheck(this.gameObject))
                 {
                     Agent.destination = Random.insideUnitSphere * WanderDistance + location.transform.position;
                     Timer = 0;
@@ -111,6 +112,7 @@ public class EnemyNav : MonoBehaviour
                     Debug.Log("Idle");
                     State = EnemyState.Idle;
                 }
+
                 break;
             default:
                 break;

@@ -205,7 +205,17 @@ public class TurnBased : MonoBehaviour {
 
                 attackMode = false;
 	            UIInventory.instance.CompanionStatShowWindow( false );
-	            this.enabled = false;
+
+				GameObject[] obj = GameObject.FindGameObjectsWithTag( "Guard" );
+                for (int i = 0; i < obj.Length; i++)
+                {
+                    obj[i].GetComponent<Guard>().enabled = true;
+                    if (Vector3.Distance(obj[i].transform.position, Character.player.transform.position + (Character.player.transform.position + (Vector3.forward * 15))) < 0.4)
+                    {
+                        obj[i].GetComponent<NavMeshAgent>().destination = obj[i].transform.forward + (Vector3.forward * 30);
+                    }
+                }
+                this.enabled = false;
             }
         }
     }

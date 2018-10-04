@@ -54,8 +54,8 @@ namespace Kristal
             if (enemies == null)
                 enemies = new List<GameObject>();
             
-            attachedWeapon = transform.Find( "EnemySword" ).gameObject;
-            animation = attachedWeapon.GetComponent<Animation>();
+            //attachedWeapon = transform.Find( "EnemySword" ).gameObject;
+            //animation = attachedWeapon.GetComponent<Animation>();
         }
 
         private void Start( ) {
