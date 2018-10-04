@@ -448,7 +448,7 @@ MonoBehaviour:
   enemy: []
   patrols: []
   currentwaypoint: 0
-  s_spot: 2
+  s_spot: 0
 --- !u!195 &120185904
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1360,6 +1360,9 @@ MonoBehaviour:
   groupLeader: {fileID: 0}
   reactionTime: 1.76
   playerDistance: 3.81
+  stamina: 0
+  reactionTime: 3
+  playerDistance: 3
   attachedWeapon: {fileID: 125592225}
 --- !u!4 &408457344
 Transform:
@@ -2760,7 +2763,7 @@ MonoBehaviour:
   enemy: []
   patrols: []
   currentwaypoint: 0
-  s_spot: 3
+  s_spot: 0
 --- !u!195 &1052077350
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3540,7 +3543,7 @@ MonoBehaviour:
     isStackable: 0
     destroyOnUse: 0
     clip: {fileID: 0}
-  weaponName: Sword
+  weaponName: 
 --- !u!4 &1169688761
 Transform:
   m_ObjectHideFlags: 0
@@ -3802,12 +3805,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f92ec2a350a5df94f92bd5d466a935e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy:
-  - {fileID: 0}
-  - {fileID: 0}
+  enemy: []
   patrols: []
   currentwaypoint: 0
-  s_spot: 1
+  s_spot: 0
 --- !u!195 &1282343687
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4043,7 +4044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapons: []
-  item: {fileID: 11400000, guid: 20bc731747852f24fbe38425ba513232, type: 2}
+  item: {fileID: 0}
   objects: []
 --- !u!114 &1379186789
 MonoBehaviour:
@@ -4057,10 +4058,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cf85b7086c5ef44da0633fb38fdb4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WalkSpeed: 3
-  RunSpeed: 2.15
-  JumpForce: 10
-  Gravity: 30
+  WalkSpeed: 0
+  RunSpeed: 0
+  JumpForce: 0
+  Gravity: 0
   Cam: {fileID: 0}
 --- !u!114 &1379186790
 MonoBehaviour:
@@ -4075,15 +4076,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDamage: 10
-  attackDistance: 10.94
+  attackDistance: 5
+  maxHealth: 200
+  maxStamina: 0
+  strength: 0
+  Speed: 0
   maxHealth: 200
   maxStamina: 0
   strength: 0
   Speed: 0
   stamina: 0
   camHolder: {fileID: 0}
-  weaponAttach: {fileID: 909746642}
-  speed: 1
+  stamina: 0
+  weaponAttach: {fileID: 0}
+  speed: 0
 --- !u!4 &1379186791
 Transform:
   m_ObjectHideFlags: 0
@@ -4311,6 +4317,9 @@ MonoBehaviour:
   groupLeader: {fileID: 0}
   reactionTime: 1.76
   playerDistance: 3.81
+  stamina: 0
+  reactionTime: 3
+  playerDistance: 3
   attachedWeapon: {fileID: 1481948905}
 --- !u!4 &1406954943
 Transform:
