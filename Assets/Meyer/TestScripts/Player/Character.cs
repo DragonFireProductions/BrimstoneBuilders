@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using UnityEngine.AI;
+using System.Collections;
 
 namespace Assets.Meyer.TestScripts.Player
 {
@@ -37,7 +39,17 @@ namespace Assets.Meyer.TestScripts.Player
        
 
         [SerializeField] public GameObject weaponAttach;
-      
+
+        Vector3 new_position;
+        //CharacterController controller;
+        NavMeshAgent agent;
+        public float speed;
+
+        private void Start()
+        {
+            agent = GetComponent<NavMeshAgent>();
+            //controller = GetComponent<CharacterController>();
+        }
 
         // Use this for initialization
         void Awake()
@@ -74,6 +86,32 @@ namespace Assets.Meyer.TestScripts.Player
                 StartAttackMode();
 
             }
+        
+            if (Input.GetMouseButtonDown(1))
+            {
+                StartCoroutine(PointandWalk());
+            }
+        }
+
+        IEnumerator PointandWalk()
+        {
+            RaycastHit hit;
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                float step = speed;
+                float distance = Vector3.Distance(transform.position, hit.point);
+                while (distance > 3.0f)
+                {
+                    distance = Vector3.Distance(transform.position, hit.point);
+                    transform.position = Vector3.Lerp(transform.position, hit.point, step * Time.deltaTime);
+                    yield return new WaitForEndOfFrame();
+                }
+                yield return null;
+            }
+                   
         }
 
 
