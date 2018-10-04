@@ -17,7 +17,7 @@ public class Guard : MonoBehaviour
     Vector3 to = new Vector3(0.0f, 210.0f, 0.0f);
 
     Vector3 center = new Vector3(0.0f, 0.0f, 0.0f);
-    float radius = 5.0f;
+    float radius = 10.0f;
 
     [SerializeField]
     GameObject[] enemy;
@@ -41,6 +41,7 @@ public class Guard : MonoBehaviour
 	void Start ()
     {
         agent = GetComponent<NavMeshAgent>();
+        center = patrols[ 0 ].position;
         stalk_distance = 10.0f;
         enemy = GameObject.FindGameObjectsWithTag("Enemy");
        // patrols = GameObject.FindGameObjectsWithTag("Patrol Point");
@@ -84,6 +85,7 @@ public class Guard : MonoBehaviour
                     }
                 }
                 break;
+
             case GuardState.stalk:
                 agent.isStopped = false;
                 agent.SetDestination(player.transform.position);
@@ -92,11 +94,13 @@ public class Guard : MonoBehaviour
                     state = GuardState.idle;
                 }
                 break;
+
             case GuardState.caught:
                 Transform target = player.transform;
                 Quaternion targetrotation = Quaternion.LookRotation(target.position - transform.position);
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetrotation, 10.0f);
                 break;
+
             case GuardState.city_danger:
                 agent.isStopped = false;
                 agent.SetDestination(enemy[currenemy].transform.position);
@@ -141,13 +145,17 @@ public class Guard : MonoBehaviour
                 for (int j = 0; j < enemy.Length; ++j)
                 {
                     currenemy = j;
-                    float distance = Vector3.Distance(enemy[j].transform.position, center);
 
-                    if (distance < radius)
-                    {
-                        break;
-                        // agent.SetDestination(enemy[j].transform.position);
+                    if ( enemy[j] != null ){
+                        float distance = Vector3.Distance(enemy[j].transform.position, center);
+
+                        if (distance < radius)
+                        {
+                            break;
+                            //agent.SetDestination(enemy[j].transform.position);
+                        }
                     }
+                    
                 }
             }
             //else

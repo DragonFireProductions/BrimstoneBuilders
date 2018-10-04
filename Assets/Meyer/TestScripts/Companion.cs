@@ -12,23 +12,35 @@ public class Companion : MonoBehaviour {
 
     [ SerializeField ] private NavMeshAgent agent;
 
+	[ SerializeField ] private GameObject camHolder;
+
     private Vector3 startPos;
 
     private Quaternion startRotation;
 
+	[SerializeField] float health = 100;
+
     // Use this for initialization
     void Start () {
-        TurnBased.Instance.AddCompanions(this.gameObject);
-
+	    camHolder = transform.Find( "CamHolder" ).gameObject;
     }
 
     // Update is called once per frame
     void Update () { 
     }
 	
-	private WeaponObject AttachedWeapon {
+	public WeaponObject AttachedWeapon {
 		get { return attachedWeapon; }
 		set { attachedWeapon = value; }
+	}
+
+	public GameObject CamHolder {
+		get { return camHolder; }
+	}
+
+	public float Health {
+		get { return health; }
+		set { health = value; }
 	}
 
 }

@@ -26,8 +26,6 @@ namespace Assets.Meyer.TestScripts.Player
         [SerializeField]
         private int Speed;
         [SerializeField]
-        private int health = 200;
-        [SerializeField]
         private int stamina;
 
         private Animator animator;
@@ -35,6 +33,8 @@ namespace Assets.Meyer.TestScripts.Player
         private GameObject UI;
         private Text healthUI;
         private Text enemyUI;
+
+        [SerializeField] GameObject camHolder;
 
        
 
@@ -81,39 +81,30 @@ namespace Assets.Meyer.TestScripts.Player
         // Update is called once per framed
         void Update()
         {
-            if (Input.GetButtonDown("Attack") && PlayerInventory.attachedWeapon)
+            if (Input.GetMouseButtonDown(0) && !CharacterUtility.instance.turnbased.enabled)
             {
-                StartAttackMode();
+                RaycastHit hit;
 
-            }
-        
-            if (Input.GetMouseButtonDown(1))
-            {
-                StartCoroutine(PointandWalk());
-            }
-        }
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        IEnumerator PointandWalk()
-        {
-            RaycastHit hit;
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                float step = speed;
-                float distance = Vector3.Distance(transform.position, hit.point);
-                while (distance > 3.0f)
+                if (Physics.Raycast(ray, out hit))
                 {
-                    distance = Vector3.Distance(transform.position, hit.point);
-                    transform.position = Vector3.Lerp(transform.position, hit.point, step * Time.deltaTime);
-                    yield return new WaitForEndOfFrame();
-                }
-                yield return null;
-            }
-                   
-        }
+                    if ( !gameObject.GetComponent < NavMeshAgent >( ).enabled ){
+                        gameObject.GetComponent < NavMeshAgent >( ).enabled = true;
+                    }
+                    float step = speed;
+                    float distance = Vector3.Distance(transform.position, hit.point);
 
+                        Vector3 pos;
+                        pos.x = hit.point.x;
+                        pos.y = 0.0f;
+                        pos.z = hit.point.z;
+                    gameObject.GetComponent < NavMeshAgent >( ).SetDestination( pos );
+
+                }
+            }
+        }
+        
 
         /// <summary>
         /// Finds the closest enemy to player
@@ -152,11 +143,7 @@ namespace Assets.Meyer.TestScripts.Player
             {
                 enemy.GetComponent<Kristal.Enemy>().Damage(playerDamage);
             }
-
-            if (health <= 0)
-            {
-                animator.SetBool("Dying", true);
-            }
+            
             animator.SetBool("Attacking", false);
             if (PlayerInventory.attachedWeapon)
             {
@@ -164,12 +151,7 @@ namespace Assets.Meyer.TestScripts.Player
             }    
         }
 
-        public void Damage(int damage)
-        {
-            health -= damage;
-            Debug.Log("Player Health: " + health);
-            healthUI.text = "Player Health: " + health.ToString();
-        }
+        
 
         void EndDeath()
         {
@@ -179,11 +161,6 @@ namespace Assets.Meyer.TestScripts.Player
         public int GetMaxHealth()
         {
             return maxHealth;
-        }
-
-        public int GetHealth()
-        {
-            return health;
         }
 
         public int GetMaxStamina()
@@ -204,6 +181,11 @@ namespace Assets.Meyer.TestScripts.Player
         public int GetSpeed()
         {
             return Speed;
+        }
+
+        public GameObject CamHolder {
+            get { return camHolder; }
+
         }
     }
 }

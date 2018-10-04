@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+using Assets.Meyer.TestScripts;
 using Assets.Meyer.TestScripts.Player;
+
+using Kristal;
 
 using UnityEngine.AI;
 using UnityEngine;
@@ -87,7 +90,7 @@ public class EnemyNav : MonoBehaviour
                         State = EnemyState.Attacking;
                 }
 
-                if (WanderDelay <= Timer && !TurnBased.Instance.AttackMode)
+                if (WanderDelay <= Timer && !TurnBased.Instance.AttackMode && CharacterUtility.instance.NavDistanceCheck(this.gameObject))
                 {
                     Agent.destination = Random.insideUnitSphere * WanderDistance + location.transform.position;
                     Timer = 0;
@@ -95,20 +98,8 @@ public class EnemyNav : MonoBehaviour
 
                 break;
             case EnemyState.Attacking:
-                if (player != null && Agent != null)
-                {
-                    if (Vector3.Distance(transform.position, player.transform.position) < MaintainAttackDistance ||
-                        timer1 < 8.0f && !TurnBased.Instance.AttackMode)
-                    {
-                       // Agent.destination = player.transform.position;
-                        timer1 += Time.deltaTime;
-                    }
-
-                    else
-                    {
-                        State = EnemyState.Idle;
-                        timer1 = 0;
-                    }
+                if (player != null && Agent != null && !TurnBased.Instance.AttackMode){
+                    gameObject.GetComponent < Enemy >( ).Leader.GetComponent<EnemyGroup>().StartBattle();
                 }
                 break;
             case EnemyState.retreat:
@@ -120,17 +111,29 @@ public class EnemyNav : MonoBehaviour
                     Debug.Log("Idle");
                     State = EnemyState.Idle;
                 }
+
+                break;
+            case EnemyState.Battle:
+
+                
                 break;
             default:
                 break;
         }
     }
 
+    public EnemyState SetState {
+        get { return State; }
+        set { State = value;}
+    }
+
+
     public void SetDestination(Vector3 des ) {
         Agent.SetDestination( des );
 
     }
 
+
 }
 
-public enum EnemyState { Idle, Attacking, retreat }
+public enum EnemyState { Idle, Attacking, retreat, Battle }
