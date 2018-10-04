@@ -145,13 +145,17 @@ public class Guard : MonoBehaviour
                 for (int j = 0; j < enemy.Length; ++j)
                 {
                     currenemy = j;
-                    float distance = Vector3.Distance(enemy[j].transform.position, center);
 
-                    if (distance < radius)
-                    {
-                        break;
-                        //agent.SetDestination(enemy[j].transform.position);
+                    if ( enemy[j] != null ){
+                        float distance = Vector3.Distance(enemy[j].transform.position, center);
+
+                        if (distance < radius)
+                        {
+                            break;
+                            //agent.SetDestination(enemy[j].transform.position);
+                        }
                     }
+                    
                 }
             }
             //else

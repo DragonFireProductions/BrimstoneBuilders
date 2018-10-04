@@ -57,6 +57,8 @@ public class TurnBased : MonoBehaviour {
 
 	private bool needstoSwitch = false;
 
+	//private bool lineUpDone = false;
+
     void Awake( ) {
         if (Instance == null)
         {
@@ -205,6 +207,8 @@ public class TurnBased : MonoBehaviour {
 
                 attackMode = false;
 	            UIInventory.instance.CompanionStatShowWindow( false );
+	            selectedCompanion = null;
+	            EnemyList = null;
 
 				GameObject[] obj = GameObject.FindGameObjectsWithTag( "Guard" );
                 for (int i = 0; i < obj.Length; i++)
@@ -215,6 +219,11 @@ public class TurnBased : MonoBehaviour {
                         obj[i].GetComponent<NavMeshAgent>().destination = obj[i].transform.forward + (Vector3.forward * 30);
                     }
                 }
+				UIInventory.instance.ShowNotification("Battle Won", 4);
+	            CharacterUtility.instance.EnableObstacle( Character.player , false );
+				Character.player.GetComponent<CompanionGroup>().UpdateState(CompanionNav.CompanionState.Follow);
+
+	            isPlayerTurn = true;
                 this.enabled = false;
             }
         }
@@ -251,7 +260,6 @@ public class TurnBased : MonoBehaviour {
         _selectedCompanion.GetComponent<Stat>().Health -= DamageCalc.Instance.CalcAttack( _selected_enemy , _selectedCompanion );
 
         
-
 	    UIInventory.instance.ShowNotification(_selected_enemy.name + " has selected to attack " + _selectedCompanion.name + "\n Health was: " + health + "\n" + _selected_enemy.name+ "health is now " + _selectedCompanion.transform.gameObject.GetComponent<Stat>().Health, 15);
 
         CharacterUtility.instance.EnableObstacle(_selectedCompanion, true);
@@ -287,9 +295,13 @@ public class TurnBased : MonoBehaviour {
     }
 	
 
-    public void SelectCompanion( ) {
-		if ( (Input.GetKeyDown(KeyCode.P) && isPlayerTurn && attackMode) || needstoSwitch){
-			needstoSwitch = false;
+    public void SelectCompanion(GameObject objectToSwitch = null ) {
+		if ( (Input.GetKeyDown(KeyCode.P) && isPlayerTurn && attackMode  /*&& lineUpDone*/) || needstoSwitch){
+            if (i >= CompanionList.Count)
+            {
+                i = 0;
+            }
+            needstoSwitch = false;
 			UIInventory.instance.CompanionStatShowWindow(true);
 			SelectedCompaion = CompanionList[ i ];
 			SelectedCompaion.GetComponent<Renderer>().material.color = Color.red;
@@ -307,9 +319,7 @@ public class TurnBased : MonoBehaviour {
             Debug.Log(CompanionList[i].name);
 			i++;
 
-			if ( i >= CompanionList.Count ){
-				i = 0;
-			}
+			
 
 			if ( selectedCompanion != Character.player ){
 				CameraController.controller.SwitchMode(CameraMode.ToOtherPlayer, SelectedCompaion.GetComponent<Companion>());
@@ -319,6 +329,10 @@ public class TurnBased : MonoBehaviour {
 				CameraController.controller.SwitchMode(CameraMode.ToPlayerBattle);
 			}
         }
+
+	    if ( objectToSwitch ){
+		     
+	    }
 	}
 
 	public void ViewEnemyStats( ) {
@@ -368,7 +382,9 @@ public class TurnBased : MonoBehaviour {
 		int left = 2;
 		
 		for ( int k = 0 ; k < groups.Count; k += 2 ){
-
+            if (!groups[k].GetComponent<NavMeshAgent>().enabled){
+	            CharacterUtility.instance.EnableObstacle( groups[ k ] , true );
+            }
 			if ( groups[ k ] != leader ){
 
 
@@ -382,7 +398,11 @@ public class TurnBased : MonoBehaviour {
 
 		for ( int k = 1 ; k < groups.Count ; k += 2 ){
 			if ( groups[ k ] != leader ){
-				var moveleft = leader.transform.position + ( -leader.transform.right * left );
+                if (!groups[k].GetComponent<NavMeshAgent>().enabled)
+                {
+                    CharacterUtility.instance.EnableObstacle(groups[k], true);
+                }
+                var moveleft = leader.transform.position + ( -leader.transform.right * left );
 				groups[ k ].GetComponent < NavMeshAgent >( ).stoppingDistance = 0;
 				groups[ k ].GetComponent < NavMeshAgent >( ).SetDestination( moveleft );
 
@@ -426,7 +446,7 @@ public class TurnBased : MonoBehaviour {
     }
 
 	private IEnumerator checkTurn( List < GameObject > group, GameObject leader) {
-		complete = false;
+		
 		for ( int j = 0 ; j < group.Count ; j++ ){
 			while ( group[ i ].transform.rotation != leader.transform.rotation ){
 				var to = Quaternion.Slerp( group[ i ].transform.rotation , leader.transform.rotation , 5 * Time.deltaTime );
@@ -434,6 +454,8 @@ public class TurnBased : MonoBehaviour {
                 yield return new WaitForEndOfFrame();
             }
 		}
+
+		//lineUpDone = true;
 	}
 
     public IEnumerator lineUpLeader( GameObject leader, List <GameObject> group) {

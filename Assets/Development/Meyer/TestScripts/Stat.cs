@@ -18,7 +18,7 @@ public class Stat : MonoBehaviour {
 
 	}
 
-    [ SerializeField ] private string name;
+   [ SerializeField ] private string name;
    [SerializeField] private float dialogText;
    [SerializeField] private float strength;
    [SerializeField] private float endurance;
