@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using Assets.Meyer.TestScripts.Player;
 
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.XR.WSA.Persistence;
 
 public class CameraController : MonoBehaviour
 {
@@ -32,12 +34,21 @@ public class CameraController : MonoBehaviour
 
     public static CameraController controller;
 
-    void Awake( ) {
+    void Awake()
+    {
         controller = this;
     }
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
+        if (controller == null)
+        {
+            controller = this;
+        }
+        else if (controller != this)
+            Destroy(gameObject);
 
+        DontDestroyOnLoad(gameObject);
         mode = CameraMode.Player;
 
         CamRig = transform.parent.parent.transform;
@@ -57,9 +68,9 @@ public class CameraController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            SwitchMode();
+            SwitchMode(CameraMode.Colony);
         }
-   
+
         if (mode == CameraMode.Colony)
         {
             if (Input.GetKey(KeyCode.Mouse2))
@@ -143,67 +154,38 @@ public class CameraController : MonoBehaviour
             transform.localPosition = new Vector3(0, 0, Zoom);
         }
 
-        if ( mode == CameraMode.EnemyAttacking ){
-
-        }
-
-        if ( mode == CameraMode.PlayerAttacking ){
+        if (mode == CameraMode.Battle)
+        {
             
         }
-       
+
     }
 
-    void SwitchMode()
+    public void UpdatePlayer(GameObject player)
     {
-        if (mode == CameraMode.Colony)
+        PlayerTransform = player.transform;
+    }
+   public void SwitchMode(CameraMode _mode, Companion player = null)
+    {
+        if (_mode == CameraMode.Player)
         {
             StartCoroutine(ToPlayer());
         }
-        else
+        else if (_mode == CameraMode.Colony)
         {
             Player.SetControlled(false);
             StartCoroutine(ToColony());
         }
-    }
-
-    public void PlayerAttack_Switch( ) {
-        if ( TurnBased.Instance.IsPlayerTurn ){
-            mode = CameraMode.Transition;
-            StartCoroutine( ToPlayer_Attack( ) );
+        else if ( _mode == CameraMode.Battle ){
+            StartCoroutine( ToBattle( ) );
         }
-    }
+        else if ( _mode == CameraMode.ToOtherPlayer ){
 
-    public void EnemyAttack_Switch(GameObject Enemy ) {
-        if ( !TurnBased.Instance.IsPlayerTurn ){
-            mode = CameraMode.Transition;
-
-            StartCoroutine( ToEnemy_Attack( Enemy ) );
+            StartCoroutine( ToAnotherPlayer( player ) );
         }
-    }
-
-    IEnumerator ToPlayer_Attack() {
-
-        while (Vector3.Distance(transform.position,  Character.player.transform.position + Character.player.transform.right * 5 ) > 10f){
-            transform.position = Vector3.Lerp( transform.position, Character.player.transform.position, 10 * Time.deltaTime);
-            transform.LookAt( Character.player.transform );
-
-            yield return new WaitForEndOfFrame( );
+        else if ( _mode == CameraMode.ToPlayerBattle ){
+            StartCoroutine( ToPlayerBattle( ) );
         }
-        yield return new WaitForSeconds(2);
-
-        mode = CameraMode.PlayerAttacking;
-    }
-
-    IEnumerator ToEnemy_Attack(GameObject enemy ) {
-        mode = CameraMode.Transition;
-
-        while (transform.position !=  enemy.transform.position + enemy.transform.forward * 5){
-            //transform.position = Vector3.Lerp(transform.position, enemy.transform.position + enemy.transform.forward * 5, 15 * Time.deltaTime);
-            //transform.LookAt(enemy.transform);
-            yield return new WaitForEndOfFrame();;
-        }
-
-        mode = CameraMode.EnemyAttacking;
     }
 
     IEnumerator ToColony()
@@ -221,20 +203,6 @@ public class CameraController : MonoBehaviour
         transform.rotation = ColonyCam.rotation;
         Zoom = 0;
         mode = CameraMode.Colony;
-    }
-
-    /// <summary>
-    /// Controls camera for player attack
-    /// </summary>
-    /// <param name="enemy">the enemy to focus on</param>
-    public void EnemyAttacking(GameObject enemy ) {
-        mode = CameraMode.PlayerAttacking;
-        
-    }
-
-    public void PlayerAttacking(GameObject player)
-    {
-        
         
     }
     IEnumerator ToPlayer()
@@ -257,9 +225,60 @@ public class CameraController : MonoBehaviour
         Player.SetControlled(true);
     }
 
+  IEnumerator ToBattle( ) {
+        mode = CameraMode.Transition;
+        Zoom = 0;
+
+        while (Vector3.Distance(transform.position, Character.instance.CamHolder.transform.position) > 0.4f ){
+            var position = Vector3.Lerp(transform.position, Character.instance.CamHolder.transform.position, 0.3f * Time.deltaTime);
+            transform.position = position;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Character.instance.CamHolder.transform.rotation, Time.deltaTime * 0.3f);
+
+            yield return new WaitForEndOfFrame();
+        }
+        Player.SetControlled(false);
+        mode = CameraMode.Battle;
+
+    }
+
+    IEnumerator ToPlayerBattle( ) {
+        mode = CameraMode.Transition;
+        Zoom = 0;
+
+        while (Vector3.Distance(transform.position, Character.instance.CamHolder.transform.position) > 0.4f)
+        {
+            var position = Vector3.Lerp(transform.position, Character.instance.CamHolder.transform.position, TransitionSpeed * Time.deltaTime);
+            transform.position = position;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Character.instance.CamHolder.transform.rotation, Time.deltaTime * TransitionSpeed);
+
+            yield return new WaitForEndOfFrame();
+        }
+        
+        mode = CameraMode.Battle;
+    }
+
+    IEnumerator ToAnotherPlayer(Companion otherPlayer ) {
+        mode = CameraMode.Transition;
+        Zoom = 0;
+
+        while (Vector3.Distance(transform.position, otherPlayer.CamHolder.transform.position) > 0.4f)
+        {
+            var position = Vector3.Lerp(transform.position, otherPlayer.CamHolder.transform.position, TransitionSpeed * Time.deltaTime);
+            transform.position = position;
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        mode = CameraMode.Battle;
+    }
+    public CameraMode Mode {
+        get { return mode; }
+        set { mode = value;  }
+    }
+
 }
 
-enum CameraMode
+public enum CameraMode
 {
-    Colony, Player, Transition, PlayerAttacking, EnemyAttacking
+    Colony, Player, Transition, Battle, ToOtherPlayer, ToPlayerBattle
 }

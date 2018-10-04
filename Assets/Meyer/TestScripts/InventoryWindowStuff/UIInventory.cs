@@ -40,11 +40,32 @@ public class UIInventory : MonoBehaviour
     /// </summary>
     [ SerializeField ] public GameObject DialogUI;
 
-    [ SerializeField ] private TextMeshProUGUI DialogText;
+    [ SerializeField ] public GameObject StatUI;
+
+    [ SerializeField ] public GameObject StatPanel;
+
+    [SerializeField] private TextMeshProUGUI dialogText;
+
+    [ SerializeField ] private GameObject CompanionPanel;
+
+    [ SerializeField ] private GameObject CompanionLabel;
+
+    struct stats {
+
+       public TextMeshProUGUI obj;
+
+       public string name;
+
+    }
+
+    private List < stats > StatUIList;
+
+    private List < stats > CompanionUIList;
     /// <summary>
     /// Controls where the new UI item will be located
     /// </summary>
     private Vector3 pos;
+
 
     /// <summary>
     /// The list of current slots in the UI
@@ -65,16 +86,59 @@ public class UIInventory : MonoBehaviour
     {
         pos = container.gameObject.transform.position;
         DialogWindowShow(false);
+        StatWindowShow(false);
+        StatUIList = new List < stats >();
+        CompanionUIList = new List < stats >( );
+
+        int i = StatPanel.transform.childCount;
+
+        for (int j = 0; j < i ; j++ ){
+            stats l_stats;
+            l_stats.obj = StatPanel.transform.GetChild( j ).GetComponent<TextMeshProUGUI>();
+            l_stats.name = StatPanel.transform.GetChild( j ).name;
+            StatUIList.Add(l_stats  );
+        }
+
+        i = CompanionLabel.transform.childCount;
+
+        for (int j = 0; j < i; j++)
+        {
+            stats l_stats;
+            l_stats.obj = CompanionLabel.transform.GetChild(j).GetComponent<TextMeshProUGUI>();
+            l_stats.name = CompanionLabel.transform.GetChild(j).name;
+            CompanionUIList.Add(l_stats);
+        }
+
     }
 
-    public void ShowNotification(string _message ) {
+    public void ShowNotification(string _message, float time ) {
         UIInventory.instance.DialogWindowShow(true);
-
-        DialogText.text = _message;
+        dialogText.text = _message;
+        StartCoroutine( showNotification( time ) );
     }
 
+    private IEnumerator showNotification( float time ) {
+        yield return new WaitForSeconds(time);
+        UIInventory.instance.DialogWindowShow(false);
+
+    }
+
+    public void CompanionStatShowWindow(bool active ) {
+        CompanionPanel.SetActive(active);
+    }
+
+    public void AppendNotification( string _message, float time ) {
+        UIInventory.instance.DialogWindowShow(true);
+        dialogText.text += _message;
+        //StartCoroutine( showNotification( time ) );
+
+    }
     public void DialogWindowShow(bool active ) {
         DialogUI.SetActive(active);
+    }
+
+    public void StatWindowShow( bool active ) {
+        StatUI.SetActive(active);
     }
     /// <summary>
     /// Adds a new item slot to UI
@@ -91,6 +155,26 @@ public class UIInventory : MonoBehaviour
         slots.Add(newContainer);
     }
 
+    public void UpdateStats(Stat stats ) {
+        StatWindowShow(true);
+
+        for ( int i = 0 ; i < StatUIList.Count ; i++ ){
+            var a = stats[ StatUIList[ i ].name ];
+            StatUIList[ i ].obj.text = a.ToString( );
+        }
+
+    }
+    public void UpdateCompanionStats(Stat stats)
+    {
+        StatWindowShow(true);
+
+        for (int i = 0; i < CompanionUIList.Count; i++)
+        {
+            var a = stats[CompanionUIList[i].name];
+            CompanionUIList[i].obj.text = a.ToString();
+        }
+
+    }
     /// <summary>
     /// Removes an item from the UI
     /// </summary>

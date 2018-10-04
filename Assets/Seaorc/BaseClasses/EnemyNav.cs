@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 using Assets.Meyer.TestScripts.Player;
 
+using Kristal;
+
 using UnityEngine.AI;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -80,20 +82,9 @@ public class EnemyNav : MonoBehaviour
 
                 break;
             case EnemyState.Attacking:
-                if (player != null && Agent != null)
-                {
-                    if (Vector3.Distance(transform.position, player.transform.position) < MaintainAttackDistance ||
-                        timer1 < 8.0f && !TurnBased.Instance.AttackMode)
-                    {
-                       // Agent.destination = player.transform.position;
-                        timer1 += Time.deltaTime;
-                    }
-
-                    else
-                    {
-                        State = EnemyState.Idle;
-                        timer1 = 0;
-                    }
+                if (player != null && Agent != null && !TurnBased.Instance.AttackMode){
+                    gameObject.GetComponent < Enemy >( ).Leader.GetComponent<EnemyGroup>().StartBattle();
+                    
                 }
 
                 break;
@@ -102,10 +93,17 @@ public class EnemyNav : MonoBehaviour
         }
     }
 
+    public EnemyState SetState {
+        get { return State; }
+        set { State = value;}
+    }
+
+
     public void SetDestination(Vector3 des ) {
         Agent.SetDestination( des );
 
     }
+
 
 }
 

@@ -25,6 +25,8 @@ namespace Kristal
         [SerializeField]
         private int stamina;
 
+        [ SerializeField ] private GameObject groupLeader;
+
         [SerializeField] public float reactionTime = 3.0f;
         [SerializeField] public float playerDistance = 3.0f;
 
@@ -51,13 +53,13 @@ namespace Kristal
 
             if (enemies == null)
                 enemies = new List<GameObject>();
-
-            enemies.Add(gameObject);
+            
+            attachedWeapon = transform.Find( "EnemySword" ).gameObject;
             animation = attachedWeapon.GetComponent<Animation>();
         }
 
         private void Start( ) {
-            TurnBased.Instance.AddEnemy(this.gameObject);
+
         }
 
         private void OnDisable()
@@ -95,8 +97,6 @@ namespace Kristal
 
                     if (timer <= 0.0f)
                     {
-                        CameraController.controller.EnemyAttack_Switch(this.gameObject);
-
                         attacking = true;
                     }
                 }
@@ -165,16 +165,11 @@ namespace Kristal
             return Speed;
         }
 
-        void EndAttack()
-        {
-            timer = 0.0f;
-            Character.instance.Damage(1);
+        public GameObject Leader {
+            get { return groupLeader; }
+            set { groupLeader = value; }
         }
-
-        void StartAttack()
-        {
-            Character.instance.Damage(1);
-        }
+        
 
         void EndDeath()
         {

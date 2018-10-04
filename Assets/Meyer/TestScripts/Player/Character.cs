@@ -24,8 +24,6 @@ namespace Assets.Meyer.TestScripts.Player
         [SerializeField]
         private int Speed;
         [SerializeField]
-        private int health = 200;
-        [SerializeField]
         private int stamina;
 
         private Animator animator;
@@ -33,6 +31,8 @@ namespace Assets.Meyer.TestScripts.Player
         private GameObject UI;
         private Text healthUI;
         private Text enemyUI;
+
+        [SerializeField] GameObject camHolder;
 
        
 
@@ -114,11 +114,7 @@ namespace Assets.Meyer.TestScripts.Player
             {
                 enemy.GetComponent<Kristal.Enemy>().Damage(playerDamage);
             }
-
-            if (health <= 0)
-            {
-                animator.SetBool("Dying", true);
-            }
+            
             animator.SetBool("Attacking", false);
             if (PlayerInventory.attachedWeapon)
             {
@@ -126,12 +122,7 @@ namespace Assets.Meyer.TestScripts.Player
             }    
         }
 
-        public void Damage(int damage)
-        {
-            health -= damage;
-            Debug.Log("Player Health: " + health);
-            healthUI.text = "Player Health: " + health.ToString();
-        }
+        
 
         void EndDeath()
         {
@@ -141,11 +132,6 @@ namespace Assets.Meyer.TestScripts.Player
         public int GetMaxHealth()
         {
             return maxHealth;
-        }
-
-        public int GetHealth()
-        {
-            return health;
         }
 
         public int GetMaxStamina()
@@ -166,6 +152,11 @@ namespace Assets.Meyer.TestScripts.Player
         public int GetSpeed()
         {
             return Speed;
+        }
+
+        public GameObject CamHolder {
+            get { return camHolder; }
+
         }
     }
 }
