@@ -330,6 +330,7 @@ public class TurnBasedController : MonoBehaviour {
 
     private bool hasSelectedCompanion = false;
     private void SelectCompanion( ) {
+        UIInventory.instance.StatWindowShow(true);
         if ( Input.GetKeyDown( KeyCode.P ) && isPlayerTurn && AttackMode ){
             hasSelectedCompanion = true;
             if ( index >= Companions.Count - 1 || Companions[ index ].gameObject == null ){
