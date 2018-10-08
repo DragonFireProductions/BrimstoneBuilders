@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)){
+        if (Input.GetMouseButtonDown(1)){
                 RaycastHit hit;
 
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -72,30 +72,31 @@ public class PlayerController : MonoBehaviour
         state = PlayerState.navMesh;
         }
 
+       
+
+        if ( Input.anyKey){
+            state = PlayerState.move;
+        }
+
         if (Input.GetKeyDown(KeyCode.C))
         {
-             sneak = !isSneaking();
+            //Sneak();
+            sneak = !isSneaking();
             if (sneak)
                 state = PlayerState.sneak;
             else
                 state = PlayerState.move;
         }
 
-        if ( Input.anyKey){
-            state = PlayerState.move;
-        }
-       
-
-        
 
         switch (state)
         {
             case PlayerState.move:
 
-                    Move();
+                Move();
                 break;
             case PlayerState.sneak:
-                    Sneak();
+                Sneak();
                 break;
             case PlayerState.navMesh:
 
@@ -107,7 +108,7 @@ public class PlayerController : MonoBehaviour
             default:
                 break;
         }
-        
+
     }
 
     /// <summary>
@@ -124,12 +125,13 @@ public class PlayerController : MonoBehaviour
         if (X > 0 || Z > 0){
             CharacterUtility.instance.EnableObstacle( this.gameObject.GetComponent<NavMeshAgent>() , false );
         }
-        if (Input.GetKey(KeyCode.LeftShift) && RunSpeed > 1)
-        {
-            X *= RunSpeed;
-            Z *= RunSpeed;
-        }
-
+        
+            if (Input.GetKey(KeyCode.LeftShift) && RunSpeed > 1)
+            {
+                X *= RunSpeed;
+                Z *= RunSpeed;
+            }
+       
         if (Controller.isGrounded)
         {
             if (Input.GetButtonDown("Jump"))
@@ -160,7 +162,11 @@ public class PlayerController : MonoBehaviour
         float z = Input.GetAxis("Vertical");
         z *= sneakspeed;
 
-        Controller.Move(Cam.TransformDirection(new Vector3(x, Y, z) * Time.deltaTime));
+        Vector3 norm = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
+        Vector3 direction = Camera.main.transform.TransformDirection(norm);
+
+
+        Controller.Move(Cam.TransformDirection(direction.normalized * sneakspeed * Time.deltaTime));
     }
 
     bool isSneaking()

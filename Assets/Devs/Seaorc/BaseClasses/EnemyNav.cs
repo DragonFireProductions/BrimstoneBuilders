@@ -90,7 +90,7 @@ public class EnemyNav : MonoBehaviour
                         State = EnemyState.Attacking;
                 }
 
-                if (WanderDelay <= Timer && TurnBasedController.instance.AttackMode && CharacterUtility.instance.NavDistanceCheck(Agent) == DistanceCheck.HasReachedDestination)
+                if (WanderDelay <= Timer /*&& TurnBasedController.instance.AttackMode*/ && CharacterUtility.instance.NavDistanceCheck(Agent) == DistanceCheck.HasReachedDestination)
                 {
                     Agent.destination = Random.insideUnitSphere * WanderDistance + location.transform.position;
                     Timer = 0;
@@ -98,9 +98,9 @@ public class EnemyNav : MonoBehaviour
 
                 break;
             case EnemyState.Attacking:
-                if (player != null && Agent != null && !TurnBasedController.instance.AttackMode){
-                    TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
-                }
+                //if (player != null && Agent != null && !TurnBasedController.instance.AttackMode){
+                //    TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
+                //}
                 break;
             case EnemyState.retreat:
                 Agent.SetDestination(s_location);

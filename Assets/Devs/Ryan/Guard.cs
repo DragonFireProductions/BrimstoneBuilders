@@ -17,7 +17,7 @@ public class Guard : MonoBehaviour
     Vector3 to = new Vector3(0.0f, 210.0f, 0.0f);
 
     Vector3 center = new Vector3(0.0f, 0.0f, 0.0f);
-    float radius = 10.0f;
+    float radius = 5.0f;
 
     [SerializeField]
     GameObject[] enemy;
@@ -35,15 +35,18 @@ public class Guard : MonoBehaviour
 
     [SerializeField]
     int s_spot;
+    [SerializeField]
+    Transform post;
 
-    enum GuardState { idle, stalk, caught, city_danger, patrol}; GuardState state;
+    bool tooclose = false;
+
+    enum GuardState { idle, stalk, caught, city_danger, stalking}; GuardState state;
 	// Use this for initialization
 	void Start ()
     {
         agent = GetComponent<NavMeshAgent>();
-        center = patrols[ 0 ].position;
-        stalk_distance = 10.0f;
-        enemy = GameObject.FindGameObjectsWithTag("Enemy");
+        stalk_distance = 1.0f;
+       // enemy = GameObject.FindGameObjectsWithTag("Enemy");
        // patrols = GameObject.FindGameObjectsWithTag("Patrol Point");
     }
 
@@ -59,7 +62,9 @@ public class Guard : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        ClosestInsideSpehere(center, radius);
+        tooclose = ClosestInsideSpehere(center, radius);
+        if (tooclose == true)
+            state = GuardState.city_danger;
         switch (state)
         {
             case GuardState.idle:
@@ -80,42 +85,64 @@ public class Guard : MonoBehaviour
                 {
                     if (hit.collider.tag == "Player")
                     {
-                        //Debug.Log("i c u");
+                        Debug.Log("i c u");
                         state = GuardState.stalk;
                     }
                 }
+                //tooclose = ClosestInsideSpehere(center, radius);
+                //if (tooclose == true)
+                //    state = GuardState.city_danger;
                 break;
-
             case GuardState.stalk:
                 agent.isStopped = false;
                 agent.SetDestination(player.transform.position);
-                if (Vector3.Distance(transform.position, player.transform.position) <= stalk_distance)
+                float dist = Vector3.Distance(transform.position, player.transform.position);
+                Debug.Log(dist);
+                if (Vector3.Distance(transform.position, player.transform.position) < 4.0f)
                 {
-                    state = GuardState.idle;
+                    agent.isStopped = true;
+                    state = GuardState.stalking;
+                    Debug.Log(state);
+                    //state = GuardState.idle;
                 }
+                else if (Vector3.Distance(transform.position, player.transform.position) > 10.0f)
+                {
+                    agent.SetDestination(post.position);
+                    if (Vector3.Distance(transform.position, post.position) < 1.0f)
+                        state = GuardState.idle;
+                }
+                //tooclose = ClosestInsideSpehere(center, radius);
+                //if (tooclose == true)
+                //    state = GuardState.city_danger;
                 break;
-
             case GuardState.caught:
                 Transform target = player.transform;
                 Quaternion targetrotation = Quaternion.LookRotation(target.position - transform.position);
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetrotation, 10.0f);
+               
                 break;
-
             case GuardState.city_danger:
                 agent.isStopped = false;
                 agent.SetDestination(enemy[currenemy].transform.position);
-                Collider[] col = Physics.OverlapSphere(center, radius);
-                for (int i = 0; i < col.Length; ++i)
+                if (Vector3.Distance(enemy[currenemy].transform.position, center) > radius)
                 {
-                    if (col[i].tag != "Enemy")
+                    agent.SetDestination(post.position);
+                    if (Vector3.Distance(transform.position, post.position) < 3.0f)
                     {
                         state = GuardState.idle;
                     }
                 }
-                break;
-            case GuardState.patrol:
                 
-                StartCoroutine(Patroling());
+                break;
+            case GuardState.stalking:
+                time += Time.deltaTime;
+                Debug.Log(time);
+                if (time > 3.0f)
+                {
+                    state = GuardState.idle;
+                    //agent.SetDestination(post.position);
+                    //time = 0.0f;
+                }
                 break;
             default:
                 break;
@@ -130,41 +157,41 @@ public class Guard : MonoBehaviour
         }
     }
 
-    void ClosestInsideSpehere(Vector3 center, float radius)
+    private void OnTriggerExit(Collider other)
+    {
+        state = GuardState.stalk;
+    }
+
+    bool ClosestInsideSpehere(Vector3 center, float radius)
     {
         Collider[] toofar = Physics.OverlapSphere(center, radius);
-        //GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
+        enemy = GameObject.FindGameObjectsWithTag("Enemy");
 
 
         for (int i = 0; i < toofar.Length; ++i)
         {
-            if (toofar[i].tag == "Enemy")
+            if (toofar[i].tag.Contains("Enemy"))
             {
-                Debug.Log("too close to city");
+                //Debug.Log("too close to city");
                 state = GuardState.city_danger;
                 for (int j = 0; j < enemy.Length; ++j)
                 {
-                    currenemy = j;
-
-                    if ( enemy[j] != null ){
-                        float distance = Vector3.Distance(enemy[j].transform.position, center);
-
-                        if (distance < radius)
-                        {
-                            break;
-                            //agent.SetDestination(enemy[j].transform.position);
-                        }
-                    }
                     
+                    float distance = Vector3.Distance(enemy[j].transform.position, center);
+
+                    if (distance < radius)
+                    {
+                        currenemy = j;
+                        return true;
+                        //break;
+                        // agent.SetDestination(enemy[j].transform.position);
+                    }
                 }
             }
-            //else
-            //{
-            //    state = GuardState.idle;
-            //}
+            
         }
         
-        //return false;
+        return false;
     }
 
     IEnumerator Patroling()
