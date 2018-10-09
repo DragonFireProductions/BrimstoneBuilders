@@ -26,7 +26,12 @@ public class PlayerController : MonoBehaviour
     float sneakspeed = 1.5f;
     bool sneak = false;
 
-   public enum PlayerState { move, sneak}; PlayerState state;
+    private float end = 0.0f;
+
+    public static Stat stats;
+    public static UIInventory inventory = UIInventory.instance;
+
+   public enum PlayerState { move, sneak, navMesh}; PlayerState state;
 
     // Use this for initialization
     void Start()
@@ -44,6 +49,8 @@ public class PlayerController : MonoBehaviour
 
         Cam = GameObject.Find("CamHolder").transform;
         Assert.IsNotNull(Cam, "Camholder cannot be found!");
+        stats = GetComponent<Stat>();
+        //inventory = GetComponent<UIInventory>();
     }
 
     /// <summary>
@@ -69,21 +76,19 @@ public class PlayerController : MonoBehaviour
                     gameObject.GetComponent<NavMeshAgent>().SetDestination(pos);
 
                 }
-        //state = PlayerState.navMesh;
+        state = PlayerState.navMesh;
         }
 
 
 
         if (Input.anyKey)
         {
-            state = PlayerState.move;
+           state = PlayerState.move;
         }
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            //Sneak();
             sneak = !isSneaking();
-
         }
         if (sneak)
             state = PlayerState.sneak;
@@ -94,14 +99,21 @@ public class PlayerController : MonoBehaviour
         switch (state)
         {
             case PlayerState.move:
-
                 Move();
                 break;
             case PlayerState.sneak:
                 Sneak();
                 break;
+            case PlayerState.navMesh:
+                break;
+                ;
             default:
                 break;
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+           UIInventory.instance.UpdateStats(stats);
         }
 
     }
@@ -125,6 +137,10 @@ public class PlayerController : MonoBehaviour
             {
                 X *= RunSpeed;
                 Z *= RunSpeed;
+                Vector3 n = new Vector3(X, 0, Z);
+                Vector3 dir = Camera.main.transform.TransformDirection(n);
+                dir.y = 0;
+                Controller.Move(dir * RunSpeed * Time.deltaTime);
             }
 
         if (Controller.isGrounded)
@@ -141,13 +157,19 @@ public class PlayerController : MonoBehaviour
             Y -= Gravity * Time.deltaTime;
         }
 
-        Vector3 norm = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        Vector3 norm = new Vector3(X, 0, Z);
 
         var direction = Camera.main.transform.TransformDirection( norm );
         direction.y = 0;
 
 
-        Controller.Move(Cam.transform.TransformDirection(new Vector3(X, Y, Z)) * Time.deltaTime);
+        Controller.Move(direction.normalized * WalkSpeed * Time.deltaTime);
+        if (state == PlayerState.move && X > 0 || X < 0 || Z > 0 || Z < 0)
+        {
+            stats.Endurance += 0.005f;
+            stats.Agility += 0.003f;
+            stats.Strength += 0.0000002f;
+        }
     }
 
     void Sneak()

@@ -14,7 +14,6 @@ namespace Assets.Meyer.TestScripts.Player
         public static Character instance;
         public static GameObject player;
         public CompanionLeader leader;
-        public static Enemy enemy;
         public static Stat stat;
 
         private Animator animator;
@@ -51,11 +50,7 @@ namespace Assets.Meyer.TestScripts.Player
         // Update is called once per framed
         void Update()
         {
-            float eHealth = enemy.getHealth;
-            if (eHealth <= 0.0f)
-            {
-                ++stat.XP;
-            }
+            
         }
 
 

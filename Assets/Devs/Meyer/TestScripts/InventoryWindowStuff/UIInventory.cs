@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class Container
 {
-   
+
 }
 
 public class UIInventory : MonoBehaviour
@@ -80,7 +80,7 @@ public class UIInventory : MonoBehaviour
 	    else if (instance != this)
 	        Destroy(gameObject);
 	    DontDestroyOnLoad(gameObject);
-	}
+    }
 
     void Start()
     {
@@ -90,6 +90,7 @@ public class UIInventory : MonoBehaviour
         StatUIList = new List < stats >();
         CompanionUIList = new List < stats >( );
         CompanionStatShowWindow(false);
+        //StatUI = new GameObject();
 
         int i = StatPanel.transform.childCount;
 
