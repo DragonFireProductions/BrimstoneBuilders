@@ -28,18 +28,7 @@ public class Sound
 
         Source.clip = Clip;
 
-
-        switch (Type)
-        {
-            case SoundType.Music:
-                Source.volume = Volume * PlayerPrefs.GetFloat("MusicVolume") * PlayerPrefs.GetFloat("MasterVolume");
-                break;
-            case SoundType.Effect:
-                Source.volume = Volume * PlayerPrefs.GetFloat("EffectVolume") * PlayerPrefs.GetFloat("MasterVolume");
-                break;
-            default:
-                break;
-        }
+        UpdateVolume();
 
         Source.pitch = Pitch;
     }
@@ -52,10 +41,16 @@ public class Sound
         switch (Type)
         {
             case SoundType.Music:
-                Source.volume = Volume * PlayerPrefs.GetFloat("MusicVolume") * PlayerPrefs.GetFloat("MasterVolume");
+                Source.volume = Volume * AudioManager.GetMusicVolume() * AudioManager.GetMasterVolume();
                 break;
             case SoundType.Effect:
-                Source.volume = Volume * PlayerPrefs.GetFloat("EffectVolume") * PlayerPrefs.GetFloat("MasterVolume");
+                Source.volume = Volume * AudioManager.GetEffectVolume() * AudioManager.GetMasterVolume();
+                break;
+            case SoundType.Voice:
+                Source.volume = Volume * AudioManager.GetVoiceVolume() * AudioManager.GetMasterVolume();
+                break;
+            case SoundType.Environment:
+                Source.volume = Volume * AudioManager.GetEnvironmentVolume() * AudioManager.GetMasterVolume();
                 break;
             default:
                 break;
@@ -82,4 +77,4 @@ public class Sound
     public SoundType GetSoundType() { return Type; }
 }
 
-public enum SoundType { Music, Effect}
+public enum SoundType { Music, Effect, Voice, Environment }

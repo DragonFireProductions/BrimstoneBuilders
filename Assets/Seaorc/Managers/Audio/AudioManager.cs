@@ -6,6 +6,13 @@ using UnityEngine.Assertions;
 
 public class AudioManager : MonoBehaviour
 {
+    static float MasterVolume;
+    static float MusicVolume;
+    static float EffectVolume;
+    static float VoiceVolume;
+    static float EnvironmentVolume;
+
+
     public static AudioManager manager = null;
     [SerializeField] Sound[] Clips;
     Dictionary<string, Sound> SoundDictionary;
@@ -74,4 +81,16 @@ public class AudioManager : MonoBehaviour
     }
 
     public static AudioManager GetInstance() { return manager; }
+
+    public static float GetMasterVolume() { return MasterVolume; }
+    public static float GetMusicVolume() { return MusicVolume; }
+    public static float GetEffectVolume() { return EffectVolume; }
+    public static float GetVoiceVolume() { return VoiceVolume; }
+    public static float GetEnvironmentVolume() { return EnvironmentVolume; }
+
+    public static void SetMasterVolume(float _volume) { MasterVolume = Mathf.Clamp(_volume, 0, 1); }
+    public static void SetMusicVolume(float _volume) { MusicVolume = Mathf.Clamp(_volume, 0, 1); }
+    public static void SetEffectVolume(float _volume) { EffectVolume = Mathf.Clamp(_volume, 0, 1); }
+    public static void SetVoiceVolume(float _volume) { VoiceVolume = Mathf.Clamp(_volume, 0, 1); }
+    public static void setEnvironmentalVolume(float _volume) { EnvironmentVolume = Mathf.Clamp(_volume, 0, 1); }
 }
