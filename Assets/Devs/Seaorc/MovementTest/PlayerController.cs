@@ -71,7 +71,10 @@ public class PlayerController : MonoBehaviour
                 }
         state = PlayerState.navMesh;
         }
-
+        if (Input.anyKey)
+        {
+            state = PlayerState.move;
+        }
         if (Input.GetKeyDown(KeyCode.C))
         {
              sneak = !isSneaking();
@@ -81,9 +84,7 @@ public class PlayerController : MonoBehaviour
                 state = PlayerState.move;
         }
 
-        if ( Input.anyKey){
-            state = PlayerState.move;
-        }
+        
        
 
         
@@ -91,7 +92,6 @@ public class PlayerController : MonoBehaviour
         switch (state)
         {
             case PlayerState.move:
-
                     Move();
                 break;
             case PlayerState.sneak:

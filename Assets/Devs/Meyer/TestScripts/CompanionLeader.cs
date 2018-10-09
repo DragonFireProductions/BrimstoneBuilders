@@ -23,13 +23,13 @@ public class CompanionLeader : Companion {
 			CompanionGroup.Add(VARIABLE.GetComponent<Companion>());
 		}
 	}
-    public void Remove(GameObject _obj)
+    public void Remove(Companion _obj)
     {
         for (int l_i = 0; l_i < CompanionGroup.Count; l_i++)
         {
-            if (CompanionGroup[l_i].gameObject == _obj)
+            if (CompanionGroup[l_i] == _obj)
                 CompanionGroup.RemoveAt(l_i);
         }
-        Destroy(_obj);
+        Destroy(_obj.obj);
     }
 }

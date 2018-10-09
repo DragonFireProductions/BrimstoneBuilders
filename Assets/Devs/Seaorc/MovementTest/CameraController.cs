@@ -183,8 +183,8 @@ public class CameraController : MonoBehaviour
 
             StartCoroutine( ToAnotherPlayer( companion ) );
         }
-        else if ( _mode == CameraMode.ToPlayerBattle ){
-            StartCoroutine( ToPlayerBattle( ) );
+        else if ( _mode == CameraMode.Freeze ){
+            mode = CameraMode.Battle;
         }
     }
 
@@ -257,6 +257,7 @@ public class CameraController : MonoBehaviour
         mode = CameraMode.Battle;
     }
 
+
     IEnumerator ToAnotherPlayer(Companion companion ) {
         mode = CameraMode.Transition;
         Zoom = 0;
@@ -280,5 +281,5 @@ public class CameraController : MonoBehaviour
 
 public enum CameraMode
 {
-    Colony, Player, Transition, Battle, ToOtherPlayer, ToPlayerBattle
+    Colony, Player, Transition, Battle, ToOtherPlayer, Freeze
 }

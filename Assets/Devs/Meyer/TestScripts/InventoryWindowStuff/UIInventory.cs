@@ -128,8 +128,7 @@ public class UIInventory : MonoBehaviour
         CompanionPanel.SetActive(active);
     }
 
-    public void AppendNotification( string _message, float time ) {
-        UIInventory.instance.DialogWindowShow(true);
+    public void AppendNotification( string _message ) {
         dialogText.text += _message;
         //StartCoroutine( showNotification( time ) );
 
@@ -167,7 +166,7 @@ public class UIInventory : MonoBehaviour
     }
     public void UpdateCompanionStats(Stat stats)
     {
-        StatWindowShow(true);
+        
 
         for (int i = 0; i < CompanionUIList.Count; i++)
         {

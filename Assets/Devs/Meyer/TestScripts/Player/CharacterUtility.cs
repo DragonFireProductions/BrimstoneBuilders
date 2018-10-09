@@ -6,6 +6,18 @@ using Kristal;
 
 using UnityEngine;
 using UnityEngine.AI;
+public enum DistanceCheck
+{
+
+    HasReachedDestination = 0,
+
+    HasNotReachedDestination,
+
+    NavMeshNotEnabled,
+
+    HasNoPath
+
+}
 
 namespace Assets.Meyer.TestScripts
 {
@@ -56,6 +68,7 @@ namespace Assets.Meyer.TestScripts
 
                 return DistanceCheck.NavMeshNotEnabled;
             }
+            
             if (!mNavMeshAgent.pathPending)
             {
                 if (mNavMeshAgent.remainingDistance <= mNavMeshAgent.stoppingDistance)

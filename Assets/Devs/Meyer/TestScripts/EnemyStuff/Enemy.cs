@@ -66,7 +66,23 @@ namespace Kristal
         {
             enemies.Remove(gameObject);
         }
+        public void Damage(Companion attacker)
+        {
+            UIInventory.instance.ShowNotification(attacker.name + " has chosen to attack " + this.gameObject.name, 5);
+            UIInventory.instance.AppendNotification("\n Damage = " + DamageCalc.Instance.CalcAttack(attacker.Stats, this.Stats));
+            UIInventory.instance.AppendNotification("\n " + this.Stats.Name + " health was " + this.Stats.Health);
+            this.Stats.Health -= DamageCalc.Instance.CalcAttack(attacker.Stats, this.Stats);
 
+            if ( this.Stats.Health <= 0 ){
+                UIInventory.instance.AppendNotification("\n Enemy is now Dead");
+                leader.Remove(this);
+            }
+            else{
+                UIInventory.instance.AppendNotification("\n" + this.Stats.name + " health is now " + this.Stats.Health);
+
+            }
+
+        }
         // Update is called once per frame
         void Update()
         {

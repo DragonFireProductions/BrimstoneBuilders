@@ -21,9 +21,7 @@ public class DamageCalc : MonoBehaviour {
     // Update is called once per frame
     private void Update( ) { }
 
-    public float CalcAttack( GameObject _victim , GameObject _attacker ) {
-        var attacker = _attacker.GetComponent < Stat >( );
-        var victim   = _victim.GetComponent < Stat >( );
+    public float CalcAttack( Stat victim , Stat attacker ) {
 
         float damageMultipler = 5;
 

@@ -95,7 +95,7 @@ public class CompanionNav : MonoBehaviour
                         CharacterUtility.instance.EnableObstacle(Agent, true);
                     }
 
-                    Agent.stoppingDistance = 3.0f;
+                    Agent.stoppingDistance = 4.0f;
                     var r = Random.Range(4, 10);
                     var a = Character.player.transform.forward + (-Vector3.forward * r);
                     Agent.destination = Character.player.transform.position;
@@ -103,7 +103,6 @@ public class CompanionNav : MonoBehaviour
 
                 break;
             case CompanionState.Attacking:
-
                 {
                     Agent.stoppingDistance = 0;
                 }
