@@ -136,7 +136,11 @@ namespace Kristal
         {
             return enemies;
         }
-        
+
+        public float getHealth
+        {
+            get { return health; }
+        }
 
     }
 }

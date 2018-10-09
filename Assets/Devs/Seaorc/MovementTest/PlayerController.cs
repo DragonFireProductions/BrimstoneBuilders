@@ -23,10 +23,10 @@ public class PlayerController : MonoBehaviour
     bool Controlled = true;
     float Y;
 
-    float sneakspeed = 2.0f;
+    float sneakspeed = 1.5f;
     bool sneak = false;
 
-   public enum PlayerState { move, sneak, navMesh}; PlayerState state;
+   public enum PlayerState { move, sneak}; PlayerState state;
 
     // Use this for initialization
     void Start()
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Calles the move function onece per frame if character is currently controlled 
+    /// Calles the move function onece per frame if character is currently controlled
     /// </summary>
     void Update()
     {
@@ -67,14 +67,15 @@ public class PlayerController : MonoBehaviour
                     pos.y = 0.0f;
                     pos.z = hit.point.z;
                     gameObject.GetComponent<NavMeshAgent>().SetDestination(pos);
-                
+
                 }
-        state = PlayerState.navMesh;
+        //state = PlayerState.navMesh;
         }
 
-       
 
-        if ( Input.anyKey){
+
+        if (Input.anyKey)
+        {
             state = PlayerState.move;
         }
 
@@ -82,11 +83,12 @@ public class PlayerController : MonoBehaviour
         {
             //Sneak();
             sneak = !isSneaking();
-            if (sneak)
-                state = PlayerState.sneak;
-            else
-                state = PlayerState.move;
+
         }
+        if (sneak)
+            state = PlayerState.sneak;
+        else
+            state = PlayerState.move;
 
 
         switch (state)
@@ -97,13 +99,6 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.sneak:
                 Sneak();
-                break;
-            case PlayerState.navMesh:
-
-                {
-
-                }
-
                 break;
             default:
                 break;
@@ -116,7 +111,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Move()
     {
-        
+
         float X = Input.GetAxisRaw("Horizontal");
         X *= WalkSpeed;
         float Z = Input.GetAxisRaw("Vertical");
@@ -125,13 +120,13 @@ public class PlayerController : MonoBehaviour
         if (X > 0 || Z > 0){
             CharacterUtility.instance.EnableObstacle( this.gameObject.GetComponent<NavMeshAgent>() , false );
         }
-        
+
             if (Input.GetKey(KeyCode.LeftShift) && RunSpeed > 1)
             {
                 X *= RunSpeed;
                 Z *= RunSpeed;
             }
-       
+
         if (Controller.isGrounded)
         {
             if (Input.GetButtonDown("Jump"))
@@ -145,14 +140,14 @@ public class PlayerController : MonoBehaviour
         {
             Y -= Gravity * Time.deltaTime;
         }
-        
+
         Vector3 norm = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
         var direction = Camera.main.transform.TransformDirection( norm );
         direction.y = 0;
 
 
-        Controller.Move(direction.normalized * WalkSpeed * Time.deltaTime);
+        Controller.Move(Cam.transform.TransformDirection(new Vector3(X, Y, Z)) * Time.deltaTime);
     }
 
     void Sneak()
@@ -162,11 +157,12 @@ public class PlayerController : MonoBehaviour
         float z = Input.GetAxis("Vertical");
         z *= sneakspeed;
 
-        Vector3 norm = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
+        Vector3 norm = new Vector3(x, 0, z);
         Vector3 direction = Camera.main.transform.TransformDirection(norm);
+        direction.y = 0;
 
 
-        Controller.Move(Cam.TransformDirection(direction.normalized * sneakspeed * Time.deltaTime));
+        Controller.Move(Cam.TransformDirection(direction.normalized * Time.deltaTime));
     }
 
     bool isSneaking()

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
@@ -45,15 +46,12 @@ public class Guard : MonoBehaviour
 	void Start ()
     {
         agent = GetComponent<NavMeshAgent>();
-        stalk_distance = 1.0f;
-       // enemy = GameObject.FindGameObjectsWithTag("Enemy");
-       // patrols = GameObject.FindGameObjectsWithTag("Patrol Point");
+        stalk_distance = 4.0f;
     }
 
     private void Awake()
     {
         state = GuardState.idle;
-        //agent.stoppingDistance = stalk_distance;
         player = GameObject.FindGameObjectWithTag("Player");
         Assert.IsNotNull(player, "player cannot be found");
         s_position = transform.position;
@@ -62,6 +60,9 @@ public class Guard : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
+        Vector3 tmppos = transform.position;
+        tmppos.y = 0.5f;
+        transform.position = tmppos;
         tooclose = ClosestInsideSpehere(center, radius);
         if (tooclose == true)
             state = GuardState.city_danger;
@@ -76,34 +77,28 @@ public class Guard : MonoBehaviour
                 float lerp = 0.5f * (1.0f + Mathf.Sin(Mathf.PI * Time.realtimeSinceStartup * 1.0f));
                 transform.rotation = Quaternion.Lerp(from, to, lerp);
 
-                //checkiing to see if the guard has spotted any scoundrels
+                //checking to see if the guard has spotted any scoundrels
                 RaycastHit hit;
-                Vector3 forward = gameObject.transform.forward * 10.0f;
-                Debug.DrawRay(transform.position, forward, Color.blue);
-                Ray ray = new Ray(transform.position, forward);
+                Debug.DrawRay(transform.position, transform.forward * 10.0f);
+                Ray ray = new Ray(transform.position, transform.forward);
+
                 if (Physics.Raycast(ray, out hit, 10.0f))
                 {
                     if (hit.collider.tag == "Player")
                     {
-                        Debug.Log("i c u");
                         state = GuardState.stalk;
                     }
                 }
-                //tooclose = ClosestInsideSpehere(center, radius);
-                //if (tooclose == true)
-                //    state = GuardState.city_danger;
                 break;
             case GuardState.stalk:
                 agent.isStopped = false;
                 agent.SetDestination(player.transform.position);
                 float dist = Vector3.Distance(transform.position, player.transform.position);
-                Debug.Log(dist);
-                if (Vector3.Distance(transform.position, player.transform.position) < 4.0f)
+
+                if (Vector3.Distance(transform.position, player.transform.position) < stalk_distance)
                 {
                     agent.isStopped = true;
                     state = GuardState.stalking;
-                    Debug.Log(state);
-                    //state = GuardState.idle;
                 }
                 else if (Vector3.Distance(transform.position, player.transform.position) > 10.0f)
                 {
@@ -111,15 +106,12 @@ public class Guard : MonoBehaviour
                     if (Vector3.Distance(transform.position, post.position) < 1.0f)
                         state = GuardState.idle;
                 }
-                //tooclose = ClosestInsideSpehere(center, radius);
-                //if (tooclose == true)
-                //    state = GuardState.city_danger;
                 break;
             case GuardState.caught:
                 Transform target = player.transform;
                 Quaternion targetrotation = Quaternion.LookRotation(target.position - transform.position);
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetrotation, 10.0f);
-               
+
                 break;
             case GuardState.city_danger:
                 agent.isStopped = false;
@@ -132,16 +124,15 @@ public class Guard : MonoBehaviour
                         state = GuardState.idle;
                     }
                 }
-                
+
                 break;
             case GuardState.stalking:
                 time += Time.deltaTime;
                 Debug.Log(time);
                 if (time > 3.0f)
                 {
-                    state = GuardState.idle;
-                    //agent.SetDestination(post.position);
-                    //time = 0.0f;
+                   state = GuardState.idle;
+                   time = 0.0f;
                 }
                 break;
             default:
@@ -153,7 +144,7 @@ public class Guard : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             state = GuardState.caught;
-            
+
         }
     }
 
@@ -172,25 +163,21 @@ public class Guard : MonoBehaviour
         {
             if (toofar[i].tag.Contains("Enemy"))
             {
-                //Debug.Log("too close to city");
                 state = GuardState.city_danger;
                 for (int j = 0; j < enemy.Length; ++j)
                 {
-                    
                     float distance = Vector3.Distance(enemy[j].transform.position, center);
 
                     if (distance < radius)
                     {
                         currenemy = j;
                         return true;
-                        //break;
-                        // agent.SetDestination(enemy[j].transform.position);
                     }
                 }
             }
-            
+
         }
-        
+
         return false;
     }
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311947, g: 0.38074005, b: 0.35872722, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -432,8 +432,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: -0.9}
 --- !u!114 &120185903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,7 +449,7 @@ MonoBehaviour:
   patrols: []
   currentwaypoint: 0
   s_spot: 2
-  post: {fileID: 842643694}
+  post: {fileID: 642265881}
 --- !u!195 &120185904
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -800,8 +800,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: -0.9}
 --- !u!114 &233140240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,7 +819,7 @@ MonoBehaviour:
   patrols: []
   currentwaypoint: 0
   s_spot: 1
-  post: {fileID: 642265881}
+  post: {fileID: 842643694}
 --- !u!195 &233140241
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1122,7 +1122,7 @@ Prefab:
     - target: {fileID: 114080057657190730, guid: 6771b5e37fe3201408d5a416dba590f4,
         type: 2}
       propertyPath: RunSpeed
-      value: 6
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114115211214187604, guid: 6771b5e37fe3201408d5a416dba590f4, type: 2}
@@ -1670,6 +1670,18 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   CompanionGroup: []
+--- !u!65 &439542107
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 439542092}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &509997166
 GameObject:
   m_ObjectHideFlags: 0
@@ -1692,7 +1704,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 509997166}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -27.76, y: -0.21, z: 8.91}
+  m_LocalPosition: {x: 30.94, y: -0.21, z: 0.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2134,7 +2146,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 641861569}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 31.24, y: -0.42, z: 0.17}
+  m_LocalPosition: {x: -27.78, y: -0.22, z: 8.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2162,7 +2174,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 642265880}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.83, y: -0.21, z: 20.741}
+  m_LocalPosition: {x: 0.26, y: -0.21, z: -21.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2425,7 +2437,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 842643693}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.83, y: -0.21, z: -22.1}
+  m_LocalPosition: {x: -0.65, y: -0.21, z: 20.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2991,8 +3003,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: -0.9}
 --- !u!114 &1052077349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3008,7 +3020,7 @@ MonoBehaviour:
   patrols: []
   currentwaypoint: 0
   s_spot: 3
-  post: {fileID: 641861570}
+  post: {fileID: 509997167}
 --- !u!195 &1052077350
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4037,8 +4049,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: -0.9}
 --- !u!114 &1282343686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4056,7 +4068,7 @@ MonoBehaviour:
   patrols: []
   currentwaypoint: 0
   s_spot: 1
-  post: {fileID: 509997167}
+  post: {fileID: 641861570}
 --- !u!195 &1282343687
 NavMeshAgent:
   m_ObjectHideFlags: 0
