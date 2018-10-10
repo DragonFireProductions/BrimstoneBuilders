@@ -31,6 +31,10 @@ public class PlayerController : MonoBehaviour
     public static Stat stats;
     public static UIInventory inventory = UIInventory.instance;
 
+    private float dex, endu, agil = 0.0f;
+
+    private bool showstats = false;
+
    public enum PlayerState { move, sneak, navMesh}; PlayerState state;
 
     // Use this for initialization
@@ -113,8 +117,14 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-           UIInventory.instance.UpdateStats(stats);
+            showstats = !Stats();
+
         }
+
+        if (showstats)
+            UIInventory.instance.UpdateStats(stats);
+        else
+            UIInventory.instance.StatUI.SetActive(false);
 
     }
 
@@ -166,9 +176,29 @@ public class PlayerController : MonoBehaviour
         Controller.Move(direction.normalized * WalkSpeed * Time.deltaTime);
         if (state == PlayerState.move && X > 0 || X < 0 || Z > 0 || Z < 0)
         {
-            stats.Endurance += 0.005f;
-            stats.Agility += 0.003f;
-            stats.Strength += 0.0000002f;
+            endu += 0.005f;
+            agil += 0.003f;
+            dex += 0.0002f;
+
+            if (endu > 1.0f)
+            {
+                endu = 0.0f;
+                ++stats.Endurance;
+            }
+            else if (agil > 1.0f)
+            {
+                agil = 0.0f;
+                ++stats.Agility;
+                ++WalkSpeed;
+                if (WalkSpeed > 7.0f)
+                    WalkSpeed = 7.0f;
+                Debug.Log("walk speed:" + WalkSpeed);
+            }
+            else if (dex > 1.0f)
+            {
+                dex = 0.0f;
+                ++stats.Dexterity;
+            }
         }
     }
 
@@ -190,6 +220,11 @@ public class PlayerController : MonoBehaviour
     bool isSneaking()
     {
         return sneak;
+    }
+
+    bool Stats()
+    {
+        return showstats;
     }
 
     public void SetControlled(bool _control)
