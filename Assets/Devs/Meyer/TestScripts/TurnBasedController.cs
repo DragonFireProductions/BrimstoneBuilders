@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 using Assets.Meyer.TestScripts;
 using Assets.Meyer.TestScripts.Player;
@@ -102,19 +103,12 @@ namespace Assets.Meyer.TestScripts
 
         private void Initalize()
         {
-            //if enemies are lined up
-            if (setUpEnimies)
-            {
-                setUpEnimies = false;
 
-                //line up players
-                LineUpCompanions(Companions, CompanionLeader);
-            }
 
             if (hasCompanionsLinedUp)
             {
                 hasCompanionsLinedUp = false;
-                Companions.Add(CompanionLeader);
+                Companions.Insert(0, CompanionLeader);
                 initalized = true;
             }
         }
@@ -146,26 +140,28 @@ namespace Assets.Meyer.TestScripts
 
             StartCoroutine(LineUpLeader());
         }
-        
 
-        private IEnumerator LineUpLeader()
-        {
+        private GameObject obj;
+        private IEnumerator LineUpLeader() {
+            obj = new GameObject("basePos");
+            obj.transform.position = Character.player.transform.position + Character.player.transform.forward * 15.0f;
+            obj.transform.LookAt(Character.player.transform);
             CharacterUtility.instance.EnableObstacle(EnemyLeader.Nav.Agent, true);
             EnemyLeader.Nav.Agent.stoppingDistance = 0;
             EnemyLeader.Nav.SetDestination(Character.player.transform.position + Character.player.transform.forward * 15.0f);
+            LineUpCompanions();
+            LineUpEnemies();
 
             while (CharacterUtility.instance.NavDistanceCheck(EnemyLeader.Nav.Agent) == DistanceCheck.HasNotReachedDestination)
             {
                 yield return new WaitForEndOfFrame();
             }
-
             EnemyLeader.gameObject.transform.LookAt(Character.player.transform);
-            LineUpEnemies();
         }
 
-        
 
-        private int index;
+
+        [SerializeField] private int index = 1;
 
         private bool hasSelectedCompanion;
 
@@ -180,7 +176,7 @@ namespace Assets.Meyer.TestScripts
 
                 hasSelectedCompanion = true;
 
-                if (index >= Companions.Count - 1 || Companions[index].gameObject == null)
+                if (index >= Companions.Count || Companions[index].gameObject == null)
                 {
                     index = 0;
                 }
@@ -480,7 +476,7 @@ namespace Assets.Meyer.TestScripts
                 Enemies[k].Nav.SetState = EnemyState.Battle;
 
                 forward -= 1;
-                var move = EnemyLeader.gameObject.transform.position + EnemyLeader.gameObject.transform.right * right + EnemyLeader.transform.forward * -forward;
+                var move = obj.transform.position + obj.transform.right * right + obj.transform.forward * -forward;
 
                 Enemies[k].Nav.Agent.stoppingDistance = 0.0f;
                 Enemies[k].Nav.Agent.SetDestination(move);
@@ -493,7 +489,7 @@ namespace Assets.Meyer.TestScripts
             {
                 Enemies[k].Nav.SetState = EnemyState.Battle;
                 forward -= 1;
-                var moveleft = EnemyLeader.gameObject.transform.position + -EnemyLeader.gameObject.transform.right * left + EnemyLeader.transform.forward * -forward;
+                var moveleft = obj.transform.position + -obj.transform.right * left + obj.transform.forward * -forward;
                 Enemies[k].Nav.Agent.stoppingDistance = 0;
                 Enemies[k].Nav.Agent.SetDestination(moveleft);
 
@@ -510,21 +506,23 @@ namespace Assets.Meyer.TestScripts
 
         private int p;
 
-        private void LineUpCompanions(List<Companion> companions, CompanionLeader companion_leader)
-        {
+        private List < Companion > holderCompanions;
+        private void LineUpCompanions() {
+            holderCompanions = new List < Companion >();
             var right = 2;
             var left = 2;
             var forward = -1;
-
+            
             for (var k = 0; k < CompanionCount; k += 2)
             {
                 forward -= 1;
-                companions[k].Nav.State = CompanionNav.CompanionState.Attacking;
-                var move = companion_leader.gameObject.transform.position + companion_leader.gameObject.transform.right * right + CompanionLeader.transform.forward * -forward;
+                Companions[k].Nav.State = CompanionNav.CompanionState.Attacking;
+                var move = CompanionLeader.gameObject.transform.position + CompanionLeader.gameObject.transform.right * right + CompanionLeader.transform.forward * -forward;
 
-                companions[k].Nav.Agent.stoppingDistance = 0.0f;
-                companions[k].Nav.Agent.SetDestination(move);
+                Companions[k].Nav.Agent.stoppingDistance = 0.0f;
+                Companions[k].Nav.Agent.SetDestination(move);
                 right += 2;
+                holderCompanions.Add(Companions[k]);
             }
 
             forward = -1;
@@ -532,19 +530,23 @@ namespace Assets.Meyer.TestScripts
             for (var k = 1; k < CompanionCount; k += 2)
             {
                 forward -= 1;
-                companions[k].Nav.State = CompanionNav.CompanionState.Attacking;
+                Companions[k].Nav.State = CompanionNav.CompanionState.Attacking;
 
-                var moveleft = companion_leader.gameObject.transform.position + -companion_leader.gameObject.transform.right * left + CompanionLeader.transform.forward * -forward;
-                companions[k].Nav.Agent.stoppingDistance = 0;
-                companions[k].Nav.Agent.SetDestination(moveleft);
+                var moveleft = CompanionLeader.gameObject.transform.position + -CompanionLeader.gameObject.transform.right * left + CompanionLeader.transform.forward * -forward;
+                Companions[k].Nav.Agent.stoppingDistance = 0;
+                Companions[k].Nav.Agent.SetDestination(moveleft);
+
+                holderCompanions.Add(Companions[k]);
 
                 left += 2;
             }
 
             for (var i = 0; i < CompanionCount; i++)
             {
-                StartCoroutine(TurnCompanion(companions[i], i));
+                StartCoroutine(TurnCompanion(Companions[i], i));
             }
+
+            Companions = holderCompanions;
         }
 
         private IEnumerator TurnEnemy(Enemy enemy, int i)
@@ -602,7 +604,7 @@ namespace Assets.Meyer.TestScripts
             companion.gameObject.GetComponent<Collider>().isTrigger =
                     !companion.gameObject.GetComponent<Collider>().isTrigger;
 
-            var r = Quaternion.LookRotation(EnemyLeader.transform.position - companion.transform.position);
+            var r = Quaternion.LookRotation(obj.transform.position - companion.transform.position);
 
             timer = 0;
             while (companion.transform.rotation != r && timer < turnTime)

@@ -15,11 +15,13 @@ public class CompanionNav : MonoBehaviour
 
     /// <remarks>Set in Inspector</remarks>
     [SerializeField] Animator animator;
-    [SerializeField] float VeiwDistance;
-    [SerializeField] float WanderDistance;
-    [SerializeField] float WanderDelay;
-    [SerializeField] float StoppingDistance;
-    [SerializeField] float MaintainAttackDistance;
+
+    [ SerializeField ] private float StoppingDistance;
+
+    [ SerializeField ] private float battleSpeed = 3;
+
+    [ SerializeField ] private float followSpeed = 4;
+       
 
     [SerializeField] private GameObject location;
     CompanionState state;
@@ -54,10 +56,9 @@ public class CompanionNav : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         Assert.IsNotNull(player, "Player or Player.Player script cannot be found");
 
-        State = CompanionState.Follow;
+        Switch(State);
         Timer = Time.deltaTime;
-
-        Agent.stoppingDistance = StoppingDistance;
+        
 
         s_location = transform.position;
     }
@@ -66,10 +67,13 @@ public class CompanionNav : MonoBehaviour
         switch (state)
         {
             case CompanionState.Follow:
+                Agent.stoppingDistance = 4.0f;
+                Agent.speed = followSpeed;
                 State = CompanionState.Follow;
-
                 break;
             case CompanionState.Attacking:
+                Agent.stoppingDistance = 0;
+                Agent.speed = battleSpeed;
                 State = CompanionState.Attacking;
 
                 break;
@@ -88,6 +92,7 @@ public class CompanionNav : MonoBehaviour
         switch (State)
         {
             case CompanionState.Follow:
+
                 if (player != null)
                 {
                     if (!Agent.enabled)
@@ -95,7 +100,6 @@ public class CompanionNav : MonoBehaviour
                         CharacterUtility.instance.EnableObstacle(Agent, true);
                     }
 
-                    Agent.stoppingDistance = 4.0f;
                     var r = Random.Range(4, 10);
                     var a = Character.player.transform.forward + (-Vector3.forward * r);
                     Agent.destination = Character.player.transform.position;
@@ -104,7 +108,6 @@ public class CompanionNav : MonoBehaviour
                 break;
             case CompanionState.Attacking:
                 {
-                    Agent.stoppingDistance = 0;
                 }
                 break;
             default:

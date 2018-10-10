@@ -20,6 +20,8 @@ public class EnemyNav : MonoBehaviour
     [SerializeField] float StoppingDistance;
     [SerializeField] float MaintainAttackDistance;
 
+    [ SerializeField ] private float battleSpeed = 3;
+
     [SerializeField] private GameObject location;
     public EnemyState State;
     GameObject player = null;
@@ -96,6 +98,8 @@ public class EnemyNav : MonoBehaviour
                         }
 
                         Agent.stoppingDistance = 0;
+                        Agent.speed = battleSpeed;
+
                         TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
                     }
                 }
