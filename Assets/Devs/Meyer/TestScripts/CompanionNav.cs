@@ -108,6 +108,8 @@ public class CompanionNav : MonoBehaviour
                 break;
             case CompanionState.Attacking:
                 {
+                    Agent.stoppingDistance = 0;
+
                 }
                 break;
             default:

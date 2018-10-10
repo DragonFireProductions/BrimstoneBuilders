@@ -206,11 +206,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  VeiwDistance: 0
-  WanderDistance: 0
-  WanderDelay: 0
   StoppingDistance: 0
-  MaintainAttackDistance: 0
+  battleSpeed: 3
+  followSpeed: 4
   location: {fileID: 0}
   Agent: {fileID: 0}
   guard: []
@@ -1559,7 +1557,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1060019818453842, guid: 26c4156bc4ffb0746a8f5bdd387d2e85, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 195888429888511744, guid: 26c4156bc4ffb0746a8f5bdd387d2e85,
         type: 2}
@@ -1696,7 +1694,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1060019818453842, guid: 26c4156bc4ffb0746a8f5bdd387d2e85, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 195888429888511744, guid: 26c4156bc4ffb0746a8f5bdd387d2e85,
         type: 2}
@@ -1779,10 +1777,6 @@ MonoBehaviour:
   Enemies:
   - {fileID: 1478348098}
   - {fileID: 743203825}
-  - {fileID: 303560412}
-  - {fileID: 1381997645}
-  - {fileID: 448436908}
-  - {fileID: 1052871631}
   EnemyGroup: []
   Leader: {fileID: 0}
 --- !u!1 &1004867000 stripped
@@ -1801,10 +1795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3752dbeaf6676c04798c45c3b5d1fed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemies:
-  - {fileID: 618863149}
-  - {fileID: 1684288177}
-  - {fileID: 717416805}
+  Enemies: []
   EnemyGroup: []
   Leader: {fileID: 0}
 --- !u!1 &1052871631 stripped
@@ -1957,7 +1948,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1060019818453842, guid: 26c4156bc4ffb0746a8f5bdd387d2e85, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 195888429888511744, guid: 26c4156bc4ffb0746a8f5bdd387d2e85,
         type: 2}
@@ -2094,7 +2085,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1060019818453842, guid: 26c4156bc4ffb0746a8f5bdd387d2e85, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 195888429888511744, guid: 26c4156bc4ffb0746a8f5bdd387d2e85,
         type: 2}
@@ -2144,27 +2135,6 @@ MonoBehaviour:
   - {fileID: 2102352491}
   - {fileID: 1687487063}
   CompanionGroup: []
---- !u!114 &1299291891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1299291889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f755bcc0b6929e45ad33ba5dabf353d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Enemies: []
-  Companions: []
-  PlayerSelectedCompanion: {fileID: 0}
-  PlayerSelectedEnemy: {fileID: 0}
-  CompanionLeader: {fileID: 0}
-  EnemyLeader: {fileID: 0}
-  AttackMode: 0
-  CompanionCount: 0
-  turnTime: 1
-  switchCompanionSelected: 0
 --- !u!1 &1381997645 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1060019818453842, guid: 26c4156bc4ffb0746a8f5bdd387d2e85,
@@ -2315,7 +2285,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1060019818453842, guid: 26c4156bc4ffb0746a8f5bdd387d2e85, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 195888429888511744, guid: 26c4156bc4ffb0746a8f5bdd387d2e85,
         type: 2}
@@ -2515,7 +2485,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1060019818453842, guid: 26c4156bc4ffb0746a8f5bdd387d2e85, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 195888429888511744, guid: 26c4156bc4ffb0746a8f5bdd387d2e85,
         type: 2}
@@ -2652,7 +2622,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1060019818453842, guid: 26c4156bc4ffb0746a8f5bdd387d2e85, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 195888429888511744, guid: 26c4156bc4ffb0746a8f5bdd387d2e85,
         type: 2}
@@ -3096,11 +3066,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  VeiwDistance: 0
-  WanderDistance: 0
-  WanderDelay: 0
   StoppingDistance: 0
-  MaintainAttackDistance: 0
+  battleSpeed: 3
+  followSpeed: 4
   location: {fileID: 0}
   Agent: {fileID: 0}
   guard: []
@@ -3498,11 +3466,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  VeiwDistance: 0
-  WanderDistance: 0
-  WanderDelay: 0
   StoppingDistance: 0
-  MaintainAttackDistance: 0
+  battleSpeed: 3
+  followSpeed: 4
   location: {fileID: 0}
   Agent: {fileID: 0}
   guard: []

@@ -12,10 +12,9 @@ using UnityEngine.AI;
 
 namespace Assets.Meyer.TestScripts
 {
-    public class TurnBasedController : MonoBehaviour
-    {
+    public class TurnBasedController : MonoBehaviour {
 
-        public List<Enemy> Enemies;
+        public List < Enemy > Enemies;
 
         public List<Companion> Companions;
 
@@ -90,6 +89,7 @@ namespace Assets.Meyer.TestScripts
                 //if it's the enemys turn
                 else if (isEnemyTurn)
                 {
+
                     //take enemys turn
                     EnemysTurn();
                 }
@@ -115,16 +115,23 @@ namespace Assets.Meyer.TestScripts
 
         public void HasCollided(Enemy enemy)
         {
-            if (!AttackMode)
-            {
+            if (!AttackMode){
+                CompanionLeader = Character.player.GetComponent < CompanionLeader >( );
                 Enemies = enemy.Leader.EnemyGroup;
                 EnemyLeader = enemy.Leader.Leader;
-                Companions = Character.instance.leader.CompanionGroup;
-                CompanionLeader = Character.instance.gameObject.GetComponent<CompanionLeader>();
+                Companions = CompanionLeader.CompanionGroup;
                 AttackMode = true;
 
                 if ( CompanionLeader.agent.enabled == true ){
                 CompanionLeader.agent.isStopped = true;
+                }
+
+                foreach ( var VARIABLE in Companions ){
+                    CharacterUtility.instance.EnableObstacle(VARIABLE.agent, true);
+                }
+
+                foreach ( var VARIABLE in Enemies ){
+                    VARIABLE.Nav.SetState = EnemyState.Battle;
                 }
                 Character.player.GetComponent<PlayerController>().enabled = false;
                 CompanionCount = Companions.Count;
@@ -161,7 +168,7 @@ namespace Assets.Meyer.TestScripts
 
 
 
-        [SerializeField] private int index = 1;
+        [SerializeField] private int index = 0;
 
         private bool hasSelectedCompanion;
 
@@ -182,15 +189,15 @@ namespace Assets.Meyer.TestScripts
                 }
 
                 PlayerSelectedCompanion = Companions[index];
-                PlayerSelectedCompanion.gameObject.GetComponent<Renderer>().material.color = Color.red;
+                PlayerSelectedCompanion.gameObject.GetComponent<Renderer>().material.color = CompanionLeader.PlayerSelectedColor;
 
                 if (index == 0)
                 {
-                    Companions[Companions.Count - 1].gameObject.GetComponent<Renderer>().material.color = Color.blue;
+                    Companions[Companions.Count - 1].gameObject.GetComponent<Renderer>().material.color = CompanionLeader.baseColor;
                 }
                 else
                 {
-                    Companions[index - 1].gameObject.GetComponent<Renderer>().material.color = Color.blue;
+                    Companions[index - 1].gameObject.GetComponent<Renderer>().material.color = CompanionLeader.baseColor;
                 }
 
                 UIInventory.instance.UpdateCompanionStats(PlayerSelectedCompanion.gameObject.GetComponent<Stat>());
@@ -255,6 +262,8 @@ namespace Assets.Meyer.TestScripts
         private IEnumerator damage(Enemy enemy)
         {
             yield return new WaitForSeconds(2);
+            PlayerSelectedEnemy.obj.GetComponent<Renderer>().material.color = EnemyLeader.leader.selectedColor;
+
             enemy.Damage(PlayerSelectedCompanion);
             hasDamaged = true;
         }
@@ -309,6 +318,7 @@ namespace Assets.Meyer.TestScripts
 
                         PlayerSelectedCompanion.agent.SetDestination(l_hitInfo.transform.gameObject.transform.position + l_hitInfo.transform.gameObject.transform.forward * 2);
                         PlayerSelectedEnemy = l_hitInfo.transform.gameObject.GetComponent<Enemy>();
+                        PlayerSelectedEnemy.obj.GetComponent<Renderer>().material.color = CompanionLeader.LeaderColor;
                         StartCoroutine(NavDistanceCheck(PlayerSelectedCompanion.agent));
 
                         isEnemySelected = true;
@@ -393,17 +403,24 @@ namespace Assets.Meyer.TestScripts
 
         private void SelectRandomPlayer()
         {
-            if ( Enemies.Count == 0 ){
+            if ( Enemies.Count == 1 ){
                 enemySelectedEnemy = EnemyLeader;
             }
             else{
                 var randomEnemy = Random.Range(0, Enemies.Count - 1);
                 enemySelectedEnemy = Enemies[randomEnemy];
             }
+
+            if ( Companions.Count == 1 ){
+                enemySelectedCompanion = Companions[ 0 ];
+            }
+            else{
+                var randomPlayer = Random.Range(1, Companions.Count - 1);
+                enemySelectedCompanion = Companions[randomPlayer];
+            }
             
 
-            var randomPlayer = Random.Range(0, Companions.Count - 1);
-            enemySelectedCompanion = Companions[randomPlayer];
+            enemySelectedEnemy.obj.GetComponent<Renderer>().material.color = EnemyLeader.leader.selectedColor;
 
             EnemyStartPos = enemySelectedEnemy.transform.position;
             EnemyStartRotation = enemySelectedEnemy.transform.localRotation;
@@ -419,6 +436,8 @@ namespace Assets.Meyer.TestScripts
         IEnumerator damage(Companion companion)
         {
             yield return new WaitForSeconds(1);
+            enemySelectedEnemy.obj.GetComponent<Renderer>().material.color = EnemyLeader.leader.selectedColor;
+
             companion.Damage(enemySelectedEnemy);
 
             hasDamaged = true;
@@ -450,10 +469,16 @@ namespace Assets.Meyer.TestScripts
             CameraController.controller.SwitchMode(CameraMode.Player);
             for ( int i= 0; i < Companions.Count; i++ ){
                 if ( Companions[i] != CompanionLeader ){
-                    Companions[i].Nav.Switch( CompanionNav.CompanionState.Follow );
-                    Companions[i].gameObject.GetComponent < Renderer >( ).material.color = Color.blue;
+                        CharacterUtility.instance.EnableObstacle( Companions[ i ].Nav.Agent , true );
+                        Companions[ i ].Nav.Switch( CompanionNav.CompanionState.Follow );
+                        Companions[ i ].gameObject.GetComponent < Renderer >( ).material.color = CompanionLeader.baseColor;
+                    }
+                else{
+                    Companions[i].gameObject.GetComponent<Renderer>().material.color = CompanionLeader.LeaderColor;
+                    Companions.RemoveAt(i);
+                    i--;
                 }
-                else Companions.RemoveAt(i);
+                   
             }
 
             Destroy(this);
@@ -589,6 +614,7 @@ namespace Assets.Meyer.TestScripts
             {
                 p = 0;
                 setUpEnimies = true;
+                Enemies.Add(EnemyLeader);
             }
         }
 

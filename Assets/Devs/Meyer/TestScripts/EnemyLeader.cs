@@ -16,9 +16,17 @@ public class EnemyLeader : MonoBehaviour {
 
     public Enemy Leader;
 
+    public Color selectedColor = Color.yellow;
+
+    public Color baseColor = Color.grey;
+
+    public Color leaderColor = Color.green;
+
+    
+
     // Use this for initialization
     void Start () {
-        
+        EnemyGroup = new List < Enemy >();
         Leader = this.gameObject.GetComponent < Enemy >( );
 
         EnemyGroup = new List < Enemy >();
@@ -36,28 +44,16 @@ public class EnemyLeader : MonoBehaviour {
     }
 
     public void AssignNewLeader( ) {
-
-        //TODO: This might cause errors
-        if ( EnemyGroup.Count > 0 ){
             GameObject NewLeader = EnemyGroup[ 0 ].gameObject;
 
-            for ( int i = 0 ; i < EnemyGroup.Count ; i++ ){
-                if ( EnemyGroup[i] == Leader ){
-                    Enemies.RemoveAt(i);
-                }
-
-                if ( EnemyGroup[i] == NewLeader ){
-                    Enemies.RemoveAt(i);
-                }
-            }
-            Enemies.Add(NewLeader);
             NewLeader.gameObject.AddComponent < EnemyLeader >( );
             NewLeader.GetComponent < EnemyLeader >( ).Enemies = Enemies;
-            TurnBasedController.instance.EnemyLeader = NewLeader.GetComponent<Enemy>();
+            TurnBasedController.instance.EnemyLeader = NewLeader.GetComponent < Enemy >( );
+        NewLeader.GetComponent < EnemyLeader >( ).baseColor = baseColor;
+        NewLeader.GetComponent < EnemyLeader >( ).selectedColor = selectedColor;
             
             Destroy(this.gameObject);
             this.enabled = false;
-        }
     }
     void FillOutInfo(List <GameObject> objects ) {
        
@@ -67,16 +63,20 @@ public class EnemyLeader : MonoBehaviour {
     {
         if (EnemyGroup.Count == 0 &&  _obj == this.Leader )
         {
+            Enemies.Clear();
+            EnemyGroup.Clear();
             TurnBasedController.instance.BattleWon();
-            for (int l_i = 0; l_i < EnemyGroup.Count; l_i++)
-            {
-                if (EnemyGroup[l_i].gameObject == _obj.gameObject)
-                    EnemyGroup.RemoveAt(l_i);
-            }
-
             Destroy(_obj.gameObject);
         }
         else if ( _obj == this.Leader ){
+            for ( int i = 0 ; i < Enemies.Count ; i++ ){
+                if ( Enemies[i] == null){
+                    Enemies.RemoveAt(i);
+                }
+            }
+            Enemies.Remove( _obj.gameObject );
+            EnemyGroup.Remove( _obj );
+            TurnBasedController.instance.Enemies.Remove( _obj );
             AssignNewLeader();
         }
         else{
@@ -85,7 +85,6 @@ public class EnemyLeader : MonoBehaviour {
                 if (EnemyGroup[l_i].gameObject == _obj.gameObject)
                     EnemyGroup.RemoveAt(l_i);
             }
-            
             Destroy(_obj.gameObject);
         }
         

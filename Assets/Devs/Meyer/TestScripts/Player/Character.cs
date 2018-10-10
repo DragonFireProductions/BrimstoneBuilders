@@ -19,13 +19,15 @@ namespace Assets.Meyer.TestScripts.Player
         private GameObject UI;
 
         [SerializeField] GameObject camHolder;
-        
+
+        public Color color = Color.green;
         
         //CharacterController controller;
 
         private void Start()
         {
             leader = this.gameObject.GetComponent < CompanionLeader >( );
+            gameObject.GetComponent < Renderer >( ).material.color = color;
 
             //controller = GetComponent<CharacterController>();
         }

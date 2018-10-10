@@ -30,7 +30,7 @@ public class Stat : MonoBehaviour {
    [ SerializeField ] private float dexterity;
    [SerializeField] private float luck;
 
-    private float health;
+    [SerializeField] float health;
 
     // Use this for initialization
     void Start () {
