@@ -71,14 +71,10 @@ public class PlayerController : MonoBehaviour
                 {
                     float step = speed;
                     float distance = Vector3.Distance(transform.position, hit.point);
-                Quaternion rotation = Quaternion.Euler(hit.point);
-
-                    float dot = Quaternion.Dot(transform.rotation, rotation);
-                    if (dot > 1.0f)
-                        dot = 1.0f;
-                    if (dot < 0.0f)
-                        dot = 0.0f;
-                   //transform.rotation = Quaternion.Euler(hit.point.x, hit.point.y, hit.point.z);
+                Quaternion rotation = transform.rotation;
+                //Vector3 nRotation = rotation.eulerAngles;
+                //float dot = Quaternion.Dot()
+                    transform.rotation = Quaternion.Euler(hit.point.x, hit.point.y, hit.point.z);
                     Vector3 pos;
                     pos.x = hit.point.x;
                     pos.y = 0.0f;

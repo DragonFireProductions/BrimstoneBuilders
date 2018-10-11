@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+
 using Assets.Meyer.TestScripts;
 using Assets.Meyer.TestScripts.Player;
 
@@ -34,6 +34,9 @@ public class PlayerController : MonoBehaviour
     private float dex, endu, agil = 0.0f;
 
     private bool showstats = false;
+    private bool canRun = true;
+
+    private float runTimer = 0.0f;
 
    public enum PlayerState { move, sneak, navMesh}; PlayerState state;
 
@@ -62,8 +65,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Update()
     {
+
+
+
         if (Input.GetMouseButtonDown(1)){
                 RaycastHit hit;
+
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 CharacterUtility.instance.EnableObstacle(this.gameObject.GetComponent<NavMeshAgent>(), true);
 
@@ -71,14 +78,7 @@ public class PlayerController : MonoBehaviour
                 {
                     float step = speed;
                     float distance = Vector3.Distance(transform.position, hit.point);
-                Quaternion rotation = Quaternion.Euler(hit.point);
 
-                    float dot = Quaternion.Dot(transform.rotation, rotation);
-                    if (dot > 1.0f)
-                        dot = 1.0f;
-                    if (dot < 0.0f)
-                        dot = 0.0f;
-                   //transform.rotation = Quaternion.Euler(hit.point.x, hit.point.y, hit.point.z);
                     Vector3 pos;
                     pos.x = hit.point.x;
                     pos.y = 0.0f;
@@ -151,12 +151,29 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKey(KeyCode.LeftShift) && RunSpeed > 1)
             {
-                X *= RunSpeed;
-                Z *= RunSpeed;
-                Vector3 n = new Vector3(X, 0, Z);
-                Vector3 dir = Camera.main.transform.TransformDirection(n);
-                dir.y = 0;
-                Controller.Move(dir * RunSpeed * Time.deltaTime);
+                if (canRun == true)
+                {
+                    X *= RunSpeed;
+                    Z *= RunSpeed;
+                    Vector3 n = new Vector3(X, 0, Z);
+                    Vector3 dir = Camera.main.transform.TransformDirection(n);
+                    dir.y = 0;
+                    Controller.Move(dir.normalized * RunSpeed * Time.deltaTime);
+                    runTimer += Time.deltaTime;
+
+                    if (runTimer > 5.0f)
+                        canRun = false;
+                }
+                else
+                {
+                    X *= WalkSpeed;
+                    Z *= WalkSpeed;
+                    Vector3 wnorm = new Vector3(X, 0, Z);
+                    Vector3 wDir = Camera.main.transform.TransformDirection(wnorm);
+                    wDir.y = 0;
+                    Controller.Move(wDir.normalized * WalkSpeed * Time.deltaTime);
+                }
+
             }
 
         if (Controller.isGrounded)
@@ -184,6 +201,7 @@ public class PlayerController : MonoBehaviour
         {
             endu += 0.005f;
             agil += 0.0003f;
+            //Debug.Log(agil);
             dex += 0.0002f;
 
             if (endu > 1.0f)
@@ -198,7 +216,7 @@ public class PlayerController : MonoBehaviour
                 ++WalkSpeed;
                 if (WalkSpeed > 7.0f)
                     WalkSpeed = 7.0f;
-                Debug.Log("walk speed:" + WalkSpeed);
+                //Debug.Log("walk speed:" + WalkSpeed);
             }
             else if (dex > 1.0f)
             {

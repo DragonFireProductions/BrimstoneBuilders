@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+
 using Assets.Meyer.TestScripts;
 using Assets.Meyer.TestScripts.Player;
 
@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1)){
                 RaycastHit hit;
+
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 CharacterUtility.instance.EnableObstacle(this.gameObject.GetComponent<NavMeshAgent>(), true);
 
@@ -71,14 +72,7 @@ public class PlayerController : MonoBehaviour
                 {
                     float step = speed;
                     float distance = Vector3.Distance(transform.position, hit.point);
-                Quaternion rotation = Quaternion.Euler(hit.point);
 
-                    float dot = Quaternion.Dot(transform.rotation, rotation);
-                    if (dot > 1.0f)
-                        dot = 1.0f;
-                    if (dot < 0.0f)
-                        dot = 0.0f;
-                   //transform.rotation = Quaternion.Euler(hit.point.x, hit.point.y, hit.point.z);
                     Vector3 pos;
                     pos.x = hit.point.x;
                     pos.y = 0.0f;
@@ -183,7 +177,8 @@ public class PlayerController : MonoBehaviour
         if (state == PlayerState.move && X > 0 || X < 0 || Z > 0 || Z < 0)
         {
             endu += 0.005f;
-            agil += 0.0003f;
+            agil += 0.003f;
+            Debug.Log(agil);
             dex += 0.0002f;
 
             if (endu > 1.0f)
