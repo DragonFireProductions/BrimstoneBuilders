@@ -5,15 +5,17 @@ using UnityEngine;
 
 public class LevelManagerV2 : MonoBehaviour
 {
-    static LevelManagerV2 Instance;
+    public static LevelManagerV2 instance;
     static Level CurrentLevel;
     [SerializeField] List<Level> levels;
 
+    public LevelType level;
+
     private void Awake()
     {
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -62,7 +64,7 @@ public class LevelManagerV2 : MonoBehaviour
        
     }
 
-    public LevelManagerV2 GetInstance() { return Instance; }
+    public LevelManagerV2 GetInstance() { return instance; }
 }
 
 public enum LevelType

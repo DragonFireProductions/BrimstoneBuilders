@@ -34,7 +34,7 @@ public class EnemyNav : MonoBehaviour
     [SerializeField]
     GameObject[] guard;
 
-    Vector3 s_location;
+    public Vector3 s_location;
 
     void Awake()
     {
