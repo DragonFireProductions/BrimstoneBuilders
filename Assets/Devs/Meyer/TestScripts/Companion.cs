@@ -16,12 +16,9 @@ public class Companion : BaseCharacter {
 
 	public CompanionNav Nav;
 
-	void Awake( ) {
-		base.Awake();
-		this.material.color = BaseColor;
-	}
     // Use this for initialization
     void Start () {
+		this.material.color = BaseColor;
 	    camHolder = transform.Find( "CamHolder" ).gameObject;
 	    Nav = gameObject.GetComponent < CompanionNav >( );
 	    leader = Character.player.GetComponent < CompanionLeader >( );
@@ -29,52 +26,47 @@ public class Companion : BaseCharacter {
 
 	public void Damage(Enemy attacker ) {
 
-		UIInventory.instance.ShowNotification(attacker.name + " has chosen to attack " + this.gameObject.name, 5);
+		
+		UIInventory.instance.AppendNotification("    " + gameObject.name + ":") ;
 		UIInventory.instance.AppendNotification("\n Damage = " + DamageCalc.Instance.CalcAttack(attacker.stats, this.stats) );
-		UIInventory.instance.AppendNotification("\n " + this.stats.Name + " health was " + this.stats.Health);
+		UIInventory.instance.AppendNotification("\n health was " + this.stats.Health);
 		this.stats.Health -= DamageCalc.Instance.CalcAttack(attacker.stats, this.stats);
-		UIInventory.instance.AppendNotification("\n" + this.stats.name + " health is now " + this.stats.Health);
-		UIInventory.instance.UpdateCompanionStats(this.stats);
-
-
+	
         if (this.stats.Health <= 0 && this != leader)
         {
-            UIInventory.instance.AppendNotification("\n Enemy is now Dead");
+            UIInventory.instance.AppendNotification("\n Companion is now Dead");
 
 	        if ( this == TurnBasedController.instance.PlayerSelectedCompanion ){
 		        TurnBasedController.instance.switchCompanionSelected = true;
 	        }
-            leader.Remove(this);
+            Leader.Remove(this);
         }
-        else
+        else if (this != leader)
         {
-            UIInventory.instance.AppendNotification("\n" + this.stats.name + " health is now " + this.stats.Health);
+            UIInventory.instance.AppendNotification("\n health is now " + this.stats.Health);
 
         }
 
 
     }
-	
+	public void Remove( BaseCharacter chara ) { }
     // Update is called once per frame
     void Update () { 
     }
 
-	public override void Remove( BaseCharacter _obj ) {
-        for (int l_i = 0; l_i < characters.Count; l_i++)
-        {
-            if (characters[l_i].gameObject == _obj.gameObject){
-	            characters.RemoveAt( l_i );
-				characterObjs.RemoveAt(l_i);
-                TurnBasedController.instance.Companions.Remove(( Companion )_obj);
-            }
-
-        }
-        Destroy(_obj.obj);
-    }
+	
 
 	public GameObject CamHolder {
 		get { return camHolder; }
 
 	}
+    public CompanionLeader Leader
+    {
+        get
+        {
+            return (CompanionLeader)leader;
 
+        }
+        set { leader = value; }
+    }
 }

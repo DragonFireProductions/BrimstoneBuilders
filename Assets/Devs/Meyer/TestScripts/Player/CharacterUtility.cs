@@ -15,7 +15,9 @@ public enum DistanceCheck
 
     NavMeshNotEnabled,
 
-    HasNoPath
+    HasNoPath,
+
+    PathInvalid
 
 }
 
@@ -34,7 +36,7 @@ namespace Assets.Meyer.TestScripts
             }
             else if (instance != this)
                 Destroy(gameObject);
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
             
         }
 	
@@ -69,8 +71,9 @@ namespace Assets.Meyer.TestScripts
 
                 return DistanceCheck.NavMeshNotEnabled;
             }
-            
-            if (!mNavMeshAgent.pathPending)
+            NavMeshPath path = new NavMeshPath();
+            ;
+                if (!mNavMeshAgent.pathPending)
             {
                 if (mNavMeshAgent.remainingDistance <= mNavMeshAgent.stoppingDistance)
                 {
@@ -78,7 +81,11 @@ namespace Assets.Meyer.TestScripts
                         return DistanceCheck.HasReachedDestination;
                     }
                 }
-            };
+            }
+                else if ( NavMesh.CalculatePath( transform.position , mNavMeshAgent.destination , NavMesh.AllAreas , path )
+                      && path.status == NavMeshPathStatus.PathInvalid  ){
+                    return DistanceCheck.PathInvalid;
+                }
 
             return DistanceCheck.HasNotReachedDestination;
         }

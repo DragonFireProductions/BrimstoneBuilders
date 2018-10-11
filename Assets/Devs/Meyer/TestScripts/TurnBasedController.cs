@@ -49,7 +49,7 @@ namespace Assets.Meyer.TestScripts
                 Destroy(instance);
             }
 
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
 
         private bool addedEnemyLeader = false;
@@ -308,9 +308,9 @@ namespace Assets.Meyer.TestScripts
 
         public static int stoppingDistance = 0;
 
-        public IEnumerator NavDistanceCheck(NavMeshAgent agent)
-        {
-            while (CharacterUtility.instance.NavDistanceCheck(agent) == DistanceCheck.HasNotReachedDestination)
+        public IEnumerator NavDistanceCheck(NavMeshAgent agent) {
+            timer = 0;
+            while (CharacterUtility.instance.NavDistanceCheck(agent) == DistanceCheck.HasNotReachedDestination && timer < 5.0f)
             {
                 yield return new WaitForEndOfFrame();
             }
@@ -482,7 +482,7 @@ namespace Assets.Meyer.TestScripts
                 }
                    
             }
-
+            UIInventory.instance.CompanionStatShowWindow(false);
             Destroy(this);
         }
 
@@ -576,12 +576,14 @@ namespace Assets.Meyer.TestScripts
             Companions = holderCompanions;
         }
 
-        private IEnumerator TurnEnemy(Enemy enemy, int i)
-        {
-            while (CharacterUtility.instance.NavDistanceCheck(enemy.Nav.Agent) == DistanceCheck.HasNotReachedDestination)
+        private IEnumerator TurnEnemy(Enemy enemy, int i) {
+            timer = 0;
+            while (CharacterUtility.instance.NavDistanceCheck(enemy.Nav.Agent) == DistanceCheck.HasNotReachedDestination && timer < 5.0f)
             {
                 yield return new WaitForEndOfFrame();
             }
+
+            timer = 0;
 
             CharacterUtility.instance.EnableObstacle(enemy.Nav.Agent);
 
@@ -621,13 +623,14 @@ namespace Assets.Meyer.TestScripts
 
         }
 
-        private IEnumerator TurnCompanion(Companion companion, int i)
-        {
-            while (CharacterUtility.instance.NavDistanceCheck(companion.Nav.Agent) == DistanceCheck.HasNotReachedDestination)
+        private IEnumerator TurnCompanion(Companion companion, int i) {
+            timer = 0;
+            while (CharacterUtility.instance.NavDistanceCheck(companion.Nav.Agent) == DistanceCheck.HasNotReachedDestination && timer < 5.0f)
             {
                 yield return new WaitForEndOfFrame();
             }
 
+            timer = 0;
             CharacterUtility.instance.EnableObstacle(companion.Nav.Agent);
 
             companion.gameObject.GetComponent<Collider>().isTrigger =

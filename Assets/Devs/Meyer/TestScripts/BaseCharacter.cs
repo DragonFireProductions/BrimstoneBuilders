@@ -54,8 +54,8 @@ public abstract class BaseCharacter : MonoBehaviour {
     void Update () {
 		
 	}
-
-	public abstract void Remove( BaseCharacter chara );
+	
+	
 
 	public void Damage( BaseCharacter _player_selected_companion ) { }
 

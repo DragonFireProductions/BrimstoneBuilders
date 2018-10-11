@@ -51,7 +51,7 @@ public class EnemyLeader : Enemy {
        
     }
 
-    public override void Remove(BaseCharacter _obj)
+    public void Remove(BaseCharacter _obj)
     {
         Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Remove-EnemyLeader- line: 64");
 
