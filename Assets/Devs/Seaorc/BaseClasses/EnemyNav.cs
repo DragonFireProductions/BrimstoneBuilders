@@ -89,7 +89,7 @@ public class EnemyNav : MonoBehaviour
         switch (State)
         {
             case EnemyState.Idle:
-                if (player != null && !TurnBasedController.instance.AttackMode)
+                if (player != null && !TurnBasedController.instance)
                 {
                     if ( Vector3.Distance( transform.position , player.transform.position ) < VeiwDistance ){
 
@@ -121,13 +121,14 @@ public class EnemyNav : MonoBehaviour
                 }
                 break;
             case EnemyState.Battle:
+                Agent.stoppingDistance = 0;
 
                 
                 break;
             case EnemyState.Follow:
                 Agent.stoppingDistance = 5;
                Agent.destination = gameObject.GetComponent < Enemy >( ).Leader.gameObject.transform.position;
-                if (player != null && !TurnBasedController.instance.AttackMode)
+                if (player != null && !TurnBasedController.instance)
                 {
                     if (Vector3.Distance(transform.position, player.transform.position) < VeiwDistance)
                     {

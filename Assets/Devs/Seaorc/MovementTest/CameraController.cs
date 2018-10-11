@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
+using Assets.Meyer.TestScripts;
 using Assets.Meyer.TestScripts.Player;
 
 using UnityEngine;
@@ -12,7 +14,6 @@ public class CameraController : MonoBehaviour
 {
 
     [Header("Transforms")]
-    [SerializeField] PlayerController Player;
     [SerializeField] Transform PlayerTransform;
     [SerializeField] Transform CamRig;
     [SerializeField] Transform Playercam;
@@ -32,8 +33,13 @@ public class CameraController : MonoBehaviour
     CameraMode mode;
     float Zoom;
 
+    private float timer;
+
     public static CameraController controller;
 
+    private bool isColony = false;
+
+    private bool switched = false;
     void Awake()
     {
         controller = this;
@@ -49,14 +55,12 @@ public class CameraController : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-        mode = CameraMode.Player;
+        SwitchMode( CameraMode.Player );
 
         CamRig = transform.parent.parent.transform;
 
         Playercam = transform.parent.transform;
-
-        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        Assert.IsNotNull(Player, "Cannot find object with tag of player");
+        
         PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
         ColonyCam = GameObject.Find("ColonyCam").transform;
@@ -64,13 +68,24 @@ public class CameraController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
+    void Update() {
+
+        timer += Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Tab)){
+            isColony = !isColony;
+            switched = true;
+        }
+
+        if ( isColony && switched ){
+            switched = false;
             SwitchMode(CameraMode.Colony);
         }
 
+        if ( !isColony && !TurnBasedController.instance && switched ){
+            switched = false;
+            SwitchMode(CameraMode.Player);
+
+        }
         if (mode == CameraMode.Colony)
         {
             if (Input.GetKey(KeyCode.Mouse2))
@@ -173,11 +188,11 @@ public class CameraController : MonoBehaviour
         }
         else if (_mode == CameraMode.Colony)
         {
-            Player.SetControlled(false);
+            Character.instance.controller.SetControlled(false);
             StartCoroutine(ToColony());
         }
         else if ( _mode == CameraMode.Battle ){
-            StartCoroutine( ToBattle( ) );
+            StartCoroutine( ToBattle(companion ) );
         }
         else if ( _mode == CameraMode.ToOtherPlayer ){
 
@@ -192,9 +207,10 @@ public class CameraController : MonoBehaviour
     {
         mode = CameraMode.Transition;
 
+        var CamPos = new Vector3(Character.player.transform.position.x, ColonyCam.position.y, Character.player.transform.position.z);
         while (Vector3.Distance(transform.position, ColonyCam.position) > .5f)
         {
-            transform.position = Vector3.Lerp(transform.position, ColonyCam.position, TransitionSpeed * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, CamPos, TransitionSpeed * Time.deltaTime);
             transform.rotation = Quaternion.Slerp(transform.rotation, ColonyCam.rotation, TransitionSpeed * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
@@ -203,18 +219,20 @@ public class CameraController : MonoBehaviour
         transform.rotation = ColonyCam.rotation;
         Zoom = 0;
         mode = CameraMode.Colony;
+       Character.instance.controller.SetControlled(false);
         
     }
     IEnumerator ToPlayer()
     {
         mode = CameraMode.Transition;
         Zoom = 0;
-
+        var pos = Playercam.position;
+        var rot = Playercam.rotation;
         while (Vector3.Distance(transform.position, Playercam.position) > .5f)
         {
 
-            transform.position = Vector3.Lerp(transform.position, Playercam.position, TransitionSpeed * Time.deltaTime);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Playercam.rotation, TransitionSpeed * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, pos, TransitionSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, TransitionSpeed * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
 
@@ -222,34 +240,48 @@ public class CameraController : MonoBehaviour
         transform.rotation = Playercam.rotation;
 
         mode = CameraMode.Player;
-        Player.SetControlled(true);
     }
 
-  IEnumerator ToBattle( ) {
+  IEnumerator ToBattle(Companion companion ) {
         mode = CameraMode.Transition;
         Zoom = 0;
 
-        while (Vector3.Distance(transform.position, Character.instance.CamHolder.transform.position) > 0.4f ){
-            var position = Vector3.Lerp(transform.position, Character.instance.CamHolder.transform.position, 0.3f * Time.deltaTime);
+        while (Vector3.Distance(transform.position, companion.CamHolder.transform.position) > 0.4f ){
+            var position = Vector3.Lerp(transform.position, companion.camHolder.transform.position, 0.3f * Time.deltaTime);
             transform.position = position;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Character.instance.CamHolder.transform.rotation, Time.deltaTime * 0.3f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, companion.camHolder.transform.rotation, Time.deltaTime * 0.3f);
 
             yield return new WaitForEndOfFrame();
         }
-        Player.SetControlled(false);
+
+        var r = Quaternion.LookRotation((Character.player.transform.position + (Character.player.transform.forward * 10)) - transform.position);
+        timer = 0;
+        while (transform.rotation != r && timer < 2.0f)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, r, 5 * Time.deltaTime);
+            timer += Time.deltaTime;
+
+            yield return new WaitForEndOfFrame();
+        }
+        if (timer >= 2.0f)
+        {
+            transform.LookAt(Character.player.transform.position + (Character.player.transform.forward * 10));
+        }
+
+        Character.instance.controller.SetControlled( true );
         mode = CameraMode.Battle;
 
     }
 
-    IEnumerator ToPlayerBattle( ) {
+    IEnumerator ToPlayerBattle(Companion companion ) {
         mode = CameraMode.Transition;
         Zoom = 0;
 
-        while (Vector3.Distance(transform.position, Character.instance.CamHolder.transform.position) > 0.4f)
+        while (Vector3.Distance(transform.position, companion.camHolder.transform.position) > 0.4f)
         {
-            var position = Vector3.Lerp(transform.position, Character.instance.CamHolder.transform.position, TransitionSpeed * Time.deltaTime);
+            var position = Vector3.Lerp(transform.position, companion.camHolder.transform.position, TransitionSpeed * Time.deltaTime);
             transform.position = position;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Character.instance.CamHolder.transform.rotation, Time.deltaTime * TransitionSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, companion.camHolder.transform.rotation, Time.deltaTime * TransitionSpeed);
 
             yield return new WaitForEndOfFrame();
         }
@@ -261,14 +293,39 @@ public class CameraController : MonoBehaviour
     IEnumerator ToAnotherPlayer(Companion companion ) {
         mode = CameraMode.Transition;
         Zoom = 0;
+        timer = 0;
+        var pos = companion.CamHolder.transform.position;
 
-        while (Vector3.Distance(transform.position, companion.CamHolder.transform.position) > 0.4f)
+       
+
+        while ( Vector3.Distance( transform.position , pos ) > 0.4f && timer < 2.0f )
         {
-            var position = Vector3.Lerp(transform.position, companion.CamHolder.transform.position, TransitionSpeed * Time.deltaTime);
+            var position = Vector3.Lerp(transform.position,pos , TransitionSpeed * Time.deltaTime);
             transform.position = position;
+           
+            yield return new WaitForEndOfFrame();
+        }
+       
+        if (timer >= 2.0f)
+        {
+            transform.position = companion.CamHolder.transform.position;
+        }
+       
+        var r = Quaternion.LookRotation( ( Character.player.transform.position + (Character.player.transform.forward * 10) ) - transform.position );
+        timer = 0;
+        while (transform.rotation != r && timer < 2.0f)
+        {
+            transform.rotation =  Quaternion.Slerp(transform.rotation, r, 5 * Time.deltaTime);
+            timer                    += Time.deltaTime;
 
             yield return new WaitForEndOfFrame();
         }
+        if (timer >= 2.0f)
+        {
+            transform.LookAt(Character.player.transform.position + (Character.player.transform.forward * 10));
+        }
+       
+
 
         mode = CameraMode.Battle;
     }

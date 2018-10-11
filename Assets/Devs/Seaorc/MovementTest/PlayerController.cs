@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float speed = 3;
 
     CharacterController Controller;
-    bool Controlled = true;
+    bool canMove = true;
     float Y;
 
     float sneakspeed = 2.0f;
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)){
+        if (Input.GetMouseButtonDown(0) && !TurnBasedController.instance){
                 RaycastHit hit;
 
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -83,15 +83,12 @@ public class PlayerController : MonoBehaviour
             else
                 state = PlayerState.move;
         }
-
-        
-       
-
         
 
         switch (state)
         {
             case PlayerState.move:
+                if (canMove)
                     Move();
                 break;
             case PlayerState.sneak:
@@ -170,7 +167,7 @@ public class PlayerController : MonoBehaviour
 
     public void SetControlled(bool _control)
     {
-        Controlled = _control;
+        canMove = _control;
     }
 
 }
