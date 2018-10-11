@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.AI;
 using System.Collections;
 using System.Runtime.CompilerServices;
+using Kristal;
 
 namespace Assets.Meyer.TestScripts.Player
 {
@@ -12,23 +13,16 @@ namespace Assets.Meyer.TestScripts.Player
 
         public static Character instance;
         public static GameObject player;
-        
 
         private GameObject UI;
         
 
-        public Color color = Color.green;
-
+        [SerializeField] GameObject camHolder;
         public PlayerController controller;
         
         //CharacterController controller;
-
-        private void Start() {
+        void Start() { 
             controller = gameObject.GetComponent < PlayerController >( );
-
-            gameObject.GetComponent < Renderer >( ).material.color = color;
-
-            //controller = GetComponent<CharacterController>();
         }
 
         // Use this for initialization
@@ -41,15 +35,15 @@ namespace Assets.Meyer.TestScripts.Player
             else if (instance != this)
                 Destroy(gameObject);
 
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
             player = this.gameObject;
-            
+
         }
 
         // Update is called once per framed
         void Update()
         {
-           
+            
         }
     }
 }

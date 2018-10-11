@@ -104,7 +104,8 @@ public class EnemyNav : MonoBehaviour
                     }
                 }
 
-                if (WanderDelay <= Timer && CharacterUtility.instance.NavDistanceCheck(Agent) == DistanceCheck.HasReachedDestination || CharacterUtility.instance.NavDistanceCheck(Agent) ==DistanceCheck.HasNoPath)
+                var check = CharacterUtility.instance.NavDistanceCheck( Agent );
+                if (WanderDelay <= Timer && (check == DistanceCheck.HasReachedDestination || check == DistanceCheck.PathInvalid)  || CharacterUtility.instance.NavDistanceCheck(Agent) ==DistanceCheck.HasNoPath)
                 {
                     Agent.destination = Random.insideUnitSphere * WanderDistance + location.transform.position;
                     Timer = 0;
@@ -161,5 +162,4 @@ public class EnemyNav : MonoBehaviour
 
 
 }
-
 public enum EnemyState { Idle, Attacking, retreat, Battle, Follow }

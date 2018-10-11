@@ -30,25 +30,26 @@ namespace Kristal
         private Vector3 startPosition;
 
         private Quaternion startRotation;
-        
+
         public EnemyNav Nav;
 
         // Use this for initialization
+        void Awake( ) {
+            base.Awake( );
+            timer = reactionTime;
+        }
+
         void Start( ) {
             this.material.color = BaseColor;
             Nav = gameObject.GetComponent<EnemyNav>();
         }
         
 
-        private void OnDisable()
-        {
-            characterObjs.Remove(gameObject);
-        }
         public void Damage(Companion attacker)
         {
-            UIInventory.instance.ShowNotification(attacker.name + " has chosen to attack " + this.gameObject.name, 5);
+            UIInventory.instance.ShowNotification("   " + gameObject.name + " : ", 5);
             UIInventory.instance.AppendNotification("\n Damage = " + DamageCalc.Instance.CalcAttack(attacker.stats, this.stats));
-            UIInventory.instance.AppendNotification("\n " + this.stats.Name + " health was " + this.stats.Health);
+            UIInventory.instance.AppendNotification("\n Health was " + this.stats.Health);
             this.stats.Health -= DamageCalc.Instance.CalcAttack(attacker.stats, this.stats);
             Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Damage-Enemy- line: 64");
          
@@ -59,7 +60,7 @@ namespace Kristal
                 Leader.Remove(this);
             }
             else{
-                UIInventory.instance.AppendNotification("\n" + this.stats.name + " health is now " + this.stats.Health);
+                UIInventory.instance.AppendNotification("\n health is now " + this.stats.Health);
 
             }
 
@@ -118,7 +119,7 @@ namespace Kristal
 
         }
 
-        public override void Remove( BaseCharacter chara ) { }
+        public void Remove( BaseCharacter chara ) { }
 
         public EnemyLeader Leader {
             get { return ( EnemyLeader )leader; }

@@ -31,6 +31,7 @@ public class Stat : MonoBehaviour {
    [SerializeField] private float luck;
 
     [SerializeField] float health;
+    private int xp;
 
     // Use this for initialization
     void Start () {
@@ -44,7 +45,7 @@ public class Stat : MonoBehaviour {
         perception = Random.Range( 0 , 30 );
         intelligence = Random.Range( 0 , 30 );
         luck = Random.Range( 0 , 30 );
-
+        xp = 0;
     }
 	
 	// Update is called once per frame
@@ -106,5 +107,10 @@ public class Stat : MonoBehaviour {
         get { return name; }
         set { name = value; }
     }
- 
+
+    public int XP
+    {
+        get { return xp; }
+        set { xp = value; }
+    }
 }

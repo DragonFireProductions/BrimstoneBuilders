@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Experimental.UIElements;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Container
 {
-   
+
 }
 
 public class UIInventory : MonoBehaviour
@@ -50,6 +52,12 @@ public class UIInventory : MonoBehaviour
 
     [ SerializeField ] private GameObject CompanionLabel;
 
+    [ SerializeField ] private GameObject Instructions;
+
+    [ SerializeField ] private GameObject InstructionsPanel;
+
+    private bool showWindow;
+
     struct stats {
 
        public TextMeshProUGUI obj;
@@ -71,6 +79,7 @@ public class UIInventory : MonoBehaviour
     /// The list of current slots in the UI
     /// </summary>
     public List<GameObject> slots;
+    
     // Use this for initialization
     void Awake () {
 	    if (instance == null)
@@ -79,17 +88,20 @@ public class UIInventory : MonoBehaviour
 	    }
 	    else if (instance != this)
 	        Destroy(gameObject);
-	    DontDestroyOnLoad(gameObject);
-	}
+	    //DontDestroyOnLoad(gameObject);
+    }
 
     void Start()
     {
         pos = container.gameObject.transform.position;
-        DialogWindowShow(false);
+        DialogUI.SetActive(true);
+        Show = false;
         StatWindowShow(false);
+        ShowInstructions(false);
         StatUIList = new List < stats >();
         CompanionUIList = new List < stats >( );
         CompanionStatShowWindow(false);
+        //StatUI = new GameObject();
 
         int i = StatPanel.transform.childCount;
 
@@ -113,14 +125,13 @@ public class UIInventory : MonoBehaviour
     }
 
     public void ShowNotification(string _message, float time ) {
-        UIInventory.instance.DialogWindowShow(true);
         dialogText.text = _message;
         StartCoroutine( showNotification( time ) );
     }
 
     private IEnumerator showNotification( float time ) {
         yield return new WaitForSeconds(time);
-        UIInventory.instance.DialogWindowShow(false);
+        UIInventory.instance.dialogText.text = "";
 
     }
 
@@ -128,17 +139,36 @@ public class UIInventory : MonoBehaviour
         CompanionPanel.SetActive(active);
     }
 
+    public void ShowInstructions(bool show) {
+        Instructions.SetActive(show);
+    }
+
+    public void ResetLevel( ) {
+        Scene loadedLevel = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(loadedLevel.buildIndex);
+    }
+
+    public void LoadMenu( ) {
+        
+        SceneManager.LoadScene("ResponsiveMainMenu");
+    }
     public void AppendNotification( string _message ) {
         dialogText.text += _message;
-        //StartCoroutine( showNotification( time ) );
 
     }
-    public void DialogWindowShow(bool active ) {
-        DialogUI.SetActive(active);
-    }
+    
 
     public void StatWindowShow( bool active ) {
         StatUI.SetActive(active);
+    }
+
+    public bool Show {
+        get {
+            showWindow = !showWindow;
+
+            return showWindow;
+        }
+        set { showWindow = value; }
     }
     /// <summary>
     /// Adds a new item slot to UI
@@ -166,7 +196,6 @@ public class UIInventory : MonoBehaviour
     }
     public void UpdateCompanionStats(Stat stats)
     {
-        
 
         for (int i = 0; i < CompanionUIList.Count; i++)
         {
@@ -234,6 +263,10 @@ public class UIInventory : MonoBehaviour
 
     // Update is called once per frame
     void Update () {
+        if ( Input.GetKeyDown(KeyCode.Escape) ){
+            ShowInstructions(Show);
+        }
+
 	}
     /// <summary>
     /// Selects the item in the UI to attach to player
