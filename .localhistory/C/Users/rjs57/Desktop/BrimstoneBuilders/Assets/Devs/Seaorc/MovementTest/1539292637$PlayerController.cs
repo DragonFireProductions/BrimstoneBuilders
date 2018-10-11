@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+
 using Assets.Meyer.TestScripts;
 using Assets.Meyer.TestScripts.Player;
 
@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float speed = 3;
 
     CharacterController Controller;
-    bool canMove = true;
+    bool Controlled = true;
     float Y;
 
     float sneakspeed = 1.5f;
@@ -62,8 +62,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !TurnBasedController.instance){
+        if (Input.GetMouseButtonDown(1)){
                 RaycastHit hit;
+
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 CharacterUtility.instance.EnableObstacle(this.gameObject.GetComponent<NavMeshAgent>(), true);
 
@@ -71,14 +72,7 @@ public class PlayerController : MonoBehaviour
                 {
                     float step = speed;
                     float distance = Vector3.Distance(transform.position, hit.point);
-                Quaternion rotation = Quaternion.Euler(hit.point);
 
-                    float dot = Quaternion.Dot(transform.rotation, rotation);
-                    if (dot > 1.0f)
-                        dot = 1.0f;
-                    if (dot < 0.0f)
-                        dot = 0.0f;
-                   //transform.rotation = Quaternion.Euler(hit.point.x, hit.point.y, hit.point.z);
                     Vector3 pos;
                     pos.x = hit.point.x;
                     pos.y = 0.0f;
@@ -88,9 +82,12 @@ public class PlayerController : MonoBehaviour
                 }
         state = PlayerState.navMesh;
         }
+
+
+
         if (Input.anyKey)
         {
-            state = PlayerState.move;
+           state = PlayerState.move;
         }
 
         if (Input.GetKeyDown(KeyCode.C))
@@ -106,16 +103,14 @@ public class PlayerController : MonoBehaviour
         switch (state)
         {
             case PlayerState.move:
-
-                if (!TurnBasedController.instance)
-                    Move();
+                Move();
                 break;
             case PlayerState.sneak:
-                if (!TurnBasedController.instance)
-                    Sneak();
+                Sneak();
                 break;
             case PlayerState.navMesh:
                 break;
+                ;
             default:
                 break;
         }
@@ -209,18 +204,17 @@ public class PlayerController : MonoBehaviour
 
     void Sneak()
     {
-        float X = Input.GetAxisRaw("Horizontal");
-        X *= WalkSpeed;
-        float Z = Input.GetAxisRaw("Vertical");
-        Z *= WalkSpeed;
+        float x = Input.GetAxis("Horizontal");
+        x *= sneakspeed;
+        float z = Input.GetAxis("Vertical");
+        z *= sneakspeed;
 
-        Vector3 n = new Vector3(X, 0, Z);
-
-        var direction = Camera.main.transform.TransformDirection(n);
+        Vector3 norm = new Vector3(x, 0, z);
+        Vector3 direction = Camera.main.transform.TransformDirection(norm);
         direction.y = 0;
 
 
-        Controller.Move(direction.normalized * sneakspeed * Time.deltaTime);
+        Controller.Move(Cam.TransformDirection(direction.normalized * Time.deltaTime));
     }
 
     bool isSneaking()
@@ -235,7 +229,7 @@ public class PlayerController : MonoBehaviour
 
     public void SetControlled(bool _control)
     {
-        canMove = _control;
+        Controlled = _control;
     }
 
 }
