@@ -34,22 +34,11 @@ namespace Kristal
         public EnemyNav Nav;
 
         // Use this for initialization
-        void Awake() {
-
-            timer = reactionTime;
-
-            if (characterObjs == null)
-                characterObjs = new List<GameObject>();
-            
-            //attachedWeapon = transform.Find( "EnemySword" ).gameObject;
-            //animation = attachedWeapon.GetComponent<Animation>();
-        }
-
-        private void Start( ) {
-            stats = gameObject.GetComponent<Stat>();
-            obj = gameObject;
+        void Start( ) {
+            this.material.color = BaseColor;
             Nav = gameObject.GetComponent<EnemyNav>();
         }
+        
 
         private void OnDisable()
         {
@@ -62,6 +51,8 @@ namespace Kristal
             UIInventory.instance.AppendNotification("\n " + this.stats.Name + " health was " + this.stats.Health);
             this.stats.Health -= DamageCalc.Instance.CalcAttack(attacker.stats, this.stats);
             Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Damage-Enemy- line: 64");
+         
+
 
             if ( this.stats.Health <= 0 ){
                 UIInventory.instance.AppendNotification("\n Enemy is now Dead");

@@ -17,21 +17,12 @@ public class EnemyLeader : Enemy {
     //public List<Enemy> EnemyGroup;
 
     public Enemy Leader;
-
-    public Color selectedColor = Color.yellow;
-
-    public Color baseColor = Color.grey;
-
-    public Color leaderColor = Color.green;
-
-    
-
     // Use this for initialization
     void Start () {
+        
         characters = new List < BaseCharacter >();
         Leader = this.gameObject.GetComponent < Enemy >( );
         
-
         gameObject.GetComponent < Enemy >( ).leader = this;
 
         if ( characterObjs.Count != 0 ){
@@ -41,17 +32,17 @@ public class EnemyLeader : Enemy {
                 l_gameObject.GetComponent<Enemy>().leader = this;
             }
         }
-        
     }
 
     public void AssignNewLeader( ) {
-        GameObject NewLeader = characters[ 0 ].gameObject;
+        GameObject NewLeader = TurnBasedController.instance.Enemies[ 0 ].gameObject;
 
         NewLeader.gameObject.AddComponent < EnemyLeader >( );
-        NewLeader.GetComponent < EnemyLeader >( ).characterObjs = characterObjs;
+        NewLeader.gameObject.GetComponent<EnemyLeader>().characterObjs = new List < GameObject >();
+        foreach ( var VARIABLE in TurnBasedController.instance.Enemies ){
+            NewLeader.GetComponent < EnemyLeader >( ).characterObjs.Add(VARIABLE.obj);
+        }
         TurnBasedController.instance.EnemyLeader = NewLeader.GetComponent < Enemy >( );
-        NewLeader.GetComponent < EnemyLeader >( ).baseColor = baseColor;
-        NewLeader.GetComponent < EnemyLeader >( ).selectedColor = selectedColor;
         
         Destroy(this.gameObject);
         this.enabled = false;
@@ -64,7 +55,7 @@ public class EnemyLeader : Enemy {
     {
         Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Remove-EnemyLeader- line: 64");
 
-        if (characters.Count == 0 && _obj == this.Leader)
+        if (TurnBasedController.instance.Enemies.Count == 1 && _obj == this.Leader)
         {
             characterObjs.Clear();
             characters.Clear();
@@ -75,29 +66,21 @@ public class EnemyLeader : Enemy {
         }
         else if (_obj == this.Leader)
         {
-            for (int i = 0; i < characterObjs.Count; i++)
+            for (int i = 0; i < TurnBasedController.instance.Enemies.Count; i++)
             {
-                if (characterObjs[i] == null)
+                if (TurnBasedController.instance.Enemies[i] == null)
                 {
-                    characterObjs.RemoveAt(i);
+                    TurnBasedController.instance.Enemies.RemoveAt(i);
                 }
             }
             Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Remove-EnemyLeader- line: 85");
-
-            characterObjs.Remove(_obj.gameObject);
-            characters.Remove(_obj);
             TurnBasedController.instance.Enemies.Remove(( Enemy )_obj);
             AssignNewLeader();
         }
         else
         {
-            for (int l_i = 0; l_i < characters.Count; l_i++)
-            {
-                if ( characters[ l_i ].gameObject == _obj.gameObject ){
-                    characters.RemoveAt( l_i );
-                    TurnBasedController.instance.Enemies.RemoveAt( l_i );
-                }
-            }
+            TurnBasedController.instance.Enemies.Remove((Enemy)_obj);
+
             Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Remove-EnemyLeader- line: 101");
 
             Destroy(_obj.gameObject);

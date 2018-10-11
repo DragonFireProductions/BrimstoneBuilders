@@ -15,14 +15,16 @@ public class Companion : BaseCharacter {
 	[ SerializeField ] public GameObject camHolder;
 
 	public CompanionNav Nav;
-	
 
+	void Awake( ) {
+		base.Awake();
+		this.material.color = BaseColor;
+	}
     // Use this for initialization
     void Start () {
 	    camHolder = transform.Find( "CamHolder" ).gameObject;
 	    Nav = gameObject.GetComponent < CompanionNav >( );
 	    leader = Character.player.GetComponent < CompanionLeader >( );
-
     }
 
 	public void Damage(Enemy attacker ) {
@@ -33,6 +35,7 @@ public class Companion : BaseCharacter {
 		this.stats.Health -= DamageCalc.Instance.CalcAttack(attacker.stats, this.stats);
 		UIInventory.instance.AppendNotification("\n" + this.stats.name + " health is now " + this.stats.Health);
 		UIInventory.instance.UpdateCompanionStats(this.stats);
+
 
         if (this.stats.Health <= 0 && this != leader)
         {

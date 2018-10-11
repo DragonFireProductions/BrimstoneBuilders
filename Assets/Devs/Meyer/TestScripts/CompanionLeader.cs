@@ -13,13 +13,11 @@ public class CompanionLeader : Companion {
 	//public List < Companion > CompanionGroup;
 
     // Use this for initialization
+	
     void Start () {
-		leader = this;
-		obj = this.gameObject;
-		Nav = null;
-		agent = this.GetComponent < NavMeshAgent >( );
-		stats = this.gameObject.GetComponent < Stat >( );
-		camHolder = this.gameObject.transform.Find( "CamHolder" ).gameObject;
+	    this.material.color = LeaderColor;
+	    camHolder = gameObject.transform.Find("CamHolder").gameObject;
+	    leader = this.gameObject.GetComponent<CompanionLeader>();
 
 		foreach ( var VARIABLE in characterObjs){
 			characters.Add(VARIABLE.GetComponent<Companion>());

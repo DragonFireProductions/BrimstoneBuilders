@@ -112,10 +112,15 @@ namespace Assets.Meyer.TestScripts
 
         private void Initalize()
         {
-
-
             if (hasCompanionsLinedUp)
             {
+                foreach ( var VARIABLE in Companions ){
+                    VARIABLE.material.color = VARIABLE.BaseColor;
+                }
+
+                foreach ( var VARIABLE in Enemies ){
+                    VARIABLE.material.color = VARIABLE.BaseColor;
+                }
                 hasCompanionsLinedUp = false;
                 Companions.Insert(0, CompanionLeader);
                 initalized = true;
@@ -142,7 +147,9 @@ namespace Assets.Meyer.TestScripts
                 foreach ( var VARIABLE in Enemies ){
                     VARIABLE.Nav.SetState = EnemyState.Battle;
                 }
-                Character.player.GetComponent<PlayerController>().enabled = false;
+
+                CompanionLeader.agent.stoppingDistance = 0.1f;
+                Character.instance.controller.SetControlled(false);
                 CompanionCount = Companions.Count;
                 EnemyLeader.Nav.SetState = EnemyState.Battle;
                 Debug.Log("Enemycount: " + Enemies.Count + "           HasCollided- line: 141");
@@ -153,7 +160,7 @@ namespace Assets.Meyer.TestScripts
 
         public void StartBattle()
         {
-            CameraController.controller.SwitchMode(CameraMode.Battle);
+            CameraController.controller.SwitchMode(CameraMode.Battle, CompanionLeader);
 
             StartCoroutine(LineUpLeader());
         }
@@ -200,15 +207,14 @@ namespace Assets.Meyer.TestScripts
                 }
 
                 PlayerSelectedCompanion = Companions[index];
-                PlayerSelectedCompanion.gameObject.GetComponent<Renderer>().material.color = CompanionLeader.LeaderColor;
-
+                PlayerSelectedCompanion.material.color = PlayerSelectedCompanion.IsChosenBySelf;
                 if (index == 0)
                 {
-                    Companions[Companions.Count - 1].gameObject.GetComponent<Renderer>().material.color = CompanionLeader.BaseColor;
+                    Companions[Companions.Count - 1].material.color =  Companions[Companions.Count - 1].BaseColor;
                 }
                 else
                 {
-                    Companions[index - 1].gameObject.GetComponent<Renderer>().material.color = CompanionLeader.BaseColor;
+                    Companions[index - 1].material.color = Companions[index - 1].BaseColor;
                 }
 
                 UIInventory.instance.UpdateCompanionStats(PlayerSelectedCompanion.gameObject.GetComponent<Stat>());
@@ -249,7 +255,7 @@ namespace Assets.Meyer.TestScripts
             if (hasDamaged)
             {
                 hasDamaged = false;
-
+                PlayerSelectedEnemy.material.color = PlayerSelectedEnemy.BaseColor;
                 StartCoroutine(returnToPoint(PlayerStartPos, PlayerSelectedCompanion.agent));
 
             }
@@ -272,11 +278,14 @@ namespace Assets.Meyer.TestScripts
 
         private IEnumerator damage(Enemy enemy)
         {
+            PlayerSelectedCompanion.AnimationClass.Play(AnimationClass.states.Attacking);
+
             yield return new WaitForSeconds(2);
+
+            PlayerSelectedCompanion.AnimationClass.Stop(AnimationClass.states.Attacking);
+
             Debug.Log("Enemycount: " + Enemies.Count + "           Damage- line: 271");
-
-            PlayerSelectedEnemy.obj.GetComponent<Renderer>().material.color = EnemyLeader.leader.IsSelectedColor;
-
+            
             enemy.Damage(PlayerSelectedCompanion);
             hasDamaged = true;
         }
@@ -320,8 +329,8 @@ namespace Assets.Meyer.TestScripts
                 {
                     Debug.Log("Hit " + l_hitInfo.transform.gameObject.name);
 
-                    if (l_hitInfo.transform.gameObject.tag == "Enemy" && PlayerSelectedCompanion.gameObject != null)
-                    {
+                    if (l_hitInfo.transform.gameObject.tag == "Enemy" && PlayerSelectedCompanion.gameObject != null){
+                        l_hitInfo.transform.gameObject.GetComponent < BaseCharacter >( ).material.color = l_hitInfo.transform.gameObject.GetComponent < BaseCharacter >( ).IsChosenByEnemy;
                         CameraController.controller.SwitchMode(CameraMode.Freeze);
                         PlayerStartPos = PlayerSelectedCompanion.transform.position;
                         PlayerStartRotation = PlayerSelectedCompanion.transform.localRotation;
@@ -330,9 +339,7 @@ namespace Assets.Meyer.TestScripts
                         PlayerSelectedCompanion.agent.stoppingDistance = stoppingDistance;
 
                         PlayerSelectedCompanion.agent.SetDestination(l_hitInfo.transform.gameObject.transform.position + l_hitInfo.transform.gameObject.transform.forward * 2);
-                        PlayerSelectedEnemy = l_hitInfo.transform.gameObject.GetComponent<Enemy>();
-                        PlayerSelectedEnemy.obj.GetComponent<Renderer>().material.color = CompanionLeader.LeaderColor;
-                        StartCoroutine(NavDistanceCheck(PlayerSelectedCompanion.agent));
+                        PlayerSelectedEnemy = l_hitInfo.transform.gameObject.GetComponent<Enemy>(); StartCoroutine(NavDistanceCheck(PlayerSelectedCompanion.agent));
 
                         isEnemySelected = true;
                     }
@@ -376,8 +383,9 @@ namespace Assets.Meyer.TestScripts
                 StartCoroutine(damage(enemySelectedCompanion));
             }
             //if enemy has done their damage routine
-            if (hasDamaged)
-            {
+            if (hasDamaged){
+                enemySelectedEnemy.material.color = enemySelectedEnemy.BaseColor;
+                enemySelectedCompanion.material.color = enemySelectedCompanion.BaseColor;
                 hasDamaged = false;
                 //return enemy to starting point
                 StartCoroutine(returnToPoint(EnemyStartPos, enemySelectedEnemy.Nav.Agent));
@@ -433,13 +441,12 @@ namespace Assets.Meyer.TestScripts
             }
             
 
-            enemySelectedEnemy.obj.GetComponent<Renderer>().material.color = EnemyLeader.leader.IsSelectedColor;
-
             EnemyStartPos = enemySelectedEnemy.transform.position;
             EnemyStartRotation = enemySelectedEnemy.transform.localRotation;
 
             CharacterUtility.instance.EnableObstacle(enemySelectedEnemy.Nav.Agent, true);
-            enemySelectedEnemy.Nav.Agent.stoppingDistance = 3;
+            enemySelectedEnemy.material.color = enemySelectedEnemy.IsChosenBySelf;
+            enemySelectedCompanion.material.color = enemySelectedCompanion.IsChosenByEnemy;
 
             enemySelectedEnemy.GetComponent<NavMeshAgent>().SetDestination(enemySelectedCompanion.gameObject.transform.position + enemySelectedCompanion.gameObject.transform.forward * 2);
 
@@ -448,8 +455,11 @@ namespace Assets.Meyer.TestScripts
 
         IEnumerator damage(Companion companion)
         {
+            enemySelectedEnemy.AnimationClass.Play(AnimationClass.states.Attacking);
+
             yield return new WaitForSeconds(1);
-            enemySelectedEnemy.obj.GetComponent<Renderer>().material.color = EnemyLeader.leader.BaseColor;
+
+            enemySelectedEnemy.AnimationClass.Stop(AnimationClass.states.Attacking);
 
             companion.Damage(enemySelectedEnemy);
 
@@ -457,37 +467,16 @@ namespace Assets.Meyer.TestScripts
         }
 
         public void BattleWon( ) {
-            initalized = false;
-            AttackMode = false;
-            isEnemyTurn = false;
-            switchToEnemiesTurn = false;
-            isRandomPlayerSelected = false;
-            hasDamaged = false;
-            isPlayerTurn = false;
-            switchToPlayerTurn = false;
-            isEnemySelected = false;
-            isReached = false;
-            isReturned = false;
-            hasRotated = false;
-            enemySelectedCompanion = null;
-            enemySelectedEnemy = null;
-            PlayerSelectedCompanion = null;
-            PlayerSelectedEnemy = null;
-            index = 0;
-            hasSelectedCompanion = false;
-            switchCompanionSelected = false;
-
-
-            Character.player.GetComponent<PlayerController>().enabled = true;
+            
+            Character.instance.controller.SetControlled( true );
             CameraController.controller.SwitchMode(CameraMode.Player);
             for ( int i= 0; i < Companions.Count; i++ ){
                 if ( Companions[i] != CompanionLeader ){
                         CharacterUtility.instance.EnableObstacle( Companions[ i ].Nav.Agent , true );
                         Companions[ i ].Nav.Switch( CompanionNav.CompanionState.Follow );
-                        Companions[ i ].gameObject.GetComponent < Renderer >( ).material.color = CompanionLeader.BaseColor;
                     }
                 else{
-                    Companions[i].gameObject.GetComponent<Renderer>().material.color = CompanionLeader.LeaderColor;
+                    Companions[ i ].material.color = Companions[ i ].LeaderColor;
                     Companions.RemoveAt(i);
                     i--;
                 }

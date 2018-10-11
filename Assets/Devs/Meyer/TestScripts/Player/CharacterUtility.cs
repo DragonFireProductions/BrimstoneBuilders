@@ -24,6 +24,7 @@ namespace Assets.Meyer.TestScripts
     public class CharacterUtility : MonoBehaviour
     {
         public static CharacterUtility instance;
+
         
         // Use this for initialization
         void Awake () {

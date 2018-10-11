@@ -12,21 +12,20 @@ namespace Assets.Meyer.TestScripts.Player
 
         public static Character instance;
         public static GameObject player;
-        public CompanionLeader leader;
-
-        private Animator animator;
+        
 
         private GameObject UI;
-
-        [SerializeField] GameObject camHolder;
+        
 
         public Color color = Color.green;
+
+        public PlayerController controller;
         
         //CharacterController controller;
 
-        private void Start()
-        {
-            leader = this.gameObject.GetComponent < CompanionLeader >( );
+        private void Start() {
+            controller = gameObject.GetComponent < PlayerController >( );
+
             gameObject.GetComponent < Renderer >( ).material.color = color;
 
             //controller = GetComponent<CharacterController>();
@@ -51,12 +50,6 @@ namespace Assets.Meyer.TestScripts.Player
         void Update()
         {
            
-        }
-        
-    
-        public GameObject CamHolder {
-            get { return camHolder; }
-
         }
     }
 }
