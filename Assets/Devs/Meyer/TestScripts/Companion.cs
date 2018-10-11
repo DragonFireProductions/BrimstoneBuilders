@@ -9,45 +9,32 @@ using Kristal;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Companion : MonoBehaviour {
+public class Companion : BaseCharacter {
 	
-
-    [ SerializeField ] public NavMeshAgent agent;
 
 	[ SerializeField ] public GameObject camHolder;
-	
-
-	[SerializeField] float health = 100;
-
-	public CompanionLeader leader;
-
-	public GameObject obj;
 
 	public CompanionNav Nav;
-
-	public Stat Stats;
+	
 
     // Use this for initialization
     void Start () {
 	    camHolder = transform.Find( "CamHolder" ).gameObject;
-	    Stats = gameObject.GetComponent < Stat >( );
-	    obj = gameObject;
 	    Nav = gameObject.GetComponent < CompanionNav >( );
 	    leader = Character.player.GetComponent < CompanionLeader >( );
-	    agent = gameObject.GetComponent < NavMeshAgent >( );
 
     }
 
 	public void Damage(Enemy attacker ) {
 
 		UIInventory.instance.ShowNotification(attacker.name + " has chosen to attack " + this.gameObject.name, 5);
-		UIInventory.instance.AppendNotification("\n Damage = " + DamageCalc.Instance.CalcAttack(attacker.Stats, this.Stats) );
-		UIInventory.instance.AppendNotification("\n " + this.Stats.Name + " health was " + this.Stats.Health);
-		this.Stats.Health -= DamageCalc.Instance.CalcAttack(attacker.Stats, this.Stats);
-		UIInventory.instance.AppendNotification("\n" + this.Stats.name + " health is now " + this.Stats.Health);
-		UIInventory.instance.UpdateCompanionStats(this.Stats);
+		UIInventory.instance.AppendNotification("\n Damage = " + DamageCalc.Instance.CalcAttack(attacker.stats, this.stats) );
+		UIInventory.instance.AppendNotification("\n " + this.stats.Name + " health was " + this.stats.Health);
+		this.stats.Health -= DamageCalc.Instance.CalcAttack(attacker.stats, this.stats);
+		UIInventory.instance.AppendNotification("\n" + this.stats.name + " health is now " + this.stats.Health);
+		UIInventory.instance.UpdateCompanionStats(this.stats);
 
-        if (this.Stats.Health <= 0 && this != leader)
+        if (this.stats.Health <= 0 && this != leader)
         {
             UIInventory.instance.AppendNotification("\n Enemy is now Dead");
 
@@ -58,14 +45,28 @@ public class Companion : MonoBehaviour {
         }
         else
         {
-            UIInventory.instance.AppendNotification("\n" + this.Stats.name + " health is now " + this.Stats.Health);
+            UIInventory.instance.AppendNotification("\n" + this.stats.name + " health is now " + this.stats.Health);
 
         }
 
 
     }
+	
     // Update is called once per frame
     void Update () { 
+    }
+
+	public override void Remove( BaseCharacter _obj ) {
+        for (int l_i = 0; l_i < characters.Count; l_i++)
+        {
+            if (characters[l_i].gameObject == _obj.gameObject){
+	            characters.RemoveAt( l_i );
+				characterObjs.RemoveAt(l_i);
+                TurnBasedController.instance.Companions.Remove(( Companion )_obj);
+            }
+
+        }
+        Destroy(_obj.obj);
     }
 
 	public GameObject CamHolder {

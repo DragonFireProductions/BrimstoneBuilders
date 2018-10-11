@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Kristal
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : BaseCharacter
     {
         private float timer;
         
@@ -17,12 +17,12 @@ namespace Kristal
         [SerializeField] public float playerDistance = 3.0f;
 
         private bool distanceCheck = false;
-        static List<GameObject> enemies;
 
         [SerializeField] private GameObject attachedWeapon;
 
 
         private bool attacking = false;
+
         private float time = 0;
 
         private Animation animation;
@@ -30,55 +30,45 @@ namespace Kristal
         private Vector3 startPosition;
 
         private Quaternion startRotation;
-
-
-        [SerializeField] float health = 100;
-
-        public EnemyLeader leader;
-
-        public GameObject obj;
-
+        
         public EnemyNav Nav;
 
-        public Stat Stats;
-
-
-
         // Use this for initialization
-        void Awake()
-        {
+        void Awake() {
+
             timer = reactionTime;
 
-            if (enemies == null)
-                enemies = new List<GameObject>();
+            if (characterObjs == null)
+                characterObjs = new List<GameObject>();
             
             //attachedWeapon = transform.Find( "EnemySword" ).gameObject;
             //animation = attachedWeapon.GetComponent<Animation>();
         }
 
         private void Start( ) {
-            Stats = gameObject.GetComponent<Stat>();
+            stats = gameObject.GetComponent<Stat>();
             obj = gameObject;
             Nav = gameObject.GetComponent<EnemyNav>();
         }
 
         private void OnDisable()
         {
-            enemies.Remove(gameObject);
+            characterObjs.Remove(gameObject);
         }
         public void Damage(Companion attacker)
         {
             UIInventory.instance.ShowNotification(attacker.name + " has chosen to attack " + this.gameObject.name, 5);
-            UIInventory.instance.AppendNotification("\n Damage = " + DamageCalc.Instance.CalcAttack(attacker.Stats, this.Stats));
-            UIInventory.instance.AppendNotification("\n " + this.Stats.Name + " health was " + this.Stats.Health);
-            this.Stats.Health -= DamageCalc.Instance.CalcAttack(attacker.Stats, this.Stats);
+            UIInventory.instance.AppendNotification("\n Damage = " + DamageCalc.Instance.CalcAttack(attacker.stats, this.stats));
+            UIInventory.instance.AppendNotification("\n " + this.stats.Name + " health was " + this.stats.Health);
+            this.stats.Health -= DamageCalc.Instance.CalcAttack(attacker.stats, this.stats);
+            Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Damage-Enemy- line: 64");
 
-            if ( this.Stats.Health <= 0 ){
+            if ( this.stats.Health <= 0 ){
                 UIInventory.instance.AppendNotification("\n Enemy is now Dead");
-                leader.Remove(this);
+                Leader.Remove(this);
             }
             else{
-                UIInventory.instance.AppendNotification("\n" + this.Stats.name + " health is now " + this.Stats.Health);
+                UIInventory.instance.AppendNotification("\n" + this.stats.name + " health is now " + this.stats.Health);
 
             }
 
@@ -136,9 +126,11 @@ namespace Kristal
             }
 
         }
-        
+
+        public override void Remove( BaseCharacter chara ) { }
+
         public EnemyLeader Leader {
-            get { return leader; }
+            get { return ( EnemyLeader )leader; }
             set { leader = value; }
         }
         
@@ -146,11 +138,6 @@ namespace Kristal
         void EndDeath()
         {
             Destroy(this.gameObject);
-        }
-
-        public List<GameObject> GetEnemies()
-        {
-            return enemies;
         }
         
 

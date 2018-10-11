@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using Assets.Meyer.TestScripts;
@@ -7,12 +8,13 @@ using Kristal;
 
 using UnityEngine;
 
-public class EnemyLeader : MonoBehaviour {
+[Serializable]
+public class EnemyLeader : Enemy {
     
 
-    [SerializeField] List<GameObject> Enemies;
+    //[SerializeField] List<GameObject> Enemies;
 
-    public List<Enemy> EnemyGroup;
+    //public List<Enemy> EnemyGroup;
 
     public Enemy Leader;
 
@@ -26,17 +28,16 @@ public class EnemyLeader : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        EnemyGroup = new List < Enemy >();
+        characters = new List < BaseCharacter >();
         Leader = this.gameObject.GetComponent < Enemy >( );
-
-        EnemyGroup = new List < Enemy >();
+        
 
         gameObject.GetComponent < Enemy >( ).leader = this;
 
-        if ( Enemies.Count != 0 ){
-            foreach (var l_gameObject in Enemies)
+        if ( characterObjs.Count != 0 ){
+            foreach (var l_gameObject in characterObjs)
             {
-                EnemyGroup.Add(l_gameObject.GetComponent<Enemy>());
+                characters.Add(l_gameObject.GetComponent<Enemy>());
                 l_gameObject.GetComponent<Enemy>().leader = this;
             }
         }
@@ -44,50 +45,63 @@ public class EnemyLeader : MonoBehaviour {
     }
 
     public void AssignNewLeader( ) {
-            GameObject NewLeader = EnemyGroup[ 0 ].gameObject;
+        GameObject NewLeader = characters[ 0 ].gameObject;
 
-            NewLeader.gameObject.AddComponent < EnemyLeader >( );
-            NewLeader.GetComponent < EnemyLeader >( ).Enemies = Enemies;
-            TurnBasedController.instance.EnemyLeader = NewLeader.GetComponent < Enemy >( );
+        NewLeader.gameObject.AddComponent < EnemyLeader >( );
+        NewLeader.GetComponent < EnemyLeader >( ).characterObjs = characterObjs;
+        TurnBasedController.instance.EnemyLeader = NewLeader.GetComponent < Enemy >( );
         NewLeader.GetComponent < EnemyLeader >( ).baseColor = baseColor;
         NewLeader.GetComponent < EnemyLeader >( ).selectedColor = selectedColor;
-            
-            Destroy(this.gameObject);
-            this.enabled = false;
+        
+        Destroy(this.gameObject);
+        this.enabled = false;
     }
     void FillOutInfo(List <GameObject> objects ) {
        
     }
-    
-    public void Remove(Enemy _obj)
+
+    public override void Remove(BaseCharacter _obj)
     {
-        if (EnemyGroup.Count == 0 &&  _obj == this.Leader )
+        Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Remove-EnemyLeader- line: 64");
+
+        if (characters.Count == 0 && _obj == this.Leader)
         {
-            Enemies.Clear();
-            EnemyGroup.Clear();
+            characterObjs.Clear();
+            characters.Clear();
             TurnBasedController.instance.BattleWon();
             Destroy(_obj.gameObject);
+            Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Remove-EnemyLeader line: 73");
+
         }
-        else if ( _obj == this.Leader ){
-            for ( int i = 0 ; i < Enemies.Count ; i++ ){
-                if ( Enemies[i] == null){
-                    Enemies.RemoveAt(i);
+        else if (_obj == this.Leader)
+        {
+            for (int i = 0; i < characterObjs.Count; i++)
+            {
+                if (characterObjs[i] == null)
+                {
+                    characterObjs.RemoveAt(i);
                 }
             }
-            Enemies.Remove( _obj.gameObject );
-            EnemyGroup.Remove( _obj );
-            TurnBasedController.instance.Enemies.Remove( _obj );
+            Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Remove-EnemyLeader- line: 85");
+
+            characterObjs.Remove(_obj.gameObject);
+            characters.Remove(_obj);
+            TurnBasedController.instance.Enemies.Remove(( Enemy )_obj);
             AssignNewLeader();
         }
-        else{
-            for (int l_i = 0; l_i < EnemyGroup.Count; l_i++)
+        else
+        {
+            for (int l_i = 0; l_i < characters.Count; l_i++)
             {
-                if (EnemyGroup[l_i].gameObject == _obj.gameObject)
-                    EnemyGroup.RemoveAt(l_i);
+                if ( characters[ l_i ].gameObject == _obj.gameObject ){
+                    characters.RemoveAt( l_i );
+                    TurnBasedController.instance.Enemies.RemoveAt( l_i );
+                }
             }
+            Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Remove-EnemyLeader- line: 101");
+
             Destroy(_obj.gameObject);
         }
-        
     }
 
 }
