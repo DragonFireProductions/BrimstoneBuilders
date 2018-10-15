@@ -89,7 +89,7 @@ public class UIInventory : MonoBehaviour
 	    else if (instance != this)
 	        Destroy(gameObject);
 	    DontDestroyOnLoad(gameObject);
-
+        
         pos = container.gameObject.transform.position;
         PlayerUi.SetActive(false);
         DialogUI.SetActive(true);
