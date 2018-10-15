@@ -69,7 +69,7 @@ public class PlayerInventory : MonoBehaviour
 
     void Start()
     {
-        UIInventory.instance.PlayerUi.SetActive(isActive);
+        UIInventory.instance.itemsInstance.PlayerUI.SetActive(isActive);
     }
 
     /// <summary>
@@ -116,12 +116,12 @@ public class PlayerInventory : MonoBehaviour
             isActive = !isActive;
             if (isActive == true)
             {
-                UIInventory.instance.PlayerUi.SetActive(true);
+                UIInventory.instance.itemsInstance.PlayerUI.SetActive(true);
             }
 
             if (isActive == false)
             {
-               UIInventory.instance.PlayerUi.SetActive(false);
+               UIInventory.instance.itemsInstance.PlayerUI.SetActive(false);
             }
         }
 

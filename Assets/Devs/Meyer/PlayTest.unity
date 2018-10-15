@@ -1151,10 +1151,11 @@ GameObject:
   - component: {fileID: 102536284}
   - component: {fileID: 102536283}
   - component: {fileID: 102536287}
-  - component: {fileID: 102536286}
   - component: {fileID: 102536282}
+  - component: {fileID: 102536288}
+  - component: {fileID: 102536286}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: ManagerHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1171,18 +1172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abb987950d4d5a843b3c9b1ce3f15046, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 1495378364}
-  variables: {fileID: 2039078893}
-  pause: {fileID: 1796226078}
-  PlayerUi: {fileID: 764070957}
-  DialogUI: {fileID: 1163670918}
-  StatUI: {fileID: 846054845}
-  StatPanel: {fileID: 495920854}
-  dialogText: {fileID: 2037347314}
-  CompanionPanel: {fileID: 1090656365}
-  CompanionLabel: {fileID: 445469966}
-  Instructions: {fileID: 1076827925}
-  InstructionsPanel: {fileID: 0}
+  itemsInstance: {fileID: 0}
   slots: []
 --- !u!114 &102536283
 MonoBehaviour:
@@ -1234,9 +1224,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 102536281}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0b22741440810744901167729840b78, type: 3}
+  m_Script: {fileID: 11500000, guid: 5c5e4556a1d119b45b01175c75ca36de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Clips:
+  - Clip: {fileID: 0}
+    name: 
+    Type: 0
+    Looping: 0
+    Volume: 0
+    Pitch: 0
 --- !u!114 &102536287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1251,6 +1248,17 @@ MonoBehaviour:
   weapons: []
   item: {fileID: 11400000, guid: 20bc731747852f24fbe38425ba513232, type: 2}
   objects: []
+--- !u!114 &102536288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 102536281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ac3246efb7a964e89d70373897d70f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &106604721
 GameObject:
   m_ObjectHideFlags: 0
@@ -1465,9 +1473,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fec39a11410b16b4a98c30f16f89fc35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsChosenBySelf: {r: 0.7924528, g: 0.02616591, b: 0.02616591, a: 0}
+  IsChosenBySelf: {r: 0.027450996, g: 0.7921569, b: 0.7135175, a: 0}
   LeaderColor: {r: 0, g: 1, b: 0.011662006, a: 0}
-  BaseColor: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 0}
+  BaseColor: {r: 1, g: 0, b: 0, a: 0}
   IsChosenByEnemy: {r: 0.8773585, g: 0.81091464, b: 0.15312389, a: 0}
   characters: []
   characterObjs: []
@@ -3168,9 +3176,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fec39a11410b16b4a98c30f16f89fc35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsChosenBySelf: {r: 0.7924528, g: 0.02616591, b: 0.02616591, a: 0}
+  IsChosenBySelf: {r: 0.027450996, g: 0.7921569, b: 0.7135175, a: 0}
   LeaderColor: {r: 0, g: 1, b: 0.011662006, a: 0}
-  BaseColor: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 0}
+  BaseColor: {r: 1, g: 0, b: 0, a: 0}
   IsChosenByEnemy: {r: 0.8773585, g: 0.81091464, b: 0.15312389, a: 0}
   characters: []
   characterObjs: []
@@ -4611,7 +4619,7 @@ GameObject:
   m_Component:
   - component: {fileID: 445469967}
   m_Layer: 5
-  m_Name: Labels
+  m_Name: CompanionLabels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5096,7 +5104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 495920855}
   m_Layer: 5
-  m_Name: Labels
+  m_Name: StatLabels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5234,6 +5242,7 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114050069178616682, guid: 5c119eac46f04df419d8be7ad32e4361, type: 2}
+    - {fileID: 114037816333589322, guid: 5c119eac46f04df419d8be7ad32e4361, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 5c119eac46f04df419d8be7ad32e4361, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &524254299
@@ -6116,7 +6125,6 @@ GameObject:
   - component: {fileID: 631850999}
   - component: {fileID: 631850998}
   - component: {fileID: 631850996}
-  - component: {fileID: 631850995}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -6124,24 +6132,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &631850995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 631850994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c5e4556a1d119b45b01175c75ca36de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Clips:
-  - Clip: {fileID: 0}
-    name: 
-    Type: 0
-    Looping: 0
-    Volume: 0
-    Pitch: 0
 --- !u!114 &631850996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6545,9 +6535,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fec39a11410b16b4a98c30f16f89fc35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsChosenBySelf: {r: 0.7924528, g: 0.02616591, b: 0.02616591, a: 0}
+  IsChosenBySelf: {r: 0.027450996, g: 0.7921569, b: 0.7135175, a: 0}
   LeaderColor: {r: 0, g: 1, b: 0.011662006, a: 0}
-  BaseColor: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 0}
+  BaseColor: {r: 1, g: 0, b: 0, a: 0}
   IsChosenByEnemy: {r: 0.8773585, g: 0.81091464, b: 0.15312389, a: 0}
   characters: []
   characterObjs: []
@@ -8702,7 +8692,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 102536282}
         m_MethodName: LoadMenu
         m_Mode: 1
         m_Arguments:
@@ -10100,7 +10090,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsChosenBySelf: {r: 0.9811321, g: 0.1342115, b: 0.15132718, a: 0}
   LeaderColor: {r: 0, g: 1, b: 0.055066347, a: 0}
-  BaseColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0}
+  BaseColor: {r: 0, g: 0.21405768, b: 1, a: 0}
   IsChosenByEnemy: {r: 0.8919433, g: 0.9150943, b: 0.10791205, a: 0}
   characters: []
   characterObjs:
@@ -10484,9 +10474,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fec39a11410b16b4a98c30f16f89fc35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsChosenBySelf: {r: 0.7924528, g: 0.02616591, b: 0.02616591, a: 0}
+  IsChosenBySelf: {r: 0.027450996, g: 0.7921569, b: 0.7135175, a: 0}
   LeaderColor: {r: 0, g: 1, b: 0.011662006, a: 0}
-  BaseColor: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 0}
+  BaseColor: {r: 1, g: 0, b: 0, a: 0}
   IsChosenByEnemy: {r: 0.8773585, g: 0.81091464, b: 0.15312389, a: 0}
   characters: []
   characterObjs: []
@@ -12400,7 +12390,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 102536282}
         m_MethodName: ResetLevel
         m_Mode: 1
         m_Arguments:
@@ -13591,9 +13581,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fec39a11410b16b4a98c30f16f89fc35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsChosenBySelf: {r: 0.7924528, g: 0.02616591, b: 0.02616591, a: 0}
+  IsChosenBySelf: {r: 0.027450996, g: 0.7921569, b: 0.7135175, a: 0}
   LeaderColor: {r: 0, g: 1, b: 0.011662006, a: 0}
-  BaseColor: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 0}
+  BaseColor: {r: 1, g: 0, b: 0, a: 0}
   IsChosenByEnemy: {r: 0.8773585, g: 0.81091464, b: 0.15312389, a: 0}
   characters: []
   characterObjs: []
@@ -13663,7 +13653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsChosenBySelf: {r: 0.9811321, g: 0.1342115, b: 0.15132718, a: 0}
   LeaderColor: {r: 0, g: 1, b: 0.055066347, a: 0}
-  BaseColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0}
+  BaseColor: {r: 0, g: 0.21405768, b: 1, a: 0}
   IsChosenByEnemy: {r: 0.8919433, g: 0.9150943, b: 0.10791205, a: 0}
   characters: []
   characterObjs:
@@ -14582,7 +14572,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1495378365
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16102,9 +16092,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fec39a11410b16b4a98c30f16f89fc35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsChosenBySelf: {r: 0.7924528, g: 0.02616591, b: 0.02616591, a: 0}
+  IsChosenBySelf: {r: 0.027450996, g: 0.7921569, b: 0.7135175, a: 0}
   LeaderColor: {r: 0, g: 1, b: 0.011662006, a: 0}
-  BaseColor: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 0}
+  BaseColor: {r: 1, g: 0, b: 0, a: 0}
   IsChosenByEnemy: {r: 0.8773585, g: 0.81091464, b: 0.15312389, a: 0}
   characters: []
   characterObjs: []
@@ -16941,7 +16931,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1796226079
 MonoBehaviour:
   m_ObjectHideFlags: 0
