@@ -94,7 +94,7 @@ public class EnemyNav : MonoBehaviour
                     if ( Vector3.Distance( transform.position , player.transform.position ) < VeiwDistance ){
 
                         if ( TurnBasedController.instance == null ){
-                            Character.player.AddComponent<TurnBasedController  >();
+                            GameObject.Find("ManagerHolder").gameObject.AddComponent<TurnBasedController>();
                         }
 
                         Agent.stoppingDistance = 0;
