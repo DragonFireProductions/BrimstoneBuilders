@@ -14,7 +14,8 @@ public class CompanionLeader : Companion {
 
     // Use this for initialization
 	
-    void Start () {
+    void Awake () {
+		base.Awake();
 	    this.material.color = LeaderColor;
 	    camHolder = gameObject.transform.Find("CamHolder").gameObject;
 	    leader = this.gameObject.GetComponent<CompanionLeader>();

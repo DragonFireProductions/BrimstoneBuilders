@@ -17,7 +17,8 @@ public class Companion : BaseCharacter {
 	public CompanionNav Nav;
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
+		base.Awake();
 		this.material.color = BaseColor;
 	    camHolder = transform.Find( "CamHolder" ).gameObject;
 	    Nav = gameObject.GetComponent < CompanionNav >( );
@@ -30,7 +31,9 @@ public class Companion : BaseCharacter {
 		UIInventory.instance.AppendNotification("    " + gameObject.name + ":") ;
 		UIInventory.instance.AppendNotification("\n Damage = " + DamageCalc.Instance.CalcAttack(attacker.stats, this.stats) );
 		UIInventory.instance.AppendNotification("\n health was " + this.stats.Health);
-		this.stats.Health -= DamageCalc.Instance.CalcAttack(attacker.stats, this.stats);
+		float damage =  DamageCalc.Instance.CalcAttack(attacker.stats, this.stats);
+		this.stats.Health -= damage;
+		base.DamageDone((int)damage, this);
 	
         if (this.stats.Health <= 0 && this != leader)
         {

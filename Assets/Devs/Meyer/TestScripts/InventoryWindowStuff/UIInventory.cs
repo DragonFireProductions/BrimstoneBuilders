@@ -88,28 +88,27 @@ public class UIInventory : MonoBehaviour
 	    }
 	    else if (instance != this)
 	        Destroy(gameObject);
-	    //DontDestroyOnLoad(gameObject);
-    }
+	    DontDestroyOnLoad(gameObject);
 
-    void Start()
-    {
         pos = container.gameObject.transform.position;
+        PlayerUi.SetActive(false);
         DialogUI.SetActive(true);
         Show = false;
         StatWindowShow(false);
         ShowInstructions(false);
-        StatUIList = new List < stats >();
-        CompanionUIList = new List < stats >( );
+        StatUIList = new List<stats>();
+        CompanionUIList = new List<stats>();
         CompanionStatShowWindow(false);
         //StatUI = new GameObject();
 
         int i = StatPanel.transform.childCount;
 
-        for (int j = 0; j < i ; j++ ){
+        for (int j = 0; j < i; j++)
+        {
             stats l_stats;
-            l_stats.obj = StatPanel.transform.GetChild( j ).GetComponent<TextMeshProUGUI>();
-            l_stats.name = StatPanel.transform.GetChild( j ).name;
-            StatUIList.Add(l_stats  );
+            l_stats.obj = StatPanel.transform.GetChild(j).GetComponent<TextMeshProUGUI>();
+            l_stats.name = StatPanel.transform.GetChild(j).name;
+            StatUIList.Add(l_stats);
         }
 
         i = CompanionLabel.transform.childCount;
@@ -122,6 +121,11 @@ public class UIInventory : MonoBehaviour
             CompanionUIList.Add(l_stats);
         }
 
+    }
+
+    void Start()
+    {
+        
     }
 
     public void ShowNotification(string _message, float time ) {

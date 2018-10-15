@@ -50,10 +50,12 @@ namespace Kristal
             UIInventory.instance.ShowNotification("   " + gameObject.name + " : ", 5);
             UIInventory.instance.AppendNotification("\n Damage = " + DamageCalc.Instance.CalcAttack(attacker.stats, this.stats));
             UIInventory.instance.AppendNotification("\n Health was " + this.stats.Health);
-            this.stats.Health -= DamageCalc.Instance.CalcAttack(attacker.stats, this.stats);
+            float damage = DamageCalc.Instance.CalcAttack(attacker.stats, this.stats);
+            
+            this.stats.Health -= damage;
             Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Damage-Enemy- line: 64");
          
-
+            base.DamageDone((int)damage, this);
 
             if ( this.stats.Health <= 0 ){
                 UIInventory.instance.AppendNotification("\n Enemy is now Dead");

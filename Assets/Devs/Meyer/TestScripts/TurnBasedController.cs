@@ -49,7 +49,7 @@ namespace Assets.Meyer.TestScripts
                 Destroy(instance);
             }
 
-            //DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
 
         private bool addedEnemyLeader = false;
@@ -75,12 +75,12 @@ namespace Assets.Meyer.TestScripts
 
                 }
 
-                //if initalized & it's the players turn & either the player hasn't selected a companion OR they havent selected an enemy to attack
-                if (addedEnemyLeader && isPlayerTurn && (!hasSelectedCompanion || !isEnemySelected))
-                {
-                    //then
-                    //Select companion
+                if ( addedEnemyLeader && isPlayerTurn && ( !hasSelectedCompanion ) ){
                     SelectCompanion();
+                }
+                //if initalized & it's the players turn & either the player hasn't selected a companion OR they havent selected an enemy to attack
+                if (addedEnemyLeader && isPlayerTurn && (hasSelectedCompanion || !isEnemySelected))
+                {
 
                     //Select enemy
                     SelectEnemy();
@@ -194,7 +194,7 @@ namespace Assets.Meyer.TestScripts
 
         private void SelectCompanion()
         {
-            if (Input.GetKeyDown(KeyCode.P) && isPlayerTurn && AttackMode || switchCompanionSelected)
+            if (isPlayerTurn && AttackMode || switchCompanionSelected)
             {
                 switchCompanionSelected = false;
                 UIInventory.instance.CompanionStatShowWindow(true);
@@ -221,11 +221,6 @@ namespace Assets.Meyer.TestScripts
 
                 CameraController.controller.SwitchMode(CameraMode.ToOtherPlayer, PlayerSelectedCompanion);
                 index += 1;
-            }
-
-            if (PlayerSelectedCompanion != null)
-            {
-                hasSelectedCompanion = true;
             }
         }
 
@@ -278,6 +273,7 @@ namespace Assets.Meyer.TestScripts
 
         private IEnumerator damage(Enemy enemy)
         {
+            
             PlayerSelectedCompanion.AnimationClass.Play(AnimationClass.states.Attacking);
 
             yield return new WaitForSeconds(2);
@@ -422,14 +418,15 @@ namespace Assets.Meyer.TestScripts
 
         private Quaternion EnemyStartRotation;
 
+        private int selected = 0;
+
         private void SelectRandomPlayer()
         {
-            if ( Enemies.Count == 0 ){
+            if ( Enemies.Count == 1 ){
                 enemySelectedEnemy = EnemyLeader;
             }
             else{
-                var randomEnemy = Random.Range(0, Enemies.Count - 1);
-                enemySelectedEnemy = Enemies[randomEnemy];
+                enemySelectedEnemy = Enemies[selected];
             }
 
             if ( Companions.Count == 1 ){
@@ -451,6 +448,7 @@ namespace Assets.Meyer.TestScripts
             enemySelectedEnemy.GetComponent<NavMeshAgent>().SetDestination(enemySelectedCompanion.gameObject.transform.position + enemySelectedCompanion.gameObject.transform.forward * 2);
 
             StartCoroutine(NavDistanceCheck(enemySelectedEnemy.Nav.Agent));
+            selected++;
         }
 
         IEnumerator damage(Companion companion)
@@ -573,6 +571,9 @@ namespace Assets.Meyer.TestScripts
                 StartCoroutine(TurnCompanion(Companions[i], i));
             }
 
+            if ( Companions.Count == 0 ){
+                hasCompanionsLinedUp = true;
+            }
             Companions = holderCompanions;
         }
 

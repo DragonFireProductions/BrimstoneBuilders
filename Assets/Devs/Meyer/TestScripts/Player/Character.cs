@@ -21,10 +21,6 @@ namespace Assets.Meyer.TestScripts.Player
         public PlayerController controller;
         
         //CharacterController controller;
-        void Start() { 
-            controller = gameObject.GetComponent < PlayerController >( );
-        }
-
         // Use this for initialization
         void Awake()
         {
@@ -35,8 +31,9 @@ namespace Assets.Meyer.TestScripts.Player
             else if (instance != this)
                 Destroy(gameObject);
 
-            //DontDestroyOnLoad(gameObject);
-            player = this.gameObject;
+            DontDestroyOnLoad(gameObject);
+            player = GameObject.FindWithTag( "Player" );
+            controller = player.GetComponent < PlayerController >( );
 
         }
 

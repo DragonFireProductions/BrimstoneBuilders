@@ -5,7 +5,7 @@ using UnityEngine;
 public class AnimationClass : MonoBehaviour
 {
 
-    public enum states { Attacking = 0, Idle, Dying }
+    public enum states { Attacking = 0, Idle, Dying, DamageText }
 
     [SerializeField] public Animator animation;
     [SerializeField] public string name;
