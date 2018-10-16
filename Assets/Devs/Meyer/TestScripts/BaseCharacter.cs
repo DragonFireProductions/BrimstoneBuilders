@@ -6,9 +6,13 @@ using Assets.Meyer.TestScripts;
 
 using Kristal;
 
+using TMPro;
+
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
+
+using Random = System.Random;
 
 [Serializable]
 public abstract class BaseCharacter : MonoBehaviour {
@@ -39,6 +43,8 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public AnimationClass AnimationClass;
 
+	public TextMeshPro damageText;
+
 	protected void Awake( ) {
         stats = gameObject.GetComponent<Stat>();
 		Assert.IsNotNull(stats, "Stats not found on " + this.gameObject.name);
@@ -47,6 +53,7 @@ public abstract class BaseCharacter : MonoBehaviour {
         material = gameObject.GetComponent<Renderer>().material;
 		animator = gameObject.GetComponent < Animator >( );
 		AnimationClass = gameObject.AddComponent < AnimationClass >( );
+		damageText = transform.Find( "DamageText" ).GetComponentInChildren< TextMeshPro >( );
 	}
 	
 
@@ -55,8 +62,21 @@ public abstract class BaseCharacter : MonoBehaviour {
 		
 	}
 	
-	
+	public void DamageDone(int damage, BaseCharacter gameObject ) {
+		damageText.enabled = true;
 
+        damageText.transform.position = gameObject.transform.position + ( gameObject.transform.up * 4 );
+		damageText.text = damage.ToString( );
+			damageText.transform.parent = this.transform;
+			damageText.GetComponentInChildren < Animation >( ).Play( );
+			StartCoroutine( deleteDamages( damageText ) );
+	}
+
+	IEnumerator deleteDamages(TextMeshPro instantiated ) {
+		yield return new WaitForSeconds(4);
+		AnimationClass.Stop(AnimationClass.states.DamageText);
+		damageText.enabled = false;
+	}
 	public void Damage( BaseCharacter _player_selected_companion ) { }
 
 }

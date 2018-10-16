@@ -7,6 +7,8 @@ using Assets.Meyer.TestScripts.Player;
 
 using Kristal;
 
+using TMPro;
+
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -49,13 +51,13 @@ namespace Assets.Meyer.TestScripts
                 Destroy(instance);
             }
 
-            //DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
 
         private bool addedEnemyLeader = false;
         private void Update() {
             timer += Time.deltaTime;
-            UIInventory.instance.ViewEnemyStats();
+            StaticManager.uiInventory.ViewEnemyStats();
 
             if (AttackMode)
             {
@@ -75,12 +77,12 @@ namespace Assets.Meyer.TestScripts
 
                 }
 
-                //if initalized & it's the players turn & either the player hasn't selected a companion OR they havent selected an enemy to attack
-                if (addedEnemyLeader && isPlayerTurn && (!hasSelectedCompanion || !isEnemySelected))
-                {
-                    //then
-                    //Select companion
+                if ( addedEnemyLeader && isPlayerTurn && ( !hasSelectedCompanion ) ){
                     SelectCompanion();
+                }
+                //if initalized & it's the players turn & either the player hasn't selected a companion OR they havent selected an enemy to attack
+                if (addedEnemyLeader && isPlayerTurn && (hasSelectedCompanion || !isEnemySelected))
+                {
 
                     //Select enemy
                     SelectEnemy();
@@ -141,7 +143,7 @@ namespace Assets.Meyer.TestScripts
                 }
 
                 foreach ( var VARIABLE in Companions ){
-                    CharacterUtility.instance.EnableObstacle(VARIABLE.agent, true);
+                    StaticManager.utility.EnableObstacle(VARIABLE.agent, true);
                 }
 
                 foreach ( var VARIABLE in Enemies ){
@@ -149,7 +151,7 @@ namespace Assets.Meyer.TestScripts
                 }
 
                 CompanionLeader.agent.stoppingDistance = 0.1f;
-                Character.instance.controller.SetControlled(false);
+                StaticManager.character.controller.SetControlled(false);
                 CompanionCount = Companions.Count;
                 EnemyLeader.Nav.SetState = EnemyState.Battle;
                 Debug.Log("Enemycount: " + Enemies.Count + "           HasCollided- line: 141");
@@ -170,7 +172,7 @@ namespace Assets.Meyer.TestScripts
             obj = new GameObject("basePos");
             obj.transform.position = Character.player.transform.position + Character.player.transform.forward * 15.0f;
             obj.transform.LookAt(Character.player.transform);
-            CharacterUtility.instance.EnableObstacle(EnemyLeader.Nav.Agent, true);
+            StaticManager.utility.EnableObstacle(EnemyLeader.Nav.Agent, true);
             EnemyLeader.Nav.Agent.stoppingDistance = 0;
             EnemyLeader.Nav.SetDestination(Character.player.transform.position + Character.player.transform.forward * 15.0f);
             Debug.Log("Enemycount: " + Enemies.Count + "           LineUpLeader- line: 162");
@@ -178,7 +180,7 @@ namespace Assets.Meyer.TestScripts
             LineUpCompanions();
             LineUpEnemies();
 
-            while (CharacterUtility.instance.NavDistanceCheck(EnemyLeader.Nav.Agent) == DistanceCheck.HasNotReachedDestination)
+            while (StaticManager.utility.NavDistanceCheck(EnemyLeader.Nav.Agent) == DistanceCheck.HasNotReachedDestination)
             {
                 yield return new WaitForEndOfFrame();
             }
@@ -194,10 +196,10 @@ namespace Assets.Meyer.TestScripts
 
         private void SelectCompanion()
         {
-            if (Input.GetKeyDown(KeyCode.P) && isPlayerTurn && AttackMode || switchCompanionSelected)
+            if (isPlayerTurn && AttackMode || switchCompanionSelected)
             {
                 switchCompanionSelected = false;
-                UIInventory.instance.CompanionStatShowWindow(true);
+               StaticManager.uiInventory.CompanionStatShowWindow(true);
 
                 hasSelectedCompanion = true;
 
@@ -217,15 +219,10 @@ namespace Assets.Meyer.TestScripts
                     Companions[index - 1].material.color = Companions[index - 1].BaseColor;
                 }
 
-                UIInventory.instance.UpdateCompanionStats(PlayerSelectedCompanion.gameObject.GetComponent<Stat>());
+                StaticManager.uiInventory.UpdateCompanionStats(PlayerSelectedCompanion.gameObject.GetComponent<Stat>());
 
                 CameraController.controller.SwitchMode(CameraMode.ToOtherPlayer, PlayerSelectedCompanion);
                 index += 1;
-            }
-
-            if (PlayerSelectedCompanion != null)
-            {
-                hasSelectedCompanion = true;
             }
         }
 
@@ -278,6 +275,7 @@ namespace Assets.Meyer.TestScripts
 
         private IEnumerator damage(Enemy enemy)
         {
+            
             PlayerSelectedCompanion.AnimationClass.Play(AnimationClass.states.Attacking);
 
             yield return new WaitForSeconds(2);
@@ -294,7 +292,7 @@ namespace Assets.Meyer.TestScripts
         {
             enemy.SetDestination(point);
 
-            while (CharacterUtility.instance.NavDistanceCheck(enemy) == DistanceCheck.HasNotReachedDestination)
+            while (StaticManager.utility.NavDistanceCheck(enemy) == DistanceCheck.HasNotReachedDestination)
             {
                 yield return new WaitForEndOfFrame();
             }
@@ -310,7 +308,7 @@ namespace Assets.Meyer.TestScripts
 
         public IEnumerator NavDistanceCheck(NavMeshAgent agent) {
             timer = 0;
-            while (CharacterUtility.instance.NavDistanceCheck(agent) == DistanceCheck.HasNotReachedDestination && timer < 5.0f)
+            while (StaticManager.utility.NavDistanceCheck(agent) == DistanceCheck.HasNotReachedDestination && timer < 5.0f)
             {
                 yield return new WaitForEndOfFrame();
             }
@@ -335,7 +333,7 @@ namespace Assets.Meyer.TestScripts
                         PlayerStartPos = PlayerSelectedCompanion.transform.position;
                         PlayerStartRotation = PlayerSelectedCompanion.transform.localRotation;
 
-                        CharacterUtility.instance.EnableObstacle(PlayerSelectedCompanion.agent, true);
+                        StaticManager.utility.EnableObstacle(PlayerSelectedCompanion.agent, true);
                         PlayerSelectedCompanion.agent.stoppingDistance = stoppingDistance;
 
                         PlayerSelectedCompanion.agent.SetDestination(l_hitInfo.transform.gameObject.transform.position + l_hitInfo.transform.gameObject.transform.forward * 2);
@@ -422,14 +420,15 @@ namespace Assets.Meyer.TestScripts
 
         private Quaternion EnemyStartRotation;
 
+        private int selected = 0;
+
         private void SelectRandomPlayer()
         {
-            if ( Enemies.Count == 0 ){
+            if ( Enemies.Count == 1 ){
                 enemySelectedEnemy = EnemyLeader;
             }
             else{
-                var randomEnemy = Random.Range(0, Enemies.Count - 1);
-                enemySelectedEnemy = Enemies[randomEnemy];
+                enemySelectedEnemy = Enemies[selected];
             }
 
             if ( Companions.Count == 1 ){
@@ -444,13 +443,14 @@ namespace Assets.Meyer.TestScripts
             EnemyStartPos = enemySelectedEnemy.transform.position;
             EnemyStartRotation = enemySelectedEnemy.transform.localRotation;
 
-            CharacterUtility.instance.EnableObstacle(enemySelectedEnemy.Nav.Agent, true);
+            StaticManager.utility.EnableObstacle(enemySelectedEnemy.Nav.Agent, true);
             enemySelectedEnemy.material.color = enemySelectedEnemy.IsChosenBySelf;
             enemySelectedCompanion.material.color = enemySelectedCompanion.IsChosenByEnemy;
 
             enemySelectedEnemy.GetComponent<NavMeshAgent>().SetDestination(enemySelectedCompanion.gameObject.transform.position + enemySelectedCompanion.gameObject.transform.forward * 2);
 
             StartCoroutine(NavDistanceCheck(enemySelectedEnemy.Nav.Agent));
+            selected++;
         }
 
         IEnumerator damage(Companion companion)
@@ -465,14 +465,15 @@ namespace Assets.Meyer.TestScripts
 
             hasDamaged = true;
         }
+        
 
         public void BattleWon( ) {
             
-            Character.instance.controller.SetControlled( true );
+            StaticManager.character.controller.SetControlled( true );
             CameraController.controller.SwitchMode(CameraMode.Player);
             for ( int i= 0; i < Companions.Count; i++ ){
                 if ( Companions[i] != CompanionLeader ){
-                        CharacterUtility.instance.EnableObstacle( Companions[ i ].Nav.Agent , true );
+                        StaticManager.utility.EnableObstacle( Companions[ i ].Nav.Agent , true );
                         Companions[ i ].Nav.Switch( CompanionNav.CompanionState.Follow );
                     }
                 else{
@@ -482,7 +483,7 @@ namespace Assets.Meyer.TestScripts
                 }
                    
             }
-            UIInventory.instance.CompanionStatShowWindow(false);
+            StaticManager.uiInventory.CompanionStatShowWindow(false);
             Destroy(this);
         }
 
@@ -525,7 +526,7 @@ namespace Assets.Meyer.TestScripts
 
             for (var i = 0; i < Enemies.Count; i++)
             {
-                //CharacterUtility.instance.EnableObstacle( Enemies[ i ].Nav.Agent , true );
+                //StaticManager.utility.EnableObstacle( Enemies[ i ].Nav.Agent , true );
                 StartCoroutine(TurnEnemy(Enemies[i], i));
             }
         }
@@ -573,19 +574,22 @@ namespace Assets.Meyer.TestScripts
                 StartCoroutine(TurnCompanion(Companions[i], i));
             }
 
+            if ( Companions.Count == 0 ){
+                hasCompanionsLinedUp = true;
+            }
             Companions = holderCompanions;
         }
 
         private IEnumerator TurnEnemy(Enemy enemy, int i) {
             timer = 0;
-            while (CharacterUtility.instance.NavDistanceCheck(enemy.Nav.Agent) == DistanceCheck.HasNotReachedDestination && timer < 5.0f)
+            while (StaticManager.utility.NavDistanceCheck(enemy.Nav.Agent) == DistanceCheck.HasNotReachedDestination && timer < 5.0f)
             {
                 yield return new WaitForEndOfFrame();
             }
 
             timer = 0;
 
-            CharacterUtility.instance.EnableObstacle(enemy.Nav.Agent);
+            StaticManager.utility.EnableObstacle(enemy.Nav.Agent);
 
             enemy.gameObject.GetComponent<Collider>().isTrigger =
                     !enemy.gameObject.GetComponent<Collider>().isTrigger;
@@ -625,13 +629,13 @@ namespace Assets.Meyer.TestScripts
 
         private IEnumerator TurnCompanion(Companion companion, int i) {
             timer = 0;
-            while (CharacterUtility.instance.NavDistanceCheck(companion.Nav.Agent) == DistanceCheck.HasNotReachedDestination && timer < 5.0f)
+            while (StaticManager.utility.NavDistanceCheck(companion.Nav.Agent) == DistanceCheck.HasNotReachedDestination && timer < 5.0f)
             {
                 yield return new WaitForEndOfFrame();
             }
 
             timer = 0;
-            CharacterUtility.instance.EnableObstacle(companion.Nav.Agent);
+            StaticManager.utility.EnableObstacle(companion.Nav.Agent);
 
             companion.gameObject.GetComponent<Collider>().isTrigger =
                     !companion.gameObject.GetComponent<Collider>().isTrigger;
@@ -666,14 +670,14 @@ namespace Assets.Meyer.TestScripts
         {
             hasRotated = false;
 
-            if (CharacterUtility.instance.NavDistanceCheck(agent) == DistanceCheck.HasNotReachedDestination)
+            if (StaticManager.utility.NavDistanceCheck(agent) == DistanceCheck.HasNotReachedDestination)
             {
                 yield return new WaitForEndOfFrame();
             }
 
             else
             {
-                CharacterUtility.instance.EnableObstacle(agent);
+                StaticManager.utility.EnableObstacle(agent);
 
                 agent.gameObject.GetComponent<Collider>().isTrigger =
                         !agent.gameObject.GetComponent<Collider>().isTrigger;

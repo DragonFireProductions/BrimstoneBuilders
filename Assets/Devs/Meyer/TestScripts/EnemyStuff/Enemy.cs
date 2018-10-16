@@ -47,20 +47,22 @@ namespace Kristal
 
         public void Damage(Companion attacker)
         {
-            UIInventory.instance.ShowNotification("   " + gameObject.name + " : ", 5);
-            UIInventory.instance.AppendNotification("\n Damage = " + DamageCalc.Instance.CalcAttack(attacker.stats, this.stats));
-            UIInventory.instance.AppendNotification("\n Health was " + this.stats.Health);
-            this.stats.Health -= DamageCalc.Instance.CalcAttack(attacker.stats, this.stats);
+          StaticManager.uiInventory.ShowNotification("   " + gameObject.name + " : ", 5);
+          StaticManager.uiInventory.AppendNotification("\n Damage = " + StaticManager.DamageCalc.CalcAttack(attacker.stats, this.stats));
+          StaticManager.uiInventory.AppendNotification("\n Health was " + this.stats.Health);
+            float damage = StaticManager.DamageCalc.CalcAttack(attacker.stats, this.stats);
+            
+            this.stats.Health -= damage;
             Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Damage-Enemy- line: 64");
          
-
+            base.DamageDone((int)damage, this);
 
             if ( this.stats.Health <= 0 ){
-                UIInventory.instance.AppendNotification("\n Enemy is now Dead");
+              StaticManager.uiInventory.AppendNotification("\n Enemy is now Dead");
                 Leader.Remove(this);
             }
             else{
-                UIInventory.instance.AppendNotification("\n health is now " + this.stats.Health);
+              StaticManager.uiInventory.AppendNotification("\n health is now " + this.stats.Health);
 
             }
 

@@ -6,6 +6,8 @@ using Assets.Meyer.TestScripts.Player;
 
 using Kristal;
 
+using TMPro;
+
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,7 +19,8 @@ public class Companion : BaseCharacter {
 	public CompanionNav Nav;
 
     // Use this for initialization
-    void Start () {
+    void Awake () {
+		base.Awake();
 		this.material.color = BaseColor;
 	    camHolder = transform.Find( "CamHolder" ).gameObject;
 	    Nav = gameObject.GetComponent < CompanionNav >( );
@@ -27,14 +30,16 @@ public class Companion : BaseCharacter {
 	public void Damage(Enemy attacker ) {
 
 		
-		UIInventory.instance.AppendNotification("    " + gameObject.name + ":") ;
-		UIInventory.instance.AppendNotification("\n Damage = " + DamageCalc.Instance.CalcAttack(attacker.stats, this.stats) );
-		UIInventory.instance.AppendNotification("\n health was " + this.stats.Health);
-		this.stats.Health -= DamageCalc.Instance.CalcAttack(attacker.stats, this.stats);
+		StaticManager.uiInventory.AppendNotification("    " + gameObject.name + ":") ;
+		StaticManager.uiInventory.AppendNotification("\n Damage = " + StaticManager.DamageCalc.CalcAttack(attacker.stats, this.stats) );
+		StaticManager.uiInventory.AppendNotification("\n health was " + this.stats.Health);
+		float damage =  StaticManager.DamageCalc.CalcAttack(attacker.stats, this.stats);
+		this.stats.Health -= damage;
+		base.DamageDone((int)damage, this);
 	
         if (this.stats.Health <= 0 && this != leader)
         {
-            UIInventory.instance.AppendNotification("\n Companion is now Dead");
+          StaticManager.uiInventory.AppendNotification("\n Companion is now Dead");
 
 	        if ( this == TurnBasedController.instance.PlayerSelectedCompanion ){
 		        TurnBasedController.instance.switchCompanionSelected = true;
@@ -43,8 +48,13 @@ public class Companion : BaseCharacter {
         }
         else if (this != leader)
         {
-            UIInventory.instance.AppendNotification("\n health is now " + this.stats.Health);
+          StaticManager.uiInventory.AppendNotification("\n health is now " + this.stats.Health);
 
+        }
+		else if ( this == leader && stats.Health <= 0 ){
+            StaticManager.uiInventory.ShowInstructions(true);
+			StaticManager.uiInventory.ShowGameOver(true);
+            StaticManager.uiInventory.itemsInstance.Instructions.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
         }
 
 

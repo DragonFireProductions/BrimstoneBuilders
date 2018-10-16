@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+
+using Assets.Meyer.TestScripts.Player;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -15,47 +18,9 @@ public class Container
 
 public class UIInventory : MonoBehaviour
 {
-    public static UIInventory instance;
+    public UIItems itemsInstance;
 
-    /// <summary>
-    /// InventoryContainer (The whole object containing variables of items)
-    /// </summary>
-    [SerializeField] GameObject container;
-
-    /// <summary>
-    /// The String variables to set in the UI
-    /// </summary>
-    [SerializeField] GameObject variables;
-
-    /// <summary>
-    /// Pause menu
-    /// </summary>
-    [SerializeField] private GameObject pause;
-
-    /// <summary>
-    /// Player UI
-    /// </summary>
-    [SerializeField] public GameObject PlayerUi;
-
-    /// <summary>
-    /// Dialog UI
-    /// </summary>
-    [ SerializeField ] public GameObject DialogUI;
-
-    [ SerializeField ] public GameObject StatUI;
-
-    [ SerializeField ] public GameObject StatPanel;
-
-    [SerializeField] private TextMeshProUGUI dialogText;
-
-    [ SerializeField ] private GameObject CompanionPanel;
-
-    [ SerializeField ] private GameObject CompanionLabel;
-
-    [ SerializeField ] private GameObject Instructions;
-
-    [ SerializeField ] private GameObject InstructionsPanel;
-
+   
     private bool showWindow;
 
     struct stats {
@@ -81,68 +46,70 @@ public class UIInventory : MonoBehaviour
     public List<GameObject> slots;
     
     // Use this for initialization
-    void Awake () {
-	    if (instance == null)
-	    {
-	        instance = this;
-	    }
-	    else if (instance != this)
-	        Destroy(gameObject);
-	    //DontDestroyOnLoad(gameObject);
-    }
+    
 
-    void Start()
-    {
-        pos = container.gameObject.transform.position;
-        DialogUI.SetActive(true);
+    public void Start() {
+        itemsInstance = gameObject.GetComponent < UIItems >( );
+
+        itemsInstance.Start();
+        pos = itemsInstance.InventoryContainer.gameObject.transform.position;
+        itemsInstance.PlayerUI.SetActive(false);
+        itemsInstance.DialogueUI.SetActive(true);
         Show = false;
         StatWindowShow(false);
+        ShowPauseMenu(false);
         ShowInstructions(false);
-        StatUIList = new List < stats >();
-        CompanionUIList = new List < stats >( );
+        StatUIList = new List<stats>();
+        CompanionUIList = new List<stats>();
         CompanionStatShowWindow(false);
-        //StatUI = new GameObject();
+        ShowGameOver(false);
 
-        int i = StatPanel.transform.childCount;
+        //itemsInstance.StatUI = new GameObject();
 
-        for (int j = 0; j < i ; j++ ){
-            stats l_stats;
-            l_stats.obj = StatPanel.transform.GetChild( j ).GetComponent<TextMeshProUGUI>();
-            l_stats.name = StatPanel.transform.GetChild( j ).name;
-            StatUIList.Add(l_stats  );
-        }
-
-        i = CompanionLabel.transform.childCount;
+        int i = itemsInstance.StatLabels.transform.childCount;
 
         for (int j = 0; j < i; j++)
         {
             stats l_stats;
-            l_stats.obj = CompanionLabel.transform.GetChild(j).GetComponent<TextMeshProUGUI>();
-            l_stats.name = CompanionLabel.transform.GetChild(j).name;
+            l_stats.obj = itemsInstance.StatLabels.transform.GetChild(j).GetComponent<TextMeshProUGUI>();
+            l_stats.name = itemsInstance.StatLabels.transform.GetChild(j).name;
+            StatUIList.Add(l_stats);
+        }
+
+        i = itemsInstance.CompanionLabels.transform.childCount;
+
+        for (int j = 0; j < i; j++)
+        {
+            stats l_stats;
+            l_stats.obj = itemsInstance.CompanionLabels.transform.GetChild(j).GetComponent<TextMeshProUGUI>();
+            l_stats.name = itemsInstance.CompanionLabels.transform.GetChild(j).name;
             CompanionUIList.Add(l_stats);
         }
 
     }
 
     public void ShowNotification(string _message, float time ) {
-        dialogText.text = _message;
+        itemsInstance.DialogueUI.GetComponentInChildren<TextMeshProUGUI>().text = _message;
         StartCoroutine( showNotification( time ) );
     }
 
     private IEnumerator showNotification( float time ) {
         yield return new WaitForSeconds(time);
-        UIInventory.instance.dialogText.text = "";
+        itemsInstance.DialogueUI.GetComponentInChildren<TextMeshProUGUI>().text = "";
 
     }
 
     public void CompanionStatShowWindow(bool active ) {
-        CompanionPanel.SetActive(active);
+        itemsInstance.CompanionUI.SetActive(active);
     }
 
     public void ShowInstructions(bool show) {
-        Instructions.SetActive(show);
+        itemsInstance.Instructions.SetActive(show);
     }
 
+    public void ShowGameOver( bool show ) {
+        itemsInstance.GameOverUI.SetActive(show);
+    }
     public void ResetLevel( ) {
         Scene loadedLevel = SceneManager.GetActiveScene();
         SceneManager.LoadScene(loadedLevel.buildIndex);
@@ -153,13 +120,13 @@ public class UIInventory : MonoBehaviour
         SceneManager.LoadScene("ResponsiveMainMenu");
     }
     public void AppendNotification( string _message ) {
-        dialogText.text += _message;
+        itemsInstance.DialogueUI.GetComponentInChildren<TextMeshProUGUI>().text += _message;
 
     }
     
 
     public void StatWindowShow( bool active ) {
-        StatUI.SetActive(active);
+        itemsInstance.StatUI.SetActive(active);
     }
 
     public bool Show {
@@ -176,11 +143,11 @@ public class UIInventory : MonoBehaviour
     /// <param name="item">Weapon that is picked up</param>
     public void AddSlot(WeaponObject item)
     {
-        GameObject newContainer = Instantiate(container);
+        GameObject newContainer = Instantiate(itemsInstance.InventoryContainer);
         newContainer.SetActive(true);
-        newContainer.transform.SetParent(container.transform.parent);
+        newContainer.transform.SetParent(itemsInstance.InventoryContainer.transform.parent);
         newContainer.transform.position = pos;
-        newContainer.transform.localScale = container.transform.localScale;
+        newContainer.transform.localScale = itemsInstance.InventoryContainer.transform.localScale;
         Set(item, newContainer);
         slots.Add(newContainer);
     }
@@ -224,7 +191,7 @@ public class UIInventory : MonoBehaviour
     /// Sets the variables in the UI to the weapon stats passed in
     /// </summary>
     /// <param name="_weapons">Weapon added to UI</param>
-    /// <param name="_container_p">The UI container</param>
+    /// <param name="_container_p">The UI itemsInstance.InventoryContainer</param>
     public void Set(WeaponObject _weapons, GameObject _container_p)
     {
         TextMeshProUGUI[] transforms = _container_p.GetComponentsInChildren<TextMeshProUGUI>();
@@ -253,12 +220,12 @@ public class UIInventory : MonoBehaviour
     }
 
     /// <summary>
-    /// Shows the pause menu
+    /// Shows the itemsInstance.Pause menu
     /// </summary>
     /// <param name="showPause">Bool that determines whether it's shown or not</param>
     public void ShowPauseMenu(bool showPause)
     {
-        pause.SetActive(showPause);
+        itemsInstance.PauseUI.SetActive(showPause);
     }
 
     // Update is called once per frame
@@ -306,7 +273,7 @@ public class UIInventory : MonoBehaviour
         }
         else
         {
-            UIInventory.instance.StatWindowShow(false);
+          StaticManager.uiInventory.StatWindowShow(false);
         }
     }
 

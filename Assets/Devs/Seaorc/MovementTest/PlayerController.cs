@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     private float end = 0.0f;
 
     public static Stat stats;
-    public static UIInventory inventory = UIInventory.instance;
+    
 
     private float dex, endu, agil = 0.0f;
 
@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
         if (showstats)
             UIInventory.instance.UpdateStats(stats);
         else
-            UIInventory.instance.StatUI.SetActive(false);
+            UIInventory.instance.itemsInstance.StatUI.SetActive(false);
 
     }
 

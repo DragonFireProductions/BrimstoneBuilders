@@ -17,7 +17,7 @@ public class WeaponObject : MonoBehaviour
     protected virtual void Start()
     {
         animator = gameObject.GetComponent<Animation>();
-        weaponStats = PlayerInventory.inventory.get_item(weaponName);
+        weaponStats = StaticManager.inventory.get_item(weaponName);
         Assert.IsNotNull(weaponStats, "WeaponItem name not added in inspector " + gameObject.name);
         weapon = this.gameObject;
     }
@@ -59,7 +59,7 @@ public class WeaponObject : MonoBehaviour
     {
         if (collider.tag == "Player")
         {
-            PlayerInventory.inventory.add(this);
+            StaticManager.inventory.add(this);
             if (PlayerInventory.attachedWeapon == null)
             {
                 
@@ -76,13 +76,13 @@ public class WeaponObject : MonoBehaviour
     {
         if (PlayerInventory.attachedWeapon != null)
         {
-            UIInventory.instance.AddSlot(PlayerInventory.attachedWeapon);
+          StaticManager.uiInventory.AddSlot(PlayerInventory.attachedWeapon);
             PlayerInventory.attachedWeapon.gameObject.SetActive(false);
             PlayerInventory.attachedWeapon = null;
         }
         PlayerInventory.attachedWeapon = this;
 
-        UIInventory.instance.Remove(this);
+      StaticManager.uiInventory.Remove(this);
         gameObject.SetActive(true);
         gameObject.GetComponent<BoxCollider>().enabled = false;
         
