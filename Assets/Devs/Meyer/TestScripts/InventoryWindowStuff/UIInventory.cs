@@ -54,8 +54,8 @@ public class UIInventory : MonoBehaviour
 
     public void Start() {
         itemsInstance = gameObject.GetComponent < UIItems >( );
-
         itemsInstance.Start();
+        itemsInstance.InventoryContainer.SetActive(false);
         pos = itemsInstance.InventoryContainer.gameObject.transform.position;
         itemsInstance.PlayerUI.SetActive(false);
         itemsInstance.DialogueUI.SetActive(true);
@@ -301,7 +301,7 @@ public class UIInventory : MonoBehaviour
                 else if (l_hitInfo.transform.gameObject.tag == "Weapon")
                 {
                     UpdateWeaponStats(l_hitInfo.transform.gameObject.GetComponent<WeaponObject>().WeaponStats);
-                    UpdateGameWeaponStats(l_hitInfo.transform.gameObject.GetComponent<GunType>());
+                    //UpdateGameWeaponStats(l_hitInfo.transform.gameObject.GetComponent<GunType>());
                 }
             }
             else

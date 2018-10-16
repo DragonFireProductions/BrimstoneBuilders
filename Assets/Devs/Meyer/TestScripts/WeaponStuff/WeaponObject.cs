@@ -60,16 +60,12 @@ public class WeaponObject : MonoBehaviour
     /// Picks up item
     /// </summary>
     /// <param name="collider">Item it collides with</param>
-    protected virtual void OnTriggerEnter(Collider collider)
+    protected void OnTriggerEnter(Collider collider)
     {
         if (collider.tag == "Player")
         {
             StaticManager.inventory.add(this);
-            if (PlayerInventory.attachedWeapon == null)
-            {
-                
-                SelectItem();
-            }
+            this.GetComponent < BoxCollider >( ).enabled = false;
         }
     }
 
@@ -79,21 +75,16 @@ public class WeaponObject : MonoBehaviour
     /// </summary>
     public void SelectItem()
     {
-        if (PlayerInventory.attachedWeapon != null)
-        {
-          StaticManager.uiInventory.AddSlot(PlayerInventory.attachedWeapon);
-            PlayerInventory.attachedWeapon.gameObject.SetActive(false);
-            PlayerInventory.attachedWeapon = null;
-        }
+       
         PlayerInventory.attachedWeapon = this;
 
-      StaticManager.uiInventory.Remove(this);
+        StaticManager.uiInventory.Remove(this);
         gameObject.SetActive(true);
-        gameObject.GetComponent<BoxCollider>().enabled = false;
-        
 
-        gameObject.transform.parent = Character.player.transform;
-    
+        gameObject.transform.position = StaticManager.character.cube.transform.position;
+        gameObject.transform.rotation = StaticManager.character.cube.transform.rotation;
+        gameObject.transform.parent = StaticManager.character.cube.transform;
+
     }
     
     /// <summary>

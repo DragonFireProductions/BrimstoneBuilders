@@ -16,16 +16,16 @@ namespace Assets.Meyer.TestScripts.Player
         public static GameObject player;
 
         private GameObject UI;
-        
 
+        public GameObject cube;
         [SerializeField] GameObject camHolder;
         public PlayerController controller;
 
         //CharacterController controller;
         // Use this for initialization
-        void Awake()
-        {
+        void Awake() {
             player = GameObject.FindWithTag( "Player" );
+            cube = player.transform.Find("Cube").gameObject;
             controller = player.GetComponent < PlayerController >( );
 
 
