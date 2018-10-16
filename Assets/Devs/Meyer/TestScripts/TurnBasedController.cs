@@ -57,7 +57,7 @@ namespace Assets.Meyer.TestScripts
         private bool addedEnemyLeader = false;
         private void Update() {
             timer += Time.deltaTime;
-            StaticManager.uiInventory.ViewEnemyStats();
+           
 
             if (AttackMode)
             {

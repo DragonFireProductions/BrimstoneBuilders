@@ -19,7 +19,8 @@ public class WeaponItem
         Type3,
         Type4
     };
-        public string objectName;
+
+    public string objectName;
         public int weight;
         public int durability;
         public int value;
@@ -33,4 +34,12 @@ public class WeaponItem
         public bool isStackable;
         public bool destroyOnUse;
         public AudioClip clip;
+
+
+    public object this[string propertyName]
+    {
+        get { return this.GetType().GetField(propertyName).GetValue(this); }
+        set { this.GetType().GetField(propertyName).SetValue(this, value); }
+    }
+
 }

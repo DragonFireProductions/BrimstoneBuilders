@@ -32,6 +32,14 @@ public class UIItems : MonoBehaviour {
 
 	public GameObject GameOverUI;
 
+	public GameObject WeaponStatsUI;
+
+	public GameObject WeaponStatsPanel;
+
+	public GameObject WeaponLabels;
+
+	public GameObject GameStatLabels;
+
 
     public object this[string propertyName]
     {

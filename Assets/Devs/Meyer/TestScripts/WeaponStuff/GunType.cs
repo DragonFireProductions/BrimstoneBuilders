@@ -15,11 +15,11 @@ public class GunType : WeaponObject
     // All variables from previous script can be referenced
     // Script should allow for shooting. Is attached to weapon object in scene
     [SerializeField] GameObject Projectile;
-    [SerializeField] protected float Range;
-    [SerializeField] protected float FireRate;
-    [SerializeField] protected float ReloadTime;
-    [SerializeField] protected int Capacity;
-    [SerializeField] protected int Ammo;
+    [SerializeField] public float Range;
+    [SerializeField] public float FireRate;
+    [SerializeField] public float ReloadTime;
+    [SerializeField] public int Capacity;
+    [SerializeField] public int Ammo;
 
     bool CanFire = true;
     bool Reloading = false;
@@ -29,7 +29,7 @@ public class GunType : WeaponObject
     {
 
     }
-
+    
     //shoots gun
     public override void Attack()
     {
@@ -61,7 +61,11 @@ public class GunType : WeaponObject
         Ammo = Capacity;
         Reloading = false;
     }
-
+    public  object this[string propertyName]
+    {
+        get { return this.GetType().GetField(propertyName).GetValue(this); }
+        set { this.GetType().GetField(propertyName).SetValue(this, value); }
+    }
     ///Recommended functions
     // - Damage
     // - Increase / decrease strength

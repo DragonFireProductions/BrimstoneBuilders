@@ -34,6 +34,10 @@ public class UIInventory : MonoBehaviour
     private List < stats > StatUIList;
 
     private List < stats > CompanionUIList;
+
+    private List < stats > WeaponUIList;
+
+    private List < stats > WeaponStatsUIList;
     /// <summary>
     /// Controls where the new UI item will be located
     /// </summary>
@@ -61,9 +65,11 @@ public class UIInventory : MonoBehaviour
         ShowInstructions(false);
         StatUIList = new List<stats>();
         CompanionUIList = new List<stats>();
+        WeaponUIList = new List < stats >();
+        WeaponStatsUIList = new List < stats >( );
         CompanionStatShowWindow(false);
         ShowGameOver(false);
-
+        ShowWeaponStats(false);
         //itemsInstance.StatUI = new GameObject();
 
         int i = itemsInstance.StatLabels.transform.childCount;
@@ -86,6 +92,26 @@ public class UIInventory : MonoBehaviour
             CompanionUIList.Add(l_stats);
         }
 
+        i = itemsInstance.WeaponLabels.transform.childCount;
+
+        for ( int j = 0 ; j < i ; j++ ){
+            stats l_stats;
+            l_stats.obj = itemsInstance.WeaponLabels.transform.GetChild( j ).GetComponent < TextMeshProUGUI >( );
+            l_stats.name = itemsInstance.WeaponLabels.transform.GetChild( j ).name;
+         
+            WeaponUIList.Add(l_stats);
+        }
+
+        i = itemsInstance.GameStatLabels.transform.childCount;
+
+        for ( int j = 0 ; j < i ; j++ ){
+
+            stats l_stats;
+            l_stats.obj = itemsInstance.GameStatLabels.transform.GetChild( j ).GetComponent < TextMeshProUGUI >( );
+            l_stats.name = itemsInstance.GameStatLabels.transform.GetChild( j ).name;
+
+            WeaponStatsUIList.Add(l_stats);
+        }
     }
 
     public void ShowNotification(string _message, float time ) {
@@ -110,14 +136,9 @@ public class UIInventory : MonoBehaviour
     public void ShowGameOver( bool show ) {
         itemsInstance.GameOverUI.SetActive(show);
     }
-    public void ResetLevel( ) {
-        Scene loadedLevel = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(loadedLevel.buildIndex);
-    }
 
-    public void LoadMenu( ) {
-        
-        SceneManager.LoadScene("ResponsiveMainMenu");
+    public void ShowWeaponStats( bool show ) {
+        itemsInstance.WeaponStatsUI.SetActive(show);
     }
     public void AppendNotification( string _message ) {
         itemsInstance.DialogueUI.GetComponentInChildren<TextMeshProUGUI>().text += _message;
@@ -161,9 +182,25 @@ public class UIInventory : MonoBehaviour
         }
 
     }
+
+    public void UpdateWeaponStats(WeaponItem item ) {
+        ShowWeaponStats(true);
+
+        for ( int i = 0 ; i < WeaponUIList.Count ; i++ ){
+            var a = item[ WeaponUIList[ i ].name ];
+            WeaponUIList[ i ].obj.text = a.ToString( );
+        }
+        
+    }
+
+    public void UpdateGameWeaponStats( GunType obj ) {
+        for ( int i = 0 ; i < WeaponStatsUIList.Count ; i++ ){
+            var a = obj[ WeaponStatsUIList[ i ].name ];
+            WeaponStatsUIList[ i ].obj.text = a.ToString( );
+        }
+    }
     public void UpdateCompanionStats(Stat stats)
     {
-
         for (int i = 0; i < CompanionUIList.Count; i++)
         {
             var a = stats[CompanionUIList[i].name];
@@ -233,8 +270,10 @@ public class UIInventory : MonoBehaviour
         if ( Input.GetKeyDown(KeyCode.Escape) ){
             ShowInstructions(Show);
         }
+        StaticManager.uiInventory.ViewEnemyStats();
 
-	}
+
+    }
     /// <summary>
     /// Selects the item in the UI to attach to player
     /// </summary>
@@ -259,9 +298,10 @@ public class UIInventory : MonoBehaviour
                 {
                     UpdateStats(l_hitInfo.transform.gameObject.GetComponent<Stat>());
                 }
-                else
+                else if (l_hitInfo.transform.gameObject.tag == "Weapon")
                 {
-                    Debug.Log("Nothing is selected");
+                    UpdateWeaponStats(l_hitInfo.transform.gameObject.GetComponent<WeaponObject>().WeaponStats);
+                    UpdateGameWeaponStats(l_hitInfo.transform.gameObject.GetComponent<GunType>());
                 }
             }
             else
@@ -274,6 +314,7 @@ public class UIInventory : MonoBehaviour
         else
         {
           StaticManager.uiInventory.StatWindowShow(false);
+          StaticManager.uiInventory.ShowWeaponStats(false);
         }
     }
 

@@ -22,6 +22,10 @@ public class WeaponObject : MonoBehaviour
         weapon = this.gameObject;
     }
 
+    public virtual object this[ string propertyName ] {
+        get { return this.GetType().GetField(propertyName).GetValue(this); }
+        set { this.GetType().GetField(propertyName).SetValue(this, value); }
+    }
 
     /// <summary>
     /// Plays the animation attached to weapon
@@ -37,6 +41,7 @@ public class WeaponObject : MonoBehaviour
 
     public void StopUsing()
     {
+
     }
 
     //Function should be called when player wants to select this as their primary object

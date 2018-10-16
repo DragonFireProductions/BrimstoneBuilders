@@ -26,7 +26,7 @@ namespace Assets.Meyer.TestScripts
     public class CharacterUtility : MonoBehaviour
     {
     
-
+        
         
         public void EnableObstacle( NavMeshAgent game_object, bool agentMoving = false) {
             game_object.enabled = agentMoving;
