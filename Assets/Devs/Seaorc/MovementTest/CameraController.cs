@@ -188,7 +188,7 @@ public class CameraController : MonoBehaviour
         }
         else if (_mode == CameraMode.Colony)
         {
-            Character.instance.controller.SetControlled(false);
+            StaticManager.character.controller.SetControlled(false);
             StartCoroutine(ToColony());
         }
         else if ( _mode == CameraMode.Battle ){
@@ -219,7 +219,7 @@ public class CameraController : MonoBehaviour
         transform.rotation = ColonyCam.rotation;
         Zoom = 0;
         mode = CameraMode.Colony;
-       Character.instance.controller.SetControlled(false);
+       StaticManager.character.controller.SetControlled(false);
         
     }
     IEnumerator ToPlayer()
@@ -268,7 +268,7 @@ public class CameraController : MonoBehaviour
             transform.LookAt(Character.player.transform.position + (Character.player.transform.forward * 10));
         }
 
-        Character.instance.controller.SetControlled( true );
+        StaticManager.character.controller.SetControlled( true );
         mode = CameraMode.Battle;
 
     }

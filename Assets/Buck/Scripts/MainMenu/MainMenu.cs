@@ -18,9 +18,9 @@ public class MainMenu : MonoBehaviour
     //{
 
     //}
-    void Start ()
-    {
-        AudioManager.manager.PlayMusic("Theme");
+    void Start () {
+        
+        MenuManager.audio.PlayMusic("Theme");
 
         cam = Camera.main;
         cam.GetComponent<Animator>();
@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour
    
     public void PlayClick()
     {
-        AudioManager.manager.PlaySound("Click");
+        MenuManager.audio.PlaySound("Click");
     }
 
     public void PlayGame()

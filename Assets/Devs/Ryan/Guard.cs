@@ -149,7 +149,7 @@ public class Guard : MonoBehaviour
             case GuardState.battle:
                 agent.SetDestination(post.transform.position);
 
-                var check = CharacterUtility.instance.NavDistanceCheck( this.agent );
+                var check = StaticManager.utility.NavDistanceCheck( this.agent );
                 if ( check == DistanceCheck.NavMeshNotEnabled || check == DistanceCheck.HasNotReachedDestination ){
                     if ( check == DistanceCheck.NavMeshNotEnabled ){
                         this.gameObject.GetComponent < NavMeshAgent >( ).enabled = true;

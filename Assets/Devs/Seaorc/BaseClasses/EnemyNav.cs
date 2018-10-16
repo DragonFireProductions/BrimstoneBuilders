@@ -104,8 +104,8 @@ public class EnemyNav : MonoBehaviour
                     }
                 }
 
-                var check = CharacterUtility.instance.NavDistanceCheck( Agent );
-                if (WanderDelay <= Timer && (check == DistanceCheck.HasReachedDestination || check == DistanceCheck.PathInvalid)  || CharacterUtility.instance.NavDistanceCheck(Agent) ==DistanceCheck.HasNoPath)
+                var check = StaticManager.utility.NavDistanceCheck( Agent );
+                if (WanderDelay <= Timer && (check == DistanceCheck.HasReachedDestination || check == DistanceCheck.PathInvalid)  || StaticManager.utility.NavDistanceCheck(Agent) ==DistanceCheck.HasNoPath)
                 {
                     Agent.destination = Random.insideUnitSphere * WanderDistance + location.transform.position;
                     Timer = 0;

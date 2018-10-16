@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
                 RaycastHit hit;
 
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                CharacterUtility.instance.EnableObstacle(this.gameObject.GetComponent<NavMeshAgent>(), true);
+                StaticManager.utility.EnableObstacle(this.gameObject.GetComponent<NavMeshAgent>(), true);
 
                 if (Physics.Raycast(ray, out hit))
                 {
@@ -120,11 +120,12 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (showstats)
-            UIInventory.instance.UpdateStats(stats);
-        else
-            UIInventory.instance.itemsInstance.StatUI.SetActive(false);
+        if (showstats && TurnBasedController.instance)
+          StaticManager.uiInventory.UpdateStats(stats);
+        else if (TurnBasedController.instance && !showstats)
+          StaticManager.uiInventory.itemsInstance.StatUI.SetActive(false);
 
+        
     }
 
     /// <summary>
@@ -139,7 +140,7 @@ public class PlayerController : MonoBehaviour
         Z *= WalkSpeed;
 
         if (X > 0 || Z > 0){
-            CharacterUtility.instance.EnableObstacle( this.gameObject.GetComponent<NavMeshAgent>() , false );
+            StaticManager.utility.EnableObstacle( this.gameObject.GetComponent<NavMeshAgent>() , false );
         }
 
             if (Input.GetKey(KeyCode.LeftShift) && RunSpeed > 1)

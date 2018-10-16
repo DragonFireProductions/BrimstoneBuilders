@@ -6,7 +6,6 @@ using UnityEngine.Assertions;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager manager = null;
     [SerializeField] Sound[] Clips;
     Dictionary<string, Sound> SoundDictionary;
     Sound CurrentSong;
@@ -16,13 +15,6 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        if (manager != null)
-            Destroy(this);
-        else
-            manager = this;
-
-        DontDestroyOnLoad(gameObject);
-
         SoundDictionary = new Dictionary<string, Sound>();
         foreach (Sound sound in Clips)
         {
@@ -72,6 +64,5 @@ public class AudioManager : MonoBehaviour
             SongToPlay.PlaySound();
         }
     }
-
-    public static AudioManager GetInstance() { return manager; }
+    
 }
