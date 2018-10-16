@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+
+using Assets.Meyer.TestScripts.Player;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,8 +20,7 @@ public class UIInventory : MonoBehaviour
 {
     public UIItems itemsInstance;
 
-    public static UIInventory instance;
-
+   
     private bool showWindow;
 
     struct stats {
@@ -44,24 +46,12 @@ public class UIInventory : MonoBehaviour
     public List<GameObject> slots;
     
     // Use this for initialization
-    void Awake () {
-	    if (instance == null)
-	    {
-	        instance = this;
-	    }
-	    else if (instance != this)
-	        Destroy(this);
-	    DontDestroyOnLoad(gameObject);
+    
 
-        itemsInstance = new UIItems();
+    public void Start() {
+        itemsInstance = gameObject.GetComponent < UIItems >( );
 
-        itemsInstance.Start( );
-        
-    }
-
-    void Start() {
-        
-
+        itemsInstance.Start();
         pos = itemsInstance.InventoryContainer.gameObject.transform.position;
         itemsInstance.PlayerUI.SetActive(false);
         itemsInstance.DialogueUI.SetActive(true);
@@ -72,15 +62,17 @@ public class UIInventory : MonoBehaviour
         StatUIList = new List<stats>();
         CompanionUIList = new List<stats>();
         CompanionStatShowWindow(false);
+        ShowGameOver(false);
+
         //itemsInstance.StatUI = new GameObject();
 
-        int i = itemsInstance.StatUI.transform.childCount;
+        int i = itemsInstance.StatLabels.transform.childCount;
 
         for (int j = 0; j < i; j++)
         {
             stats l_stats;
-            l_stats.obj = itemsInstance.StatUI.transform.GetChild(j).GetComponent<TextMeshProUGUI>();
-            l_stats.name = itemsInstance.StatUI.transform.GetChild(j).name;
+            l_stats.obj = itemsInstance.StatLabels.transform.GetChild(j).GetComponent<TextMeshProUGUI>();
+            l_stats.name = itemsInstance.StatLabels.transform.GetChild(j).name;
             StatUIList.Add(l_stats);
         }
 
@@ -115,6 +107,9 @@ public class UIInventory : MonoBehaviour
         itemsInstance.Instructions.SetActive(show);
     }
 
+    public void ShowGameOver( bool show ) {
+        itemsInstance.GameOverUI.SetActive(show);
+    }
     public void ResetLevel( ) {
         Scene loadedLevel = SceneManager.GetActiveScene();
         SceneManager.LoadScene(loadedLevel.buildIndex);
@@ -278,7 +273,7 @@ public class UIInventory : MonoBehaviour
         }
         else
         {
-            UIInventory.instance.StatWindowShow(false);
+          StaticManager.uiInventory.StatWindowShow(false);
         }
     }
 

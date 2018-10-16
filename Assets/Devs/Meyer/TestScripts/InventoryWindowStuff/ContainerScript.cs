@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using Assets.Meyer.TestScripts.Player;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -20,6 +23,6 @@ public class ContainerScript : MonoBehaviour, IPointerDownHandler
     {
         Debug.Log("OnPointerDownDelegate called.");
         name = gameObject.transform.Find("ItemName").GetComponentInChildren<TextMeshProUGUI>().text;
-        UIInventory.instance.selected(PlayerInventory.inventory.get_weapon(name));
+      StaticManager.uiInventory.selected(StaticManager.inventory.get_weapon(name));
     }
 }

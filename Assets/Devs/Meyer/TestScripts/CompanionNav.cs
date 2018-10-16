@@ -97,7 +97,7 @@ public class CompanionNav : MonoBehaviour
                 {
                     if (!Agent.enabled)
                     {
-                        CharacterUtility.instance.EnableObstacle(Agent, true);
+                       StaticManager.utility.EnableObstacle(Agent, true);
                     }
 
                     var r = Random.Range(4, 10);

@@ -6,12 +6,13 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using Kristal;
 
+using UnityEngine.SceneManagement;
+
 namespace Assets.Meyer.TestScripts.Player
 {
     public class Character : MonoBehaviour
     {
-
-        public static Character instance;
+        
         public static GameObject player;
 
         private GameObject UI;
@@ -19,26 +20,21 @@ namespace Assets.Meyer.TestScripts.Player
 
         [SerializeField] GameObject camHolder;
         public PlayerController controller;
-        
+
         //CharacterController controller;
         // Use this for initialization
         void Awake()
         {
-            if (instance == null)
-            {
-                instance = this;
-            }
-            else if (instance != this)
-                Destroy(gameObject);
-
-            DontDestroyOnLoad(gameObject);
             player = GameObject.FindWithTag( "Player" );
             controller = player.GetComponent < PlayerController >( );
 
-        }
 
-        // Update is called once per framed
-        void Update()
+    }
+
+       
+
+    // Update is called once per framed
+    void Update()
         {
             
         }

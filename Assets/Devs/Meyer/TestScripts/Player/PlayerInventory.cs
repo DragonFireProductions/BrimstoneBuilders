@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+
+using Assets.Meyer.TestScripts.Player;
+
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -13,11 +16,6 @@ using Object = System.Object;
 
 public class PlayerInventory : MonoBehaviour
 {
-    /// <summary>
-    /// Static instance of inventory object
-    /// </summary>
-    public static PlayerInventory inventory = null; //Global variable
-
     /// <summary>
     /// Contains list of current weapons in player inventory
     /// </summary>
@@ -54,14 +52,6 @@ public class PlayerInventory : MonoBehaviour
     // Use this for initialization
     void Awake()
     {
-        if (inventory == null)
-        {
-            inventory = this;
-        }
-        else if (inventory != this)
-            Destroy(gameObject);
-        DontDestroyOnLoad(gameObject);
-
         list = item.itemList;
         
         uiList = new List<GameObject>();
@@ -69,7 +59,7 @@ public class PlayerInventory : MonoBehaviour
 
     void Start()
     {
-        UIInventory.instance.itemsInstance.PlayerUI.SetActive(isActive);
+      StaticManager.uiInventory.itemsInstance.PlayerUI.SetActive(isActive);
     }
 
     /// <summary>
@@ -116,12 +106,12 @@ public class PlayerInventory : MonoBehaviour
             isActive = !isActive;
             if (isActive == true)
             {
-                UIInventory.instance.itemsInstance.PlayerUI.SetActive(true);
+              StaticManager.uiInventory.itemsInstance.PlayerUI.SetActive(true);
             }
 
             if (isActive == false)
             {
-               UIInventory.instance.itemsInstance.PlayerUI.SetActive(false);
+             StaticManager.uiInventory.itemsInstance.PlayerUI.SetActive(false);
             }
         }
 
@@ -148,7 +138,7 @@ public class PlayerInventory : MonoBehaviour
         //attachedWeapon = item;
         item.gameObject.SetActive(false);
         objects.Add(item);
-        UIInventory.instance.AddSlot(item);
+      StaticManager.uiInventory.AddSlot(item);
         Debug.Log("Item: " + item.WeaponStats.objectName + " has been added!");
     }
 
