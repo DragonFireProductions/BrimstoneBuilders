@@ -238,38 +238,54 @@ namespace Assets.Meyer.TestScripts
 
         private bool hasRotated;
 
+        public bool AttackConfermed;
+
         private void PlayersTurn()
         {
-            // if player reached enemy
-            if (isReached)
+            GameObject ConfermationPanel = StaticManager.uiInventory.itemsInstance.AttackConfirmationPanel;
+
+            if (ConfermationPanel && !ConfermationPanel.activeSelf)
             {
-                isReached = false;
 
-                StartCoroutine(damage(PlayerSelectedEnemy));
+                if (AttackConfermed)
+                {
+                    // if player reached enemy
+                    if (isReached)
+                    {
+                        isReached = false;
 
-            }
+                        StartCoroutine(damage(PlayerSelectedEnemy));
 
-            if (hasDamaged)
-            {
-                hasDamaged = false;
-                PlayerSelectedEnemy.material.color = PlayerSelectedEnemy.BaseColor;
-                StartCoroutine(returnToPoint(PlayerStartPos, PlayerSelectedCompanion.agent));
+                    }
 
-            }
-            // if player returned to point and hasn't turned yet
-            if (isReturned && !hasRotated){
-                isReturned = false;
-                
-                //turn to original rotation
-                StartCoroutine(Turn(PlayerSelectedCompanion.agent, EnemyLeader.transform.position, PlayerStartRotation));
-            }
+                    if (hasDamaged)
+                    {
+                        hasDamaged = false;
+                        PlayerSelectedEnemy.material.color = PlayerSelectedEnemy.BaseColor;
+                        StartCoroutine(returnToPoint(PlayerStartPos, PlayerSelectedCompanion.agent));
 
-            //if it turned
-            if (hasRotated)
-            {
-                hasRotated = false;
-                isEnemyTurn = true;
-                isPlayerTurn = false;
+                    }
+                    // if player returned to point and hasn't turned yet
+                    if (isReturned && !hasRotated)
+                    {
+                        isReturned = false;
+
+                        //turn to original rotation
+                        StartCoroutine(Turn(PlayerSelectedCompanion.agent, EnemyLeader.transform.position, PlayerStartRotation));
+                    }
+
+                    //if it turned
+                    if (hasRotated)
+                    {
+                        hasRotated = false;
+                        isEnemyTurn = true;
+                        isPlayerTurn = false;
+                    }
+                }
+                else
+                {
+                    isEnemySelected = false;
+                }
             }
         }
 
@@ -340,6 +356,9 @@ namespace Assets.Meyer.TestScripts
                         PlayerSelectedEnemy = l_hitInfo.transform.gameObject.GetComponent<Enemy>(); StartCoroutine(NavDistanceCheck(PlayerSelectedCompanion.agent));
 
                         isEnemySelected = true;
+
+                       if(StaticManager.uiInventory.itemsInstance.AttackConfirmationPanel)
+                            StaticManager.uiInventory.itemsInstance.AttackConfirmationPanel.SetActive(true);
                     }
                     else
                     {
@@ -705,6 +724,11 @@ namespace Assets.Meyer.TestScripts
 
                 hasRotated = true;
             }
+        }
+
+        public void ConfermAttack(bool Confermed)
+        {
+            AttackConfermed = Confermed;
         }
     }
 }

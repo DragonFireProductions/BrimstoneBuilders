@@ -32,6 +32,8 @@ public class UIItems : MonoBehaviour {
 
 	public GameObject GameOverUI;
 
+    public GameObject AttackConfirmationPanel;
+
 
     public object this[string propertyName]
     {
