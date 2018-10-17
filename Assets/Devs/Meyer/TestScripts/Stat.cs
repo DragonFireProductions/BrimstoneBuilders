@@ -31,6 +31,9 @@ public class Stat : MonoBehaviour {
    [SerializeField] private float luck;
 
     [SerializeField] float health;
+    [SerializeField] float maxHealth;
+    [SerializeField] float stamina;
+    [SerializeField] float maxStamina;
     private int xp;
 
     // Use this for initialization
@@ -93,9 +96,28 @@ public class Stat : MonoBehaviour {
         get { return perception; }
     }
 
-    public float Health {
+    public float Health
+    {
         get { return health; }
         set { health = value; }
+    }
+
+    public float MaxHealth
+    {
+        get { return maxHealth; }
+        set { MaxHealth = value; }
+    }
+
+    public float Stamina
+    {
+        get { return stamina; }
+        set { stamina = value; }
+    }
+
+    public float MaxStamina
+    {
+        get { return maxStamina; }
+        set { maxStamina = value; }
     }
 
     public float Dexterity {
