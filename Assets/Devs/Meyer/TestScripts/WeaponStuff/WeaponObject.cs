@@ -13,9 +13,10 @@ public class WeaponObject : MonoBehaviour
     [SerializeField] protected string weaponName; // references InventoryManager items
     protected Animation animator;
 
-
+    public bool isMainInventory = true;
     protected virtual void Start()
     {
+        
         animator = gameObject.GetComponent<Animation>();
         weaponStats = StaticManager.inventory.get_item(weaponName);
         Assert.IsNotNull(weaponStats, "WeaponItem name not added in inspector " + gameObject.name);
@@ -69,8 +70,20 @@ public class WeaponObject : MonoBehaviour
    
         }
 
-        if ( collider.tag == "Player" && StaticManager.uiInventory.Dragging){
+        if ( collider.tag == "Player" && StaticManager.uiInventory.Dragging && StaticManager.uiInventory.isMainInventory){
             StaticManager.uiInventory.Dragging = false;
+            StaticManager.uiInventory.attachedWeapons.Add(this);
+            var ob = StaticManager.uiInventory.attachedWeapons[ 0 ];
+            StaticManager.uiInventory.attachedWeapons.RemoveAt(0);
+            if (ob.isMainInventory)
+            {
+                StaticManager.uiInventory.AddSlot(ob);
+            }
+            else
+            {
+                StaticManager.uiInventory.AddBackpackSlot(ob);
+            }
+            ob.gameObject.SetActive(false);
             this.GetComponent<BoxCollider>().enabled = false;
             StaticManager.character.controller.SetControlled(true);
             StaticManager.uiInventory.Remove(this);
@@ -78,25 +91,30 @@ public class WeaponObject : MonoBehaviour
             this.gameObject.transform.rotation = StaticManager.character.cube.transform.rotation;
             this.gameObject.transform.SetParent(StaticManager.character.cube.transform);
         }
+        else if ( collider.tag == "Player" && StaticManager.uiInventory.Dragging && !StaticManager.uiInventory.isMainInventory ){
+            isMainInventory = false;
+            StaticManager.uiInventory.Dragging = false;
+            StaticManager.uiInventory.attachedWeapons.Add(this);
+            var ob = StaticManager.uiInventory.attachedWeapons[0];
+            StaticManager.uiInventory.attachedWeapons.RemoveAt(0);
+
+            if ( ob.isMainInventory ){
+                StaticManager.uiInventory.AddSlot(ob);
+            }
+            else{
+                StaticManager.uiInventory.AddBackpackSlot(ob);
+            }
+            StaticManager.uiInventory.RemoveBackpack(this);
+
+            ob.gameObject.SetActive(false);
+            this.GetComponent<BoxCollider>().enabled = false;
+            StaticManager.character.controller.SetControlled(true);
+            this.gameObject.transform.position = StaticManager.character.cube.transform.position;
+            this.gameObject.transform.rotation = StaticManager.character.cube.transform.rotation;
+            this.gameObject.transform.SetParent(StaticManager.character.cube.transform);
+        }
     }
-
-
-    /// <summary>
-    /// Attaches weapon to player transform and adds it to UI
-    /// </summary>
-    public void SelectItem()
-    {
-       
-        PlayerInventory.attachedWeapon = this;
-
-        StaticManager.uiInventory.Remove(this);
-        gameObject.SetActive(true);
-
-        gameObject.transform.position = StaticManager.character.cube.transform.position;
-        gameObject.transform.rotation = StaticManager.character.cube.transform.rotation;
-        gameObject.transform.parent = StaticManager.character.cube.transform;
-
-    }
+    
     
     /// <summary>
     /// Returns stats attached to this game object

@@ -46,6 +46,12 @@ public class UIItems : MonoBehaviour {
 
 	public GameObject WeaponOptions;
 
+	public GameObject WeaponInventoryLabels;
+
+	public GameObject GameInventoryStatLabels;
+
+	public GameObject WeaponInventoryStatsUI;
+
     public object this[string propertyName]
     {
         get { return this.GetType().GetField(propertyName).GetValue(this); }

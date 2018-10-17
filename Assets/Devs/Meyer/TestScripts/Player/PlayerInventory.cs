@@ -50,7 +50,9 @@ public class PlayerInventory : MonoBehaviour
     public List < WeaponObject > backpackInventory;
 
     [SerializeField]
-    public static WeaponObject attachedWeapon; // Primary weapon holder
+    public GameObject attachedWeapon; // Primary weapon holder
+
+    public WeaponObject selectedItem;
     // Use this for initialization
     void Awake()
     {
@@ -61,6 +63,8 @@ public class PlayerInventory : MonoBehaviour
 
     void Start()
     {
+      StaticManager.uiInventory.attachedWeapons.Add(attachedWeapon.GetComponent<WeaponObject>());
+      StaticManager.inventory.objects.Add(attachedWeapon.GetComponent<WeaponObject>());
       StaticManager.uiInventory.itemsInstance.PlayerUI.SetActive(isActive);
     }
 
@@ -118,13 +122,8 @@ public class PlayerInventory : MonoBehaviour
              StaticManager.uiInventory.itemsInstance.PlayerUI.SetActive(false);
             }
         }
-
-        if ( Input.GetMouseButtonDown( 1 ) && (StaticManager.uiInventory.itemsInstance.PlayerUI.activeSelf || StaticManager.uiInventory.itemsInstance.BackPackUI.activeSelf )){
-           StaticManager.uiInventory.ShowWeaponOptions(true);
-        }
         
     }
-    
 
     /// <summary>
     /// Adds item picked up to inventory
@@ -144,21 +143,21 @@ public class PlayerInventory : MonoBehaviour
         StaticManager.uiInventory.AddBackpackSlot(item);
     }
 
-    public void moveToBackPack(WeaponObject slot ) {
-        StaticManager.uiInventory.Remove(slot);
-        backpackInventory.Add(slot);
-        StaticManager.uiInventory.AddBackpackSlot(slot);
+    public void moveToBackPack() {
+        StaticManager.uiInventory.itemsInstance.WeaponOptions.SetActive(false);
+        StaticManager.uiInventory.Remove(selectedItem);
+        backpackInventory.Add(selectedItem);
+        StaticManager.uiInventory.AddBackpackSlot(selectedItem);
+        StaticManager.uiInventory.itemsInstance.BackPackUI.GetComponentInChildren<RawImage>().texture = selectedItem.WeaponStats.icon;
+        StaticManager.uiInventory.itemsInstance.BackPackUI.GetComponentInChildren<TextMeshProUGUI>().text = selectedItem.WeaponStats.objectName;
+        StaticManager.uiInventory.ShowBackPackInventory(true);
     }
 
-    public void ViewOptions( WeaponObject slot ) {
+    public void ViewStats( ) {
+        StaticManager.uiInventory.ShowWeaponOptions(false);
+        StaticManager.uiInventory.ShowInventoryWeaponStats(true);
+        StaticManager.uiInventory.UpdateWeaponInventoryStats(selectedItem.WeaponStats);
+    }
 
-    }
-    /// <summary>
-    /// Returns current weapon attached to player
-    /// </summary>
-    /// <returns></returns>
-    public WeaponObject GetWeapon()
-    {
-        return attachedWeapon;
-    }
+   
 }
