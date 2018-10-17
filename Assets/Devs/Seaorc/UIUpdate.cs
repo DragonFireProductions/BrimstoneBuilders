@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using Assets.Meyer.TestScripts;
 
 public class UIUpdate : MonoBehaviour
@@ -9,8 +10,8 @@ public class UIUpdate : MonoBehaviour
     [Header("Status")]
     public Image HPBar;
     public Image StaminaBar;
-    public Text HpText;
-    public Text StaminaText;
+    public TextMeshProUGUI HpText;
+    public TextMeshProUGUI StaminaText;
 
     Stat Selected = null;
     
