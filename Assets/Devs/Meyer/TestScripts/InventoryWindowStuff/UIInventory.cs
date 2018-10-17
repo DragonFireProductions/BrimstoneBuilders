@@ -43,11 +43,16 @@ public class UIInventory : MonoBehaviour
     /// </summary>
     private Vector3 pos;
 
+    private Vector3 pos2;
 
     /// <summary>
     /// The list of current slots in the UI
     /// </summary>
     public List<GameObject> slots;
+
+    public List < GameObject > backpackSlots;
+
+    public bool Dragging = false;
     
     // Use this for initialization
     
@@ -70,6 +75,9 @@ public class UIInventory : MonoBehaviour
         CompanionStatShowWindow(false);
         ShowGameOver(false);
         ShowWeaponStats(false);
+        ShowBackPackInventory(false);
+        ShowWeaponOptions(false);
+
         //itemsInstance.StatUI = new GameObject();
 
         int i = itemsInstance.StatLabels.transform.childCount;
@@ -140,16 +148,23 @@ public class UIInventory : MonoBehaviour
     public void ShowWeaponStats( bool show ) {
         itemsInstance.WeaponStatsUI.SetActive(show);
     }
+
+    public void ShowBackPackInventory( bool show ) {
+        itemsInstance.BackPackUI.SetActive(show);
+    }
+    public void StatWindowShow(bool active)
+    {
+        itemsInstance.StatUI.SetActive(active);
+    }
+
     public void AppendNotification( string _message ) {
         itemsInstance.DialogueUI.GetComponentInChildren<TextMeshProUGUI>().text += _message;
 
     }
-    
 
-    public void StatWindowShow( bool active ) {
-        itemsInstance.StatUI.SetActive(active);
+    public void ShowWeaponOptions( bool active ) {
+        itemsInstance.WeaponOptions.SetActive(active);
     }
-
     public bool Show {
         get {
             showWindow = !showWindow;
@@ -173,6 +188,16 @@ public class UIInventory : MonoBehaviour
         slots.Add(newContainer);
     }
 
+    public void AddBackpackSlot(WeaponObject item)
+    {
+        GameObject newContainer = Instantiate(itemsInstance.BackpackContainer);
+        newContainer.SetActive(true);
+        newContainer.transform.SetParent(itemsInstance.BackpackContainer.transform.parent);
+        newContainer.transform.position = pos2;
+        newContainer.transform.localScale = itemsInstance.BackpackContainer.transform.localScale;
+        backpackSlots.Add(newContainer);
+    }
+
     public void UpdateStats(Stat stats ) {
         StatWindowShow(true);
 
@@ -191,6 +216,10 @@ public class UIInventory : MonoBehaviour
             WeaponUIList[ i ].obj.text = a.ToString( );
         }
         
+    }
+
+    public void ViewWeaponStats( WeaponObject container ) {
+
     }
 
     public void UpdateGameWeaponStats( GunType obj ) {
@@ -220,6 +249,16 @@ public class UIInventory : MonoBehaviour
             {
                 GameObject slot = slots[i].gameObject;
                 slots.RemoveAt(i);
+                Destroy(slot);
+            }
+        }
+    }
+
+    public void RemoveBackpack( WeaponObject item ) {
+        for ( int i = 0 ; i < backpackSlots.Count ; i++ ){
+            if ( backpackSlots[i].name == item.name ){
+                GameObject slot = backpackSlots[ i ].gameObject;
+                backpackSlots.RemoveAt(i);
                 Destroy(slot);
             }
         }
@@ -256,6 +295,14 @@ public class UIInventory : MonoBehaviour
         _container_p.GetComponentInChildren<RawImage>().texture = _weapons.WeaponStats.icon;
     }
 
+    public void SetBackpack( WeaponObject _weapons, GameObject container ) {
+        container.GetComponentInChildren < TextMeshProUGUI >( ).text = _weapons.WeaponStats.objectName;
+        container.transform.Find( "icon" ).GetComponent < RawImage >( ).texture = _weapons.WeaponStats.icon;
+    }
+    void ShowWeaponStats( ) {
+
+    }
+
     /// <summary>
     /// Shows the itemsInstance.Pause menu
     /// </summary>
@@ -266,12 +313,40 @@ public class UIInventory : MonoBehaviour
     }
 
     // Update is called once per frame
+    public WeaponObject selectedItem;
+
+    public GameObject ob;
+
+    public Vector3 offset;
+
+    public Vector3 screenPoint;
     void Update () {
+        if ( Dragging && Input.GetMouseButton(0)){
+            selectedItem.gameObject.SetActive(true);
+            selectedItem.GetComponent < BoxCollider >( ).enabled = true;
+            itemsInstance.PlayerUI.SetActive(false);
+            Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
+
+            //If something was hit, the RaycastHit2D.collider will not be null and the the object must have the "Monkey" tag and target has to be null
+            if (hit.collider != null && hit.collider.tag == "Weapon")
+            {
+                selectedItem.transform.position = worldPoint; // Sets the target to be the transform that was hit
+            }
+
+            float distance_to_screen = Camera.main.WorldToScreenPoint(selectedItem.transform.position).z;
+            var curPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance_to_screen));
+            selectedItem.transform.position = curPosition;
+        }
+
+        if ( Input.GetMouseButtonUp(0) && Dragging ){
+            selectedItem.gameObject.SetActive(false);
+            StaticManager.character.controller.SetControlled(false);
+        }
         if ( Input.GetKeyDown(KeyCode.Escape) ){
             ShowInstructions(Show);
         }
         StaticManager.uiInventory.ViewEnemyStats();
-
 
     }
     /// <summary>

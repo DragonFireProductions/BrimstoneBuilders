@@ -62,10 +62,21 @@ public class WeaponObject : MonoBehaviour
     /// <param name="collider">Item it collides with</param>
     protected void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag == "Player")
+        if (collider.tag == "Player" && !StaticManager.uiInventory.Dragging)
         {
             StaticManager.inventory.add(this);
-            this.GetComponent < BoxCollider >( ).enabled = false;
+            this.GetComponent<BoxCollider>().enabled = false;
+   
+        }
+
+        if ( collider.tag == "Player" && StaticManager.uiInventory.Dragging){
+            StaticManager.uiInventory.Dragging = false;
+            this.GetComponent<BoxCollider>().enabled = false;
+            StaticManager.character.controller.SetControlled(true);
+            StaticManager.uiInventory.Remove(this);
+            this.gameObject.transform.position = StaticManager.character.cube.transform.position;
+            this.gameObject.transform.rotation = StaticManager.character.cube.transform.rotation;
+            this.gameObject.transform.SetParent(StaticManager.character.cube.transform);
         }
     }
 

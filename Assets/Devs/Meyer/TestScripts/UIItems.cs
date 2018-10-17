@@ -40,6 +40,11 @@ public class UIItems : MonoBehaviour {
 
 	public GameObject GameStatLabels;
 
+    public GameObject BackPackUI;
+
+    public GameObject BackpackContainer;
+
+	public GameObject WeaponOptions;
 
     public object this[string propertyName]
     {
