@@ -34,6 +34,7 @@ public class UIItems : MonoBehaviour {
 	public GameObject GameOverUI;
 
 	public GameObject WeaponStatsUI;
+    public GameObject AttackConfirmationPanel;
 
 	public GameObject WeaponStatsPanel;
 
