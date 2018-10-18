@@ -47,8 +47,12 @@ public class PlayerInventory : MonoBehaviour
     private bool isActive = false;
     public List<WeaponObject> objects;
 
+    public List < WeaponObject > backpackInventory;
+
     [SerializeField]
-    public static WeaponObject attachedWeapon; // Primary weapon holder
+    public GameObject attachedWeapon; // Primary weapon holder
+
+    public WeaponObject selectedItem;
     // Use this for initialization
     void Awake()
     {
@@ -59,6 +63,8 @@ public class PlayerInventory : MonoBehaviour
 
     void Start()
     {
+      StaticManager.uiInventory.attachedWeapons.Add(attachedWeapon.GetComponent<WeaponObject>());
+      StaticManager.inventory.objects.Add(attachedWeapon.GetComponent<WeaponObject>());
       StaticManager.uiInventory.itemsInstance.PlayerUI.SetActive(isActive);
     }
 
@@ -104,6 +110,8 @@ public class PlayerInventory : MonoBehaviour
         if (Input.GetButtonDown("Inventory"))
         {
             isActive = !isActive;
+            StaticManager.character.controller.SetControlled(!isActive);
+
             if (isActive == true)
             {
               StaticManager.uiInventory.itemsInstance.PlayerUI.SetActive(true);
@@ -114,19 +122,8 @@ public class PlayerInventory : MonoBehaviour
              StaticManager.uiInventory.itemsInstance.PlayerUI.SetActive(false);
             }
         }
-
-        //calls select() on wanted weapon
-        //if (Input.GetKeyDown(KeyCode.L))
-        //{
-        //    attachedWeapon.GetComponent<Collider>().enabled = false;
-        //    attachedWeapon.gameObject.SetActive(true);
-        //    attachedWeapon.transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;
-        //    attachedWeapon.transform.rotation = GameObject.FindGameObjectWithTag("Player").transform.rotation;
-
-        //    attachedWeapon.gameObject.transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
-        //}
+        
     }
-    
 
     /// <summary>
     /// Adds item picked up to inventory
@@ -134,20 +131,33 @@ public class PlayerInventory : MonoBehaviour
     /// <param name="item">Name of item picked up</param>
     public void add(WeaponObject item)
     {
-        //weapons.Add(item);
-        //attachedWeapon = item;
         item.gameObject.SetActive(false);
         objects.Add(item);
         StaticManager.uiInventory.AddSlot(item);
         Debug.Log("Item: " + item.WeaponStats.objectName + " has been added!");
     }
 
-    /// <summary>
-    /// Returns current weapon attached to player
-    /// </summary>
-    /// <returns></returns>
-    public WeaponObject GetWeapon()
-    {
-        return attachedWeapon;
+    public void addToBackpack( WeaponObject item ) {
+        item.gameObject.SetActive(false);
+        backpackInventory.Add(item);
+        StaticManager.uiInventory.AddBackpackSlot(item);
     }
+
+    public void moveToBackPack() {
+        StaticManager.uiInventory.itemsInstance.WeaponOptions.SetActive(false);
+        StaticManager.uiInventory.Remove(selectedItem);
+        backpackInventory.Add(selectedItem);
+        StaticManager.uiInventory.AddBackpackSlot(selectedItem);
+        StaticManager.uiInventory.itemsInstance.BackPackUI.GetComponentInChildren<RawImage>().texture = selectedItem.WeaponStats.icon;
+        StaticManager.uiInventory.itemsInstance.BackPackUI.GetComponentInChildren<TextMeshProUGUI>().text = selectedItem.WeaponStats.objectName;
+        StaticManager.uiInventory.ShowBackPackInventory(true);
+    }
+
+    public void ViewStats( ) {
+        StaticManager.uiInventory.ShowWeaponOptions(false);
+        StaticManager.uiInventory.ShowInventoryWeaponStats(true);
+        StaticManager.uiInventory.UpdateWeaponInventoryStats(selectedItem.WeaponStats);
+    }
+
+   
 }

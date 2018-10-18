@@ -40,6 +40,17 @@ public class UIItems : MonoBehaviour {
 
 	public GameObject GameStatLabels;
 
+    public GameObject BackPackUI;
+
+    public GameObject BackpackContainer;
+
+	public GameObject WeaponOptions;
+
+	public GameObject WeaponInventoryLabels;
+
+	public GameObject GameInventoryStatLabels;
+
+	public GameObject WeaponInventoryStatsUI;
 
     public object this[string propertyName]
     {

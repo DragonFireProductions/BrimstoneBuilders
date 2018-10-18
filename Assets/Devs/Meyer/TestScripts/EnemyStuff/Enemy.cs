@@ -39,7 +39,7 @@ namespace Kristal
             timer = reactionTime;
         }
 
-        void Start( ) {
+        protected void Start( ) {
             this.material.color = BaseColor;
             Nav = gameObject.GetComponent<EnemyNav>();
         }

@@ -37,17 +37,29 @@ public class UIInventory : MonoBehaviour
 
     private List < stats > WeaponUIList;
 
-    private List < stats > WeaponStatsUIList;
+    private List < stats > GameStatsUiList;
+
+    private List < stats > WeaponInventoryStatsUIList;
+
+    private List < stats > GameInventoryStatsUIList;
+
+    public List < WeaponObject > attachedWeapons;
+
     /// <summary>
     /// Controls where the new UI item will be located
     /// </summary>
     private Vector3 pos;
 
+    private Vector3 pos2;
 
     /// <summary>
     /// The list of current slots in the UI
     /// </summary>
     public List<GameObject> slots;
+
+    public List < GameObject > backpackSlots;
+
+    public bool Dragging = false;
     
     // Use this for initialization
     
@@ -66,10 +78,16 @@ public class UIInventory : MonoBehaviour
         StatUIList = new List<stats>();
         CompanionUIList = new List<stats>();
         WeaponUIList = new List < stats >();
-        WeaponStatsUIList = new List < stats >( );
+        GameStatsUiList = new List < stats >( );
+        WeaponInventoryStatsUIList = new List < stats >( );
+        GameInventoryStatsUIList = new List < stats >();
         CompanionStatShowWindow(false);
         ShowGameOver(false);
         ShowWeaponStats(false);
+        ShowBackPackInventory(false);
+        ShowWeaponOptions(false);
+        ShowInventoryWeaponStats(false);
+
         //itemsInstance.StatUI = new GameObject();
 
         int i = itemsInstance.StatLabels.transform.childCount;
@@ -110,8 +128,32 @@ public class UIInventory : MonoBehaviour
             l_stats.obj = itemsInstance.GameStatLabels.transform.GetChild( j ).GetComponent < TextMeshProUGUI >( );
             l_stats.name = itemsInstance.GameStatLabels.transform.GetChild( j ).name;
 
-            WeaponStatsUIList.Add(l_stats);
+            GameStatsUiList.Add(l_stats);
         }
+        i = itemsInstance.WeaponInventoryLabels.transform.childCount;
+
+        for (int j = 0; j < i; j++)
+        {
+
+            stats l_stats;
+            l_stats.obj = itemsInstance.WeaponInventoryLabels.transform.GetChild(j).GetComponent<TextMeshProUGUI>();
+            l_stats.name = itemsInstance.WeaponInventoryLabels.transform.GetChild(j).name;
+
+            WeaponInventoryStatsUIList.Add(l_stats);
+        }
+        i = itemsInstance.GameInventoryStatLabels.transform.childCount;
+
+        for (int j = 0; j < i; j++)
+        {
+
+            stats l_stats;
+            l_stats.obj = itemsInstance.GameInventoryStatLabels.transform.GetChild(j).GetComponent<TextMeshProUGUI>();
+            l_stats.name = itemsInstance.GameInventoryStatLabels.transform.GetChild(j).name;
+
+            GameInventoryStatsUIList.Add(l_stats);
+        }
+
+
     }
 
     public void ShowNotification(string _message, float time ) {
@@ -140,16 +182,38 @@ public class UIInventory : MonoBehaviour
     public void ShowWeaponStats( bool show ) {
         itemsInstance.WeaponStatsUI.SetActive(show);
     }
+
+    public void ShowBackPackInventory( bool show ) {
+        itemsInstance.BackPackUI.SetActive(show);
+    }
+    public void StatWindowShow(bool active)
+    {
+        itemsInstance.StatUI.SetActive(active);
+    }
+
     public void AppendNotification( string _message ) {
         itemsInstance.DialogueUI.GetComponentInChildren<TextMeshProUGUI>().text += _message;
 
     }
-    
 
-    public void StatWindowShow( bool active ) {
-        itemsInstance.StatUI.SetActive(active);
+    public void ShowWeaponOptions( bool active ) {
+        itemsInstance.WeaponOptions.SetActive(active);
     }
 
+    public void ShowInventoryWeaponStats( bool active ) {
+        itemsInstance.WeaponInventoryStatsUI.SetActive(active);
+    }
+
+    private bool active = false;
+    public void ToggleShow(GameObject obj ) {
+        active = !obj.activeSelf;
+        obj.SetActive(active);
+    }
+    public void Quit(GameObject obj)
+    {
+        obj.SetActive(false);
+
+    }
     public bool Show {
         get {
             showWindow = !showWindow;
@@ -173,6 +237,22 @@ public class UIInventory : MonoBehaviour
         slots.Add(newContainer);
     }
 
+    public void AddBackpackSlot(WeaponObject item)
+    {
+        StaticManager.uiInventory.ShowBackPackInventory(true);
+        itemsInstance.BackpackContainer.SetActive(true);
+        GameObject newContainer = Instantiate( itemsInstance.BackpackContainer );
+        newContainer.name = item.gameObject.name + "Slot";
+        newContainer.transform.SetParent(itemsInstance.BackpackContainer.transform.parent);
+        newContainer.transform.position = pos2;
+        newContainer.transform.localScale = itemsInstance.BackpackContainer.transform.localScale;
+        backpackSlots.Add(newContainer);
+        newContainer.GetComponentInChildren<RawImage>().texture     = item.WeaponStats.icon;
+        newContainer.GetComponentInChildren<TextMeshProUGUI>().text = item.WeaponStats.objectName;
+        itemsInstance.BackpackContainer.SetActive(false);
+
+    }
+
     public void UpdateStats(Stat stats ) {
         StatWindowShow(true);
 
@@ -192,12 +272,33 @@ public class UIInventory : MonoBehaviour
         }
         
     }
+    
 
     public void UpdateGameWeaponStats( GunType obj ) {
-        for ( int i = 0 ; i < WeaponStatsUIList.Count ; i++ ){
-            var a = obj[ WeaponStatsUIList[ i ].name ];
-            WeaponStatsUIList[ i ].obj.text = a.ToString( );
+        for ( int i = 0 ; i < GameStatsUiList.Count ; i++ ){
+            var a = obj[ GameStatsUiList[ i ].name ];
+            GameStatsUiList[ i ].obj.text = a.ToString( );
         }
+    }
+
+    public void UpdateWeaponInventoryStats(WeaponItem obj)
+    {
+        for (int i = 0; i < WeaponInventoryStatsUIList.Count; i++)
+        {
+            var a = obj[WeaponInventoryStatsUIList[i].name];
+            WeaponInventoryStatsUIList[i].obj.text = a.ToString();
+        }
+    }
+    public void UpdateGameInventoryStats(GunType item)
+    {
+        ShowInventoryWeaponStats(true);
+
+        for (int i = 0; i < GameInventoryStatsUIList.Count; i++)
+        {
+            var a = item[GameInventoryStatsUIList[i].name];
+            GameInventoryStatsUIList[i].obj.text = a.ToString();
+        }
+
     }
     public void UpdateCompanionStats(Stat stats)
     {
@@ -220,6 +321,16 @@ public class UIInventory : MonoBehaviour
             {
                 GameObject slot = slots[i].gameObject;
                 slots.RemoveAt(i);
+                Destroy(slot);
+            }
+        }
+    }
+
+    public void RemoveBackpack( WeaponObject item ) {
+        for ( int i = 0 ; i < backpackSlots.Count ; i++ ){
+            if ( backpackSlots[i].name == item.name + "Slot"){
+                GameObject slot = backpackSlots[ i ].gameObject;
+                backpackSlots.RemoveAt(i);
                 Destroy(slot);
             }
         }
@@ -256,6 +367,14 @@ public class UIInventory : MonoBehaviour
         _container_p.GetComponentInChildren<RawImage>().texture = _weapons.WeaponStats.icon;
     }
 
+    public void SetBackpack( WeaponObject _weapons, GameObject container ) {
+        container.GetComponentInChildren < TextMeshProUGUI >( ).text = _weapons.WeaponStats.objectName;
+        container.transform.Find( "icon" ).GetComponent < RawImage >( ).texture = _weapons.WeaponStats.icon;
+    }
+    void ShowWeaponStats( ) {
+
+    }
+
     /// <summary>
     /// Shows the itemsInstance.Pause menu
     /// </summary>
@@ -266,23 +385,46 @@ public class UIInventory : MonoBehaviour
     }
 
     // Update is called once per frame
+    public WeaponObject selectedItem;
+
+    public GameObject ob;
+
+    public Vector3 offset;
+
+    public Vector3 screenPoint;
+
+    public bool isMainInventory = true;
+    
     void Update () {
+        if ( Dragging && Input.GetMouseButton(0)){
+            selectedItem.gameObject.SetActive(true);
+            selectedItem.GetComponent < BoxCollider >( ).enabled = true;
+            Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
+
+            //If something was hit, the RaycastHit2D.collider will not be null and the the object must have the "Monkey" tag and target has to be null
+            if (hit.collider != null && hit.collider.tag == "Weapon")
+            {
+                selectedItem.transform.position = worldPoint; // Sets the target to be the transform that was hit
+            }
+
+            float distance_to_screen = Camera.main.WorldToScreenPoint(selectedItem.transform.position).z;
+            var curPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance_to_screen));
+            selectedItem.transform.position = curPosition;
+        }
+
+        if ( Input.GetMouseButtonUp(0) && Dragging ){
+            Dragging = false;
+            selectedItem.gameObject.SetActive(false);
+            StaticManager.character.controller.SetControlled(false);
+        }
         if ( Input.GetKeyDown(KeyCode.Escape) ){
             ShowInstructions(Show);
         }
         StaticManager.uiInventory.ViewEnemyStats();
 
-
     }
-    /// <summary>
-    /// Selects the item in the UI to attach to player
-    /// </summary>
-    /// <param name="weapon"></param>
-    public void selected(WeaponObject weapon)
-    {
-        Debug.Log(weapon.WeaponStats.objectName + "was clicked");
-        weapon.SelectItem();
-    }
+  
     public void ViewEnemyStats()
     {
         if (Input.GetMouseButton(1))

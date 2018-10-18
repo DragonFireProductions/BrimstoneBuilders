@@ -48,10 +48,9 @@ namespace Assets.Meyer.TestScripts
             }
             else if (instance != this)
             {
-                Destroy(instance);
+                Destroy(this);
             }
-
-            DontDestroyOnLoad(gameObject);
+            
         }
 
         private bool addedEnemyLeader = false;
@@ -198,6 +197,7 @@ namespace Assets.Meyer.TestScripts
         {
             if (isPlayerTurn && AttackMode || switchCompanionSelected)
             {
+                
                 switchCompanionSelected = false;
                StaticManager.uiInventory.CompanionStatShowWindow(true);
 
@@ -209,7 +209,7 @@ namespace Assets.Meyer.TestScripts
                 }
 
                 PlayerSelectedCompanion = Companions[index];
-                PlayerSelectedCompanion.material.color = PlayerSelectedCompanion.IsChosenBySelf;
+                PlayerSelectedCompanion.AnimationClass.Play(AnimationClass.states.Selected);
                 if (index == 0)
                 {
                     Companions[Companions.Count - 1].material.color =  Companions[Companions.Count - 1].BaseColor;
@@ -259,7 +259,7 @@ namespace Assets.Meyer.TestScripts
             // if player returned to point and hasn't turned yet
             if (isReturned && !hasRotated){
                 isReturned = false;
-                
+                PlayerSelectedCompanion.AnimationClass.Stop(AnimationClass.states.Selected);
                 //turn to original rotation
                 StartCoroutine(Turn(PlayerSelectedCompanion.agent, EnemyLeader.transform.position, PlayerStartRotation));
             }

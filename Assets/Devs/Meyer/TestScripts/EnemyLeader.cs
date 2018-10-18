@@ -19,6 +19,7 @@ public class EnemyLeader : Enemy {
     public Enemy Leader;
     // Use this for initialization
     void Start () {
+        base.Start( );
         
         characters = new List < BaseCharacter >();
         Leader = this.gameObject.GetComponent < Enemy >( );
