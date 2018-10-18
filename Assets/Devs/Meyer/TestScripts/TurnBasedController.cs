@@ -236,12 +236,13 @@ namespace Assets.Meyer.TestScripts
 
                 CameraController.controller.SwitchMode(CameraMode.ToOtherPlayer, PlayerSelectedCompanion);
                 index += 1;
+
                 PlayerSelectedCompanion.AnimationClass.Play(AnimationClass.states.Selected);
 
 
                 PlayerSelectedCompanion.isBlocking = false;
             
-               hasSelectedCompanion = true;
+                hasSelectedCompanion = true;
 
         }
 
@@ -275,6 +276,7 @@ namespace Assets.Meyer.TestScripts
                 hasRotated = false;
                 isEnemyTurn = true;
                 isPlayerTurn = false;
+                PlayerSelectedCompanion.AnimationClass.Stop(AnimationClass.states.Selected);
             }
             isPlayersTurnAgain = false;
             // if player reached enemy
