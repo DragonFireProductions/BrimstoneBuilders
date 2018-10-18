@@ -166,6 +166,13 @@ namespace Assets.Meyer.TestScripts
                 PlayerSelectedCompanion.AnimationClass.Stop(AnimationClass.states.Selected);
                 blocking = true;
                 PlayerSelectedCompanion.isBlocking = true;
+                PlayerSelectedCompanion.stats.AttackPoints -= 2;
+
+                if ( PlayerSelectedCompanion.stats.AttackPoints < 0 ){
+                    PlayerSelectedCompanion.stats.AttackPoints = 0;
+                }
+                StaticManager.uiInventory.UpdateCompanionStats(PlayerSelectedCompanion.stats);
+
                 StaticManager.uiInventory.ShowNotification("You have chosen to block", 5);
             }
         }
@@ -208,7 +215,7 @@ namespace Assets.Meyer.TestScripts
                 switchCompanionSelected = false;
                StaticManager.uiInventory.CompanionStatShowWindow(true);
 
-                hasSelectedCompanion = true;
+                
 
                 if (index >= Companions.Count || Companions[index].gameObject == null)
                 {
@@ -230,7 +237,11 @@ namespace Assets.Meyer.TestScripts
                 CameraController.controller.SwitchMode(CameraMode.ToOtherPlayer, PlayerSelectedCompanion);
                 index += 1;
                 PlayerSelectedCompanion.AnimationClass.Play(AnimationClass.states.Selected);
-            PlayerSelectedCompanion.isBlocking = false;
+
+
+                PlayerSelectedCompanion.isBlocking = false;
+            
+               hasSelectedCompanion = true;
 
         }
 
@@ -252,12 +263,12 @@ namespace Assets.Meyer.TestScripts
             if (!hasSelectedCompanion && (PlayerSelectedCompanion == null || isBlocking || PlayerSelectedCompanion.stats.AttackPoints < 1 || !isPlayersTurnAgain)){
                  SelectCompanion();
             }
-            else if (hasSelectedCompanion && !isEnemySelected && !blocking)
+            else if (hasSelectedCompanion && !isEnemySelected && !blocking && PlayerSelectedCompanion.stats.AttackPoints > 0)
             {
                 isPlayersTurnAgain = false;
                 SelectEnemy();
             }
-            else if (!isEnemySelected && hasSelectedCompanion && (blocking || PlayerSelectedCompanion.stats.AttackPoints <= 1)){
+            else if (!isEnemySelected && hasSelectedCompanion && (blocking || PlayerSelectedCompanion.stats.AttackPoints <= 0)){
                 blocking = false;
                 isPlayersTurnAgain = false;
                 hasSelectedCompanion = false;
@@ -291,13 +302,13 @@ namespace Assets.Meyer.TestScripts
             }
 
             //if it turned
-            if (hasRotated && PlayerSelectedCompanion.stats.AttackPoints == 0 && !PlayerSelectedCompanion.isBlocking)
+            if (hasRotated && PlayerSelectedCompanion.stats.AttackPoints <= 0 && !PlayerSelectedCompanion.isBlocking)
             {
                 hasRotated = false;
                 isEnemyTurn = true;
                 isPlayerTurn = false;
             }
-            else if (hasRotated && PlayerSelectedCompanion.stats.AttackPoints != 0 && !PlayerSelectedCompanion.isBlocking){
+            else if (hasRotated && PlayerSelectedCompanion.stats.AttackPoints > 0 && !PlayerSelectedCompanion.isBlocking){
                 isPlayersTurnAgain = true;
                 isEnemyTurn = false;
                 isPlayerTurn = false;
@@ -318,7 +329,13 @@ namespace Assets.Meyer.TestScripts
             PlayerSelectedCompanion.AnimationClass.Stop(AnimationClass.states.Attacking);
 
             Debug.Log("Enemycount: " + Enemies.Count + "           Damage- line: 271");
-            
+            PlayerSelectedCompanion.stats.AttackPoints -= 1;
+            if (PlayerSelectedCompanion.stats.AttackPoints < 0)
+            {
+                PlayerSelectedCompanion.stats.AttackPoints = 0;
+            }
+            StaticManager.uiInventory.UpdateCompanionStats(PlayerSelectedCompanion.stats);
+
             enemy.Damage(PlayerSelectedCompanion);
             hasDamaged = true;
         }
