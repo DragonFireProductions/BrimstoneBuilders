@@ -87,7 +87,7 @@ public class UIInventory : MonoBehaviour
         ShowBackPackInventory(false);
         ShowWeaponOptions(false);
         ShowInventoryWeaponStats(false);
-
+        ShowPauseMenu(false);
         //itemsInstance.StatUI = new GameObject();
 
         int i = itemsInstance.StatLabels.transform.childCount;
@@ -174,7 +174,7 @@ public class UIInventory : MonoBehaviour
     public void ShowInstructions(bool show) {
         itemsInstance.Instructions.SetActive(show);
     }
-
+    
     public void ShowGameOver( bool show ) {
         itemsInstance.GameOverUI.SetActive(show);
     }
@@ -213,6 +213,18 @@ public class UIInventory : MonoBehaviour
     {
         obj.SetActive(false);
 
+    }
+
+    private bool freeze = false;
+    public void Freeze( ) {
+        freeze = !freeze;
+
+        if ( freeze ){
+            Time.timeScale = 0;
+        }
+        else{
+            Time.timeScale = 1;
+        }
     }
     public bool Show {
         get {
@@ -419,7 +431,7 @@ public class UIInventory : MonoBehaviour
             StaticManager.character.controller.SetControlled(false);
         }
         if ( Input.GetKeyDown(KeyCode.Escape) ){
-            ShowInstructions(Show);
+            ShowPauseMenu(Show);
         }
         StaticManager.uiInventory.ViewEnemyStats();
 

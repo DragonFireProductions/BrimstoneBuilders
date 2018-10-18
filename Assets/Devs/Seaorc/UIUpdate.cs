@@ -19,15 +19,15 @@ public class UIUpdate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (TurnBasedController.instance != null)
-        {
-            Selected = TurnBasedController.instance.PlayerSelectedCompanion.stats;
+        //if (TurnBasedController.instance != null)
+        //{
+        //    Selected = TurnBasedController.instance.PlayerSelectedCompanion.stats;
 
-        }
-        else if (FindObjectOfType<CompanionLeader>())
-        {
-            Selected = FindObjectOfType<CompanionLeader>().stats;
-        }
+        //}
+        //else if (FindObjectOfType<CompanionLeader>())
+        //{
+        //    Selected = FindObjectOfType<CompanionLeader>().stats;
+        //}
 
 
         if (Selected != null)

@@ -54,6 +54,10 @@ namespace Assets.Meyer.TestScripts
         }
 
         private bool addedEnemyLeader = false;
+
+        private bool isBlocking = false;
+
+        private bool isPlayersTurnAgain = false;
         private void Update() {
             timer += Time.deltaTime;
            
@@ -76,11 +80,22 @@ namespace Assets.Meyer.TestScripts
 
                 }
 
-                if ( addedEnemyLeader && isPlayerTurn && ( !hasSelectedCompanion ) ){
+                if ( addedEnemyLeader && isPlayerTurn && ( !hasSelectedCompanion) ){
                     SelectCompanion();
                 }
+
+                if ( isPlayersTurnAgain ){
+                    isPlayersTurnAgain = false;
+                  
+                        PlayerSelectedCompanion.AnimationClass.Play(AnimationClass.states.Selected);
+                        PlayerSelectedCompanion.stats.AttackPoints -= 1;
+                }
+
+                if ( isBlocking ){
+                    
+                }
                 //if initalized & it's the players turn & either the player hasn't selected a companion OR they havent selected an enemy to attack
-                if (addedEnemyLeader && isPlayerTurn && (hasSelectedCompanion || !isEnemySelected))
+                if (addedEnemyLeader && isPlayerTurn && (hasSelectedCompanion && !isEnemySelected) && !isBlocking)
                 {
 
                     //Select enemy
@@ -159,6 +174,14 @@ namespace Assets.Meyer.TestScripts
             }
         }
 
+        public void Block( ) {
+            
+            if ( (addedEnemyLeader && isPlayerTurn && hasSelectedCompanion && !isEnemySelected && !isBlocking) ){
+                isBlocking = true;
+                PlayerSelectedCompanion.isBlocking = true;
+            }
+        }
+
         public void StartBattle()
         {
             CameraController.controller.SwitchMode(CameraMode.Battle, CompanionLeader);
@@ -195,7 +218,7 @@ namespace Assets.Meyer.TestScripts
 
         private void SelectCompanion()
         {
-            if (isPlayerTurn && AttackMode || switchCompanionSelected)
+            if (isPlayerTurn && AttackMode && !hasSelectedCompanion && (PlayerSelectedCompanion == null || PlayerSelectedCompanion.stats.AttackPoints == 0 ))
             {
                 
                 switchCompanionSelected = false;
@@ -209,7 +232,6 @@ namespace Assets.Meyer.TestScripts
                 }
 
                 PlayerSelectedCompanion = Companions[index];
-                PlayerSelectedCompanion.AnimationClass.Play(AnimationClass.states.Selected);
                 if (index == 0)
                 {
                     Companions[Companions.Count - 1].material.color =  Companions[Companions.Count - 1].BaseColor;
@@ -223,7 +245,10 @@ namespace Assets.Meyer.TestScripts
 
                 CameraController.controller.SwitchMode(CameraMode.ToOtherPlayer, PlayerSelectedCompanion);
                 index += 1;
+                PlayerSelectedCompanion.AnimationClass.Play(AnimationClass.states.Selected);
+
             }
+            
         }
 
         private bool isPlayerTurn;
@@ -265,11 +290,21 @@ namespace Assets.Meyer.TestScripts
             }
 
             //if it turned
-            if (hasRotated)
+            if (hasRotated && PlayerSelectedCompanion.stats.AttackPoints == 0 && !PlayerSelectedCompanion.isBlocking)
             {
                 hasRotated = false;
                 isEnemyTurn = true;
                 isPlayerTurn = false;
+            }
+            else if (hasRotated && PlayerSelectedCompanion.stats.AttackPoints != 0 && !PlayerSelectedCompanion.isBlocking){
+                isPlayersTurnAgain = true;
+                isPlayerTurn = true;
+                isEnemyTurn = false;
+                isRandomPlayerSelected = false;
+                hasSelectedCompanion = true;
+                isEnemySelected = false;
+                hasRotated = false;
+
             }
         }
 
@@ -455,13 +490,16 @@ namespace Assets.Meyer.TestScripts
 
         IEnumerator damage(Companion companion)
         {
+
             enemySelectedEnemy.AnimationClass.Play(AnimationClass.states.Attacking);
 
             yield return new WaitForSeconds(1);
 
             enemySelectedEnemy.AnimationClass.Stop(AnimationClass.states.Attacking);
 
-            companion.Damage(enemySelectedEnemy);
+            if ( !companion.isBlocking ){
+                companion.Damage(enemySelectedEnemy);
+            }
 
             hasDamaged = true;
         }

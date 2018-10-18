@@ -16,6 +16,7 @@ public class Companion : BaseCharacter {
 
 	[ SerializeField ] public GameObject camHolder;
 
+	public bool isBlocking = false;
 	public CompanionNav Nav;
 
     // Use this for initialization

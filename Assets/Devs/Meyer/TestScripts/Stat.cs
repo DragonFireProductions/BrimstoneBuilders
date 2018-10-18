@@ -27,6 +27,8 @@ public class Stat : MonoBehaviour {
    [SerializeField] private float perception;
    [SerializeField] private float intelligence;
 
+    [ SerializeField ] private int attackPoints;
+
    [ SerializeField ] private float dexterity;
    [SerializeField] private float luck;
 
@@ -48,6 +50,7 @@ public class Stat : MonoBehaviour {
         perception = Random.Range( 0 , 30 );
         intelligence = Random.Range( 0 , 30 );
         luck = Random.Range( 0 , 30 );
+        attackPoints = Random.Range( 1 , 6 );
         xp = 0;
     }
 	
@@ -134,5 +137,10 @@ public class Stat : MonoBehaviour {
     {
         get { return xp; }
         set { xp = value; }
+    }
+
+    public int AttackPoints {
+        get { return attackPoints; }
+        set { attackPoints = value; }
     }
 }

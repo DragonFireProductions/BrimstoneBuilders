@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using Assets.Meyer.TestScripts;
 using Assets.Meyer.TestScripts.Player;
 
 using TMPro;
@@ -123,6 +124,10 @@ public class PlayerInventory : MonoBehaviour
             }
         }
         
+    }
+    public void Block() {
+
+        TurnBasedController.instance.Block( );
     }
 
     /// <summary>
