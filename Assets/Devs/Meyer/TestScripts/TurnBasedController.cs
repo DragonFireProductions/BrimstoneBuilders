@@ -95,7 +95,7 @@ namespace Assets.Meyer.TestScripts
                     
                 }
                 //if initalized & it's the players turn & either the player hasn't selected a companion OR they havent selected an enemy to attack
-                if (addedEnemyLeader && isPlayerTurn && (hasSelectedCompanion && !isEnemySelected) && !isBlocking)
+                if (addedEnemyLeader && isPlayerTurn && (hasSelectedCompanion && !isEnemySelected) && !PlayerSelectedCompanion.isBlocking)
                 {
 
                     //Select enemy
@@ -111,8 +111,12 @@ namespace Assets.Meyer.TestScripts
                     PlayersTurn();
                 }
 
+                if ( isPlayerTurn && PlayerSelectedCompanion != null && PlayerSelectedCompanion.isBlocking ){
+                    isEnemyTurn = true;
+                }
+
                 //if it's the enemys turn
-                else if (isEnemyTurn)
+                if (isEnemyTurn)
                 {
 
                     //take enemys turn
@@ -218,7 +222,7 @@ namespace Assets.Meyer.TestScripts
 
         private void SelectCompanion()
         {
-            if (isPlayerTurn && AttackMode && !hasSelectedCompanion && (PlayerSelectedCompanion == null || PlayerSelectedCompanion.stats.AttackPoints == 0 ))
+            if (isPlayerTurn && AttackMode && !hasSelectedCompanion && (PlayerSelectedCompanion == null || PlayerSelectedCompanion.stats.AttackPoints == 0 ) || PlayerSelectedCompanion.isBlocking)
             {
                 
                 switchCompanionSelected = false;
@@ -353,7 +357,7 @@ namespace Assets.Meyer.TestScripts
 
         private void SelectEnemy()
         {
-            if (Input.GetMouseButtonDown(0) && hasSelectedCompanion)
+            if (Input.GetMouseButtonDown(0) && hasSelectedCompanion )
             {
                 var l_hitInfo = new RaycastHit();
                 var hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out l_hitInfo);
