@@ -93,17 +93,13 @@ public class EnemyNav : MonoBehaviour
                 {
                     if ( Vector3.Distance( transform.position , player.transform.position ) < VeiwDistance ){
 
-                        if ( TurnBasedController.instance == null ){
-                            GameObject.Find("ManagerHolder").gameObject.AddComponent<TurnBasedController>();
+                        if ( !TurnBasedController.instance ){
+                            StaticManager.character.gameObject.AddComponent < TurnBasedController >( );
                         }
-
-                        Agent.stoppingDistance = 0;
-                        Agent.speed = battleSpeed;
 
                         TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
                     }
                 }
-
                 var check = StaticManager.utility.NavDistanceCheck( Agent );
                 if (WanderDelay <= Timer && (check == DistanceCheck.HasReachedDestination || check == DistanceCheck.PathInvalid)  || StaticManager.utility.NavDistanceCheck(Agent) ==DistanceCheck.HasNoPath)
                 {
