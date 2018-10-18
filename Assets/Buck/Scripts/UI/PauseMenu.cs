@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using Assets.Meyer.TestScripts.Player;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -52,7 +55,7 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
-        pauseMenuUI.SetActive(true);
+      StaticManager.uiInventory.itemsInstance.PauseUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
