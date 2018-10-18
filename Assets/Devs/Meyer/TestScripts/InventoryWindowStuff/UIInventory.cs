@@ -88,6 +88,7 @@ public class UIInventory : MonoBehaviour
         ShowWeaponOptions(false);
         ShowInventoryWeaponStats(false);
         ShowPauseMenu(false);
+        itemsInstance.AttackConfirmation.SetActive(false);
         //itemsInstance.StatUI = new GameObject();
 
         int i = itemsInstance.StatLabels.transform.childCount;

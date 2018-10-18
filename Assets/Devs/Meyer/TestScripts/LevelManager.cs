@@ -24,10 +24,22 @@ public class LevelManager : MonoBehaviour {
     }
 
 	public void Block( ) {
-		TurnBasedController.instance.PlayerSelectedCompanion.isBlocking = true;
+		TurnBasedController.instance.Block();
 	}
     public void ReloadLevel()
     {
         SceneManager.LoadScene(1);
     }
+
+	public void Attack( ) {
+		Time.timeScale = 1;
+		StaticManager.uiInventory.itemsInstance.AttackConfirmation.SetActive(false);
+		TurnBasedController.instance.continueattack();
+	}
+
+	public void DontContinue( ) {
+		Time.timeScale = 1;
+		StaticManager.uiInventory.itemsInstance.AttackConfirmation.SetActive(false);
+	}
+
 }

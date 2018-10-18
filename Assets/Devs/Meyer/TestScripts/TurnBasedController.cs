@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 
 using Assets.Meyer.TestScripts;
 using Assets.Meyer.TestScripts.Player;
@@ -14,7 +15,8 @@ using UnityEngine.AI;
 
 namespace Assets.Meyer.TestScripts
 {
-    public class TurnBasedController : MonoBehaviour {
+    public class 
+        TurnBasedController : MonoBehaviour {
 
         public List < Enemy > Enemies;
 
@@ -66,9 +68,7 @@ namespace Assets.Meyer.TestScripts
             {
                 //If enemies & companions aren't lined up
                 if (!initalized)
-                {
-                    Debug.Log("Enemycount: " + Enemies.Count + "           Initalize- line: 66");
-
+                { 
                     Initalize();
                     switchCompanionSelected = true;
                 }
@@ -77,43 +77,25 @@ namespace Assets.Meyer.TestScripts
                     isPlayerTurn = true;
                     addedEnemyLeader = true;
                     Enemies.Add(EnemyLeader);
-
                 }
 
-                if ( addedEnemyLeader && isPlayerTurn && ( !hasSelectedCompanion) ){
-                    SelectCompanion();
-                }
-
-                if ( isPlayersTurnAgain ){
-                    isPlayersTurnAgain = false;
-                  
-                        PlayerSelectedCompanion.AnimationClass.Play(AnimationClass.states.Selected);
-                        PlayerSelectedCompanion.stats.AttackPoints -= 1;
-                }
-
-                if ( isBlocking ){
-                    
-                }
-                //if initalized & it's the players turn & either the player hasn't selected a companion OR they havent selected an enemy to attack
-                if (addedEnemyLeader && isPlayerTurn && (hasSelectedCompanion && !isEnemySelected) && !PlayerSelectedCompanion.isBlocking)
-                {
-
-                    //Select enemy
-                    SelectEnemy();
-                }
-
-                //if it's the players turn and they have selected an enemy & have selected a companion
-                if (isPlayerTurn && isEnemySelected)
-                {
-                    Debug.Log("Enemycount: " + Enemies.Count + "           Update- line: 87");
-
-                    //Take players turn
+                if ( addedEnemyLeader && isPlayerTurn){
                     PlayersTurn();
+
                 }
 
-                if ( isPlayerTurn && PlayerSelectedCompanion != null && PlayerSelectedCompanion.isBlocking ){
-                    isEnemyTurn = true;
+                else if ( isPlayersTurnAgain ){
+                    isPlayersTurnAgain = false;
+                    isPlayerTurn = true;
+                    hasSelectedCompanion = true;
+                    PlayerSelectedCompanion.AnimationClass.Play(AnimationClass.states.Selected);
+                    PlayerSelectedCompanion.stats.AttackPoints -= 1;
                 }
+                
+                //if initalized & it's the players turn & either the player hasn't selected a companion OR they havent selected an enemy to attack
+               
+
+                
 
                 //if it's the enemys turn
                 if (isEnemyTurn)
@@ -180,9 +162,11 @@ namespace Assets.Meyer.TestScripts
 
         public void Block( ) {
             
-            if ( (addedEnemyLeader && isPlayerTurn && hasSelectedCompanion && !isEnemySelected && !isBlocking) ){
-                isBlocking = true;
+            if ( (addedEnemyLeader && isPlayerTurn && hasSelectedCompanion && !isEnemySelected) ){
+                PlayerSelectedCompanion.AnimationClass.Stop(AnimationClass.states.Selected);
+                blocking = true;
                 PlayerSelectedCompanion.isBlocking = true;
+                StaticManager.uiInventory.ShowNotification("You have chosen to block", 5);
             }
         }
 
@@ -220,11 +204,7 @@ namespace Assets.Meyer.TestScripts
 
         public bool switchCompanionSelected;
 
-        private void SelectCompanion()
-        {
-            if (isPlayerTurn && AttackMode && !hasSelectedCompanion && (PlayerSelectedCompanion == null || PlayerSelectedCompanion.stats.AttackPoints == 0 ) || PlayerSelectedCompanion.isBlocking)
-            {
-                
+        private void SelectCompanion() {
                 switchCompanionSelected = false;
                StaticManager.uiInventory.CompanionStatShowWindow(true);
 
@@ -250,9 +230,8 @@ namespace Assets.Meyer.TestScripts
                 CameraController.controller.SwitchMode(CameraMode.ToOtherPlayer, PlayerSelectedCompanion);
                 index += 1;
                 PlayerSelectedCompanion.AnimationClass.Play(AnimationClass.states.Selected);
+            PlayerSelectedCompanion.isBlocking = false;
 
-            }
-            
         }
 
         private bool isPlayerTurn;
@@ -267,8 +246,26 @@ namespace Assets.Meyer.TestScripts
 
         private bool hasRotated;
 
-        private void PlayersTurn()
-        {
+        private bool blocking = false;
+        private void PlayersTurn() {
+            
+            if (!hasSelectedCompanion && (PlayerSelectedCompanion == null || isBlocking || PlayerSelectedCompanion.stats.AttackPoints < 1 || !isPlayersTurnAgain)){
+                 SelectCompanion();
+            }
+            else if (hasSelectedCompanion && !isEnemySelected && !blocking)
+            {
+                isPlayersTurnAgain = false;
+                SelectEnemy();
+            }
+            else if (!isEnemySelected && hasSelectedCompanion && (blocking || PlayerSelectedCompanion.stats.AttackPoints <= 1)){
+                blocking = false;
+                isPlayersTurnAgain = false;
+                hasSelectedCompanion = false;
+                hasRotated = false;
+                isEnemyTurn = true;
+                isPlayerTurn = false;
+            }
+            isPlayersTurnAgain = false;
             // if player reached enemy
             if (isReached)
             {
@@ -302,8 +299,8 @@ namespace Assets.Meyer.TestScripts
             }
             else if (hasRotated && PlayerSelectedCompanion.stats.AttackPoints != 0 && !PlayerSelectedCompanion.isBlocking){
                 isPlayersTurnAgain = true;
-                isPlayerTurn = true;
                 isEnemyTurn = false;
+                isPlayerTurn = false;
                 isRandomPlayerSelected = false;
                 hasSelectedCompanion = true;
                 isEnemySelected = false;
@@ -311,7 +308,6 @@ namespace Assets.Meyer.TestScripts
 
             }
         }
-
         private IEnumerator damage(Enemy enemy)
         {
             
@@ -355,30 +351,31 @@ namespace Assets.Meyer.TestScripts
             isReached = true;
         }
 
+        private bool continueAttack = false;
+
+        private bool dontcontinue = true;
+
+        private RaycastHit l_hitInfo;
+
+        private Enemy hitenemy;
         private void SelectEnemy()
         {
             if (Input.GetMouseButtonDown(0) && hasSelectedCompanion )
             {
-                var l_hitInfo = new RaycastHit();
+                
+                l_hitInfo = new RaycastHit();
                 var hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out l_hitInfo);
 
                 if (hit)
                 {
                     Debug.Log("Hit " + l_hitInfo.transform.gameObject.name);
 
-                    if (l_hitInfo.transform.gameObject.tag == "Enemy" && PlayerSelectedCompanion.gameObject != null){
-                        l_hitInfo.transform.gameObject.GetComponent < BaseCharacter >( ).material.color = l_hitInfo.transform.gameObject.GetComponent < BaseCharacter >( ).IsChosenByEnemy;
-                        CameraController.controller.SwitchMode(CameraMode.Freeze);
-                        PlayerStartPos = PlayerSelectedCompanion.transform.position;
-                        PlayerStartRotation = PlayerSelectedCompanion.transform.localRotation;
-
-                        StaticManager.utility.EnableObstacle(PlayerSelectedCompanion.agent, true);
-                        PlayerSelectedCompanion.agent.stoppingDistance = stoppingDistance;
-
-                        PlayerSelectedCompanion.agent.SetDestination(l_hitInfo.transform.gameObject.transform.position + l_hitInfo.transform.gameObject.transform.forward * 2);
-                        PlayerSelectedEnemy = l_hitInfo.transform.gameObject.GetComponent<Enemy>(); StartCoroutine(NavDistanceCheck(PlayerSelectedCompanion.agent));
-
-                        isEnemySelected = true;
+                    if (l_hitInfo.transform.gameObject.tag == "Enemy" && PlayerSelectedCompanion.gameObject != null)
+                    {
+                        hitenemy =  l_hitInfo.transform.gameObject.GetComponent<Enemy>();
+                        StaticManager.uiInventory.itemsInstance.AttackConfirmation.SetActive(true);
+                        Time.timeScale = 0;
+                        
                     }
                     else
                     {
@@ -393,7 +390,23 @@ namespace Assets.Meyer.TestScripts
                 Debug.Log("Mouse is down");
             }
         }
+        public void continueattack()
+        {
 
+            hitenemy.transform.gameObject.GetComponent<BaseCharacter>().material.color = hitenemy.transform.gameObject.GetComponent<BaseCharacter>().IsChosenByEnemy;
+            CameraController.controller.SwitchMode(CameraMode.Freeze);
+            PlayerStartPos = PlayerSelectedCompanion.transform.position;
+            PlayerStartRotation = PlayerSelectedCompanion.transform.localRotation;
+
+            StaticManager.utility.EnableObstacle(PlayerSelectedCompanion.agent, true);
+            PlayerSelectedCompanion.agent.stoppingDistance = stoppingDistance;
+
+            PlayerSelectedCompanion.agent.SetDestination(hitenemy.transform.gameObject.transform.position + hitenemy.transform.gameObject.transform.forward * 2);
+            PlayerSelectedEnemy = hitenemy.transform.gameObject.GetComponent<Enemy>();
+            StartCoroutine(NavDistanceCheck(PlayerSelectedCompanion.agent));
+
+            isEnemySelected = true;
+        }
         private bool isEnemyTurn;
 
         private bool switchToEnemiesTurn;
@@ -463,6 +476,9 @@ namespace Assets.Meyer.TestScripts
 
         private void SelectRandomPlayer()
         {
+            if ( selected > Enemies.Count - 1 ){
+                selected = 0;
+            }
             if ( Enemies.Count == 1 ){
                 enemySelectedEnemy = EnemyLeader;
             }
@@ -505,6 +521,11 @@ namespace Assets.Meyer.TestScripts
                 companion.Damage(enemySelectedEnemy);
             }
 
+            else if ( companion.isBlocking ){
+                StaticManager.uiInventory.ShowNotification("Companion has blocked the attack!", 4);
+                companion.isBlocking = false;
+            }
+
             hasDamaged = true;
         }
         
@@ -513,6 +534,7 @@ namespace Assets.Meyer.TestScripts
             
             StaticManager.character.controller.SetControlled( true );
             CameraController.controller.SwitchMode(CameraMode.Player);
+            PlayerSelectedCompanion.AnimationClass.Stop(AnimationClass.states.Selected);
             for ( int i= 0; i < Companions.Count; i++ ){
                 if ( Companions[i] != CompanionLeader ){
                         StaticManager.utility.EnableObstacle( Companions[ i ].Nav.Agent , true );

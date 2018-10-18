@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 
 using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 
 public class UIItems : MonoBehaviour {
 
@@ -51,6 +52,8 @@ public class UIItems : MonoBehaviour {
 	public GameObject GameInventoryStatLabels;
 
 	public GameObject WeaponInventoryStatsUI;
+
+	public GameObject AttackConfirmation;
 
     public object this[string propertyName]
     {
