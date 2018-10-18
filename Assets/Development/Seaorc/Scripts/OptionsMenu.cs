@@ -65,11 +65,22 @@ public class OptionsMenu : MonoBehaviour
     /////////// Video Settings ///////////
     public void SetFullScreen(bool _fullScreen)
     {
+        Debug.Log("setting Changed");
         Screen.fullScreen = _fullScreen;
+    }
+
+    public void SetFullScreen(int _fullScreen)
+    {
+        Debug.Log("setting Changed");
+        if (_fullScreen == 0)
+            Screen.fullScreen = true;
+        else
+            Screen.fullScreen = false;
     }
 
     public void SetResolutioin(int _index)
     {
+        Debug.Log("setting Changed");
         Resolution resolution = Screen.resolutions[_index];
 
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
@@ -77,6 +88,7 @@ public class OptionsMenu : MonoBehaviour
 
     public void SetVsync(bool _Sync)
     {
+        Debug.Log("setting Changed");
         if (_Sync)
             QualitySettings.vSyncCount = 1;
         else
@@ -88,11 +100,13 @@ public class OptionsMenu : MonoBehaviour
     /////////// Graphics Settings ///////////
     public void SetAntiAliasing(int _Multisampling)
     {
+        Debug.Log("setting Changed");
         QualitySettings.antiAliasing = _Multisampling;
     }
 
     public void SetAnisotropicFiltering(bool _Filtering)
     {
+        Debug.Log("setting Changed");
         if (_Filtering)
             QualitySettings.anisotropicFiltering = AnisotropicFiltering.Enable;
         else
@@ -101,16 +115,22 @@ public class OptionsMenu : MonoBehaviour
 
     public void SetFog(bool _fog)
     {
+        Debug.Log("setting Changed");
         RenderSettings.fog = _fog;
+        RenderSettings.fogMode = FogMode.Linear;
+        RenderSettings.fogStartDistance = 20;
+        RenderSettings.fogEndDistance = 1000;
     }
 
     public void SetShadowResolution(int _Resolution)
     {
+        Debug.Log("setting Changed");
         QualitySettings.shadowResolution = (ShadowResolution)_Resolution;
     }
 
     public void SetQualityLevel(int _Level)
     {
+        Debug.Log("setting Changed");
         QualitySettings.SetQualityLevel(_Level);
     }
 }
