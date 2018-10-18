@@ -100,10 +100,10 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if (showstats && TurnBasedController.instance)
-          StaticManager.uiInventory.UpdateStats(stats);
-        else if (TurnBasedController.instance && !showstats)
-          StaticManager.uiInventory.itemsInstance.StatUI.SetActive(false);
+        //if (showstats && TurnBasedController.instance)
+        //  StaticManager.uiInventory.UpdateStats(stats);
+        //else if (TurnBasedController.instance && !showstats)
+        //  StaticManager.uiInventory.itemsInstance.StatUI.SetActive(false);
 
         
     }
