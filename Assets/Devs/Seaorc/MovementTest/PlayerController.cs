@@ -38,8 +38,8 @@ public class PlayerController : MonoBehaviour
    public enum PlayerState { move, sneak, navMesh}; PlayerState state;
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
+        canMove = true;
         state = PlayerState.move;
         if(GetComponent<CharacterController>() != null)
         {
@@ -62,26 +62,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !TurnBasedController.instance){
-                RaycastHit hit;
-
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                StaticManager.utility.EnableObstacle(this.gameObject.GetComponent<NavMeshAgent>(), true);
-
-                if (Physics.Raycast(ray, out hit))
-                {
-                    float step = speed;
-                    float distance = Vector3.Distance(transform.position, hit.point);
-
-                    Vector3 pos;
-                    pos.x = hit.point.x;
-                    pos.y = 0.0f;
-                    pos.z = hit.point.z;
-                    gameObject.GetComponent<NavMeshAgent>().SetDestination(pos);
-
-                }
-        state = PlayerState.navMesh;
-        }
         if (Input.anyKey)
         {
             state = PlayerState.move;
@@ -101,11 +81,11 @@ public class PlayerController : MonoBehaviour
         {
             case PlayerState.move:
 
-                if (!TurnBasedController.instance)
+                if (!TurnBasedController.instance && canMove)
                     Move();
                 break;
             case PlayerState.sneak:
-                if (!TurnBasedController.instance)
+                if (!TurnBasedController.instance && canMove)
                     Sneak();
                 break;
             case PlayerState.navMesh:
