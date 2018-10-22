@@ -28,7 +28,7 @@ public class CompanionLeader : Companion {
     {
         characters.Remove(_obj);
         characterObjs.Remove(_obj.gameObject);
-        TurnBasedController.instance.Companions.Remove((Companion)_obj);
+        TurnBasedController.instance._player.characters.Remove((Companion)_obj);
         Destroy(_obj.obj);
     }
 

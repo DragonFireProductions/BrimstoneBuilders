@@ -51,13 +51,20 @@ public class Stat : MonoBehaviour {
         intelligence = Random.Range( 0 , 30 );
         luck = Random.Range( 0 , 30 );
         attackPoints = Random.Range( 1 , 6 );
+        stamina = Random.Range( 0 , 30 );
         xp = 0;
+        maxHealth = 7;
+        maxStamina = 30;
     }
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public void RegenerateAttackPoints( ) {
+        this.AttackPoints = Random.Range( 0 , 4 );
+    }
     public object this[string propertyName]
     {
         get { return this.GetType().GetProperty(propertyName).GetValue(this, null); }

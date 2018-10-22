@@ -27,6 +27,8 @@ public class StaticManager : MonoBehaviour {
     public static DamageCalc DamageCalc;
 
     public static StaticManager instance;
+
+    public bool isTurnBasedOn = false;
 	
 
     // Use this for initialization

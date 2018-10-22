@@ -26,14 +26,11 @@ public class UIItems : MonoBehaviour {
 	public GameObject CompanionUI;
 
 	public GameObject CompanionLabels;
-
-	public GameObject Instructions;
-
-	public GameObject InstructionPanel;
-
+	
 	public GameObject GameOverUI;
 
 	public GameObject WeaponStatsUI;
+
     public GameObject AttackConfirmationPanel;
 
 	public GameObject WeaponStatsPanel;

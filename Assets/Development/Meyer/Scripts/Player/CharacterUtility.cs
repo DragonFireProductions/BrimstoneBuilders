@@ -61,7 +61,7 @@ namespace Assets.Meyer.TestScripts
                 {
                     if (!mNavMeshAgent.hasPath || mNavMeshAgent.velocity.sqrMagnitude == 0f){
                         return DistanceCheck.HasReachedDestination;
-                    }
+                    } 
                 }
             }
                 else if ( NavMesh.CalculatePath( transform.position , mNavMeshAgent.destination , NavMesh.AllAreas , path )

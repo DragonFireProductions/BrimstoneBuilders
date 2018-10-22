@@ -36,14 +36,14 @@ public class EnemyLeader : Enemy {
     }
 
     public void AssignNewLeader( ) {
-        GameObject NewLeader = TurnBasedController.instance.Enemies[ 0 ].gameObject;
+        GameObject NewLeader = TurnBasedController.instance._enemy.characters[ 0 ].gameObject;
 
         NewLeader.gameObject.AddComponent < EnemyLeader >( );
         NewLeader.gameObject.GetComponent<EnemyLeader>().characterObjs = new List < GameObject >();
-        foreach ( var VARIABLE in TurnBasedController.instance.Enemies ){
+        foreach ( var VARIABLE in TurnBasedController.instance._enemy.characters ){
             NewLeader.GetComponent < EnemyLeader >( ).characterObjs.Add(VARIABLE.obj);
         }
-        TurnBasedController.instance.EnemyLeader = NewLeader.GetComponent < Enemy >( );
+        TurnBasedController.instance._enemy.leader = NewLeader.GetComponent < Enemy >( );
         
         Destroy(this.gameObject);
         this.enabled = false;
@@ -54,35 +54,35 @@ public class EnemyLeader : Enemy {
 
     public void Remove(BaseCharacter _obj)
     {
-        Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Remove-EnemyLeader- line: 64");
+        Debug.Log("Enemycount: " + TurnBasedController.instance._enemy.characters.Count + "           Remove-EnemyLeader- line: 64");
 
-        if (TurnBasedController.instance.Enemies.Count == 1 && _obj == this.Leader)
+        if (TurnBasedController.instance._enemy.characters.Count == 1 && _obj == this.Leader)
         {
             characterObjs.Clear();
             characters.Clear();
             TurnBasedController.instance.BattleWon();
             Destroy(_obj.gameObject);
-            Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Remove-EnemyLeader line: 73");
+            Debug.Log("Enemycount: " + TurnBasedController.instance._enemy.characters.Count + "           Remove-EnemyLeader line: 73");
 
         }
         else if (_obj == this.Leader)
         {
-            for (int i = 0; i < TurnBasedController.instance.Enemies.Count; i++)
+            for (int i = 0; i < TurnBasedController.instance._enemy.characters.Count; i++)
             {
-                if (TurnBasedController.instance.Enemies[i] == null)
+                if (TurnBasedController.instance._enemy.characters[i] == null)
                 {
-                    TurnBasedController.instance.Enemies.RemoveAt(i);
+                    TurnBasedController.instance._enemy.characters.RemoveAt(i);
                 }
             }
-            Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Remove-EnemyLeader- line: 85");
-            TurnBasedController.instance.Enemies.Remove(( Enemy )_obj);
+            Debug.Log("Enemycount: " + TurnBasedController.instance._enemy.characters.Count + "           Remove-EnemyLeader- line: 85");
+            TurnBasedController.instance._enemy.characters.Remove(( Enemy )_obj);
             AssignNewLeader();
         }
         else
         {
-            TurnBasedController.instance.Enemies.Remove((Enemy)_obj);
+            TurnBasedController.instance._enemy.characters.Remove((Enemy)_obj);
 
-            Debug.Log("Enemycount: " + TurnBasedController.instance.Enemies.Count + "           Remove-EnemyLeader- line: 101");
+            Debug.Log("Enemycount: " + TurnBasedController.instance._enemy.characters.Count + "           Remove-EnemyLeader- line: 101");
 
             Destroy(_obj.gameObject);
         }
