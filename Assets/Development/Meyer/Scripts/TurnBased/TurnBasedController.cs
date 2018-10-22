@@ -27,6 +27,8 @@ namespace Assets.Meyer.TestScripts
 
         [SerializeField] float turnTime = 1;
 
+        [ SerializeField ] private float navTime = 3;
+
         //private float coroutineTimer;
 
         public enum enumCheck
@@ -387,7 +389,7 @@ namespace Assets.Meyer.TestScripts
 
         public IEnumerator NavDistanceCheck(NavMeshAgent agent, Action <bool> hasReached) {
             timer = 0;
-            while (StaticManager.utility.NavDistanceCheck(agent) == DistanceCheck.HasNotReachedDestination && timer < 5.0f)
+            while (StaticManager.utility.NavDistanceCheck(agent) == DistanceCheck.HasNotReachedDestination && timer < navTime)
             {
                 yield return new WaitForEndOfFrame();
             }
@@ -487,7 +489,7 @@ namespace Assets.Meyer.TestScripts
             {
                 _enemy.hasDamaged = false;
                 _enemy.selectedVictim.material.color = _enemy.selectedVictim.BaseColor;
-                StartCoroutine(returnToPoint(PlayerStartPos, _enemy.selectedAttacker.agent, _result => _enemy.hasReturned = _result));
+                StartCoroutine(returnToPoint(EnemyStartPos, _enemy.selectedAttacker.agent, _result => _enemy.hasReturned = _result));
 
             }
             // if player returned to point and hasn't turned yet
@@ -496,7 +498,7 @@ namespace Assets.Meyer.TestScripts
                 _enemy.hasReturned = false;
 
                 //turn to original rotation
-                StartCoroutine(Turn(_enemy.selectedAttacker.agent, _player.leader.transform.position, PlayerStartRotation, _bool => _enemy.hasRotated = _bool));
+                StartCoroutine(Turn(_enemy.selectedAttacker.agent, _player.leader.transform.position, EnemyStartRotation, _bool => _enemy.hasRotated = _bool));
             }
 
             //if it turned
@@ -543,9 +545,9 @@ namespace Assets.Meyer.TestScripts
             selected++;
            
 
-            int isBlocking = Random.Range( 0 , 11 );
+            int isBlocking = Random.Range( 0 , 35 );
 
-            if ( isBlocking < 10 ){
+            if ( isBlocking < 20 ){
                 _enemy.selectedAttacker.isBlocking = true;
                 _enemy.selectedAttacker.stats.AttackPoints -= 1;
             }
@@ -715,7 +717,7 @@ namespace Assets.Meyer.TestScripts
 
                 yield break;
             }
-            while (StaticManager.utility.NavDistanceCheck(enemy.Nav.Agent) == DistanceCheck.HasNotReachedDestination && timer < 5.0f)
+            while (StaticManager.utility.NavDistanceCheck(enemy.Nav.Agent) == DistanceCheck.HasNotReachedDestination && timer < navTime)
             {
                 yield return new WaitForEndOfFrame();
             }
@@ -739,7 +741,7 @@ namespace Assets.Meyer.TestScripts
                 yield return new WaitForEndOfFrame();
             }
 
-            if (timer > turnTime)
+            if (timer >= turnTime)
             {
                 enemy.transform.rotation = r;
             }
@@ -779,7 +781,7 @@ namespace Assets.Meyer.TestScripts
                 float timer = 0;
                 var r = Quaternion.LookRotation(toRotateTopos - agent.transform.position);
 
-                while (agent.transform.rotation != r && timer < 3)
+                while (agent.transform.rotation != r && timer < turnTime)
                 {
                     agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, r, 5 * Time.deltaTime);
                     timer += Time.deltaTime;
@@ -787,7 +789,7 @@ namespace Assets.Meyer.TestScripts
                     yield return new WaitForEndOfFrame();
                 }
 
-                if (timer > 3)
+                if (timer >= turnTime)
                 {
                     agent.transform.rotation = r;
                 }
