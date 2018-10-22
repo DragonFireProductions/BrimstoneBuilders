@@ -31,17 +31,12 @@ public class PlayerController : MonoBehaviour
     public static Stat stats;
 
 
-    private float dex, endu, agil, perc = 0.0f;
+    private float dex, endu, agil = 0.0f;
 
     private bool showstats = false;
 
     private bool canRun = true;
     private float stamina, maxStamina = 500.0f;
-
-    private float perception = 5.0f;
-
-    [SerializeField]
-     static EnemyNav[] enemy;
 
    public enum PlayerState { move, sneak, navMesh}; PlayerState state;
 
@@ -62,8 +57,7 @@ public class PlayerController : MonoBehaviour
         Cam = GameObject.Find("CamHolder").transform;
         Assert.IsNotNull(Cam, "Camholder cannot be found!");
         stats = GetComponent<Stat>();
-
-
+        //inventory = GetComponent<UIInventory>();
     }
 
     /// <summary>
@@ -75,24 +69,6 @@ public class PlayerController : MonoBehaviour
             canRun = false;
         else
             canRun = true;
-
-        Ray ray = new Ray(transform.position, gameObject.transform.forward);
-        RaycastHit hit;
-        Debug.DrawRay(transform.position, gameObject.transform.forward * perception);
-        if (Physics.Raycast(ray, out hit, perception))
-        {
-            perc += 0.05f;
-            if (perc > 1.0f)
-            {
-                ++stats.Perception;
-                perception += 0.5f;
-                for (int i = 0; i < enemy.Length; ++i)
-                {
-                    //if (hit.collider)
-                    //enemy.getVision -= 0.5f;
-                }
-            }
-        }
 
         if (Input.anyKey)
         {

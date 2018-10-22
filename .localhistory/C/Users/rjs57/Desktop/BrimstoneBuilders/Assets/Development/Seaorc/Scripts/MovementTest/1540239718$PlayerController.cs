@@ -40,9 +40,6 @@ public class PlayerController : MonoBehaviour
 
     private float perception = 5.0f;
 
-    [SerializeField]
-     static EnemyNav[] enemy;
-
    public enum PlayerState { move, sneak, navMesh}; PlayerState state;
 
     // Use this for initialization
@@ -62,7 +59,6 @@ public class PlayerController : MonoBehaviour
         Cam = GameObject.Find("CamHolder").transform;
         Assert.IsNotNull(Cam, "Camholder cannot be found!");
         stats = GetComponent<Stat>();
-
 
     }
 
@@ -86,11 +82,6 @@ public class PlayerController : MonoBehaviour
             {
                 ++stats.Perception;
                 perception += 0.5f;
-                for (int i = 0; i < enemy.Length; ++i)
-                {
-                    //if (hit.collider)
-                    //enemy.getVision -= 0.5f;
-                }
             }
         }
 

@@ -98,20 +98,20 @@ public class EnemyNav : BaseNav
                         if (Physics.Raycast(ray, out hit, getVision))
                         {
                             Debug.Log(hit.collider.tag);
-                            //if (hit.collider.tag == "Player")
-                            //{
-                            //    Debug.Log("player! get em");
-                            //    if (TurnBasedController.instance == null)
-                            //    {
-                            //        GameObject.Find("ManagerHolder").gameObject.AddComponent<TurnBasedController>();
-                            //    }
+                            if (hit.collider.tag == "Player")
+                            {
+                                Debug.Log("player! get em");
+                                if (TurnBasedController.instance == null)
+                                {
+                                    GameObject.Find("ManagerHolder").gameObject.AddComponent<TurnBasedController>();
+                                }
 
-                            //    Agent.stoppingDistance = 0;
-                            //    Agent.speed = battleSpeed;
+                                Agent.stoppingDistance = 0;
+                                Agent.speed = battleSpeed;
 
-                            //    TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
+                                TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
 
-                            //}
+                            }
                         }
                         //if (Vector3.Distance(transform.position, player.transform.position) < VeiwDistance)
                         //{
@@ -175,7 +175,7 @@ public class EnemyNav : BaseNav
         }
     }
 
-    public float getVision
+    private float getVision
     {
         get { return vision; }
         set { vision = value; }

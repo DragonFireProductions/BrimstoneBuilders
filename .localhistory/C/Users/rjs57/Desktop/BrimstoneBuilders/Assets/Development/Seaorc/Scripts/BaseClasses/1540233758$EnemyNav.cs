@@ -34,8 +34,6 @@ public class EnemyNav : BaseNav
 
     public Vector3 s_location;
 
-    private float vision = 10.0f;
-
     void Awake()
     {
         //Get Player form level manager
@@ -86,46 +84,36 @@ public class EnemyNav : BaseNav
             }
         }
 
+        Ray ray = new Ray(transform.position, Vector3.forward);
+        RaycastHit hit;
+        Debug.DrawRay(transform.position, Vector3.forward);
+        if (Physics.Raycast(ray, out hit, 10.0f))
+        {
+            if (hit.collider.tag == "Player")
+            {
+                State = state.Battle;
+            }
+        }
+
         switch (State)
         {
             case state.Idle:
                 if (player != null && !TurnBasedController.instance)
                 {
                     if (StaticManager.instance.isTurnBasedOn ){
-                        Ray ray = new Ray(transform.position, gameObject.transform.forward);
-                        RaycastHit hit;
-                        Debug.DrawRay(transform.position, gameObject.transform.forward * 10.0f);
-                        if (Physics.Raycast(ray, out hit, getVision))
+                        if (Vector3.Distance(transform.position, player.transform.position) < VeiwDistance)
                         {
-                            Debug.Log(hit.collider.tag);
-                            //if (hit.collider.tag == "Player")
-                            //{
-                            //    Debug.Log("player! get em");
-                            //    if (TurnBasedController.instance == null)
-                            //    {
-                            //        GameObject.Find("ManagerHolder").gameObject.AddComponent<TurnBasedController>();
-                            //    }
 
-                            //    Agent.stoppingDistance = 0;
-                            //    Agent.speed = battleSpeed;
+                            if (TurnBasedController.instance == null)
+                            {
+                                GameObject.Find("ManagerHolder").gameObject.AddComponent<TurnBasedController>();
+                            }
 
-                            //    TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
+                            Agent.stoppingDistance = 0;
+                            Agent.speed = battleSpeed;
 
-                            //}
+                            TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
                         }
-                        //if (Vector3.Distance(transform.position, player.transform.position) < VeiwDistance)
-                        //{
-
-                        //    if (TurnBasedController.instance == null)
-                        //    {
-                        //        GameObject.Find("ManagerHolder").gameObject.AddComponent<TurnBasedController>();
-                        //    }
-
-                        //    Agent.stoppingDistance = 0;
-                        //    Agent.speed = battleSpeed;
-
-                        //    TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
-                        //}
                     }
 
                 }
@@ -175,11 +163,7 @@ public class EnemyNav : BaseNav
         }
     }
 
-    public float getVision
-    {
-        get { return vision; }
-        set { vision = value; }
-    }
+
 
 
 }
