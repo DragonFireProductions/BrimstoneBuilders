@@ -45,6 +45,10 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public TextMeshPro damageText;
 
+	public bool isBlocking;
+
+	public BaseNav Nav;
+
 	protected void Awake( ) {
         stats = gameObject.GetComponent<Stat>();
 		Assert.IsNotNull(stats, "Stats not found on " + this.gameObject.name);
@@ -77,6 +81,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 		AnimationClass.Stop(AnimationClass.states.DamageText);
 		damageText.enabled = false;
 	}
-	public void Damage( BaseCharacter _player_selected_companion ) { }
+
+	public abstract void Damage( BaseCharacter _player_selected_companion );
 
 }

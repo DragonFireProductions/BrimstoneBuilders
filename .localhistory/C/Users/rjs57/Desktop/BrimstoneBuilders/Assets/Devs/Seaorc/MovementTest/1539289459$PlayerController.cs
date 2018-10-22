@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+
 using Assets.Meyer.TestScripts;
 using Assets.Meyer.TestScripts.Player;
 
@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float speed = 3;
 
     CharacterController Controller;
-    bool canMove = true;
+    bool Controlled = true;
     float Y;
 
     float sneakspeed = 1.5f;
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     private float end = 0.0f;
 
     public static Stat stats;
-    
+    public static UIInventory inventory = UIInventory.instance;
 
     private float dex, endu, agil = 0.0f;
 
@@ -38,8 +38,8 @@ public class PlayerController : MonoBehaviour
    public enum PlayerState { move, sneak, navMesh}; PlayerState state;
 
     // Use this for initialization
-    void Start() {
-        canMove = true;
+    void Start()
+    {
         state = PlayerState.move;
         if(GetComponent<CharacterController>() != null)
         {
@@ -62,9 +62,32 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (Input.GetMouseButtonDown(1)){
+                RaycastHit hit;
+
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                CharacterUtility.instance.EnableObstacle(this.gameObject.GetComponent<NavMeshAgent>(), true);
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    float step = speed;
+                    float distance = Vector3.Distance(transform.position, hit.point);
+
+                    Vector3 pos;
+                    pos.x = hit.point.x;
+                    pos.y = 0.0f;
+                    pos.z = hit.point.z;
+                    gameObject.GetComponent<NavMeshAgent>().SetDestination(pos);
+
+                }
+        state = PlayerState.navMesh;
+        }
+
+
+
         if (Input.anyKey)
         {
-            state = PlayerState.move;
+           state = PlayerState.move;
         }
 
         if (Input.GetKeyDown(KeyCode.C))
@@ -80,16 +103,14 @@ public class PlayerController : MonoBehaviour
         switch (state)
         {
             case PlayerState.move:
-
-                if (!TurnBasedController.instance && canMove)
-                    Move();
+                Move();
                 break;
             case PlayerState.sneak:
-                if (!TurnBasedController.instance && canMove)
-                    Sneak();
+                Sneak();
                 break;
             case PlayerState.navMesh:
                 break;
+                ;
             default:
                 break;
         }
@@ -100,12 +121,11 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        //if (showstats && TurnBasedController.instance)
-        //  StaticManager.uiInventory.UpdateStats(stats);
-        //else if (TurnBasedController.instance && !showstats)
-        //  StaticManager.uiInventory.itemsInstance.StatUI.SetActive(false);
+        if (showstats)
+            UIInventory.instance.UpdateStats(stats);
+        else
+            UIInventory.instance.StatUI.SetActive(false);
 
-        
     }
 
     /// <summary>
@@ -120,7 +140,7 @@ public class PlayerController : MonoBehaviour
         Z *= WalkSpeed;
 
         if (X > 0 || Z > 0){
-            StaticManager.utility.EnableObstacle( this.gameObject.GetComponent<NavMeshAgent>() , false );
+            CharacterUtility.instance.EnableObstacle( this.gameObject.GetComponent<NavMeshAgent>() , false );
         }
 
             if (Input.GetKey(KeyCode.LeftShift) && RunSpeed > 1)
@@ -158,6 +178,7 @@ public class PlayerController : MonoBehaviour
         {
             endu += 0.005f;
             agil += 0.003f;
+            Debug.Log(agil);
             dex += 0.0002f;
 
             if (endu > 1.0f)
@@ -184,18 +205,17 @@ public class PlayerController : MonoBehaviour
 
     void Sneak()
     {
-        float X = Input.GetAxisRaw("Horizontal");
-        X *= WalkSpeed;
-        float Z = Input.GetAxisRaw("Vertical");
-        Z *= WalkSpeed;
+        float x = Input.GetAxis("Horizontal");
+        x *= sneakspeed;
+        float z = Input.GetAxis("Vertical");
+        z *= sneakspeed;
 
-        Vector3 n = new Vector3(X, 0, Z);
-
-        var direction = Camera.main.transform.TransformDirection(n);
+        Vector3 norm = new Vector3(x, 0, z);
+        Vector3 direction = Camera.main.transform.TransformDirection(norm);
         direction.y = 0;
 
 
-        Controller.Move(direction.normalized * sneakspeed * Time.deltaTime);
+        Controller.Move(Cam.TransformDirection(direction.normalized * Time.deltaTime));
     }
 
     bool isSneaking()
@@ -210,7 +230,7 @@ public class PlayerController : MonoBehaviour
 
     public void SetControlled(bool _control)
     {
-        canMove = _control;
+        Controlled = _control;
     }
 
 }

@@ -15,20 +15,18 @@ public class Companion : BaseCharacter {
 	
 
 	[ SerializeField ] public GameObject camHolder;
-
-	public bool isBlocking = false;
-	public CompanionNav Nav;
+	
 
     // Use this for initialization
-    void Awake () {
+    void Start () {
 		base.Awake();
 		this.material.color = BaseColor;
 	    camHolder = transform.Find( "CamHolder" ).gameObject;
 	    Nav = gameObject.GetComponent < CompanionNav >( );
-	    leader = Character.player.GetComponent < CompanionLeader >( );
+	    leader = StaticManager.character.GetComponent < CompanionLeader >( );
     }
 
-	public void Damage(Enemy attacker ) {
+	public override void Damage(BaseCharacter attacker ) {
 
 		
 		StaticManager.uiInventory.AppendNotification("    " + gameObject.name + ":") ;
@@ -41,10 +39,7 @@ public class Companion : BaseCharacter {
         if (this.stats.Health <= 0 && this != leader)
         {
           StaticManager.uiInventory.AppendNotification("\n Companion is now Dead");
-
-	        if ( this == TurnBasedController.instance.PlayerSelectedCompanion ){
-		        TurnBasedController.instance.switchCompanionSelected = true;
-	        }
+			
             Leader.Remove(this);
         }
         else if (this != leader)
@@ -53,9 +48,7 @@ public class Companion : BaseCharacter {
 
         }
 		else if ( this == leader && stats.Health <= 0 ){
-            StaticManager.uiInventory.ShowInstructions(true);
-			StaticManager.uiInventory.ShowGameOver(true);
-            StaticManager.uiInventory.itemsInstance.Instructions.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
+            StaticManager.uiInventory.ShowGameOver(true);
         }
 
 

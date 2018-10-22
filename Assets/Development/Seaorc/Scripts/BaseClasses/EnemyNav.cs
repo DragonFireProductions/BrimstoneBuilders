@@ -10,7 +10,7 @@ using UnityEngine.AI;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class EnemyNav : MonoBehaviour
+public class EnemyNav : BaseNav
 {
     /// <remarks>Set in Inspector</remarks>
     [SerializeField] Animator animator;
@@ -23,9 +23,7 @@ public class EnemyNav : MonoBehaviour
     [ SerializeField ] private float battleSpeed = 3;
 
     [SerializeField] private GameObject location;
-    public EnemyState State;
     GameObject player = null;
-    public NavMeshAgent Agent;
     private float Timer = 0;
     private float timer1 = 0;
 
@@ -57,7 +55,7 @@ public class EnemyNav : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         Assert.IsNotNull(player, "Player or Player.Player script cannot be found");
 
-        Assert.IsNotNull(animator, "No animator attached to enemy");
+        Assert.IsNotNull(animator, "No animator attached to _enemy");
         Timer = Time.deltaTime;
 
         Agent.stoppingDistance = StoppingDistance;
@@ -82,27 +80,31 @@ public class EnemyNav : MonoBehaviour
             //Debug.Log(distance);
             if (distance < 1.0f)
             {
-                State = EnemyState.retreat;
+                State = state.retreat;
             }
         }
         
         switch (State)
         {
-            case EnemyState.Idle:
+            case state.Idle:
                 if (player != null && !TurnBasedController.instance)
                 {
-                    if ( Vector3.Distance( transform.position , player.transform.position ) < VeiwDistance ){
+                    if (StaticManager.instance.isTurnBasedOn ){
+                        if (Vector3.Distance(transform.position, player.transform.position) < VeiwDistance)
+                        {
 
-                        //if (TurnBasedController.instance == null)
-                        //{
-                        //    GameObject.Find("ManagerHolder").gameObject.AddComponent<TurnBasedController>();
-                        //}
+                            if (TurnBasedController.instance == null)
+                            {
+                                GameObject.Find("ManagerHolder").gameObject.AddComponent<TurnBasedController>();
+                            }
 
-                        //Agent.stoppingDistance = 0;
-                        //Agent.speed = battleSpeed;
+                            Agent.stoppingDistance = 0;
+                            Agent.speed = battleSpeed;
 
-                        //TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
+                            TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
+                        }
                     }
+                    
                 }
 
                 var check = StaticManager.utility.NavDistanceCheck( Agent );
@@ -112,22 +114,22 @@ public class EnemyNav : MonoBehaviour
                     Timer = 0;
                 }
                 break;
-            case EnemyState.retreat:
+            case state.retreat:
                 Agent.SetDestination(s_location);
                 float distance = Vector3.Distance(transform.position, s_location);
                 Debug.Log(distance);
                 if (distance < 3.0f)
                 {
                     Debug.Log("Idle");
-                    State = EnemyState.Idle;
+                    State = state.Idle;
                 }
                 break;
-            case EnemyState.Battle:
+            case state.Battle:
                 Agent.stoppingDistance = 0;
 
                 
                 break;
-            case EnemyState.Follow:
+            case state.Follow:
                 Agent.stoppingDistance = 5;
                Agent.destination = gameObject.GetComponent < Enemy >( ).Leader.gameObject.transform.position;
                 if (player != null && !TurnBasedController.instance)
@@ -149,18 +151,8 @@ public class EnemyNav : MonoBehaviour
                 break;
         }
     }
+    
 
-    public EnemyState SetState {
-        get { return State; }
-        set { State = value;}
-    }
-
-
-    public void SetDestination(Vector3 des ) {
-        Agent.SetDestination( des );
-
-    }
 
 
 }
-public enum EnemyState { Idle, Attacking, retreat, Battle, Follow }

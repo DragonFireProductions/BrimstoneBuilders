@@ -74,7 +74,6 @@ public class UIInventory : MonoBehaviour
         Show = false;
         StatWindowShow(false);
         ShowPauseMenu(false);
-        ShowInstructions(false);
         StatUIList = new List<stats>();
         CompanionUIList = new List<stats>();
         WeaponUIList = new List < stats >();
@@ -171,12 +170,9 @@ public class UIInventory : MonoBehaviour
     public void CompanionStatShowWindow(bool active ) {
         itemsInstance.CompanionUI.SetActive(active);
     }
-
-    public void ShowInstructions(bool show) {
-        itemsInstance.Instructions.SetActive(show);
-    }
     
     public void ShowGameOver( bool show ) {
+        StaticManager.uiInventory.Freeze();
         itemsInstance.GameOverUI.SetActive(show);
     }
 

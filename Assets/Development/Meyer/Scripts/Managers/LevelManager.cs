@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
 
+	public bool isTurnBasedOn = false;
 	// Use this for initialization
 	void Start () {
 		
@@ -32,7 +33,7 @@ public class LevelManager : MonoBehaviour {
     public void ReloadLevel()
     {
 		UnFreeze();
-        SceneManager.LoadScene("PlayTest");
+        SceneManager.LoadScene(1);
     }
 
 	public void Attack( ) {
