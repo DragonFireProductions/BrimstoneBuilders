@@ -51,14 +51,22 @@ public class Companion : BaseCharacter {
             StaticManager.uiInventory.ShowGameOver(true);
         }
 
-
     }
-	public void Remove( BaseCharacter chara ) { }
+    public void Remove( BaseCharacter chara ) { }
     // Update is called once per frame
     void Update () { 
     }
 
-	
+	public override void RegenerateAttackPoints(bool betweenrounds ) {
+		if ( betweenrounds ){
+			stats.AttackPoints += stats.attackCost;
+			
+		}
+		else{
+			this.stats.AttackPoints = stats.maxAttackpoints;
+
+        }
+    }
 
 	public GameObject CamHolder {
 		get { return camHolder; }

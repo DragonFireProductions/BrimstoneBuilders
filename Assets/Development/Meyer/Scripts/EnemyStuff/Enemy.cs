@@ -63,6 +63,7 @@ namespace Kristal
               StaticManager.uiInventory.AppendNotification("\n health is now " + this.stats.Health);
 
             }
+            StaticManager.uiInventory.UpdateCompanionStats(attacker.stats);
 
         }
         // Update is called once per frame
@@ -117,6 +118,12 @@ namespace Kristal
                 attacking = false;
             }
 
+        }
+
+        public override void RegenerateAttackPoints( bool betweenrounds ) {
+            if ( betweenrounds ){
+                stats.AttackPoints += stats.attackCost;
+            }
         }
 
         public void Remove( BaseCharacter chara ) { }

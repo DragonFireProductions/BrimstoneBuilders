@@ -48,6 +48,9 @@ public abstract class BaseCharacter : MonoBehaviour {
 	public bool isBlocking;
 
 	public BaseNav Nav;
+	
+
+
 
 	protected void Awake( ) {
         stats = gameObject.GetComponent<Stat>();
@@ -65,15 +68,16 @@ public abstract class BaseCharacter : MonoBehaviour {
     void Update () {
 		
 	}
-	
+
+	public abstract void RegenerateAttackPoints(bool betweenrounds );
 	public void DamageDone(int damage, BaseCharacter gameObject ) {
 		damageText.enabled = true;
 
         damageText.transform.position = gameObject.transform.position + ( gameObject.transform.up * 4 );
 		damageText.text = damage.ToString( );
-			damageText.transform.parent = this.transform;
-			damageText.GetComponentInChildren < Animation >( ).Play( );
-			StartCoroutine( deleteDamages( damageText ) );
+		damageText.transform.parent = this.transform;
+		damageText.GetComponentInChildren < Animation >( ).Play( );
+		StartCoroutine( deleteDamages( damageText ) );
 	}
 
 	IEnumerator deleteDamages(TextMeshPro instantiated ) {

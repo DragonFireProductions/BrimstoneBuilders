@@ -29,6 +29,8 @@ namespace Assets.Meyer.TestScripts
 
         [ SerializeField ] private float navTime = 3;
 
+        [ SerializeField ] private int enemyPauseTime = 3;
+
         //private float coroutineTimer;
 
         public enum enumCheck
@@ -199,11 +201,15 @@ namespace Assets.Meyer.TestScripts
 
         public void Block( ) {
             
-            if ( (addedEnemyLeader && _player.isTurn && _player.hasSelectedCompanion && !_player.hasSelectedEnemy) ){
+            if ( (addedEnemyLeader && _player.isTurn && _player.hasSelectedCompanion && !_player.hasSelectedEnemy && _player.selectedAttacker.stats.AttackPoints > 3) ){
                 _player.selectedAttacker.AnimationClass.Stop(AnimationClass.states.Selected);
                 _player.blocking.block = true;
                 _player.selectedAttacker.isBlocking = true;
-                _player.selectedAttacker.stats.AttackPoints -= 2;
+                _player.selectedAttacker.stats.AttackPoints = 0;
+                _player.hasRotated = false;
+                _enemy.isTurn = true;
+                _player.isTurn = false;
+                _player.hasSelectedEnemy = false;
 
                 if ( _player.selectedAttacker.stats.AttackPoints < 0 ){
                     _player.selectedAttacker.stats.AttackPoints = 0;
@@ -211,6 +217,9 @@ namespace Assets.Meyer.TestScripts
                 StaticManager.uiInventory.UpdateCompanionStats(_player.selectedAttacker.stats);
 
                 StaticManager.uiInventory.ShowNotification("You have chosen to block", 5);
+            }
+            else if (_player.selectedAttacker.stats.AttackPoints < 4){
+                StaticManager.uiInventory.ShowNotification("Uh-Oh, Not enough attack points!", 3);
             }
         }
 
@@ -282,7 +291,15 @@ namespace Assets.Meyer.TestScripts
         private void PlayersTurn() {
             
             if (!_player.hasSelectedCompanion && ( ( _player.selectedAttacker == null || _player.selectedAttacker.isBlocking || _player.selectedAttacker.stats.AttackPoints < 1 || !_player.isTurn))){
-                 SelectCompanion();
+                if ( _player.selectedAttacker ){
+                _player.selectedAttacker.RegenerateAttackPoints(true);
+
+                }
+
+                if ( _enemy.selectedAttacker ){
+                    _enemy.selectedAttacker.AnimationClass.Stop(AnimationClass.states.Selected);
+                }
+                SelectCompanion();
             }
             else if (_player.hasSelectedCompanion && !_player.hasSelectedEnemy && !_player.selectedAttacker.isBlocking && _player.selectedAttacker.stats.AttackPoints > 0)
             {
@@ -338,7 +355,6 @@ namespace Assets.Meyer.TestScripts
                 _player.hasSelectedCompanion = true;
                 _player.hasSelectedEnemy = false;
                 _player.hasRotated = false;
-
             }
         }
         private IEnumerator damage(BaseCharacter victim, checkStruct attacker, Action <bool> hasDamaged)
@@ -350,7 +366,7 @@ namespace Assets.Meyer.TestScripts
 
             attacker.selectedAttacker.AnimationClass.Stop(AnimationClass.states.Attacking);
             
-            attacker.selectedAttacker.stats.AttackPoints -= 1;
+            attacker.selectedAttacker.stats.AttackPoints -= attacker.selectedAttacker.stats.attackCost;
             
             if (attacker.selectedAttacker.stats.AttackPoints < 0)
             {
@@ -365,7 +381,7 @@ namespace Assets.Meyer.TestScripts
                 StaticManager.uiInventory.ShowNotification("Victim has blocked!", 3);
                 victim.isBlocking = false;
             }
-
+           
             hasDamaged( true );
         }
 
@@ -455,12 +471,15 @@ namespace Assets.Meyer.TestScripts
 
             _player.hasSelectedEnemy = true;
         }
-       
 
+        private bool isPaused = false;
         private void EnemysTurn()
         {
-            if (!_enemy.hasSelectedCompanion && ((_enemy.selectedAttacker == null || _enemy.selectedAttacker.isBlocking || _enemy.selectedAttacker.stats.AttackPoints < 1 || !_enemy.isTurn)))
+            if (!_enemy.hasSelectedCompanion && !isPaused && ((_enemy.selectedAttacker == null || _enemy.selectedAttacker.isBlocking || _enemy.selectedAttacker.stats.AttackPoints < 1 || !_enemy.isTurn)))
             {
+                if (_enemy.selectedAttacker)
+                _enemy.selectedAttacker.RegenerateAttackPoints(true);
+
                 SelectRandomEnemy();
             }
             
@@ -543,21 +562,39 @@ namespace Assets.Meyer.TestScripts
             }
 
             selected++;
-           
+           _enemy.selectedAttacker.AnimationClass.Play(AnimationClass.states.Selected);
 
             int isBlocking = Random.Range( 0 , 35 );
 
-            if ( isBlocking < 20 ){
+            if ( isBlocking < 20 && _enemy.selectedAttacker.stats.AttackPoints > 3 ){
                 _enemy.selectedAttacker.isBlocking = true;
-                _enemy.selectedAttacker.stats.AttackPoints -= 1;
+                _enemy.selectedAttacker.stats.AttackPoints = 0;
+                _enemy.hasRotated = false;
+                _player.isTurn = true;
+                _enemy.isTurn = false;
+                _enemy.hasSelectedEnemy = false;
+                _enemy.hasSelectedCompanion = false;
+                StartCoroutine( Pause( enemyPauseTime , _bool => _enemy.hasSelectedCompanion = _bool, _bool1 => isPaused = _bool1 ) );
+
+                return;
             }
             else{
                 _enemy.selectedAttacker.isBlocking = false;
             }
-
+            
             _enemy.AllAttackptsAre0 = checkAttackpts( _enemy.characters );
 
             _enemy.hasSelectedCompanion = true;
+
+
+        }
+
+        public IEnumerator Pause(int time, Action <bool> _bool, Action <bool> _isPaused ) {
+            StaticManager.uiInventory.ShowNotification("Enemy has chosen to block", 5);
+            _isPaused( true );
+            yield return new WaitForSeconds(time);
+            _bool( true );
+            _isPaused( false );
         }
 
         bool checkAttackpts( List <BaseCharacter> character ) {
@@ -602,11 +639,11 @@ namespace Assets.Meyer.TestScripts
                 if ( _player.characters[i] != _player.leader ){
                         StaticManager.utility.EnableObstacle( _player.characters[ i ].Nav.Agent , true );
                         _player.characters[ i ].Nav.SetState = BaseNav.state.Follow;
-                    _player.characters[i].stats.RegenerateAttackPoints();
+                    _player.characters[i].RegenerateAttackPoints(false);
                     }
                 else{
                     _player.characters[ i ].material.color = _player.characters[ i ].LeaderColor;
-                    _player.characters[i].stats.RegenerateAttackPoints();
+                    _player.characters[i].RegenerateAttackPoints(false);
                     _player.characters.RemoveAt(i);
                     i--;
                 }

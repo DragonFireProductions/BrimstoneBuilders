@@ -38,6 +38,10 @@ public class Stat : MonoBehaviour {
     [SerializeField] float maxStamina;
     private int xp;
 
+    public int maxAttackpoints = 6;
+
+    public int attackCost = 3;
+
     // Use this for initialization
     void Start () {
         health = 100;
@@ -50,7 +54,7 @@ public class Stat : MonoBehaviour {
         perception = Random.Range( 0 , 30 );
         intelligence = Random.Range( 0 , 30 );
         luck = Random.Range( 0 , 30 );
-        attackPoints = Random.Range( 1 , 6 );
+        attackPoints = maxAttackpoints;
         stamina = Random.Range( 0 , 30 );
         xp = 0;
         maxHealth = 7;
