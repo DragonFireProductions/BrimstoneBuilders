@@ -33,6 +33,8 @@ namespace Kristal
 
         public EnemyNav Nav;
 
+        public LootableObject Loot;
+
         // Use this for initialization
         void Awake( ) {
             base.Awake( );
@@ -42,6 +44,10 @@ namespace Kristal
         protected void Start( ) {
             this.material.color = BaseColor;
             Nav = gameObject.GetComponent<EnemyNav>();
+
+            if (gameObject.GetComponent<LootableObject>())
+                Loot = gameObject.GetComponent<LootableObject>();
+            
         }
         
 
@@ -59,6 +65,8 @@ namespace Kristal
 
             if ( this.stats.Health <= 0 ){
               StaticManager.uiInventory.AppendNotification("\n Enemy is now Dead");
+                if (Loot != null)
+                    Loot.Drop();
                 Leader.Remove(this);
             }
             else{
