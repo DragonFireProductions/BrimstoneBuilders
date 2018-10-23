@@ -47,9 +47,14 @@ public class Stat : MonoBehaviour {
         health = 100;
         name = this.gameObject.name;
         health = Random.Range( 5 , 7 );
+
+        if ( this.gameObject != StaticManager.character.gameObject ){
         strength = Random.Range( 0 , 30 );
+        agility = Random.Range(0, 30);
+
+
+        }
         endurance = Random.Range( 0 , 30 );
-        agility = Random.Range( 0 , 30 );
         charisma = Random.Range( 0 , 30 );
         perception = Random.Range( 0 , 30 );
         intelligence = Random.Range( 0 , 30 );
@@ -59,6 +64,8 @@ public class Stat : MonoBehaviour {
         xp = 0;
         maxHealth = 7;
         maxStamina = 30;
+        
+
     }
 	
 	// Update is called once per frame

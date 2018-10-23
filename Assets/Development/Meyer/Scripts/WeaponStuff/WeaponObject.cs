@@ -90,6 +90,7 @@ public class WeaponObject : MonoBehaviour
             this.gameObject.transform.position = StaticManager.character.cube.transform.position;
             this.gameObject.transform.rotation = StaticManager.character.cube.transform.rotation;
             this.gameObject.transform.SetParent(StaticManager.character.cube.transform);
+            StaticManager.inventory.IncreaseStats(this.WeaponStats);
         }
         else if ( collider.tag == "Player" && StaticManager.uiInventory.Dragging && !StaticManager.uiInventory.isMainInventory ){
             isMainInventory = false;

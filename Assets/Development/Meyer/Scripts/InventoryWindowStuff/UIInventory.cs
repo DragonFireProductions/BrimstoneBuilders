@@ -277,7 +277,7 @@ public class UIInventory : MonoBehaviour
 
         for ( int i = 0 ; i < WeaponUIList.Count ; i++ ){
             var a = item[ WeaponUIList[ i ].name ];
-            WeaponUIList[ i ].obj.text = a.ToString( );
+            WeaponUIList[ i ].obj.text = "+" + a.ToString( );
         }
         
     }
@@ -420,6 +420,7 @@ public class UIInventory : MonoBehaviour
             float distance_to_screen = Camera.main.WorldToScreenPoint(selectedItem.transform.position).z;
             var curPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance_to_screen));
             selectedItem.transform.position = curPosition;
+            
         }
 
         if ( Input.GetMouseButtonUp(0) && Dragging ){

@@ -130,6 +130,12 @@ public class PlayerInventory : MonoBehaviour
         TurnBasedController.instance.Block( );
     }
 
+    public void IncreaseStats(WeaponItem item ) {
+        Stat stat = StaticManager.character.GetComponent < Stat >( );
+        stat.Strength = item.durability;
+        stat.Agility += item.attackSpeed;
+        stat.Strength += item.baseDamage;
+    }
     /// <summary>
     /// Adds item picked up to inventory
     /// </summary>

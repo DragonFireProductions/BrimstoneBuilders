@@ -76,7 +76,7 @@ public abstract class BaseCharacter : MonoBehaviour {
         damageText.transform.position = gameObject.transform.position + ( gameObject.transform.up * 4 );
 		damageText.text = damage.ToString( );
 		damageText.transform.parent = this.transform;
-		damageText.GetComponentInChildren < Animation >( ).Play( );
+		
 		StartCoroutine( deleteDamages( damageText ) );
 	}
 

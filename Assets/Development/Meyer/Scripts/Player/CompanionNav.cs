@@ -76,11 +76,13 @@ public class CompanionNav : BaseNav
 
                 if (player != null)
                 {
+
                     if (!Agent.enabled)
                     {
                        StaticManager.utility.EnableObstacle(Agent, true);
                     }
 
+                    Agent.stoppingDistance = 4.0f;
                     var r = Random.Range(4, 10);
                     var a = Character.player.transform.forward + (-Vector3.forward * r);
                     Agent.destination = Character.player.transform.position;

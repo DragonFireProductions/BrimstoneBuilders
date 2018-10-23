@@ -77,6 +77,8 @@ namespace Assets.Meyer.TestScripts
             public bool hasLinedUp;
 
             public bool hasCompanionsLinedUp;
+
+            public int count;
           
             public  BaseCharacter selectedAttacker;
           
@@ -201,7 +203,7 @@ namespace Assets.Meyer.TestScripts
 
         public void Block( ) {
             
-            if ( (addedEnemyLeader && _player.isTurn && _player.hasSelectedCompanion && !_player.hasSelectedEnemy && _player.selectedAttacker.stats.AttackPoints > 3) ){
+            if ( (addedEnemyLeader && _player.isTurn && !_player.hasSelectedEnemy && _player.selectedAttacker.stats.AttackPoints > 3) ){
                 _player.selectedAttacker.AnimationClass.Stop(AnimationClass.states.Selected);
                 _player.blocking.block = true;
                 _player.selectedAttacker.isBlocking = true;
@@ -210,16 +212,14 @@ namespace Assets.Meyer.TestScripts
                 _enemy.isTurn = true;
                 _player.isTurn = false;
                 _player.hasSelectedEnemy = false;
-
-                if ( _player.selectedAttacker.stats.AttackPoints < 0 ){
-                    _player.selectedAttacker.stats.AttackPoints = 0;
-                }
+                
                 StaticManager.uiInventory.UpdateCompanionStats(_player.selectedAttacker.stats);
 
                 StaticManager.uiInventory.ShowNotification("You have chosen to block", 5);
             }
             else if (_player.selectedAttacker.stats.AttackPoints < 4){
                 StaticManager.uiInventory.ShowNotification("Uh-Oh, Not enough attack points!", 3);
+                StaticManager.uiInventory.AppendNotification("It costs 4 attack points to block!");
             }
         }
 
@@ -255,53 +255,56 @@ namespace Assets.Meyer.TestScripts
         
 
         private void SelectCompanion() {
+            if ( Input.GetKeyDown(KeyCode.RightBracket) ){
+                index += 1;
+  
+            }
 
+            if ( Input.GetKeyDown(KeyCode.LeftBracket) ){
+                index -= 1;
+            }
                StaticManager.uiInventory.CompanionStatShowWindow(true);
-
-                if (index >= _player.characters.Count || _player.characters[index].gameObject == null)
+            if (index < 0)
+            {
+                index = _player.characters.Count - 1;
+            }
+            if (index >= _player.characters.Count || _player.characters[index].gameObject == null)
                 {
                     index = 0;
                 }
 
+            if (_player.selectedAttacker != null)
+            {
+                _player.selectedAttacker.AnimationClass.Stop(AnimationClass.states.Selected);
+                _player.selectedAttacker.material.color = _player.selectedAttacker.BaseColor;
+            }
+
                 _player.selectedAttacker = _player.characters[index];
-                if (index == 0)
-                {
-                    _player.characters[_player.characters.Count - 1].material.color =  _player.characters[_player.characters.Count - 1].BaseColor;
-                }
-                else
-                {
-                    _player.characters[index - 1].material.color = _player.characters[index - 1].BaseColor;
-                }
+               
 
                 StaticManager.uiInventory.UpdateCompanionStats(_player.selectedAttacker.gameObject.GetComponent<Stat>());
 
                 CameraController.controller.SwitchMode(CameraMode.ToOtherPlayer,(Companion) _player.selectedAttacker);
-                index += 1;
+                
 
                 _player.selectedAttacker.AnimationClass.Play(AnimationClass.states.Selected);
 
-
-                _player.selectedAttacker.isBlocking = false;
+           
                 _player.AllAttackptsAre0 = checkAttackpts( _player.characters );
-               _player.hasSelectedCompanion = true;
         
         }
 
        
         private void PlayersTurn() {
             
-            if (!_player.hasSelectedCompanion && ( ( _player.selectedAttacker == null || _player.selectedAttacker.isBlocking || _player.selectedAttacker.stats.AttackPoints < 1 || !_player.isTurn))){
-                if ( _player.selectedAttacker ){
-                _player.selectedAttacker.RegenerateAttackPoints(true);
-
-                }
-
+            if (!_player.hasSelectedCompanion){
+                
                 if ( _enemy.selectedAttacker ){
                     _enemy.selectedAttacker.AnimationClass.Stop(AnimationClass.states.Selected);
                 }
                 SelectCompanion();
             }
-            else if (_player.hasSelectedCompanion && !_player.hasSelectedEnemy && !_player.selectedAttacker.isBlocking && _player.selectedAttacker.stats.AttackPoints > 0)
+            if ( !_player.hasSelectedEnemy && !_player.selectedAttacker.isBlocking && _player.selectedAttacker.stats.AttackPoints > 0)
             {
                 SelectEnemy();
             }
@@ -346,20 +349,24 @@ namespace Assets.Meyer.TestScripts
                 _enemy.isTurn = true;
                 _player.isTurn = false;
                 _player.hasSelectedEnemy = false;
+                _player.hasSelectedCompanion = false;
+                
             }
             else if (_player.hasRotated && _player.selectedAttacker.stats.AttackPoints > 0 && !_player.selectedAttacker.isBlocking){
                 _player.selectedAttacker.AnimationClass.Play(AnimationClass.states.Selected);
                 _player.isTurn = true;
                 _enemy.isTurn = false;
                 _enemy.hasSelectedEnemy = false;
-                _player.hasSelectedCompanion = true;
+                // change to true if player shouldn't switch after first selecting
+                _player.hasSelectedCompanion = false;
                 _player.hasSelectedEnemy = false;
                 _player.hasRotated = false;
             }
         }
         private IEnumerator damage(BaseCharacter victim, checkStruct attacker, Action <bool> hasDamaged)
         {
-            
+            StaticManager.uiInventory.ShowNotification("3 attack points have been subtracted", 3);
+
             attacker.selectedAttacker.AnimationClass.Play(AnimationClass.states.Attacking);
 
             yield return new WaitForSeconds(2);
@@ -424,9 +431,11 @@ namespace Assets.Meyer.TestScripts
        
         private void SelectEnemy()
         {
-            if (Input.GetMouseButtonDown(0) && _player.hasSelectedCompanion )
+            if (Input.GetMouseButtonDown(0) )
             {
-                
+                if ( _player.selectedAttacker.stats.AttackPoints <= 0 ){
+                    StaticManager.uiInventory.ShowNotification("Uh-oh, this player has no attack points left!", 5);
+                }
                 l_hitInfo = new RaycastHit();
                 var hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out l_hitInfo);
 
@@ -439,7 +448,7 @@ namespace Assets.Meyer.TestScripts
                         hitenemy =  l_hitInfo.transform.gameObject.GetComponent<Enemy>();
                         StaticManager.uiInventory.itemsInstance.AttackConfirmation.SetActive(true);
                         Time.timeScale = 0;
-                        
+                        _player.hasSelectedCompanion = true;
                     }
                     else
                     {
@@ -479,6 +488,8 @@ namespace Assets.Meyer.TestScripts
             {
                 if (_enemy.selectedAttacker)
                 _enemy.selectedAttacker.RegenerateAttackPoints(true);
+                if (_player.selectedAttacker)
+                    _player.selectedAttacker.RegenerateAttackPoints(true);
 
                 SelectRandomEnemy();
             }
@@ -521,8 +532,8 @@ namespace Assets.Meyer.TestScripts
             }
 
             //if it turned
-            if (_enemy.hasRotated && _enemy.selectedAttacker.stats.AttackPoints <= 0 && !_enemy.selectedAttacker.isBlocking)
-            {
+            if (_enemy.hasRotated && _enemy.selectedAttacker.stats.AttackPoints <= 0 && !_enemy.selectedAttacker.isBlocking){
+                _player.selectedAttacker.isBlocking = false;
                 _enemy.hasRotated = false;
                 _player.isTurn = true;
                 _enemy.isTurn = false;
@@ -639,7 +650,7 @@ namespace Assets.Meyer.TestScripts
                 if ( _player.characters[i] != _player.leader ){
                         StaticManager.utility.EnableObstacle( _player.characters[ i ].Nav.Agent , true );
                         _player.characters[ i ].Nav.SetState = BaseNav.state.Follow;
-                    _player.characters[i].RegenerateAttackPoints(false);
+                        _player.characters[i].RegenerateAttackPoints(false);
                     }
                 else{
                     _player.characters[ i ].material.color = _player.characters[ i ].LeaderColor;
@@ -695,8 +706,8 @@ namespace Assets.Meyer.TestScripts
             }
 
             int p = 0;
-            for (var i = 0; i < _enemy.characters.Count; i++)
-            {
+            for (var i = 0; i < _enemy.characters.Count; i++){
+                _enemy.count++;
                 //StaticManager.utility.EnableObstacle( Enemies[ i ].Nav.Agent , true );
                 StartCoroutine(TurnEnemy((Enemy)_enemy.characters[i], _enemy, _bool => _enemy.hasCompanionsLinedUp = _bool));
             }
@@ -736,8 +747,8 @@ namespace Assets.Meyer.TestScripts
             }
 
             
-            for (var i = 0; i < _player.characters.Count; i++)
-            {
+            for (var i = 0; i < _player.characters.Count; i++){
+                _player.count++;
                 StartCoroutine(TurnEnemy((Companion)_player.characters[i], _player, _bool => _player.hasCompanionsLinedUp = _bool ));
             }
 
@@ -787,13 +798,11 @@ namespace Assets.Meyer.TestScripts
 
             enemy.gameObject.GetComponent<Collider>().isTrigger =
                     !enemy.gameObject.GetComponent<Collider>().isTrigger;
-            p++;
 
-
-
-            if (p >= _player.characters.Count + this._enemy.characters.Count)
+            
+            if (character.count >= character.characters.Count )
             {
-                p = 0;
+                character.count = 0;
                 hasTurned( true );
             }
         }
