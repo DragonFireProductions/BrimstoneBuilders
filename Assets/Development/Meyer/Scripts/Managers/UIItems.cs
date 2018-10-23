@@ -26,7 +26,7 @@ public class UIItems : MonoBehaviour {
 	public GameObject CompanionUI;
 
 	public GameObject CompanionLabels;
-	
+
 	public GameObject GameOverUI;
 
 	public GameObject WeaponStatsUI;
@@ -53,6 +53,8 @@ public class UIItems : MonoBehaviour {
 
 	public GameObject AttackConfirmation;
 
+    public GameObject Playerlevel;
+
     public object this[string propertyName]
     {
         get { return this.GetType().GetField(propertyName).GetValue(this); }
@@ -70,9 +72,9 @@ public class UIItems : MonoBehaviour {
             }
         }
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 }

@@ -7,6 +7,7 @@ using Assets.Meyer.TestScripts.Player;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -38,10 +39,20 @@ public class PlayerController : MonoBehaviour
     private bool canRun = true;
     private float stamina, maxStamina = 500.0f;
 
-    private float perception = 5.0f;
+    private float eye_sight = 5.0f;
+    private float as_far_as_the_eye_can_see = 15.0f;
+    private float blindess = 4.0f;
 
     [SerializeField]
-     static EnemyNav[] enemy;
+     EnemyNav[] enemy;
+
+    private float requiredXP = 5.0f;
+    private int playerlvl = 1;
+
+    [SerializeField]
+    Text playerlevel;
+
+    private int isVisible = 1;
 
    public enum PlayerState { move, sneak, navMesh}; PlayerState state;
 
@@ -63,7 +74,7 @@ public class PlayerController : MonoBehaviour
         Assert.IsNotNull(Cam, "Camholder cannot be found!");
         stats = GetComponent<Stat>();
 
-
+        SetText();
     }
 
     /// <summary>
@@ -78,18 +89,42 @@ public class PlayerController : MonoBehaviour
 
         Ray ray = new Ray(transform.position, gameObject.transform.forward);
         RaycastHit hit;
-        Debug.DrawRay(transform.position, gameObject.transform.forward * perception);
-        if (Physics.Raycast(ray, out hit, perception))
+        Debug.DrawRay(transform.position, gameObject.transform.forward * eye_sight);
+        if (Physics.Raycast(ray, out hit, eye_sight) && state == PlayerState.sneak)
         {
-            perc += 0.05f;
-            if (perc > 1.0f)
+            if (hit.collider.tag == "Enemy")
             {
-                ++stats.Perception;
-                perception += 0.5f;
-                for (int i = 0; i < enemy.Length; ++i)
+                dex += 0.05f;
+                if (dex > 1.0f)
                 {
-                    //if (hit.collider)
-                    //enemy.getVision -= 0.5f;
+                    dex = 0.0f;
+
+                    ++stats.Dexterity;
+                    eye_sight += 0.8f;
+                    if (eye_sight >= as_far_as_the_eye_can_see)
+                        eye_sight = 10.0f;
+
+                    ++stats.XP;
+                    if (stats.XP >= requiredXP)
+                    {
+                        stats.XP = 0;
+                        ++playerlvl;
+                        SetText();
+                    }
+
+                    for (int i = 0; i < enemy.Length; ++i)
+                    {
+                        if (hit.collider.tag == "Enemy")
+                        {
+                            if (hit.collider.gameObject.name == enemy[i].name)
+                            {
+                                enemy[i].getVision -= 0.8f;
+                                if (enemy[i].getVision <= blindess)
+                                    enemy[i].getVision = blindess;
+                            }
+
+                        }
+                    }
                 }
             }
         }
@@ -132,10 +167,10 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        //if (showstats && TurnBasedController.instance)
-        //  StaticManager.uiInventory.UpdateStats(stats);
-        //else if (TurnBasedController.instance && !showstats)
-        //  StaticManager.uiInventory.itemsInstance.StatUI.SetActive(false);
+        if (showstats && TurnBasedController.instance)
+            StaticManager.uiInventory.UpdateStats(stats);
+        else if (TurnBasedController.instance && !showstats)
+            StaticManager.uiInventory.itemsInstance.StatUI.SetActive(false);
 
 
     }
@@ -168,11 +203,21 @@ public class PlayerController : MonoBehaviour
                     Controller.Move(dir * RunSpeed * Time.deltaTime);
                     stamina -= 10.0f;
                     endu += 0.005f;
+                    Debug.Log(endu);
                     if (endu > 1.0f)
                     {
                         endu = 0.0f;
                         ++stats.Endurance;
                         maxStamina += 200.0f;
+                        ++stats.Health;
+
+                        ++stats.XP;
+                        if (stats.XP >= requiredXP)
+                        {
+                            stats.XP = 0;
+                            ++playerlvl;
+                            SetText();
+                        }
                     }
                 }
             }
@@ -188,7 +233,8 @@ public class PlayerController : MonoBehaviour
         Controller.Move(direction.normalized * WalkSpeed * Time.deltaTime);
         if (state == PlayerState.move && X > 0 || X < 0 || Z > 0 || Z < 0)
         {
-            agil += 0.00003f;
+            agil += 0.005f;
+            //Debug.Log("agil:" + agil);
             if (agil > 1.0f)
             {
                 agil = 0.0f;
@@ -196,6 +242,15 @@ public class PlayerController : MonoBehaviour
                 ++WalkSpeed;
                 if (WalkSpeed > 7.0f)
                     WalkSpeed = 7.0f;
+
+                ++stats.XP;
+                //Debug.Log("XP:" + stats.XP);
+                if (stats.XP >= requiredXP)
+                {
+                    stats.XP = 0;
+                    ++playerlvl;
+                    SetText();
+                }
             }
         }
     }
@@ -231,4 +286,14 @@ public class PlayerController : MonoBehaviour
         canMove = _control;
     }
 
+    void SetText()
+    {
+        playerlevel.text = "Player Level:" + playerlvl.ToString();
+    }
+
+    public int IsVisible
+    {
+        get { return isVisible; }
+        set { isVisible = value; }
+    }
 }
