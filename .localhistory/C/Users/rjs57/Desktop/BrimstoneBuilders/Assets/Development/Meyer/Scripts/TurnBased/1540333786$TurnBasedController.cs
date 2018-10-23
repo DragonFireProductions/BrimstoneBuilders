@@ -18,7 +18,7 @@ using Random = UnityEngine.Random;
 
 namespace Assets.Meyer.TestScripts
 {
-    public class
+    public class 
         TurnBasedController : MonoBehaviour {
 
         public bool AttackMode;
@@ -45,39 +45,39 @@ namespace Assets.Meyer.TestScripts
         public struct blockingCheck {
 
             public bool isBlocking;
-
+            
             public bool isNotBlocking;
-
+          
             public bool block;
 
         }
-
+       
         public struct checkStruct {
 
             public  blockingCheck blocking;
-
+             
             public  bool isTurn;
-
+          
             public  bool hasSelectedEnemy;
-
+            
             public  bool hasSelectedCompanion;
-
+         
             public  bool hasRotated;
-
+           
             public  bool hasReached;
-
+       
             public  bool hasReturned;
-
+         
             public  bool hasDamaged;
 
             public bool hasLinedUp;
 
             public bool hasCompanionsLinedUp;
-
+          
             public  BaseCharacter selectedAttacker;
-
+          
             public  BaseCharacter selectedVictim;
-
+         
             public  BaseCharacter leader;
 
             public List < BaseCharacter > characters;
@@ -111,13 +111,13 @@ namespace Assets.Meyer.TestScripts
 
         private void Update() {
             timer += Time.deltaTime;
-
+           
 
             if (AttackMode)
             {
                 //If enemies & companions aren't lined up
                 if (!initalized)
-                {
+                { 
                     Initalize();
                 }
 
@@ -126,12 +126,12 @@ namespace Assets.Meyer.TestScripts
                     addedEnemyLeader = true;
                     _enemy.characters.Add(_enemy.leader);
                 }
-
+                
                 if ( addedEnemyLeader && _player.isTurn){
                     PlayersTurn();
 
                 }
-
+                
                 //if it's the enemys turn
                 if (_enemy.isTurn)
                 {
@@ -196,7 +196,7 @@ namespace Assets.Meyer.TestScripts
         }
 
         public void Block( ) {
-
+            
             if ( (addedEnemyLeader && _player.isTurn && _player.hasSelectedCompanion && !_player.hasSelectedEnemy) ){
                 _player.selectedAttacker.AnimationClass.Stop(AnimationClass.states.Selected);
                 _player.blocking.block = true;
@@ -241,7 +241,7 @@ namespace Assets.Meyer.TestScripts
 
 
         [SerializeField] private int index = 0;
-
+        
 
         private void SelectCompanion() {
 
@@ -273,12 +273,12 @@ namespace Assets.Meyer.TestScripts
                 _player.selectedAttacker.isBlocking = false;
                 _player.AllAttackptsAre0 = checkAttackpts( _player.characters );
                _player.hasSelectedCompanion = true;
-
+        
         }
 
-
+       
         private void PlayersTurn() {
-
+            
             if (!_player.hasSelectedCompanion && ( ( _player.selectedAttacker == null || _player.selectedAttacker.isBlocking || _player.selectedAttacker.stats.AttackPoints < 1 || !_player.isTurn))){
                  SelectCompanion();
             }
@@ -287,7 +287,7 @@ namespace Assets.Meyer.TestScripts
                 SelectEnemy();
             }
             else if (!_player.hasSelectedEnemy && _player.hasSelectedCompanion && (_player.selectedAttacker.isBlocking || _player.selectedAttacker.stats.AttackPoints <= 0)){
-
+                
                 _player.hasSelectedCompanion = false;
                 _player.hasRotated = false;
                 _enemy.isTurn = true;
@@ -341,15 +341,15 @@ namespace Assets.Meyer.TestScripts
         }
         private IEnumerator damage(BaseCharacter victim, checkStruct attacker, Action <bool> hasDamaged)
         {
-
+            
             attacker.selectedAttacker.AnimationClass.Play(AnimationClass.states.Attacking);
 
             yield return new WaitForSeconds(2);
 
             attacker.selectedAttacker.AnimationClass.Stop(AnimationClass.states.Attacking);
-
+            
             attacker.selectedAttacker.stats.AttackPoints -= 1;
-
+            
             if (attacker.selectedAttacker.stats.AttackPoints < 0)
             {
                 attacker.selectedAttacker.stats.AttackPoints = 0;
@@ -403,12 +403,12 @@ namespace Assets.Meyer.TestScripts
 
         private Enemy hitenemy;
 
-
+       
         private void SelectEnemy()
         {
             if (Input.GetMouseButtonDown(0) && _player.hasSelectedCompanion )
             {
-
+                
                 l_hitInfo = new RaycastHit();
                 var hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out l_hitInfo);
 
@@ -421,7 +421,7 @@ namespace Assets.Meyer.TestScripts
                         hitenemy =  l_hitInfo.transform.gameObject.GetComponent<Enemy>();
                         StaticManager.uiInventory.itemsInstance.AttackConfirmation.SetActive(true);
                         Time.timeScale = 0;
-
+                        
                     }
                     else
                     {
@@ -453,7 +453,7 @@ namespace Assets.Meyer.TestScripts
 
             _player.hasSelectedEnemy = true;
         }
-
+       
 
         private void EnemysTurn()
         {
@@ -461,7 +461,7 @@ namespace Assets.Meyer.TestScripts
             {
                 SelectRandomEnemy();
             }
-
+            
             if (_enemy.hasSelectedCompanion && !_enemy.hasSelectedEnemy && !_enemy.selectedAttacker.isBlocking && _enemy.selectedAttacker.stats.AttackPoints > 0)
             {
                 SelectRandomPlayer();
@@ -519,7 +519,7 @@ namespace Assets.Meyer.TestScripts
             }
         }
 
-
+       
 
         private Vector3 EnemyStartPos;
 
@@ -541,11 +541,11 @@ namespace Assets.Meyer.TestScripts
             }
 
             selected++;
-
+           
 
             int isBlocking = Random.Range( 0 , 11 );
 
-            if ( isBlocking < 0 ){
+            if ( isBlocking < 10 ){
                 _enemy.selectedAttacker.isBlocking = true;
                 _enemy.selectedAttacker.stats.AttackPoints -= 1;
             }
@@ -589,10 +589,10 @@ namespace Assets.Meyer.TestScripts
 
             _enemy.hasSelectedEnemy = true;
         }
-
+        
 
         public void BattleWon( ) {
-
+            
             StaticManager.character.controller.SetControlled( true );
             CameraController.controller.SwitchMode(CameraMode.Player);
             _player.selectedAttacker.AnimationClass.Stop(AnimationClass.states.Selected);
@@ -608,7 +608,7 @@ namespace Assets.Meyer.TestScripts
                     _player.characters.RemoveAt(i);
                     i--;
                 }
-
+                   
             }
 
             for ( int i = 0 ; i < _enemy.characters.Count ; i++ ){
@@ -662,7 +662,7 @@ namespace Assets.Meyer.TestScripts
                 StartCoroutine(TurnEnemy((Enemy)_enemy.characters[i], _enemy, _bool => _enemy.hasCompanionsLinedUp = _bool));
             }
         }
-
+        
 
         private List < Companion > holderCompanions;
         private void LineUpCompanions() {
@@ -670,7 +670,7 @@ namespace Assets.Meyer.TestScripts
             var right = 2;
             var left = 2;
             var forward = -1;
-
+            
             for (var k = 0; k < _player.characters.Count; k += 2)
             {
                 forward -= 1;
@@ -696,7 +696,7 @@ namespace Assets.Meyer.TestScripts
                 left += 2;
             }
 
-
+            
             for (var i = 0; i < _player.characters.Count; i++)
             {
                 StartCoroutine(TurnEnemy((Companion)_player.characters[i], _player, _bool => _player.hasCompanionsLinedUp = _bool ));
@@ -758,7 +758,7 @@ namespace Assets.Meyer.TestScripts
                 hasTurned( true );
             }
         }
-
+        
 
         private IEnumerator Turn(NavMeshAgent agent, Vector3 toRotateTopos, Quaternion rotation, Action <bool> hasRotated)
         {

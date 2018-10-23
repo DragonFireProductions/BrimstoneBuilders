@@ -59,13 +59,13 @@ public abstract class BaseCharacter : MonoBehaviour {
 		AnimationClass = gameObject.AddComponent < AnimationClass >( );
 		damageText = transform.Find( "DamageText" ).GetComponentInChildren< TextMeshPro >( );
 	}
-
+	
 
     // Update is called once per frame
     void Update () {
-
+		
 	}
-
+	
 	public void DamageDone(int damage, BaseCharacter gameObject ) {
 		damageText.enabled = true;
 

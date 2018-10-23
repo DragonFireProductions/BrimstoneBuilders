@@ -169,6 +169,7 @@ namespace Assets.Meyer.TestScripts
         {
             if (!AttackMode){
                 _player.leader = Character.player.GetComponent < CompanionLeader >( );
+                if (_enemy.characters.Count != 0)
                 this._enemy.characters = enemy.Leader.characters;
                 this._enemy.leader =(Enemy)enemy.Leader.Leader;
                 _player.characters = _player.leader.characters;
@@ -545,7 +546,7 @@ namespace Assets.Meyer.TestScripts
 
             int isBlocking = Random.Range( 0 , 11 );
 
-            if ( isBlocking < 0 ){
+            if ( isBlocking < 10 ){
                 _enemy.selectedAttacker.isBlocking = true;
                 _enemy.selectedAttacker.stats.AttackPoints -= 1;
             }

@@ -545,7 +545,7 @@ namespace Assets.Meyer.TestScripts
 
             int isBlocking = Random.Range( 0 , 11 );
 
-            if ( isBlocking < 0 ){
+            if ( isBlocking < 10 ){
                 _enemy.selectedAttacker.isBlocking = true;
                 _enemy.selectedAttacker.stats.AttackPoints -= 1;
             }

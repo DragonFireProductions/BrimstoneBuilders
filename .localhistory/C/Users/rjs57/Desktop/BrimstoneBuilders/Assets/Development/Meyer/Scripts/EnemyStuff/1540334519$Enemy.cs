@@ -32,7 +32,7 @@ namespace Kristal
         private Quaternion startRotation;
 
         // Use this for initialization
-        protected void Awake( ) {
+        void Awake( ) {
             base.Awake( );
             timer = reactionTime;
         }
