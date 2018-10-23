@@ -4,8 +4,28 @@ using UnityEngine;
 
 public class LootableObject : MonoBehaviour
 {
-    [SerializeField] Drop[] DropTable;
+    [SerializeField] bool Interactable;
     [SerializeField] Transform DropPoint;
+    [SerializeField] Drop[] DropTable;
+
+    private void Update()
+    {
+        if (Interactable)
+        {
+
+
+            if (Input.GetButtonDown("Interact"))
+            {
+                float Distance = Vector3.Distance(transform.position, StaticManager.character.gameObject.transform.position);
+
+                if (Distance <= 4)
+                {
+                    Drop();
+                    this.enabled = false;
+                }
+            }
+        }
+    }
 
     public void Drop(int DropCount = 1)
     {
