@@ -8,29 +8,31 @@ using UnityEngine;
 
 using Random = UnityEngine.Random;
 
-public class Stat : MonoBehaviour {
+public class Stat : MonoBehaviour
+{
 
-	struct Info {
+    struct Info
+    {
 
-		private TextMeshProUGUI text;
+        private TextMeshProUGUI text;
 
-		private float value;
+        private float value;
 
-	}
+    }
 
-   [ SerializeField ] private string name;
-   [SerializeField] private float dialogText;
-   [SerializeField] private float strength;
-   [SerializeField] private float endurance;
-   [SerializeField] private float agility;
-   [SerializeField] private float charisma;
-   [SerializeField] private float perception;
-   [SerializeField] private float intelligence;
+    [SerializeField] private string name;
+    [SerializeField] private float dialogText;
+    [SerializeField] private float strength;
+    [SerializeField] private float endurance;
+    [SerializeField] private float agility;
+    [SerializeField] private float charisma;
+    [SerializeField] private float perception;
+    [SerializeField] private float intelligence;
 
-    [ SerializeField ] private int attackPoints;
+    [SerializeField] private int attackPoints;
 
-   [ SerializeField ] private float dexterity;
-   [SerializeField] private float luck;
+    [SerializeField] private float dexterity;
+    [SerializeField] private float luck;
 
     [SerializeField] float health;
     [SerializeField] float maxHealth;
@@ -39,31 +41,49 @@ public class Stat : MonoBehaviour {
     private int xp;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         health = 100;
         name = this.gameObject.name;
-        health = Random.Range( 5 , 7 );
-        strength = Random.Range( 0 , 30 );
-        endurance = Random.Range( 0 , 30 );
-        agility = Random.Range( 0 , 30 );
-        charisma = Random.Range( 0 , 30 );
-        perception = Random.Range( 0 , 30 );
-        intelligence = Random.Range( 0 , 30 );
-        luck = Random.Range( 0 , 30 );
-        attackPoints = Random.Range( 1 , 6 );
-        stamina = Random.Range( 0 , 30 );
+        health = Random.Range(5, 7);
+        strength = Random.Range(0, 30);
+        endurance = Random.Range(0, 30);
+        agility = Random.Range(0, 30);
+        charisma = Random.Range(0, 30);
+        perception = Random.Range(0, 30);
+        intelligence = Random.Range(0, 30);
+        luck = Random.Range(0, 30);
+        attackPoints = Random.Range(1, 6);
+        stamina = Random.Range(0, 30);
         xp = 0;
         maxHealth = 7;
         maxStamina = 30;
+        AdjustScale(strength);
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-    public void RegenerateAttackPoints( ) {
-        this.AttackPoints = Random.Range( 0 , 4 );
+    // Update is called once per frame
+    void Update()
+    {
+    }
+
+    //Handles the scaling of all characters based on Strength stat
+    public void AdjustScale(float _strength)
+    {
+        if (_strength > 10.0f)
+        {
+            if (this.gameObject.tag == "Player" || this.gameObject.tag == "Companion" || this.gameObject.tag == "Enemy")
+            {
+                float scaling = _strength * 0.003f;
+                Vector3 newScale = new Vector3(this.transform.localScale.x + scaling, this.transform.localScale.y + scaling, this.transform.localScale.z + scaling);
+                this.transform.localScale += newScale;
+                this.gameObject.GetComponent<BaseCharacter>().AttachedWeapon.transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
+    }
+
+    public void RegenerateAttackPoints()
+    {
+        this.AttackPoints = Random.Range(0, 4);
     }
     public object this[string propertyName]
     {
@@ -130,12 +150,14 @@ public class Stat : MonoBehaviour {
         set { maxStamina = value; }
     }
 
-    public float Dexterity {
+    public float Dexterity
+    {
         get { return dexterity; }
         set { dexterity = value; }
     }
 
-    public string Name {
+    public string Name
+    {
         get { return name; }
         set { name = value; }
     }
@@ -146,7 +168,8 @@ public class Stat : MonoBehaviour {
         set { xp = value; }
     }
 
-    public int AttackPoints {
+    public int AttackPoints
+    {
         get { return attackPoints; }
         set { attackPoints = value; }
     }

@@ -344,6 +344,8 @@ namespace Assets.Meyer.TestScripts
             
             attacker.selectedAttacker.AnimationClass.Play(AnimationClass.states.Attacking);
 
+            victim.AnimationClass.Play(AnimationClass.states.DamageText);
+
             yield return new WaitForSeconds(2);
 
             attacker.selectedAttacker.AnimationClass.Stop(AnimationClass.states.Attacking);
@@ -365,6 +367,8 @@ namespace Assets.Meyer.TestScripts
             }
 
             hasDamaged( true );
+
+            victim.AnimationClass.Stop(AnimationClass.states.DamageText);
         }
 
         private bool result;
@@ -625,8 +629,8 @@ namespace Assets.Meyer.TestScripts
                 _enemy.hasCompanionsLinedUp = true;
                 return;
             }
-            var right = 2;
-            var left = 2;
+            var right = 5;
+            var left = 5;
 
             var forward = -1;
 
@@ -639,7 +643,7 @@ namespace Assets.Meyer.TestScripts
 
                 _enemy.characters[k].Nav.Agent.stoppingDistance = 0.0f;
                 _enemy.characters[k].Nav.Agent.SetDestination(move);
-                right += 2;
+                right += 5;
             }
 
             forward = -1;
@@ -652,7 +656,7 @@ namespace Assets.Meyer.TestScripts
                 _enemy.characters[k].Nav.Agent.stoppingDistance = 0;
                 _enemy.characters[k].Nav.Agent.SetDestination(moveleft);
 
-                left += 2;
+                left += 5;
             }
 
             int p = 0;
@@ -667,8 +671,8 @@ namespace Assets.Meyer.TestScripts
         private List < Companion > holderCompanions;
         private void LineUpCompanions() {
             holderCompanions = new List < Companion >();
-            var right = 2;
-            var left = 2;
+            var right = 5;
+            var left = 5;
             var forward = -1;
             
             for (var k = 0; k < _player.characters.Count; k += 2)
@@ -679,7 +683,7 @@ namespace Assets.Meyer.TestScripts
 
                 _player.characters[k].Nav.Agent.stoppingDistance = 0.0f;
                 _player.characters[k].Nav.Agent.SetDestination(move);
-                right += 2;
+                right += 5;
             }
 
             forward = -1;
@@ -693,7 +697,7 @@ namespace Assets.Meyer.TestScripts
                 _player.characters[k].Nav.Agent.stoppingDistance = 0;
                 _player.characters[k].Nav.Agent.SetDestination(moveleft);
 
-                left += 2;
+                left += 5;
             }
 
             

@@ -49,10 +49,13 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public BaseNav Nav;
 
+    public GameObject AttachedWeapon;
+
 	protected void Awake( ) {
         stats = gameObject.GetComponent<Stat>();
 		Assert.IsNotNull(stats, "Stats not found on " + this.gameObject.name);
         obj = gameObject;
+        AttachedWeapon = gameObject.transform.Find("Cube/EnemySword").gameObject;
         agent = gameObject.GetComponent<NavMeshAgent>();
         material = gameObject.GetComponent<Renderer>().material;
 		animator = gameObject.GetComponent < Animator >( );
@@ -72,7 +75,6 @@ public abstract class BaseCharacter : MonoBehaviour {
         damageText.transform.position = gameObject.transform.position + ( gameObject.transform.up * 4 );
 		damageText.text = damage.ToString( );
 			damageText.transform.parent = this.transform;
-			damageText.GetComponentInChildren < Animation >( ).Play( );
 			StartCoroutine( deleteDamages( damageText ) );
 	}
 
