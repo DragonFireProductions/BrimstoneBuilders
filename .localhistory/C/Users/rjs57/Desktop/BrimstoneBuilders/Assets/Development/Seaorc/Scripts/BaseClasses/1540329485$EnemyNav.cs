@@ -105,19 +105,32 @@ public class EnemyNav : BaseNav
                             {
 
                                 //Debug.Log("player! get em");
-                                if (TurnBasedController.instance == null)
-                                {
-                                    GameObject.Find("ManagerHolder").gameObject.AddComponent<TurnBasedController>();
-                                }
+                                //if (TurnBasedController.instance == null)
+                                //{
+                                //    GameObject.Find("ManagerHolder").gameObject.AddComponent<TurnBasedController>();
+                                //}
 
-                                Agent.stoppingDistance = 0;
-                                Agent.speed = battleSpeed;
+                                //Agent.stoppingDistance = 0;
+                                //Agent.speed = battleSpeed;
 
-                                TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
+                                //TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
 
 
                             }
                         }
+                        //if (Vector3.Distance(transform.position, player.transform.position) < VeiwDistance)
+                        //{
+
+                        //    if (TurnBasedController.instance == null)
+                        //    {
+                        //        GameObject.Find("ManagerHolder").gameObject.AddComponent<TurnBasedController>();
+                        //    }
+
+                        //    Agent.stoppingDistance = 0;
+                        //    Agent.speed = battleSpeed;
+
+                        //    TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
+                        //}
                     }
 
                 }

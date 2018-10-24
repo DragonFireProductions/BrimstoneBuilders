@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
             canRun = false;
         else
             canRun = true;
-        //Debug.DrawRay(transform.position, gameObject.transform.forward * eye_sight);
+        Debug.DrawRay(transform.position, gameObject.transform.forward * eye_sight);
 
         if (Input.anyKey)
         {
@@ -166,7 +166,7 @@ public class PlayerController : MonoBehaviour
                     Controller.Move(dir * RunSpeed * Time.deltaTime);
                     stamina -= 10.0f;
                     endu += 0.005f;
-                    //Debug.Log(endu);
+                    Debug.Log(endu);
                     if (endu > 1.0f)
                     {
                         endu = 0.0f;

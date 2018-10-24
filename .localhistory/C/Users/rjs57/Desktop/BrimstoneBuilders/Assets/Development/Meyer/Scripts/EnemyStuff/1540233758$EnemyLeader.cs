@@ -10,7 +10,7 @@ using UnityEngine;
 
 [Serializable]
 public class EnemyLeader : Enemy {
-
+    
 
     //[SerializeField] List<GameObject> Enemies;
 
@@ -18,12 +18,12 @@ public class EnemyLeader : Enemy {
 
     public Enemy Leader;
     // Use this for initialization
-    protected void Start () {
+    void Start () {
         base.Start( );
-
+        
         characters = new List < BaseCharacter >();
         Leader = this.gameObject.GetComponent < Enemy >( );
-
+        
         gameObject.GetComponent < Enemy >( ).leader = this;
 
         if ( characterObjs.Count != 0 ){
@@ -44,12 +44,12 @@ public class EnemyLeader : Enemy {
             NewLeader.GetComponent < EnemyLeader >( ).characterObjs.Add(VARIABLE.obj);
         }
         TurnBasedController.instance._enemy.leader = NewLeader.GetComponent < Enemy >( );
-
+        
         Destroy(this.gameObject);
         this.enabled = false;
     }
     void FillOutInfo(List <GameObject> objects ) {
-
+       
     }
 
     public void Remove(BaseCharacter _obj)

@@ -254,7 +254,7 @@ public class PlayerController : MonoBehaviour
 
              for (int i = 0; i < enemy.Length; ++i)
              {
-                         enemy[i].getVision -= 0.5f;
+                         enemy[i].getVision -= 1.0f;
                          if (enemy[i].getVision <= blindess)
                              enemy[i].getVision = blindess;
              }

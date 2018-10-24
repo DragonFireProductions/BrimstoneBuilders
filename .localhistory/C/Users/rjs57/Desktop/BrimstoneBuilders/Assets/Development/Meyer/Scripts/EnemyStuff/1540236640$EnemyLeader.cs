@@ -18,7 +18,7 @@ public class EnemyLeader : Enemy {
 
     public Enemy Leader;
     // Use this for initialization
-    protected void Start () {
+    void Start () {
         base.Start( );
 
         characters = new List < BaseCharacter >();
@@ -33,6 +33,11 @@ public class EnemyLeader : Enemy {
                 l_gameObject.GetComponent<Enemy>().leader = this;
             }
         }
+    }
+
+    void update()
+    {
+        Debug.DrawRay(transform.position, Vector3.forward * 10.0f);
     }
 
     public void AssignNewLeader( ) {

@@ -31,12 +31,8 @@ public class PlayerController : MonoBehaviour
 
     public static Stat stats;
 
-    //how easily can you be detected when sneaking
-    private float dex = 0.0f;
-    //how long can you sprint before getting tired
-    private float endu = 0.0f;
-    //how fast can you walk
-    private float agil = 0.0f;
+
+    private float dex, endu, agil, perc = 0.0f;
 
     private bool showstats = false;
 
@@ -90,7 +86,49 @@ public class PlayerController : MonoBehaviour
             canRun = false;
         else
             canRun = true;
+        Debug.DrawRay(transform.position, gameObject.transform.forward * eye_sight);
+
+        //Ray ray = new Ray(transform.position, gameObject.transform.forward);
+        //RaycastHit hit;
         //Debug.DrawRay(transform.position, gameObject.transform.forward * eye_sight);
+        //if (Physics.Raycast(ray, out hit, eye_sight))
+        //{
+        //    if (hit.collider.tag == "Enemy")
+        //    {
+        //        dex += 0.05f;
+        //        if (dex > 1.0f)
+        //        {
+        //            dex = 0.0f;
+
+        //            ++stats.Dexterity;
+        //            eye_sight += 0.8f;
+        //            if (eye_sight >= as_far_as_the_eye_can_see)
+        //                eye_sight = 10.0f;
+
+        //            ++stats.XP;
+        //            if (stats.XP >= requiredXP)
+        //            {
+        //                stats.XP = 0;
+        //                ++playerlvl;
+        //                SetText();
+        //            }
+
+        //            for (int i = 0; i < enemy.Length; ++i)
+        //            {
+        //                if (hit.collider.tag == "Enemy")
+        //                {
+        //                    if (hit.collider.gameObject.name == enemy[i].name)
+        //                    {
+        //                        enemy[i].getVision -= 0.8f;
+        //                        if (enemy[i].getVision <= blindess)
+        //                            enemy[i].getVision = blindess;
+        //                    }
+
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
 
         if (Input.anyKey)
         {
@@ -166,7 +204,7 @@ public class PlayerController : MonoBehaviour
                     Controller.Move(dir * RunSpeed * Time.deltaTime);
                     stamina -= 10.0f;
                     endu += 0.005f;
-                    //Debug.Log(endu);
+                    Debug.Log(endu);
                     if (endu > 1.0f)
                     {
                         endu = 0.0f;
@@ -233,32 +271,34 @@ public class PlayerController : MonoBehaviour
 
         Controller.Move(direction.normalized * sneakspeed * Time.deltaTime);
 
-       // Debug.DrawRay(transform.position, gameObject.transform.forward * eye_sight);
-         dex += 0.005f;
-         if (dex > 1.0f)
-         {
-             dex = 0.0f;
+        Ray ray = new Ray(transform.position, gameObject.transform.forward);
+        Debug.DrawRay(transform.position, gameObject.transform.forward * eye_sight);
+                dex += 0.005f;
+        Debug.Log("dex:" + dex);
+                if (dex > 1.0f)
+                {
+                    dex = 0.0f;
 
-             ++stats.Dexterity;
-             eye_sight += 0.5f;
-             if (eye_sight >= as_far_as_the_eye_can_see)
-                 eye_sight = 15.0f;
+                    ++stats.Dexterity;
+                    eye_sight += 0.5f;
+                    if (eye_sight >= as_far_as_the_eye_can_see)
+                        eye_sight = 15.0f;
 
-             ++stats.XP;
-             if (stats.XP >= requiredXP)
-             {
-                 stats.XP = 0;
-                 ++playerlvl;
-                 SetText();
-             }
+                    ++stats.XP;
+                    if (stats.XP >= requiredXP)
+                    {
+                        stats.XP = 0;
+                        ++playerlvl;
+                        SetText();
+                    }
 
-             for (int i = 0; i < enemy.Length; ++i)
-             {
-                         enemy[i].getVision -= 0.5f;
-                         if (enemy[i].getVision <= blindess)
-                             enemy[i].getVision = blindess;
-             }
-         }
+                    for (int i = 0; i < enemy.Length; ++i)
+                    {
+                                enemy[i].getVision -= 0.8f;
+                                if (enemy[i].getVision <= blindess)
+                                    enemy[i].getVision = blindess;
+                    }
+                }
     }
 
     bool isSneaking()

@@ -32,7 +32,7 @@ namespace Kristal
         private Quaternion startRotation;
 
         // Use this for initialization
-        protected void Awake( ) {
+        void Awake( ) {
             base.Awake( );
             timer = reactionTime;
         }
@@ -46,9 +46,9 @@ namespace Kristal
         public override void Damage(BaseCharacter attacker)
         {
           StaticManager.uiInventory.ShowNotification("   " + gameObject.name + " : ", 5);
-          StaticManager.uiInventory.AppendNotification("\n Damage = " + StaticManager.DamageCalc.CalcAttack(this.stats, attacker.stats));
+          StaticManager.uiInventory.AppendNotification("\n Damage = " + StaticManager.DamageCalc.CalcAttack(attacker.stats, this.stats));
           StaticManager.uiInventory.AppendNotification("\n Health was " + this.stats.Health);
-            float damage = StaticManager.DamageCalc.CalcAttack(this.stats, attacker.stats);
+            float damage = StaticManager.DamageCalc.CalcAttack(attacker.stats, this.stats);
             
             this.stats.Health -= damage;
             Debug.Log("Enemycount: " + TurnBasedController.instance._enemy.characters.Count + "           Damage-Enemy- line: 64");
@@ -63,7 +63,6 @@ namespace Kristal
               StaticManager.uiInventory.AppendNotification("\n health is now " + this.stats.Health);
 
             }
-            StaticManager.uiInventory.UpdateCompanionStats(attacker.stats);
 
         }
         // Update is called once per frame
@@ -118,12 +117,6 @@ namespace Kristal
                 attacking = false;
             }
 
-        }
-
-        public override void RegenerateAttackPoints( bool betweenrounds ) {
-            if ( betweenrounds ){
-                stats.AttackPoints += stats.attackCost;
-            }
         }
 
         public void Remove( BaseCharacter chara ) { }

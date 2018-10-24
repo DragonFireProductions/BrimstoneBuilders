@@ -26,7 +26,7 @@ public class UIItems : MonoBehaviour {
 	public GameObject CompanionUI;
 
 	public GameObject CompanionLabels;
-	
+
 	public GameObject GameOverUI;
 
 	public GameObject WeaponStatsUI;
@@ -54,6 +54,8 @@ public class UIItems : MonoBehaviour {
 	public GameObject AttackConfirmation;
 
 	public GameObject BattleWon;
+
+    public GameObject Playerlevel;
 
     public object this[string propertyName]
     {
