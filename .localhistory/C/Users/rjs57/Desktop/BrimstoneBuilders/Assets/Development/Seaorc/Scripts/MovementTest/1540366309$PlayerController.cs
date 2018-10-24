@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
             canRun = false;
         else
             canRun = true;
-        //Debug.DrawRay(transform.position, gameObject.transform.forward * eye_sight);
+        Debug.DrawRay(transform.position, gameObject.transform.forward * eye_sight);
 
         if (Input.anyKey)
         {
