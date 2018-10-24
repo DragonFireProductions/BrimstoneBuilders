@@ -646,6 +646,7 @@ namespace Assets.Meyer.TestScripts
             StaticManager.character.controller.SetControlled( true );
             CameraController.controller.SwitchMode(CameraMode.Player);
             _player.selectedAttacker.AnimationClass.Stop(AnimationClass.states.Selected);
+            StaticManager.uiInventory.ShowBattleWon(true);
             for ( int i= 0; i < _player.characters.Count; i++ ){
                 if ( _player.characters[i] != _player.leader ){
                         StaticManager.utility.EnableObstacle( _player.characters[ i ].Nav.Agent , true );

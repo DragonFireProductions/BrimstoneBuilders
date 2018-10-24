@@ -87,6 +87,7 @@ public class UIInventory : MonoBehaviour
         ShowWeaponOptions(false);
         ShowInventoryWeaponStats(false);
         ShowPauseMenu(false);
+        ShowBattleWon( false );
         itemsInstance.AttackConfirmation.SetActive(false);
         //itemsInstance.StatUI = new GameObject();
 
@@ -156,6 +157,13 @@ public class UIInventory : MonoBehaviour
 
     }
 
+    public void ShowBattleWon( bool show ) {
+        itemsInstance.BattleWon.SetActive(show);
+
+        if ( show ){
+            Time.timeScale = 0;
+        }
+    }
     public void ShowNotification(string _message, float time ) {
         itemsInstance.DialogueUI.GetComponentInChildren<TextMeshProUGUI>().text = _message;
         StartCoroutine( showNotification( time ) );

@@ -53,6 +53,8 @@ public class UIItems : MonoBehaviour {
 
 	public GameObject AttackConfirmation;
 
+	public GameObject BattleWon;
+
     public object this[string propertyName]
     {
         get { return this.GetType().GetField(propertyName).GetValue(this); }
