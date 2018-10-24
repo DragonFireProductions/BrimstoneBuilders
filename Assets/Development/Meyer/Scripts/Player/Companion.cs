@@ -30,9 +30,9 @@ public class Companion : BaseCharacter {
 
 		
 		StaticManager.uiInventory.AppendNotification("    " + gameObject.name + ":") ;
-		StaticManager.uiInventory.AppendNotification("\n Damage = " + StaticManager.DamageCalc.CalcAttack(attacker.stats, this.stats) );
+		StaticManager.uiInventory.AppendNotification("\n Damage = " + StaticManager.DamageCalc.CalcAttack(this.stats, attacker.stats) );
 		StaticManager.uiInventory.AppendNotification("\n health was " + this.stats.Health);
-		float damage =  StaticManager.DamageCalc.CalcAttack(attacker.stats, this.stats);
+		float damage =  StaticManager.DamageCalc.CalcAttack(this.stats, attacker.stats);
 		this.stats.Health -= damage;
 		base.DamageDone((int)damage, this);
 	

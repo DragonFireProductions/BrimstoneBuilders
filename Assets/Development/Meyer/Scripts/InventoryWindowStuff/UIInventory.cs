@@ -413,10 +413,14 @@ public class UIInventory : MonoBehaviour
     public bool isMainInventory = true;
     
     void Update () {
-        if ( Dragging && Input.GetMouseButton(0)){
+        if ( Dragging /*&& Input.GetMouseButton(0)*/){
             selectedItem.gameObject.SetActive(true);
             selectedItem.GetComponent < BoxCollider >( ).enabled = true;
-            Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var x = StaticManager.character.gameObject.transform.position.x;
+            Vector3 worldPoint = Camera.main.WorldToScreenPoint(Input.mousePosition);
+            worldPoint.x = StaticManager.character.gameObject.transform.position.x;
+            worldPoint.z = StaticManager.character.gameObject.transform.position.z;
+            worldPoint.y = StaticManager.character.gameObject.transform.position.z;
             RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
 
             //If something was hit, the RaycastHit2D.collider will not be null and the the object must have the "Monkey" tag and target has to be null
@@ -427,15 +431,17 @@ public class UIInventory : MonoBehaviour
 
             float distance_to_screen = Camera.main.WorldToScreenPoint(selectedItem.transform.position).z;
             var curPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance_to_screen));
+            curPosition.x = Mathf.Clamp( curPosition.x , StaticManager.character.gameObject.transform.position.x -4 ,StaticManager.character.gameObject.transform.position.x + 4 );
+            curPosition.z = Mathf.Clamp( curPosition.z ,StaticManager.character.gameObject.transform.position.z -4 ,StaticManager.character.gameObject.transform.position.z + 4 );
             selectedItem.transform.position = curPosition;
             
         }
 
-        if ( Input.GetMouseButtonUp(0) && Dragging ){
-            Dragging = false;
-            selectedItem.gameObject.SetActive(false);
-            StaticManager.character.controller.SetControlled(false);
-        }
+        //if ( Input.GetMouseButtonUp(0) && Dragging ){
+        //    Dragging = false;
+        //    selectedItem.gameObject.SetActive(false);
+        //    StaticManager.character.controller.SetControlled(false);
+        //}
         if ( Input.GetKeyDown(KeyCode.Escape) ){
             ShowPauseMenu(Show);
             Time.timeScale = 0;
@@ -458,6 +464,7 @@ public class UIInventory : MonoBehaviour
                 if (l_hitInfo.transform.gameObject.tag == "Enemy" || l_hitInfo.transform.gameObject.tag == "Player" || l_hitInfo.transform.gameObject.tag == "Companion")
                 {
                     UpdateStats(l_hitInfo.transform.gameObject.GetComponent<Stat>());
+                   
                 }
                 else if (l_hitInfo.transform.gameObject.tag == "Weapon")
                 {

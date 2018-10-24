@@ -43,24 +43,24 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public AnimationClass AnimationClass;
 
-	public TextMeshPro damageText;
+	public GameObject damageText;
 
 	public bool isBlocking;
 
 	public BaseNav Nav;
-	
 
-
+    public GameObject AttachedWeapon;
 
 	protected void Awake( ) {
         stats = gameObject.GetComponent<Stat>();
 		Assert.IsNotNull(stats, "Stats not found on " + this.gameObject.name);
         obj = gameObject;
+        AttachedWeapon = gameObject.transform.Find("Cube/EnemySword").gameObject;
         agent = gameObject.GetComponent<NavMeshAgent>();
         material = gameObject.GetComponent<Renderer>().material;
 		animator = gameObject.GetComponent < Animator >( );
 		AnimationClass = gameObject.AddComponent < AnimationClass >( );
-		damageText = transform.Find( "DamageText" ).GetComponentInChildren< TextMeshPro >( );
+		damageText = transform.Find( "DamageText" ).gameObject;
 	}
 	
 
@@ -71,20 +71,11 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public abstract void RegenerateAttackPoints(bool betweenrounds );
 	public void DamageDone(int damage, BaseCharacter gameObject ) {
-		damageText.enabled = true;
-
-        damageText.transform.position = gameObject.transform.position + ( gameObject.transform.up * 4 );
-		damageText.text = damage.ToString( );
-		damageText.transform.parent = this.transform;
 		
-		StartCoroutine( deleteDamages( damageText ) );
+		AnimationClass.Play(AnimationClass.states.DamageText);
+		damageText.transform.Find( "Gamobj" ).GetComponent < TextMeshPro >( ).text = damage.ToString();
 	}
-
-	IEnumerator deleteDamages(TextMeshPro instantiated ) {
-		yield return new WaitForSeconds(4);
-		AnimationClass.Stop(AnimationClass.states.DamageText);
-		damageText.enabled = false;
-	}
+	
 
 	public abstract void Damage( BaseCharacter _player_selected_companion );
 
