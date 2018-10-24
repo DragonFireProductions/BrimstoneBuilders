@@ -44,6 +44,7 @@ public class LevelManager : MonoBehaviour {
 
 	public void DontContinue( ) {
 		Time.timeScale = 1;
+		TurnBasedController.instance._player.hasSelectedCompanion = false;
 		StaticManager.uiInventory.itemsInstance.AttackConfirmation.SetActive(false);
 	}
 
