@@ -437,11 +437,12 @@ public class UIInventory : MonoBehaviour
             
         }
 
-        //if ( Input.GetMouseButtonUp(0) && Dragging ){
-        //    Dragging = false;
-        //    selectedItem.gameObject.SetActive(false);
-        //    StaticManager.character.controller.SetControlled(false);
-        //}
+        if (Input.GetMouseButtonUp(0) && Dragging)
+        {
+            Dragging = false;
+            selectedItem.gameObject.SetActive(false);
+            StaticManager.character.controller.SetControlled(false);
+        }
         if ( Input.GetKeyDown(KeyCode.Escape) ){
             ShowPauseMenu(Show);
             Time.timeScale = 0;
