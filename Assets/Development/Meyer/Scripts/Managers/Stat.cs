@@ -38,6 +38,7 @@ public class Stat : MonoBehaviour
     [SerializeField] float maxHealth;
     [SerializeField] float stamina;
     [SerializeField] float maxStamina;
+   
     private int xp;
 
     public int maxAttackpoints = 6;
@@ -52,10 +53,8 @@ public class Stat : MonoBehaviour
         health = Random.Range( 5 , 7 );
 
         if ( this.gameObject != StaticManager.character.gameObject ){
-        strength = Random.Range( 0 , 30 );
+        strength = Random.Range( 0 , 20 );
         agility = Random.Range(0, 30);
-
-
         }
         endurance = Random.Range( 0 , 30 );
         charisma = Random.Range( 0 , 30 );

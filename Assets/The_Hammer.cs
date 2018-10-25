@@ -28,8 +28,9 @@ public class The_Hammer : EnemyLeader
 	    stats.AttackPoints = 6;
 	    stats.Dexterity = 30.0f;
 	    stats.Endurance = 30.0f;
-	    stats.Health = 100.0f;
-	    stats.MaxHealth = 100.0f;
+	    stats.Health = 15.0f;
+		stats.Strength = 30.0f;
+		stats.AdjustScale(stats.Strength);
 	}
 
     public override void Damage(BaseCharacter attacker)

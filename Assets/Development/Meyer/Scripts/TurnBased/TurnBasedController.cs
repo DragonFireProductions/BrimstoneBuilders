@@ -760,7 +760,7 @@ namespace Assets.Meyer.TestScripts
             
             for (var i = 0; i < _player.characters.Count; i++){
                 _player.count++;
-                StartCoroutine(TurnEnemy((Companion)_player.characters[i], _player, _bool => _player.hasCompanionsLinedUp = _bool, _enemy.leader.transform.position ));
+                StartCoroutine(TurnEnemy((Companion)_player.characters[i], _player, _bool => _player.hasCompanionsLinedUp = _bool, Character.player.transform.position + Character.player.transform.forward * 15.0f ));
             }
 
             if ( _player.characters.Count == 0 ){

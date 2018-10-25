@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 using Assets.Meyer.TestScripts;
 using Assets.Meyer.TestScripts.Player;
 
+using TMPro;
+
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
@@ -54,7 +56,7 @@ public class PlayerController : MonoBehaviour
     private int playerlvl = 1;
 
     [SerializeField]
-    Text playerlevel;
+    TextMeshProUGUI playerlevel;
 
     private int isVisible = 1;
 
@@ -77,7 +79,7 @@ public class PlayerController : MonoBehaviour
         Cam = GameObject.Find("CamHolder").transform;
         Assert.IsNotNull(Cam, "Camholder cannot be found!");
         stats = GetComponent<Stat>();
-
+        playerlevel = StaticManager.uiInventory.itemsInstance.Playerlevel.GetComponent < TextMeshProUGUI >( );
         SetText();
     }
 
@@ -254,9 +256,9 @@ public class PlayerController : MonoBehaviour
 
              for (int i = 0; i < enemy.Length; ++i)
              {
-                         enemy[i].getVision -= 0.5f;
-                         if (enemy[i].getVision <= blindess)
-                             enemy[i].getVision = blindess;
+                      //   enemy[i].getVision -= 0.5f;
+                       //  if (enemy[i].getVision <= blindess)
+//enemy[i].getVision = blindess;
              }
          }
     }

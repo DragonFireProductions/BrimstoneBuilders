@@ -431,8 +431,8 @@ public class UIInventory : MonoBehaviour
 
             float distance_to_screen = Camera.main.WorldToScreenPoint(selectedItem.transform.position).z;
             var curPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance_to_screen));
-            curPosition.x = Mathf.Clamp( curPosition.x , StaticManager.character.gameObject.transform.position.x -4 ,StaticManager.character.gameObject.transform.position.x + 4 );
-            curPosition.z = Mathf.Clamp( curPosition.z ,StaticManager.character.gameObject.transform.position.z -4 ,StaticManager.character.gameObject.transform.position.z + 4 );
+            curPosition.x = Mathf.Clamp( curPosition.x , StaticManager.character.gameObject.transform.position.x - 2 ,StaticManager.character.gameObject.transform.position.x + 2 );
+            curPosition.z = Mathf.Clamp( curPosition.z ,StaticManager.character.gameObject.transform.position.z -2 ,StaticManager.character.gameObject.transform.position.z + 2 );
             selectedItem.transform.position = curPosition;
             
         }
@@ -470,7 +470,7 @@ public class UIInventory : MonoBehaviour
                 else if (l_hitInfo.transform.gameObject.tag == "Weapon")
                 {
                     UpdateWeaponStats(l_hitInfo.transform.gameObject.GetComponent<WeaponObject>().WeaponStats);
-                    //UpdateGameWeaponStats(l_hitInfo.transform.gameObject.GetComponent<GunType>());
+                    //UpdateGameWeaponStats(l_hitInfo.]transform.gameObject.GetComponent<GunType>());
                 }
             }
             else
