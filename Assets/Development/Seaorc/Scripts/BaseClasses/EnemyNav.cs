@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Kristal;
+
+using UnityEngine;
 
 public class EnemyNav : BaseNav {
 
@@ -40,6 +42,12 @@ public class EnemyNav : BaseNav {
             }
 
                 break;
+            case state.FOLLOW: {
+                Agent.destination = Character.leader.transform.position;
+            }
+                break;
+
+                
             default:
 
                 break;

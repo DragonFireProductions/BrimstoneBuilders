@@ -16,6 +16,7 @@ public class BaseNav : MonoBehaviour {
 	protected void Start () {
 		Character = gameObject.GetComponent < BaseCharacter >( );
 		Agent = gameObject.GetComponent < NavMeshAgent >( );
+		Agent.stoppingDistance = stoppingDistance;
 	}
 	
 	// Update is called once per frame
