@@ -87,25 +87,7 @@ public class EnemyNav : BaseNav
         switch (State)
         {
             case state.Idle:
-                if (player != null && !TurnBasedController.instance)
-                {
-                    if (StaticManager.instance.isTurnBasedOn ){
-                        if (Vector3.Distance(transform.position, player.transform.position) < VeiwDistance)
-                        {
-
-                            if (TurnBasedController.instance == null)
-                            {
-                                GameObject.Find("ManagerHolder").gameObject.AddComponent<TurnBasedController>();
-                            }
-
-                            Agent.stoppingDistance = 0;
-                            Agent.speed = battleSpeed;
-
-                            TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
-                        }
-                    }
-                    
-                }
+                
 
                 var check = StaticManager.utility.NavDistanceCheck( Agent );
                 if (WanderDelay <= Timer && (check == DistanceCheck.HasReachedDestination || check == DistanceCheck.PathInvalid)  || StaticManager.utility.NavDistanceCheck(Agent) ==DistanceCheck.HasNoPath)
@@ -131,21 +113,6 @@ public class EnemyNav : BaseNav
                 break;
             case state.Follow:
                 Agent.stoppingDistance = 5;
-               Agent.destination = gameObject.GetComponent < Enemy >( ).Leader.gameObject.transform.position;
-                if (player != null && !TurnBasedController.instance)
-                {
-                    if (Vector3.Distance(transform.position, player.transform.position) < VeiwDistance)
-                    {
-
-                        if (TurnBasedController.instance == null)
-                        {
-                            Character.player.AddComponent<TurnBasedController>();
-                        }
-
-                        Agent.stoppingDistance = 0;
-                        TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
-                    }
-                }
                 break;
             default:
                 break;

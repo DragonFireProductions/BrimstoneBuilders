@@ -113,11 +113,11 @@ public class PlayerController : MonoBehaviour
         {
             case PlayerState.move:
 
-                if (!TurnBasedController.instance && canMove)
+                if (canMove)
                     Move();
                 break;
             case PlayerState.sneak:
-                if (!TurnBasedController.instance && canMove)
+                if ( canMove)
                     Sneak();
                 break;
             case PlayerState.navMesh:
@@ -131,11 +131,7 @@ public class PlayerController : MonoBehaviour
             showstats = !Stats();
 
         }
-
-        if (showstats && TurnBasedController.instance)
-            StaticManager.uiInventory.UpdateStats(stats);
-        else if (TurnBasedController.instance && !showstats)
-            StaticManager.uiInventory.itemsInstance.StatUI.SetActive(false);
+        
 
 
     }

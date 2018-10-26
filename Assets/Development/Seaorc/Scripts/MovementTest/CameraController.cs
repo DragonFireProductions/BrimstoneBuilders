@@ -81,7 +81,7 @@ public class CameraController : MonoBehaviour
             SwitchMode(CameraMode.Colony);
         }
 
-        if ( !isColony && !TurnBasedController.instance && switched ){
+        if ( !isColony && switched ){
             switched = false;
             SwitchMode(CameraMode.Player);
 

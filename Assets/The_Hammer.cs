@@ -41,9 +41,6 @@ public class The_Hammer : EnemyLeader
         float damage = StaticManager.DamageCalc.CalcAttack(attacker.stats, this.stats);
 
         this.stats.Health -= damage;
-        Debug.Log("Enemycount: " + TurnBasedController.instance._enemy.characters.Count + "           Damage-Enemy- line: 64");
-
-        base.DamageDone((int)damage, this);
 
         if (this.stats.Health <= 0)
         {

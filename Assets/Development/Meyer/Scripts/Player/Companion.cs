@@ -27,46 +27,13 @@ public class Companion : BaseCharacter {
     }
 
 	public override void Damage(BaseCharacter attacker ) {
-
 		
-		StaticManager.uiInventory.AppendNotification("    " + gameObject.name + ":") ;
-		StaticManager.uiInventory.AppendNotification("\n Damage = " + StaticManager.DamageCalc.CalcAttack(this.stats, attacker.stats) );
-		StaticManager.uiInventory.AppendNotification("\n health was " + this.stats.Health);
-		float damage =  StaticManager.DamageCalc.CalcAttack(this.stats, attacker.stats);
-		this.stats.Health -= damage;
-		base.DamageDone((int)damage, this);
-	
-        if (this.stats.Health <= 0 && this != leader)
-        {
-          StaticManager.uiInventory.AppendNotification("\n Companion is now Dead");
-			
-            Leader.Remove(this);
-        }
-        else if (this != leader)
-        {
-          StaticManager.uiInventory.AppendNotification("\n health is now " + this.stats.Health);
-
-        }
-		else if ( this == leader && stats.Health <= 0 ){
-            StaticManager.uiInventory.ShowGameOver(true);
-        }
-
     }
     public void Remove( BaseCharacter chara ) { }
     // Update is called once per frame
     void Update () { 
     }
-
-	public override void RegenerateAttackPoints(bool betweenrounds ) {
-		if ( betweenrounds ){
-			stats.AttackPoints += stats.attackCost;
-			
-		}
-		else{
-			this.stats.AttackPoints = stats.maxAttackpoints;
-
-        }
-    }
+	
 
 	public GameObject CamHolder {
 		get { return camHolder; }

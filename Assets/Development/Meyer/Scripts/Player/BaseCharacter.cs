@@ -44,8 +44,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 	public AnimationClass AnimationClass;
 
 	public GameObject damageText;
-
-	public bool isBlocking;
+	
 
 	public BaseNav Nav;
 
@@ -64,13 +63,7 @@ public abstract class BaseCharacter : MonoBehaviour {
     void Update () {
 
 	}
-
-	public abstract void RegenerateAttackPoints(bool betweenrounds );
-	public void DamageDone(int damage, BaseCharacter gameObject ) {
-		
-		AnimationClass.Play(AnimationClass.states.DamageText);
-		damageText.transform.Find( "Gamobj" ).GetComponent < TextMeshPro >( ).text = damage.ToString();
-	}
+	
 	
 
 	public abstract void Damage( BaseCharacter _player_selected_companion );

@@ -125,10 +125,6 @@ public class PlayerInventory : MonoBehaviour
         }
         
     }
-    public void Block() {
-
-        TurnBasedController.instance.Block( );
-    }
 
     public void IncreaseStats(WeaponItem item ) {
         Stat stat = StaticManager.character.GetComponent < Stat >( );
