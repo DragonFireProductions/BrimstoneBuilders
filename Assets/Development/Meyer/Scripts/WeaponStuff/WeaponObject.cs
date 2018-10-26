@@ -70,7 +70,7 @@ public class WeaponObject : MonoBehaviour
    
         }
 
-        if ( collider.tag == "Player" && StaticManager.uiInventory.Dragging && StaticManager.uiInventory.isMainInventory){
+        else if ( collider.tag == "Player" && StaticManager.uiInventory.Dragging && StaticManager.uiInventory.isMainInventory){
             StaticManager.uiInventory.Dragging = false;
             StaticManager.uiInventory.attachedWeapons.Add(this);
             var ob = StaticManager.uiInventory.attachedWeapons[ 0 ];
@@ -83,6 +83,7 @@ public class WeaponObject : MonoBehaviour
             {
                 StaticManager.uiInventory.AddBackpackSlot(ob);
             }
+
             ob.gameObject.SetActive(false);
             this.GetComponent<BoxCollider>().enabled = false;
             StaticManager.character.controller.SetControlled(true);
@@ -90,29 +91,9 @@ public class WeaponObject : MonoBehaviour
             this.gameObject.transform.position = StaticManager.character.cube.transform.position;
             this.gameObject.transform.rotation = StaticManager.character.cube.transform.rotation;
             this.gameObject.transform.SetParent(StaticManager.character.cube.transform);
+            
             StaticManager.inventory.IncreaseStats(this.WeaponStats);
-        }
-        else if ( collider.tag == "Player" && StaticManager.uiInventory.Dragging && !StaticManager.uiInventory.isMainInventory ){
-            isMainInventory = false;
-            StaticManager.uiInventory.Dragging = false;
-            StaticManager.uiInventory.attachedWeapons.Add(this);
-            var ob = StaticManager.uiInventory.attachedWeapons[0];
-            StaticManager.uiInventory.attachedWeapons.RemoveAt(0);
-
-            if ( ob.isMainInventory ){
-                StaticManager.uiInventory.AddSlot(ob);
-            }
-            else{
-                StaticManager.uiInventory.AddBackpackSlot(ob);
-            }
-            StaticManager.uiInventory.RemoveBackpack(this);
-
-            ob.gameObject.SetActive(false);
-            this.GetComponent<BoxCollider>().enabled = false;
-            StaticManager.character.controller.SetControlled(true);
-            this.gameObject.transform.position = StaticManager.character.cube.transform.position;
-            this.gameObject.transform.rotation = StaticManager.character.cube.transform.rotation;
-            this.gameObject.transform.SetParent(StaticManager.character.cube.transform);
+            collider.gameObject.GetComponent<Stat>().AdjustScale(collider.gameObject.GetComponent<Stat>().Strength);
         }
     }
     

@@ -133,7 +133,7 @@ namespace Assets.Meyer.TestScripts
                     _enemy.characters.Add(_enemy.leader);
                 }
                 
-                if ( addedEnemyLeader && _player.isTurn){
+                if ( addedEnemyLeader && _player.isTurn && !isPaused){
                     PlayersTurn();
 
                 }
@@ -577,7 +577,8 @@ namespace Assets.Meyer.TestScripts
 
             int isBlocking = Random.Range( 0 , 35 );
 
-            if ( isBlocking < 20 && _enemy.selectedAttacker.stats.AttackPoints > 3 ){
+            if ( isBlocking < 35 && _enemy.selectedAttacker.stats.AttackPoints > 3 ){
+                _enemy.selectedAttacker.AnimationClass.Play(AnimationClass.states.Selected);
                 _enemy.selectedAttacker.isBlocking = true;
                 _enemy.selectedAttacker.stats.AttackPoints = 0;
                 _enemy.hasRotated = false;
@@ -606,6 +607,7 @@ namespace Assets.Meyer.TestScripts
             yield return new WaitForSeconds(time);
             _bool( true );
             _isPaused( false );
+
         }
 
         bool checkAttackpts( List <BaseCharacter> character ) {
@@ -678,11 +680,14 @@ namespace Assets.Meyer.TestScripts
             }
             var right = 2;
             var left = 2;
+            var adjustright = 2;
+            var adjustleft = 2;
 
             var forward = -1;
 
             for (var k = 0; k < _enemy.characters.Count; k += 2)
             {
+                  right += _enemy.characters[k].stats.Strength > 15 ? 2 : 0;
                 _enemy.characters[k].Nav.SetState = BaseNav.state.Battle;
 
                 forward -= 1;
@@ -697,12 +702,13 @@ namespace Assets.Meyer.TestScripts
 
             for (var k = 1; k < _enemy.characters.Count; k += 2)
             {
+                left += _enemy.characters[k].stats.Strength > 15 ? 2 : adjustleft + 0;
+
                 _enemy.characters[k].Nav.SetState = BaseNav.state.Battle;
                 forward -= 1;
                 var moveleft = obj.transform.position + -obj.transform.right * left + obj.transform.forward * -forward;
                 _enemy.characters[k].Nav.Agent.stoppingDistance = 0;
                 _enemy.characters[k].Nav.Agent.SetDestination(moveleft);
-
                 left += 2;
             }
 
@@ -710,7 +716,7 @@ namespace Assets.Meyer.TestScripts
             for (var i = 0; i < _enemy.characters.Count; i++){
                 _enemy.count++;
                 //StaticManager.utility.EnableObstacle( Enemies[ i ].Nav.Agent , true );
-                StartCoroutine(TurnEnemy((Enemy)_enemy.characters[i], _enemy, _bool => _enemy.hasCompanionsLinedUp = _bool));
+                StartCoroutine(TurnEnemy((Enemy)_enemy.characters[i], _enemy, _bool => _enemy.hasCompanionsLinedUp = _bool, _player.leader.transform.position));
             }
         }
         
@@ -718,12 +724,16 @@ namespace Assets.Meyer.TestScripts
         private List < Companion > holderCompanions;
         private void LineUpCompanions() {
             holderCompanions = new List < Companion >();
+            
             var right = 2;
             var left = 2;
+            var adjustright = 2;
+            var adjustleft = 2;
             var forward = -1;
             
             for (var k = 0; k < _player.characters.Count; k += 2)
             {
+                 right += _player.characters[k].stats.Strength > 15 ?  2 :  0;
                 forward -= 1;
                 _player.characters[k].Nav.SetState = BaseNav.state.Attacking;
                 var move = _player.leader.gameObject.transform.position + _player.leader.gameObject.transform.right * right + _player.leader.transform.forward * -forward;
@@ -737,20 +747,20 @@ namespace Assets.Meyer.TestScripts
 
             for (var k = 1; k < _player.characters.Count; k += 2)
             {
+                left += _player.characters[k].stats.Strength > 15 ?  2 :  0 ;
                 forward -= 1;
                 _player.characters[k].Nav.SetState = BaseNav.state.Attacking;
 
                 var moveleft = _player.leader.gameObject.transform.position + -_player.leader.gameObject.transform.right * left + _player.leader.transform.forward * -forward;
                 _player.characters[k].Nav.Agent.stoppingDistance = 0;
                 _player.characters[k].Nav.Agent.SetDestination(moveleft);
-
                 left += 2;
             }
 
             
             for (var i = 0; i < _player.characters.Count; i++){
                 _player.count++;
-                StartCoroutine(TurnEnemy((Companion)_player.characters[i], _player, _bool => _player.hasCompanionsLinedUp = _bool ));
+                StartCoroutine(TurnEnemy((Companion)_player.characters[i], _player, _bool => _player.hasCompanionsLinedUp = _bool, Character.player.transform.position + Character.player.transform.forward * 15.0f ));
             }
 
             if ( _player.characters.Count == 0 ){
@@ -758,7 +768,7 @@ namespace Assets.Meyer.TestScripts
             }
         }
         int p = 0;
-        private IEnumerator TurnEnemy(BaseCharacter enemy, checkStruct character, Action <bool> hasTurned) {
+        private IEnumerator TurnEnemy(BaseCharacter enemy, checkStruct character, Action <bool> hasTurned, Vector3 lookat) {
             timer = 0;
 
             if ( character.characters.Count == 0 ){
@@ -780,7 +790,7 @@ namespace Assets.Meyer.TestScripts
 
             timer = 0;
 
-            var r = Quaternion.LookRotation((Character.player.transform.position + (Character.player.transform.forward * 3)) - enemy.transform.position);
+            var r = Quaternion.LookRotation(lookat - enemy.transform.position);
 
             while (enemy.transform.rotation != r && timer < turnTime)
             {

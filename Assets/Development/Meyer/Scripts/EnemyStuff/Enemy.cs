@@ -32,7 +32,7 @@ namespace Kristal
         private Quaternion startRotation;
 
         // Use this for initialization
-        void Awake( ) {
+        protected void Awake( ) {
             base.Awake( );
             timer = reactionTime;
         }
@@ -46,9 +46,9 @@ namespace Kristal
         public override void Damage(BaseCharacter attacker)
         {
           StaticManager.uiInventory.ShowNotification("   " + gameObject.name + " : ", 5);
-          StaticManager.uiInventory.AppendNotification("\n Damage = " + StaticManager.DamageCalc.CalcAttack(attacker.stats, this.stats));
+          StaticManager.uiInventory.AppendNotification("\n Damage = " + StaticManager.DamageCalc.CalcAttack(this.stats, attacker.stats));
           StaticManager.uiInventory.AppendNotification("\n Health was " + this.stats.Health);
-            float damage = StaticManager.DamageCalc.CalcAttack(attacker.stats, this.stats);
+            float damage = StaticManager.DamageCalc.CalcAttack(this.stats, attacker.stats);
             
             this.stats.Health -= damage;
             Debug.Log("Enemycount: " + TurnBasedController.instance._enemy.characters.Count + "           Damage-Enemy- line: 64");

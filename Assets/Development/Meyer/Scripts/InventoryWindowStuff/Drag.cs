@@ -14,7 +14,9 @@ public class Drag : MonoBehaviour {
         if (Input.GetMouseButton(0))
         {
             //Get the mouse position on the screen and send a raycast into the game world from that position.
-            Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            worldPoint.z = StaticManager.character.gameObject.transform.position.z;
+            worldPoint.x = StaticManager.character.gameObject.transform.position.x;
             RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
 
             StaticManager.uiInventory.Dragging = true;

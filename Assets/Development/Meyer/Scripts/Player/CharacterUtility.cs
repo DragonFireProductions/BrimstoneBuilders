@@ -54,7 +54,7 @@ namespace Assets.Meyer.TestScripts
                 return DistanceCheck.NavMeshNotEnabled;
             }
             NavMeshPath path = new NavMeshPath();
-            ;
+            
                 if (!mNavMeshAgent.pathPending)
             {
                 if (mNavMeshAgent.remainingDistance <= mNavMeshAgent.stoppingDistance)

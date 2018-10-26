@@ -1,0 +1,178 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1569870238149420}
+  m_IsPrefabAsset: 1
+--- !u!1 &1569870238149420
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224824011771915552}
+  - component: {fileID: 114038624911955980}
+  - component: {fileID: 114288495121158768}
+  - component: {fileID: 114791788785127128}
+  - component: {fileID: 114001275386695302}
+  - component: {fileID: 114061878550941016}
+  - component: {fileID: 114973857979745262}
+  - component: {fileID: 114484628259631730}
+  m_Layer: 0
+  m_Name: ManagerHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &114001275386695302
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569870238149420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ac3246efb7a964e89d70373897d70f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114038624911955980
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569870238149420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b22741440810744901167729840b78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114061878550941016
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569870238149420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5e4556a1d119b45b01175c75ca36de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Clips:
+  - Clip: {fileID: 0}
+    name: 
+    Type: 0
+    Looping: 0
+    Volume: 0
+    Pitch: 0
+--- !u!114 &114288495121158768
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569870238149420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adfd08feac066e24c89dccd472f29a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons: []
+  item: {fileID: 11400000, guid: 20bc731747852f24fbe38425ba513232, type: 2}
+  objects: []
+  backpackInventory: []
+  attachedWeapon: {fileID: 0}
+  selectedItem: {fileID: 0}
+--- !u!114 &114484628259631730
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569870238149420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03af8418ac3182341bb44cd8dd58dde6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTurnBasedOn: 1
+--- !u!114 &114791788785127128
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569870238149420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abb987950d4d5a843b3c9b1ce3f15046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemsInstance: {fileID: 0}
+  attachedWeapons: []
+  slots: []
+  backpackSlots: []
+  Dragging: 0
+  selectedItem: {fileID: 0}
+  ob: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
+  screenPoint: {x: 0, y: 0, z: 0}
+  isMainInventory: 1
+--- !u!114 &114973857979745262
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569870238149420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73fcbc006fd92944fb14e8bcf4aa8ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InventoryContainer: {fileID: 0}
+  InventoryContainerPanel: {fileID: 0}
+  PauseUI: {fileID: 0}
+  PlayerUI: {fileID: 0}
+  DialogueUI: {fileID: 0}
+  StatUI: {fileID: 0}
+  StatLabels: {fileID: 0}
+  CompanionUI: {fileID: 0}
+  CompanionLabels: {fileID: 0}
+  GameOverUI: {fileID: 0}
+  WeaponStatsUI: {fileID: 0}
+  AttackConfirmationPanel: {fileID: 0}
+  WeaponStatsPanel: {fileID: 0}
+  WeaponLabels: {fileID: 0}
+  GameStatLabels: {fileID: 0}
+  BackPackUI: {fileID: 0}
+  BackpackContainer: {fileID: 0}
+  WeaponOptions: {fileID: 0}
+  WeaponInventoryLabels: {fileID: 0}
+  GameInventoryStatLabels: {fileID: 0}
+  WeaponInventoryStatsUI: {fileID: 0}
+  AttackConfirmation: {fileID: 0}
+  BattleWon: {fileID: 0}
+  Playerlevel: {fileID: 0}
+--- !u!224 &224824011771915552
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569870238149420}
+  m_LocalRotation: {x: -0, y: 0.99765503, z: -0, w: 0.068443306}
+  m_LocalPosition: {x: 0, y: 0, z: 85.98001}
+  m_LocalScale: {x: 0.5000007, y: 0.5, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 41.340004, y: 3.883}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
