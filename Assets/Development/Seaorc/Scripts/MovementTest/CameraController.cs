@@ -13,62 +13,60 @@ using UnityEngine.Assertions;
 public class CameraController : MonoBehaviour
 {
 
-    [Header("Transforms")]
-    [SerializeField] Transform PlayerTransform;
-    [SerializeField] Transform CamRig;
-    [SerializeField] Transform Playercam;
-    [SerializeField] Transform ColonyCam;
+    [Header( "Transforms"),SerializeField]
+    private Transform playerTransform;
+    [SerializeField] private Transform camRig;
+    [SerializeField] private Transform playercam;
+    [SerializeField] private Transform colonyCam;
 
-    [Header("Basic Settings")]
-    [SerializeField] float CamSpeed;
-    [SerializeField] float TransitionSpeed;
-    [SerializeField] float MouseSensitivity;
+    [Header( "Basic Settings"),SerializeField]
+    private float camSpeed;
+    [SerializeField] private float transitionSpeed;
+    [SerializeField] private float mouseSensitivity;
 
-    [Header("Zoom Settings")]
-    [SerializeField] float ColonyWidth;
-    [SerializeField] float ColonyHight;
-    [SerializeField] float MaxZoom;
-    [SerializeField] float MinZoom;
+    [Header( "Zoom Settings"),SerializeField]
+    private float colonyWidth;
+    [SerializeField] private float colonyHight;
+    [SerializeField] private float maxZoom;
+    [SerializeField] private float minZoom;
 
-    CameraMode mode;
-    float Zoom;
+    private float zoom;
 
     private float timer;
 
-    public static CameraController controller;
+    public static CameraController Controller;
 
     private bool isColony = false;
 
     private bool switched = false;
-    void Awake()
-    {
-        controller = this;
-    }
+    
     // Use this for initialization
-    void Start()
-    {
-        if (controller == null)
+    private void Awake() {
+        Controller = this;
+        if (Controller == null)
         {
-            controller = this;
+            Controller = this;
         }
-        else if (controller != this)
+        else if (Controller != this){
             Destroy(gameObject);
+        }
 
         DontDestroyOnLoad(gameObject);
-        SwitchMode( CameraMode.Player );
+       
 
-        CamRig = transform.parent.parent.transform;
+        camRig = transform.parent.parent.transform;
 
-        Playercam = transform.parent.transform;
+        playercam = transform.parent.transform;
         
-        PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
-        ColonyCam = GameObject.Find("ColonyCam").transform;
-        Assert.IsNotNull(ColonyCam, "ColonyCam cannot be found!");
+        colonyCam = GameObject.Find("ColonyCam").transform;
+        Assert.IsNotNull(colonyCam, "ColonyCam cannot be found!");
+         SwitchMode( CameraMode.PLAYER );
     }
 
     // Update is called once per frame
-    void Update() {
+    private void Update() {
 
         timer += Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Tab)){
@@ -78,265 +76,157 @@ public class CameraController : MonoBehaviour
 
         if ( isColony && switched ){
             switched = false;
-            SwitchMode(CameraMode.Colony);
+            SwitchMode(CameraMode.COLONY);
         }
 
         if ( !isColony && switched ){
             switched = false;
-            SwitchMode(CameraMode.Player);
+            SwitchMode(CameraMode.PLAYER);
 
         }
-        if (mode == CameraMode.Colony)
+        if (Mode == CameraMode.COLONY)
         {
             if (Input.GetKey(KeyCode.Mouse2))
             {
-                float X = -Input.GetAxis("Mouse X");
-                X *= 100;
+                var l_x = -Input.GetAxis("Mouse X");
+                l_x *= 100;
 
-                float Y = -Input.GetAxis("Mouse Y");
-                Y *= 100;
+                var l_y = -Input.GetAxis("Mouse Y");
+                l_y *= 100;
 
-                transform.Translate(X * Time.deltaTime, Y * Time.deltaTime, 0);
+                transform.Translate(l_x * Time.deltaTime, l_y * Time.deltaTime, 0);
             }
             else
             {
-                float X = Input.GetAxis("Horizontal");
-                X *= CamSpeed;
-                float Y = Input.GetAxis("Vertical");
-                Y *= CamSpeed;
+                var l_x = Input.GetAxis("Horizontal");
+                l_x *= camSpeed;
+                var l_y = Input.GetAxis("Vertical");
+                l_y *= camSpeed;
 
-                transform.Translate(X * Time.deltaTime, Y * Time.deltaTime, 0);
+                transform.Translate(l_x * Time.deltaTime, l_y * Time.deltaTime, 0);
             }
 
-            Zoom += Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * MouseSensitivity;
-            Zoom = Mathf.Clamp(Zoom, -MaxZoom, MinZoom);
+            zoom += Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * mouseSensitivity;
+            zoom =  Mathf.Clamp(zoom, -maxZoom, minZoom);
 
-            if (transform.position.x > ColonyWidth)
+            if (transform.position.x > colonyWidth)
             {
-                transform.position = new Vector3(ColonyWidth, transform.position.y, transform.position.z);
+                transform.position = new Vector3(colonyWidth, transform.position.y, transform.position.z);
             }
-            else if (transform.position.x < -ColonyWidth)
+            else if (transform.position.x < -colonyWidth)
             {
-                transform.position = new Vector3(-ColonyWidth, transform.position.y, transform.position.z);
+                transform.position = new Vector3(-colonyWidth, transform.position.y, transform.position.z);
             }
 
-            if (transform.position.z > ColonyHight)
+            if (transform.position.z > colonyHight)
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y, ColonyHight);
+                transform.position = new Vector3(transform.position.x, transform.position.y, colonyHight);
             }
-            else if (transform.position.z < -ColonyHight)
+            else if (transform.position.z < -colonyHight)
             {
-                transform.position = new Vector3(transform.position.x, transform.position.y, -ColonyHight);
+                transform.position = new Vector3(transform.position.x, transform.position.y, -colonyHight);
             }
 
-            transform.position = new Vector3(transform.position.x, ColonyCam.position.y + Zoom, transform.position.z);
+            transform.position = new Vector3(transform.position.x, colonyCam.position.y + zoom, transform.position.z);
         }
-        if (mode == CameraMode.Player)
+        if (Mode == CameraMode.PLAYER)
         {
-            CamRig.position = PlayerTransform.position;
+            camRig.position = playerTransform.position;
 
-            Ray cameraray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Plane groundplane = new Plane(Vector3.up, Vector3.zero);
-            float raylength;
+            var   l_cameraray   = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var l_groundplane = new Plane(Vector3.up, Vector3.zero);
+            float l_raylength;
 
 
-            if (groundplane.Raycast(cameraray, out raylength))
+            if (l_groundplane.Raycast(l_cameraray, out l_raylength))
             {
-                Vector3 pointtolook = cameraray.GetPoint(raylength);
+                var l_pointtolook = l_cameraray.GetPoint(l_raylength);
 
-                PlayerTransform.LookAt(new Vector3(pointtolook.x, PlayerTransform.position.y, pointtolook.z));
+                playerTransform.LookAt(new Vector3(l_pointtolook.x, playerTransform.position.y, l_pointtolook.z));
             }
 
-            float Rotation = 0;
+            float l_rotation = 0;
 
             if (Input.GetKey(KeyCode.Mouse2))
             {
-                Rotation = Input.GetAxis("Mouse X");
-                Rotation *= MouseSensitivity;
+                l_rotation =  Input.GetAxis("Mouse X");
+                l_rotation *= mouseSensitivity;
             }
-            else if (Input.GetKey(KeyCode.Q))
-                Rotation = -MouseSensitivity;
-            else if (Input.GetKey(KeyCode.E))
-                Rotation = MouseSensitivity;
+            else if (Input.GetKey(KeyCode.Q)){
+                l_rotation = -mouseSensitivity;
+            }
+            else if (Input.GetKey(KeyCode.E)){
+                l_rotation = mouseSensitivity;
+            }
 
-            Rotation *= Time.deltaTime;
+            l_rotation *= Time.deltaTime;
 
-            CamRig.Rotate(0, Rotation, 0);
+            camRig.Rotate(0, l_rotation, 0);
 
-            Zoom += Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * MouseSensitivity;
-            Zoom = Mathf.Clamp(Zoom, -MinZoom, MaxZoom);
+            zoom += Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * mouseSensitivity;
+            zoom =  Mathf.Clamp(zoom, -minZoom, maxZoom);
 
-            transform.localPosition = new Vector3(0, 0, Zoom);
+            transform.localPosition = new Vector3(0, 0, zoom);
         }
-
-        if (mode == CameraMode.Battle)
-        {
-            
-        }
-
     }
-
-    public void UpdatePlayer(GameObject player)
+    public void SwitchMode(CameraMode _mode, Companion _companion = null)
     {
-        PlayerTransform = player.transform;
-    }
-   public void SwitchMode(CameraMode _mode, Companion companion = null)
-    {
-        if (_mode == CameraMode.Player)
+        if (_mode == CameraMode.PLAYER)
         {
             StartCoroutine(ToPlayer());
         }
-        else if (_mode == CameraMode.Colony)
+        else if (_mode == CameraMode.COLONY)
         {
-            StaticManager.character.controller.SetControlled(false);
             StartCoroutine(ToColony());
         }
-        else if ( _mode == CameraMode.Battle ){
-            StartCoroutine( ToBattle(companion ) );
-        }
-        else if ( _mode == CameraMode.ToOtherPlayer ){
-
-            StartCoroutine( ToAnotherPlayer( companion ) );
-        }
-        else if ( _mode == CameraMode.Freeze ){
-            mode = CameraMode.Battle;
-        }
-    }
-
-    IEnumerator ToColony()
-    {
-        mode = CameraMode.Transition;
-
-        var CamPos = new Vector3(Character.player.transform.position.x, ColonyCam.position.y, Character.player.transform.position.z);
-        while (Vector3.Distance(transform.position, ColonyCam.position) > .5f)
-        {
-            transform.position = Vector3.Lerp(transform.position, CamPos, TransitionSpeed * Time.deltaTime);
-            transform.rotation = Quaternion.Slerp(transform.rotation, ColonyCam.rotation, TransitionSpeed * Time.deltaTime);
-            yield return new WaitForEndOfFrame();
-        }
-
-        transform.position = ColonyCam.position;
-        transform.rotation = ColonyCam.rotation;
-        Zoom = 0;
-        mode = CameraMode.Colony;
-       StaticManager.character.controller.SetControlled(false);
         
     }
-    IEnumerator ToPlayer()
+
+    private IEnumerator ToColony()
     {
-        mode = CameraMode.Transition;
-        Zoom = 0;
-        var pos = Playercam.position;
-        var rot = Playercam.rotation;
-        while (Vector3.Distance(transform.position, Playercam.position) > .5f)
-        {
+        Mode = CameraMode.TRANSITION;
 
-            transform.position = Vector3.Lerp(transform.position, pos, TransitionSpeed * Time.deltaTime);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rot, TransitionSpeed * Time.deltaTime);
+        var l_camPos = new Vector3(Character.Player.transform.position.x, colonyCam.position.y, Character.Player.transform.position.z);
+        while (Vector3.Distance(transform.position, colonyCam.position) > .5f)
+        {
+            transform.position = Vector3.Lerp(transform.position, l_camPos, transitionSpeed               * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, colonyCam.rotation, transitionSpeed * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
 
-        transform.position = Playercam.position;
-        transform.rotation = Playercam.rotation;
-
-        mode = CameraMode.Player;
-    }
-
-  IEnumerator ToBattle(Companion companion ) {
-        mode = CameraMode.Transition;
-        Zoom = 0;
-
-        while (Vector3.Distance(transform.position, companion.CamHolder.transform.position) > 0.4f ){
-            var position = Vector3.Lerp(transform.position, companion.camHolder.transform.position, 0.3f * Time.deltaTime);
-            transform.position = position;
-            transform.rotation = Quaternion.Slerp(transform.rotation, companion.camHolder.transform.rotation, Time.deltaTime * 0.3f);
-
-            yield return new WaitForEndOfFrame();
-        }
-
-        var r = Quaternion.LookRotation((Character.player.transform.position + (Character.player.transform.forward * 10)) - transform.position);
-        timer = 0;
-        while (transform.rotation != r && timer < 2.0f)
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation, r, 5 * Time.deltaTime);
-            timer += Time.deltaTime;
-
-            yield return new WaitForEndOfFrame();
-        }
-        if (timer >= 2.0f)
-        {
-            transform.LookAt(Character.player.transform.position + (Character.player.transform.forward * 10));
-        }
-
-        StaticManager.character.controller.SetControlled( true );
-        mode = CameraMode.Battle;
-
-    }
-
-    IEnumerator ToPlayerBattle(Companion companion ) {
-        mode = CameraMode.Transition;
-        Zoom = 0;
-
-        while (Vector3.Distance(transform.position, companion.camHolder.transform.position) > 0.4f)
-        {
-            var position = Vector3.Lerp(transform.position, companion.camHolder.transform.position, TransitionSpeed * Time.deltaTime);
-            transform.position = position;
-            transform.rotation = Quaternion.Slerp(transform.rotation, companion.camHolder.transform.rotation, Time.deltaTime * TransitionSpeed);
-
-            yield return new WaitForEndOfFrame();
-        }
+        transform.position = colonyCam.position;
+        transform.rotation = colonyCam.rotation;
+        zoom               = 0;
+        Mode               = CameraMode.COLONY;
         
-        mode = CameraMode.Battle;
     }
 
-
-    IEnumerator ToAnotherPlayer(Companion companion ) {
-        mode = CameraMode.Transition;
-        Zoom = 0;
-        timer = 0;
-        var pos = companion.CamHolder.transform.position;
-
-       
-
-        while ( Vector3.Distance( transform.position , pos ) > 0.4f && timer < 2.0f )
+    private IEnumerator ToPlayer()
+    {
+        Mode = CameraMode.TRANSITION;
+        zoom = 0;
+        var l_pos = playercam.position;
+        var l_rot = playercam.rotation;
+        while (Vector3.Distance(transform.position, playercam.position) > .5f)
         {
-            var position = Vector3.Lerp(transform.position,pos , TransitionSpeed * Time.deltaTime);
-            transform.position = position;
-           
+
+            transform.position = Vector3.Lerp(transform.position, l_pos, transitionSpeed     * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, l_rot, transitionSpeed * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
-       
-        if (timer >= 2.0f)
-        {
-            transform.position = companion.CamHolder.transform.position;
-        }
-       
-        var r = Quaternion.LookRotation( ( Character.player.transform.position + (Character.player.transform.forward * 10) ) - transform.position );
-        timer = 0;
-        while (transform.rotation != r && timer < 2.0f)
-        {
-            transform.rotation =  Quaternion.Slerp(transform.rotation, r, 5 * Time.deltaTime);
-            timer                    += Time.deltaTime;
 
-            yield return new WaitForEndOfFrame();
-        }
-        if (timer >= 2.0f)
-        {
-            transform.LookAt(Character.player.transform.position + (Character.player.transform.forward * 10));
-        }
-       
+        transform.position = playercam.position;
+        transform.rotation = playercam.rotation;
 
-
-        mode = CameraMode.Battle;
+        Mode = CameraMode.PLAYER;
     }
-    public CameraMode Mode {
-        get { return mode; }
-        set { mode = value;  }
-    }
+
+  
+    public CameraMode Mode { get; set; }
 
 }
 
 public enum CameraMode
 {
-    Colony, Player, Transition, Battle, ToOtherPlayer, Freeze
+    COLONY, PLAYER, TRANSITION,
 }

@@ -1,51 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-using Assets.Meyer.TestScripts;
-using Assets.Meyer.TestScripts.Player;
-
-using Kristal;
-
-using TMPro;
-
-using UnityEngine;
-using UnityEngine.AI;
-
-public class Companion : BaseCharacter {
-	
-
-	[ SerializeField ] public GameObject camHolder;
-	
+﻿public class Companion : BaseCharacter {
+    
 
     // Use this for initialization
-    void Start () {
-		base.Awake();
-		this.material.color = BaseColor;
-	    camHolder = transform.Find( "CamHolder" ).gameObject;
-	    Nav = gameObject.GetComponent < CompanionNav >( );
-	    leader = StaticManager.character.GetComponent < CompanionLeader >( );
+    private void Start( ) {
+        Awake( );
+        material.color = BaseColor;
+        Nav            = gameObject.GetComponent < CompanionNav >( );
     }
 
-	public override void Damage(BaseCharacter attacker ) {
-		
-    }
-    public void Remove( BaseCharacter chara ) { }
-    // Update is called once per frame
-    void Update () { 
-    }
-	
+    public override void Damage( BaseCharacter _attacker ) { }
 
-	public GameObject CamHolder {
-		get { return camHolder; }
+    public void Remove( BaseCharacter _chara ) { }
 
-	}
-    public CompanionLeader Leader
-    {
-        get
-        {
-            return (CompanionLeader)leader;
-
-        }
-        set { leader = value; }
-    }
 }

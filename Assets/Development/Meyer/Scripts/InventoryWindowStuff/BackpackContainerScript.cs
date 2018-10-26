@@ -34,21 +34,19 @@ public class BackpackContainerScript : MonoBehaviour {
     {
         if (data.currentInputModule.input.GetMouseButton(1))
         {
-            StaticManager.uiInventory.itemsInstance.WeaponOptions.SetActive(false);
+            StaticManager.UiInventory.ItemsInstance.WeaponOptions.SetActive(false);
             name = gameObject.transform.Find("ItemName").GetComponentInChildren<TextMeshProUGUI>().text;
-            StaticManager.inventory.selectedItem = StaticManager.inventory.get_weapon(name);
-            StaticManager.uiInventory.ShowWeaponOptions(true);
+            StaticManager.Inventory.SelectedItem = StaticManager.Inventory.get_weapon(name);
            
         }
         else if (data.currentInputModule.input.GetMouseButton(0)){
-            StaticManager.uiInventory.itemsInstance.PlayerUI.SetActive(false);
-            StaticManager.uiInventory.isMainInventory = false;
-            StaticManager.uiInventory.Dragging = true;
-            StaticManager.uiInventory.ShowBackPackInventory(false);
+            StaticManager.UiInventory.ItemsInstance.PlayerUI.SetActive(false);
+            StaticManager.UiInventory.IsMainInventory = false;
+            StaticManager.UiInventory.Dragging = true;
 
             Debug.Log("OnPointerDownDelegate called.");
             name = gameObject.transform.Find("ItemName").GetComponentInChildren<TextMeshProUGUI>().text;
-            StaticManager.uiInventory.selectedItem = StaticManager.inventory.get_weapon(name);
+            StaticManager.UiInventory.SelectedItem = StaticManager.Inventory.get_weapon(name);
             selected = true;
         }
     }

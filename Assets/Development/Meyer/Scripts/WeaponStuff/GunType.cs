@@ -1,73 +1,61 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-public class GunType : WeaponObject
-{
+public class GunType : WeaponObject {
 
-    // Use this for initialization
+    [ SerializeField ] public int Ammo;
 
-    // TODO:1 Finish script
-    //------------------------
-    // Script references base class of Weapon Object
-    // Add variables as needed to either script
-    // Add functions
-    // All variables from previous script can be referenced
-    // Script should allow for shooting. Is attached to weapon object in scene
-    [SerializeField] GameObject Projectile;
-    [SerializeField] public float Range;
-    [SerializeField] public float FireRate;
-    [SerializeField] public float ReloadTime;
-    [SerializeField] public int Capacity;
-    [SerializeField] public int Ammo;
+    private bool canFire = true;
 
-    bool CanFire = true;
-    bool Reloading = false;
+    [ SerializeField ] public int Capacity;
 
-    //TODO:2 See WeaponObject.cs
-    public override void Select()
-    {
+    [ SerializeField ] public float FireRate;
 
+    [ SerializeField ] private GameObject projectile;
+
+    [ SerializeField ] public float Range;
+
+    private bool reloading;
+
+    [ SerializeField ] public float ReloadTime;
+
+    public override object this[ string _property_name ] {
+        get { return GetType( ).GetField( _property_name ).GetValue( this ); }
+        set { GetType( ).GetField( _property_name ).SetValue( this , value ); }
     }
     
-    //shoots gun
-    public override void Attack()
-    {
-        Debug.Log("Attacking");
-        if (CanFire && Ammo > 0)
-            StartCoroutine(Fire());
-        else if (!Reloading && Ammo == 0)
-            StartCoroutine(Reload());
+    public override void Attack( ) {
+        Debug.Log( "Attacking" );
 
+        if ( canFire && Ammo > 0 ){
+            StartCoroutine( Fire( ) );
+        }
+        else if ( !reloading && Ammo == 0 ){
+            StartCoroutine( Reload( ) );
+        }
     }
-    
-    IEnumerator Fire()
-    {
-        CanFire = false;
 
-        Projectile projectile = Instantiate(Projectile, transform.position + transform.forward, transform.rotation).GetComponent<Projectile>();
-        Destroy(projectile.gameObject, Range / projectile.GetSpeed());
+    private IEnumerator Fire( ) {
+        canFire = false;
+
+        var l_projectile = Instantiate( this.projectile , transform.position + transform.forward , transform.rotation ).GetComponent < Projectile >( );
+        Destroy( l_projectile.gameObject , Range / l_projectile.GetSpeed( ) );
 
         Ammo -= 1;
 
-        yield return new WaitForSeconds(1 / FireRate);
-        CanFire = true;
+        yield return new WaitForSeconds( 1 / FireRate );
+
+        canFire = true;
     }
 
-    IEnumerator Reload()
-    {
-        Reloading = true;
-        yield return new WaitForSeconds(ReloadTime);
-        Ammo = Capacity;
-        Reloading = false;
+    private IEnumerator Reload( ) {
+        reloading = true;
+
+        yield return new WaitForSeconds( ReloadTime );
+
+        Ammo      = Capacity;
+        reloading = false;
     }
-    public  object this[string propertyName]
-    {
-        get { return this.GetType().GetField(propertyName).GetValue(this); }
-        set { this.GetType().GetField(propertyName).SetValue(this, value); }
-    }
-    ///Recommended functions
-    // - Damage
-    // - Increase / decrease strength
-    // - Set transform (Move gameobject to player's hand)
+
 }

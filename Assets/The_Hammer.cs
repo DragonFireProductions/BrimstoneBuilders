@@ -35,21 +35,21 @@ public class The_Hammer : EnemyLeader
 
     public override void Damage(BaseCharacter attacker)
     {
-        StaticManager.uiInventory.ShowNotification("   " + gameObject.name + " : ", 5);
-        StaticManager.uiInventory.AppendNotification("\n Damage = " + StaticManager.DamageCalc.CalcAttack(attacker.stats, this.stats));
-        StaticManager.uiInventory.AppendNotification("\n Health was " + this.stats.Health);
+        StaticManager.UiInventory.ShowNotification("   " + gameObject.name + " : ", 5);
+        //StaticManager.UiInventory.AppendNotification("\n Damage = " + StaticManager.DamageCalc.CalcAttack(attacker.stats, this.stats));
+        //StaticManager.UiInventory.AppendNotification("\n Health was " + this.stats.Health);
         float damage = StaticManager.DamageCalc.CalcAttack(attacker.stats, this.stats);
 
         this.stats.Health -= damage;
 
         if (this.stats.Health <= 0)
         {
-            StaticManager.uiInventory.AppendNotification("\n Enemy is now Dead");
+            //StaticManager.UiInventory.AppendNotification("\n Enemy is now Dead");
             Leader.Remove(this);
         }
         else
         {
-            StaticManager.uiInventory.AppendNotification("\n health is now " + this.stats.Health);
+            //StaticManager.UiInventory.AppendNotification("\n health is now " + this.stats.Health);
 
         }
 

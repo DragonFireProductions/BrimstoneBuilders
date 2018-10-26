@@ -7,10 +7,15 @@ public class BaseNav : MonoBehaviour {
 
 	public NavMeshAgent Agent;
 
+	[ SerializeField ] protected float stoppingDistance = 4;
+
 	[SerializeField] protected state State;
+
+	public BaseCharacter Character;
 	// Use this for initialization
-	void Start () {
-		
+	protected void Start () {
+		Character = gameObject.GetComponent < BaseCharacter >( );
+		Agent = gameObject.GetComponent < NavMeshAgent >( );
 	}
 	
 	// Update is called once per frame
@@ -19,26 +24,39 @@ public class BaseNav : MonoBehaviour {
 	}
 
 
-	public void SetDestination(Vector3 des)
+	public void SetDestination(Vector3 _des)
 	{
-		Agent.SetDestination(des);
+		Agent.SetDestination(_des);
 
 	}
 
-    public enum state { Idle, Attacking, retreat, Battle, Follow }
+	public void SetDestination( Transform transform ) {
+		Agent.SetDestination( transform.position );
+	}
+    public enum state { IDLE, ATTACKING, FOLLOW, MOVE, ENEMY_CLICKED }
 
 
     public state SetState
     {
         get { return State; }
 	    set {
-		    if ( State == state.Follow ){
-			    Agent.stoppingDistance = 4.0f;
+		    if ( State == state.FOLLOW ){
+			    Agent.stoppingDistance = stoppingDistance;
 		    }
 
-		    if ( State == state.Attacking ){
-			    Agent.stoppingDistance = 0.0f;
+		    if ( State == state.ATTACKING ){
+			    Agent.stoppingDistance = stoppingDistance;
 		    }
+
+		    if ( State == state.MOVE ){
+			    Agent.stoppingDistance = 0;
+		    }
+
+		    if ( State == state.ENEMY_CLICKED ){
+			    Agent.stoppingDistance = stoppingDistance;
+		    }
+			
+			
 		    State = value;
 	    }
     }

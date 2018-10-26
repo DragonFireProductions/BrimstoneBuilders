@@ -7,8 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
-
-	public bool isTurnBasedOn = false;
+	
 	// Use this for initialization
 	void Start () {
 		

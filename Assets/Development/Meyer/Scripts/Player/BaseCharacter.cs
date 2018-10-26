@@ -44,9 +44,12 @@ public abstract class BaseCharacter : MonoBehaviour {
 	public AnimationClass AnimationClass;
 
 	public GameObject damageText;
-	
 
 	public BaseNav Nav;
+
+	public BaseCharacter Enemy;
+
+	public bool isCaught = false;
 
 	protected void Awake( ) {
         stats = gameObject.GetComponent<Stat>();
@@ -63,7 +66,6 @@ public abstract class BaseCharacter : MonoBehaviour {
     void Update () {
 
 	}
-	
 	
 
 	public abstract void Damage( BaseCharacter _player_selected_companion );

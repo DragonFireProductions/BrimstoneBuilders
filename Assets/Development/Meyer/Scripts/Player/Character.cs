@@ -1,42 +1,28 @@
 ﻿using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.UI;
-using UnityEngine.AI;
-using System.Collections;
-using System.Runtime.CompilerServices;
-using Kristal;
 
-using UnityEngine.SceneManagement;
+namespace Assets.Meyer.TestScripts.Player {
 
-namespace Assets.Meyer.TestScripts.Player
-{
-    public class Character : MonoBehaviour
-    {
-        
-        public static GameObject player;
+    public class Character : Companion {
 
-        private GameObject UI;
+        public static GameObject Player;
 
-        public GameObject cube;
-        [SerializeField] GameObject camHolder;
-        public PlayerController controller;
+        [ SerializeField ] private GameObject camHolder;
+
+        public GameObject Cube;
 
         //CharacterController controller;
         // Use this for initialization
-        void Awake() {
-            player = GameObject.FindWithTag( "Player" );
-            cube = player.transform.Find("Cube").gameObject;
-            controller = player.GetComponent < PlayerController >( );
-
-
-    }
-
-       
-
-    // Update is called once per framed
-    void Update()
+        private void Awake()
         {
-            
+            Player = GameObject.FindWithTag("Player");
+            Cube = Player.transform.Find("Cube").gameObject;
+            Nav = gameObject.GetComponent<LeaderNav>();
         }
+
+
+        // Update is called once per framed
+        private void Update( ) { }
+
     }
+
 }

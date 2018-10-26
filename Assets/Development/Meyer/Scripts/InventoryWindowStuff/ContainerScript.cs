@@ -1,53 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 
-using Assets.Meyer.TestScripts.Player;
-
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Experimental.UIElements;
 
-public class ContainerScript : MonoBehaviour  /*IPointerDownHandler*/ {
+public class ContainerScript : MonoBehaviour /*IPointerDownHandler*/ {
 
     private string name;
 
-    private bool selected = false;
-    
+    private bool selected;
 
-    /// <summary>
-    /// Is called when UI slot is selected
-    /// </summary>
-    /// <param name="data">Data captured by Unity API</param>
     public void Start( ) {
-        EventTrigger trigger = GetComponent<EventTrigger>();
-        EventTrigger.Entry entry = new EventTrigger.Entry();
-        entry.eventID = EventTriggerType.PointerDown;
-        entry.callback.AddListener((data) => { OnPointerDownDelegate((PointerEventData)data); });
-        trigger.triggers.Add(entry);
-    }
-    public void SelectObj() {
-       
-
+        var l_trigger = GetComponent < EventTrigger >( );
+        var l_entry = new EventTrigger.Entry {eventID = EventTriggerType.PointerDown};
+        l_entry.callback.AddListener( _data => { OnPointerDownDelegate( ( PointerEventData )_data ); } );
+        l_trigger.triggers.Add( l_entry );
     }
 
-    public void OnPointerDownDelegate(PointerEventData data) {
+    public void SelectObj( ) { }
+
+    public void OnPointerDownDelegate( PointerEventData data ) {
         if ( data.currentInputModule.input.GetMouseButton( 1 ) ){
-            StaticManager.uiInventory.itemsInstance.WeaponOptions.SetActive(false);
-            name = gameObject.transform.Find("ItemName").GetComponentInChildren<TextMeshProUGUI>().text;
-            StaticManager.inventory.selectedItem = StaticManager.inventory.get_weapon(name);
-             StaticManager.uiInventory.ShowWeaponOptions(true);
+            StaticManager.UiInventory.ItemsInstance.WeaponOptions.SetActive( false );
+            name                                 = gameObject.transform.Find( "ItemName" ).GetComponentInChildren < TextMeshProUGUI >( ).text;
+            StaticManager.Inventory.SelectedItem = StaticManager.Inventory.get_weapon( name );
+
         }
         else if ( data.currentInputModule.input.GetMouseButton( 0 ) ){
-            StaticManager.uiInventory.isMainInventory = true;
-            StaticManager.uiInventory.Dragging = true;
-            StaticManager.uiInventory.itemsInstance.PlayerUI.SetActive(false);
-            Debug.Log("OnPointerDownDelegate called.");
-            name = gameObject.transform.Find("ItemName").GetComponentInChildren<TextMeshProUGUI>().text;
-            StaticManager.uiInventory.selectedItem = StaticManager.inventory.get_weapon(name);
-            selected = true;
+            StaticManager.UiInventory.IsMainInventory = true;
+            StaticManager.UiInventory.Dragging        = true;
+            StaticManager.UiInventory.ItemsInstance.PlayerUI.SetActive( false );
+            Debug.Log( "OnPointerDownDelegate called." );
+            name                                   = gameObject.transform.Find( "ItemName" ).GetComponentInChildren < TextMeshProUGUI >( ).text;
+            StaticManager.UiInventory.SelectedItem = StaticManager.Inventory.get_weapon( name );
+            selected                               = true;
         }
     }
-
 
 }
