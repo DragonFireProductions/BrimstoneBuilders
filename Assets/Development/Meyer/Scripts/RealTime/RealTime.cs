@@ -19,5 +19,8 @@ public class RealTime : MonoBehaviour {
 		Companions = new List < Companion >();
 		Enemies = new List < Enemy >();
 	}
-	
+
+	public void AddEnemy(Enemy enemy ) {
+		Enemies.Add(enemy);
+	}
 }

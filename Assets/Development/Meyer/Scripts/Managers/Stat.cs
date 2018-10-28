@@ -119,7 +119,7 @@ public class Stat : MonoBehaviour {
     private void Start( ) {
         health = 100;
         name   = gameObject.name;
-        health = Random.Range( 5 , 7 );
+        health = Random.Range( 5 , 100 );
 
         if ( gameObject != StaticManager.Character.gameObject ){
             strength = Random.Range( 0 , 20 );
@@ -134,7 +134,7 @@ public class Stat : MonoBehaviour {
         attackPoints = maxAttackpoints;
         stamina      = Random.Range( 0 , 30 );
         XP           = 0;
-        maxHealth    = 7;
+        maxHealth    = 100;
         maxStamina   = 30;
         AdjustScale( strength );
     }

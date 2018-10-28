@@ -43,13 +43,14 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public AnimationClass AnimationClass;
 
-	public GameObject damageText;
+	public TextMeshPro damageText;
 
 	public BaseNav Nav;
 
-	public BaseCharacter Enemy;
-
 	public bool isCaught = false;
+
+	public int damage = 0;
+
 
 	protected void Awake( ) {
         stats = gameObject.GetComponent<Stat>();
@@ -59,15 +60,15 @@ public abstract class BaseCharacter : MonoBehaviour {
         material = gameObject.GetComponent<Renderer>().material;
 		animator = gameObject.GetComponent < Animator >( );
 		AnimationClass = gameObject.AddComponent < AnimationClass >( );
-		damageText = transform.Find( "DamageText" ).gameObject;
+		damageText = transform.Find( "DamageText/Gamobj" ).GetComponent < TextMeshPro >( );
 	}
 	
     // Update is called once per frame
     void Update () {
 
 	}
-	
 
-	public abstract void Damage( BaseCharacter _player_selected_companion );
+	public abstract void Damage();
+
 
 }

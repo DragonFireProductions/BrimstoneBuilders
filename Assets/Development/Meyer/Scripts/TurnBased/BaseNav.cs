@@ -10,11 +10,9 @@ public class BaseNav : MonoBehaviour {
 	[ SerializeField ] protected float stoppingDistance = 4;
 
 	[SerializeField] protected state State;
-
-	public BaseCharacter Character;
+	
 	// Use this for initialization
 	protected void Start () {
-		Character = gameObject.GetComponent < BaseCharacter >( );
 		Agent = gameObject.GetComponent < NavMeshAgent >( );
 		Agent.stoppingDistance = stoppingDistance;
 	}
@@ -34,26 +32,26 @@ public class BaseNav : MonoBehaviour {
 	public void SetDestination( Transform transform ) {
 		Agent.SetDestination( transform.position );
 	}
-    public enum state { IDLE, ATTACKING, FOLLOW, MOVE, ENEMY_CLICKED }
+    public enum state { IDLE, ATTACKING, FOLLOW, MOVE, ENEMY_CLICKED, FREEZE }
 
 
     public state SetState
     {
         get { return State; }
 	    set {
-		    if ( State == state.FOLLOW ){
+		    if ( value == state.FOLLOW ){
 			    Agent.stoppingDistance = stoppingDistance;
 		    }
 
-		    if ( State == state.ATTACKING ){
+		    if ( value == state.ATTACKING ){
 			    Agent.stoppingDistance = stoppingDistance;
 		    }
 
-		    if ( State == state.MOVE ){
+		    if ( value == state.MOVE ){
 			    Agent.stoppingDistance = 0;
 		    }
 
-		    if ( State == state.ENEMY_CLICKED ){
+		    if ( value == state.ENEMY_CLICKED ){
 			    Agent.stoppingDistance = stoppingDistance;
 		    }
 			

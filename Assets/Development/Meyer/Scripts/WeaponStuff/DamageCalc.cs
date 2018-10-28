@@ -24,7 +24,7 @@ public class DamageCalc : MonoBehaviour {
             l_damageMultipler *= 0.8f;
         }
 
-        return l_damageMultipler;
+        return l_damageMultipler * 0.5f;
     }
 
 }

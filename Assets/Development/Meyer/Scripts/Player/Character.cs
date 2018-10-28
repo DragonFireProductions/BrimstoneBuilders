@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿using Boo.Lang;
+
+using Kristal;
+
+using UnityEngine;
 
 namespace Assets.Meyer.TestScripts.Player {
 
@@ -10,18 +14,23 @@ namespace Assets.Meyer.TestScripts.Player {
 
         public GameObject Cube;
 
+
         //CharacterController controller;
         // Use this for initialization
         private void Awake()
         {
+            base.Awake();
             Player = GameObject.FindWithTag("Player");
             Cube = Player.transform.Find("Cube").gameObject;
             Nav = gameObject.GetComponent<LeaderNav>();
+           
         }
 
 
         // Update is called once per framed
-        private void Update( ) { }
+        private void Update( ) {
+            
+        }
 
     }
 
