@@ -18,7 +18,7 @@ public class Projectile : MonoBehaviour
     }
 
     /// <summary>
-    /// Detects when the projectile hits an enemy
+    /// Detects when the projectile hits an _enemy
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)

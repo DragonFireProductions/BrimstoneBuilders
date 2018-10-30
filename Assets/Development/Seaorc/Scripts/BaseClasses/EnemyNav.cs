@@ -1,165 +1,94 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-using Assets.Meyer.TestScripts;
-using Assets.Meyer.TestScripts.Player;
+﻿using System.Collections.Generic;
 
 using Kristal;
 
-using UnityEngine.AI;
 using UnityEngine;
-using UnityEngine.Assertions;
 
-public class EnemyNav : MonoBehaviour
-{
+public class EnemyNav : BaseNav {
+
     /// <remarks>Set in Inspector</remarks>
-    [SerializeField] Animator animator;
-    [SerializeField] float VeiwDistance;
-    [SerializeField] float WanderDistance;
-    [SerializeField] float WanderDelay;
-    [SerializeField] float StoppingDistance;
-    [SerializeField] float MaintainAttackDistance;
+    [ SerializeField ] private Animator animator;
 
-    [ SerializeField ] private float battleSpeed = 3;
+    private Enemy character;
 
-    [SerializeField] private GameObject location;
-    public EnemyState State;
-    GameObject player = null;
-    public NavMeshAgent Agent;
-    private float Timer = 0;
-    private float timer1 = 0;
+    [ SerializeField ] private GameObject location;
 
-    private bool hasReachedDestination = false;
+    [ SerializeField ] private float maintainAttackDistance;
 
-    [SerializeField]
-    GameObject[] guard;
+    private float timer;
 
-    public Vector3 s_location;
+    [ SerializeField ] private float veiwDistance;
 
-    void Awake()
-    {
-        //Get Player form level manager
+    [ SerializeField ] private float wanderDelay;
 
+    [ SerializeField ] private float wanderDistance;
 
-        if (GetComponent<NavMeshAgent>() != null)
-        {
-            Agent = GetComponent<NavMeshAgent>();
-        }
-        else
-        {
-            gameObject.AddComponent<NavMeshAgent>();
-            Agent = GetComponent<NavMeshAgent>();
-        }
-        guard = GameObject.FindGameObjectsWithTag("Guard");
-        Assert.IsNotNull(guard, "guard is not the guard");
-
-        animator = gameObject.GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        Assert.IsNotNull(player, "Player or Player.Player script cannot be found");
-
-        Assert.IsNotNull(animator, "No animator attached to enemy");
-        Timer = Time.deltaTime;
-
-        Agent.stoppingDistance = StoppingDistance;
-
-        s_location = transform.position;
+    private void Awake( ) {
+        timer = Time.deltaTime;
     }
 
-    void Start( ) {
-         Agent.destination = Random.insideUnitSphere * WanderDistance + location.transform.position;
+    private void Start( ) {
+        base.Start( );
+        character         = GetComponent < Enemy >( );
+        Agent.destination = Random.insideUnitSphere * wanderDistance + location.transform.position;
+        character.enemies = new List < Companion >( );
     }
 
-    /// <summary>
-    /// Moves the agent based on current State
-    /// </summary>
-    void Update()
-    {
-        Timer += Time.deltaTime;
+    private void Update( ) {
+        timer += Time.deltaTime;
 
-        for (int i = 0; i < guard.Length; ++i)
-        {
-            float distance = Vector3.Distance(transform.position, guard[i].transform.position);
-            //Debug.Log(distance);
-            if (distance < 1.0f)
-            {
-                State = EnemyState.retreat;
+        switch ( State ){
+            case state.IDLE: {
+                var l_check = StaticManager.Utility.NavDistanceCheck( Agent );
+
+                if ( wanderDelay <= timer && ( l_check == DistanceCheck.HAS_REACHED_DESTINATION || l_check == DistanceCheck.PATH_INVALID ) || StaticManager.Utility.NavDistanceCheck( Agent ) == DistanceCheck.HAS_NO_PATH ){
+                    Agent.destination = Random.insideUnitSphere * wanderDistance + location.transform.position;
+                    timer             = 0;
+                }
+
+                if ( Vector3.Distance( StaticManager.Character.transform.position , transform.position ) < veiwDistance ){
+                    character.ChooseEnemy( );
+                }
             }
-        }
-        
-        switch (State)
-        {
-            case EnemyState.Idle:
-                if (player != null && !TurnBasedController.instance)
-                {
-                    if ( Vector3.Distance( transform.position , player.transform.position ) < VeiwDistance ){
 
-                       // if ( TurnBasedController.instance == null ){
-                        //    GameObject.Find("ManagerHolder").gameObject.AddComponent<TurnBasedController>();
-                       // }
-
-                       // Agent.stoppingDistance = 0;
-                        //Agent.speed = battleSpeed;
-
-                       // TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
-                    }
-                }
-
-                var check = StaticManager.utility.NavDistanceCheck( Agent );
-                if (WanderDelay <= Timer && (check == DistanceCheck.HasReachedDestination || check == DistanceCheck.PathInvalid)  || StaticManager.utility.NavDistanceCheck(Agent) ==DistanceCheck.HasNoPath)
-                {
-                    Agent.destination = Random.insideUnitSphere * WanderDistance + location.transform.position;
-                    Timer = 0;
-                }
                 break;
-            case EnemyState.retreat:
-                Agent.SetDestination(s_location);
-                float distance = Vector3.Distance(transform.position, s_location);
-                Debug.Log(distance);
-                if (distance < 3.0f)
-                {
-                    Debug.Log("Idle");
-                    State = EnemyState.Idle;
+            case state.FOLLOW: {
+                Agent.destination = character.leader.transform.position;
+            }
+
+                break;
+            
+            case state.ATTACKING: {
+                //Removes the current enemy that this character is attacking from attack list if null
+                if ( character.enemies[0] == null ){
+                   character.enemies.RemoveAt(0);
                 }
-                break;
-            case EnemyState.Battle:
-                Agent.stoppingDistance = 0;
-
-                
-                break;
-            case EnemyState.Follow:
-                Agent.stoppingDistance = 5;
-               Agent.destination = gameObject.GetComponent < Enemy >( ).Leader.gameObject.transform.position;
-                if (player != null && !TurnBasedController.instance)
-                {
-                    if (Vector3.Distance(transform.position, player.transform.position) < VeiwDistance)
-                    {
-
-                        if (TurnBasedController.instance == null)
+                //if the enemy is not attacking and has enemies to attack
+                if ( character.enemies.Count > 0 && !character.AnimationClass.animation.GetBool( "Attacking" ) ){
+                    //set the destination to the first enemy in attack list
+                    Agent.SetDestination(character.enemies[0].transform.position);
+                        //if it reached the first enemy in list, then attack
+                        if (StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_REACHED_DESTINATION)
                         {
-                            Character.player.AddComponent<TurnBasedController>();
+                            character.AnimationClass.Play( AnimationClass.states.Attacking);
                         }
-
-                        Agent.stoppingDistance = 0;
-                        TurnBasedController.instance.HasCollided(this.gameObject.GetComponent<Enemy>());
-                    }
                 }
+                //if this character has no enemies then choose a new companion to attack
+                else if ( character.enemies.Count == 0 ){
+                    character.ChooseEnemy();
+                }
+                // else if it is attacking and has enemies then look at enemies
+                else if (character.enemies.Count > 0){
+                    transform.LookAt( character.enemies[ 0 ].transform.position );
+                }
+            }
+
                 break;
+
             default:
+
                 break;
         }
     }
-
-    public EnemyState SetState {
-        get { return State; }
-        set { State = value;}
-    }
-
-
-    public void SetDestination(Vector3 des ) {
-        Agent.SetDestination( des );
-
-    }
-
 
 }
-public enum EnemyState { Idle, Attacking, retreat, Battle, Follow }

@@ -55,7 +55,7 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
-      StaticManager.uiInventory.itemsInstance.PauseUI.SetActive(true);
+      StaticManager.UiInventory.ItemsInstance.PauseUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
