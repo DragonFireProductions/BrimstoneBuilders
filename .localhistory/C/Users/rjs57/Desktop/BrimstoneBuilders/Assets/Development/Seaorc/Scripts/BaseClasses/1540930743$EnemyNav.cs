@@ -23,7 +23,7 @@ public class EnemyNav : BaseNav {
 
     [ SerializeField ] private float wanderDistance;
 
-    [SerializeField] private SpriteRenderer threat_signal;
+    [SerializeField] private GameObject threat_signal;
 
     private Stat stats;
 
@@ -44,11 +44,14 @@ public class EnemyNav : BaseNav {
 
         if (stats.Health >= 10.0f)
         {
-            threat_signal.enabled = true;
+            Vector3 tmppos = transform.position;
+            tmppos.y = transform.position.y + 1.0f;
+            threat_signal.transform.position = tmppos;
+            threat_signal.SetActive(true);
         }
         else
         {
-            threat_signal.enabled = false;
+            threat_signal.SetActive(false);
         }
 
         switch ( State ){

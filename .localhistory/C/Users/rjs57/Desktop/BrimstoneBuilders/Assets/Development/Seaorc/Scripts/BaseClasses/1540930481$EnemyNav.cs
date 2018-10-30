@@ -23,10 +23,6 @@ public class EnemyNav : BaseNav {
 
     [ SerializeField ] private float wanderDistance;
 
-    [SerializeField] private SpriteRenderer threat_signal;
-
-    private Stat stats;
-
     private void Awake( ) {
         timer = Time.deltaTime;
     }
@@ -36,20 +32,10 @@ public class EnemyNav : BaseNav {
         character         = GetComponent < Enemy >( );
         Agent.destination = Random.insideUnitSphere * wanderDistance + location.transform.position;
         character.enemies = new List < Companion >( );
-        stats = GetComponent<Stat>();
     }
 
     private void Update( ) {
         timer += Time.deltaTime;
-
-        if (stats.Health >= 10.0f)
-        {
-            threat_signal.enabled = true;
-        }
-        else
-        {
-            threat_signal.enabled = false;
-        }
 
         switch ( State ){
             case state.IDLE: {
@@ -71,7 +57,7 @@ public class EnemyNav : BaseNav {
             }
 
                 break;
-
+            
             case state.ATTACKING: {
                 //Removes the current enemy that this character is attacking from attack list if null
                 if ( character.enemies[0] == null ){

@@ -15,7 +15,7 @@ public class LeaderNav : CompanionNav {
 
 	private float timer = 0;
 
-    [SerializeField] private TextMeshProUGUI message;
+    [SerializeField] private Text message;
     private float displaytimer;
 	void Start () {
 		base.Start();

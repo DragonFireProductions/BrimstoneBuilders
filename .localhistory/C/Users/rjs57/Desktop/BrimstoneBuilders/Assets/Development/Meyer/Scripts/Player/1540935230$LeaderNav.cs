@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Assets.Meyer.TestScripts.Player;
 
 using Kristal;
-using TMPro;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +15,7 @@ public class LeaderNav : CompanionNav {
 
 	private float timer = 0;
 
-    [SerializeField] private TextMeshProUGUI message;
+    [SerializeField] private Text message;
     private float displaytimer;
 	void Start () {
 		base.Start();
@@ -40,22 +40,22 @@ public class LeaderNav : CompanionNav {
 		        }
                 else if (hit.collider.tag == "Post")
 		        {
-                    //Debug.Log("got the post");
-		            displaytimer = 3.0f;
+                    Debug.Log("got the post");
+		            //displaytimer = 3.0f;
 		        }
             }
         }
 
-        displaytimer -= 0.005f;
-        if (displaytimer > 0.0f)
-        {
-            message.text = "Go forth young warrior, ad make your ancestors proud!";
-        }
-        else
-        {
-            message.text = " ";
-        }
-        switch ( State ){
+	    //displaytimer -= 0.005f;
+	    //if (displaytimer > 0.0f)
+	    //{
+	    //    message.text = "Go forth young warrior, ad make your ancestors proud!";
+	    //}
+	    //else
+	    //{
+	    //    message.text = " ";
+	    //}
+		switch ( State ){
 			case state.ATTACKING:
 
                 Agent.SetDestination(character.enemies[0].transform.position);
