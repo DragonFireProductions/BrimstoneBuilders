@@ -31,15 +31,12 @@ public class UIItems : MonoBehaviour {
 
 	public GameObject BattleWon;
 
-	public UIItemsWithLabels gameobjectName;
-
     public object this[string propertyName]
     {
         get { return this.GetType().GetField(propertyName).GetValue(this); }
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
     public void Start () {
-       gameobjectName.SetLabels(StaticManager.Character.stats);
         var properties = this.GetType().GetFields();
 
 	    foreach ( FieldInfo l_fieldInfo in properties ){
