@@ -54,7 +54,11 @@ public class BaseNav : MonoBehaviour {
 		    if ( value == state.ENEMY_CLICKED ){
 			    Agent.stoppingDistance = stoppingDistance;
 		    }
-			
+
+		    if ( value == state.IDLE ){
+			    Agent.stoppingDistance = stoppingDistance;
+		    }
+
 			
 		    State = value;
 	    }

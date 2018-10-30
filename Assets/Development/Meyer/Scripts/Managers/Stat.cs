@@ -156,8 +156,11 @@ public class Stat : MonoBehaviour {
         }
     }
 
-    public void RegenerateAttackPoints( ) {
-        AttackPoints = Random.Range( 0 , 4 );
+    public void IncreaseStats(WeaponItem _item)
+    {
+        Strength = _item.durability;
+        Agility += _item.attackSpeed;
+        Strength += _item.baseDamage;
     }
 
     private struct Info {

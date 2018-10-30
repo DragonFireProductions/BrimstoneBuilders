@@ -59,7 +59,7 @@ public abstract class BaseCharacter : MonoBehaviour {
         agent = gameObject.GetComponent<NavMeshAgent>();
         material = gameObject.GetComponent<Renderer>().material;
 		animator = gameObject.GetComponent < Animator >( );
-		AnimationClass = gameObject.AddComponent < AnimationClass >( );
+		AnimationClass = gameObject.GetComponent< AnimationClass >( );
 		damageText = transform.Find( "DamageText/Gamobj" ).GetComponent < TextMeshPro >( );
 	}
 	
@@ -67,7 +67,7 @@ public abstract class BaseCharacter : MonoBehaviour {
     void Update () {
 
 	}
-
+	
 	public abstract void Damage();
 
 

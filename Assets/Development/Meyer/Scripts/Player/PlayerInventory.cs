@@ -1,111 +1,64 @@
 ﻿using System.Collections.Generic;
-
-using TMPro;
+using System.Linq;
 
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour {
 
-    public static List < WeaponItem > List; //List of weapon stats defined by unity
-    
-    public static GameObject Ui; // UI stuff
+    public static UIInventory uiInventory = StaticManager.UiInventory;
 
-    [ SerializeField ] public GameObject AttachedWeapon; // Primary weapon holder
+    [ HideInInspector ] public static List < WeaponItem > WeaponAssetList; //public list of weapons from WeaponListAsset 
 
-    public List < WeaponObject > BackpackInventory;
+    [ HideInInspector ] public List < WeaponObject > BackPackInventoryList;
 
-    private bool isActive;
-    
-    public WeaponItemList Item; // Holder for Unity defined weapons list
-    
-    private GameObject itemSlot; // Slots for items
+    [ HideInInspector ] public bool isInventoryActive;
 
-    public List < WeaponObject > Objects;
+    [ SerializeField ] private WeaponItemList itemList; //WeaponListAsset set in inspector
 
-    public WeaponObject SelectedItem;
+    [ HideInInspector ] public List < WeaponObject > MainInventoryList;
 
-    private List < GameObject > uiList; // List of weaponItems currently pickedUp
-    
-    public List < WeaponObject > Weapons; //Contains list of picked up WeaponObjects
+    [ HideInInspector ] public List < WeaponObject > PickedUpWeapons; //Current list of items the player has picked up
 
-    // Use this for initialization
-    private void Awake( ) {
-        List = Item.itemList;
+    [ HideInInspector ] public WeaponObject selectedObject { get; set; }
 
-        uiList = new List < GameObject >( );
+    public void Awake( ) {
+        WeaponAssetList = itemList.itemList;
     }
 
-    private void Start( ) {
-       
+    public WeaponItem GetItemFromAssetList( string name ) {
+        return WeaponAssetList.FirstOrDefault( _t => _t.objectName == name );
     }
-    
-    public WeaponItem get_item( string _name ) {
-        for ( var l_i = 0 ; l_i < List.Count ; l_i++ ){
-            if ( List[ l_i ].objectName.ToLower( ) == _name.ToLower( ) ){
-                return List[ l_i ];
-            }
-        }
 
-        Debug.Log( _name + ": ASSET NOT FOUND" );
-
-        return null;
+    public WeaponObject GetItemFromInventory( string name ) {
+        return PickedUpWeapons.FirstOrDefault( _t => _t.WeaponStats.objectName == name );
     }
-    
-    public WeaponObject get_weapon( string _name ) {
-        for ( var l_i = 0 ; l_i < Objects.Count ; l_i++ ){
-            if ( Objects[ l_i ].WeaponStats.objectName == _name ){
-                return Objects[ l_i ];
-            }
-        }
 
-        return null;
+    public void PickUp( WeaponObject weapon ) {
+        PickedUpWeapons.Add( weapon );
+        weapon.PickUp( );
     }
-    
+
+    public void MoveToBackPack( WeaponObject selectedItem ) {
+        //StaticManager.UiInventory.ItemsInstance.WeaponOptions.SetActive( false );
+        StaticManager.UiInventory.RemoveMainInventory( selectedItem );
+        MainInventoryList.Remove( selectedItem );
+        BackPackInventoryList.Add( selectedItem );
+        StaticManager.UiInventory.AddBackpackSlot( selectedItem );
+        selectedItem.MoveToBackPack( );
+    }
+
     private void Update( ) {
         if ( Input.GetButtonDown( "Inventory" ) ){
-            isActive = !isActive;
+            isInventoryActive = !isInventoryActive;
 
-            if ( isActive ){
+            if ( isInventoryActive ){
                 StaticManager.UiInventory.ItemsInstance.PlayerUI.SetActive( true );
             }
 
-            if ( isActive == false ){
+            if ( isInventoryActive == false ){
                 StaticManager.UiInventory.ItemsInstance.PlayerUI.SetActive( false );
             }
         }
-    }
-
-    public void IncreaseStats( WeaponItem _item ) {
-        var l_stat = StaticManager.Character.GetComponent < Stat >( );
-        l_stat.Strength =  _item.durability;
-        l_stat.Agility  += _item.attackSpeed;
-        l_stat.Strength += _item.baseDamage;
-    }
-    public void Add( WeaponObject _item ) {
-        _item.gameObject.SetActive( false );
-        Objects.Add( _item );
-        StaticManager.UiInventory.AddSlot( _item );
-        Debug.Log( "Item: " + _item.WeaponStats.objectName + " has been added!" );
-    }
-
-    public void AddToBackpack( WeaponObject _item ) {
-        _item.gameObject.SetActive( false );
-        BackpackInventory.Add( _item );
-        StaticManager.UiInventory.AddBackpackSlot( _item );
-    }
-
-    public void MoveToBackPack( ) {
-        StaticManager.UiInventory.ItemsInstance.WeaponOptions.SetActive( false );
-        StaticManager.UiInventory.Remove( SelectedItem );
-        BackpackInventory.Add( SelectedItem );
-        StaticManager.UiInventory.AddBackpackSlot( SelectedItem );
-        StaticManager.UiInventory.ItemsInstance.BackPackUI.GetComponentInChildren < RawImage >( ).texture     = SelectedItem.WeaponStats.icon;
-        StaticManager.UiInventory.ItemsInstance.BackPackUI.GetComponentInChildren < TextMeshProUGUI >( ).text = SelectedItem.WeaponStats.objectName;
-    }
-
-    public void ViewStats( ) {
-        StaticManager.UiInventory.UpdateWeaponInventoryStats( SelectedItem.WeaponStats );
     }
 
 }

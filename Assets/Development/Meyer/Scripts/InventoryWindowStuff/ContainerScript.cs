@@ -20,9 +20,9 @@ public class ContainerScript : MonoBehaviour /*IPointerDownHandler*/ {
 
     public void OnPointerDownDelegate( PointerEventData data ) {
         if ( data.currentInputModule.input.GetMouseButton( 1 ) ){
-            StaticManager.UiInventory.ItemsInstance.WeaponOptions.SetActive( false );
+            ///StaticManager.UiInventory.ItemsInstance.WeaponOptions.SetActive( false );
             name                                 = gameObject.transform.Find( "ItemName" ).GetComponentInChildren < TextMeshProUGUI >( ).text;
-            StaticManager.Inventory.SelectedItem = StaticManager.Inventory.get_weapon( name );
+            //StaticManager.Inventory.SelectedItem = StaticManager.Inventory.get_weapon( name );
 
         }
         else if ( data.currentInputModule.input.GetMouseButton( 0 ) ){
@@ -31,7 +31,7 @@ public class ContainerScript : MonoBehaviour /*IPointerDownHandler*/ {
             StaticManager.UiInventory.ItemsInstance.PlayerUI.SetActive( false );
             Debug.Log( "OnPointerDownDelegate called." );
             name                                   = gameObject.transform.Find( "ItemName" ).GetComponentInChildren < TextMeshProUGUI >( ).text;
-            StaticManager.UiInventory.SelectedItem = StaticManager.Inventory.get_weapon( name );
+           // StaticManager.UiInventory.SelectedItem = StaticManager.Inventory.get_weapon( name );
             selected                               = true;
         }
     }

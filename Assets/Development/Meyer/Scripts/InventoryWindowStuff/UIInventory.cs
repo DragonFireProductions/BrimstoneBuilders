@@ -18,7 +18,7 @@ public class UIInventory : MonoBehaviour
    
     private bool showWindow;
 
-    struct Stats {
+    public struct Stats {
 
        public TextMeshProUGUI Obj;
 
@@ -28,9 +28,9 @@ public class UIInventory : MonoBehaviour
 
     private List < Stats > statUiList;
 
-    private List < Stats > companionUiList;
+    private List < Stats > companionWindowStats;
 
-    private List < Stats > weaponUiList;
+    private List < Stats > weaponWindowStats;
 
     private List < Stats > gameStatsUiList;
 
@@ -51,85 +51,14 @@ public class UIInventory : MonoBehaviour
     public bool Dragging = false;
     
     // Use this for initialization
-    
+    public void Start( ) {
+        StartScript();
+    }
 
     public void StartScript() {
         ItemsInstance = gameObject.GetComponent < UIItems >( );
         ItemsInstance.Start();
         pos = ItemsInstance.InventoryContainer.gameObject.transform.position;
-        statUiList = new List<Stats>();
-        companionUiList = new List<Stats>();
-        weaponUiList = new List < Stats >();
-        gameStatsUiList = new List < Stats >( );
-        weaponInventoryStatsUiList = new List < Stats >( );
-        gameInventoryStatsUiList = new List < Stats >();
-        ItemsInstance.AttackConfirmation.SetActive(false);
-        //itemsInstance.StatUI = new GameObject();
-
-        var l_i = ItemsInstance.StatLabels.transform.childCount;
-
-        for (var l_j = 0; l_j < l_i; l_j++)
-        {
-            Stats l_stats;
-            l_stats.Obj = ItemsInstance.StatLabels.transform.GetChild(l_j).GetComponent<TextMeshProUGUI>();
-            l_stats.Name = ItemsInstance.StatLabels.transform.GetChild(l_j).name;
-            statUiList.Add(l_stats);
-        }
-
-        l_i = ItemsInstance.CompanionLabels.transform.childCount;
-
-        for (var l_j = 0; l_j < l_i; l_j++)
-        {
-            Stats l_stats;
-            l_stats.Obj = ItemsInstance.CompanionLabels.transform.GetChild(l_j).GetComponent<TextMeshProUGUI>();
-            l_stats.Name = ItemsInstance.CompanionLabels.transform.GetChild(l_j).name;
-            companionUiList.Add(l_stats);
-        }
-
-        l_i = ItemsInstance.WeaponLabels.transform.childCount;
-
-        for ( var l_j = 0 ; l_j < l_i ; l_j++ ){
-            Stats l_stats;
-            l_stats.Obj = ItemsInstance.WeaponLabels.transform.GetChild( l_j ).GetComponent < TextMeshProUGUI >( );
-            l_stats.Name = ItemsInstance.WeaponLabels.transform.GetChild( l_j ).name;
-         
-            weaponUiList.Add(l_stats);
-        }
-
-        l_i = ItemsInstance.GameStatLabels.transform.childCount;
-
-        for ( var l_j = 0 ; l_j < l_i ; l_j++ ){
-
-            Stats l_stats;
-            l_stats.Obj = ItemsInstance.GameStatLabels.transform.GetChild( l_j ).GetComponent < TextMeshProUGUI >( );
-            l_stats.Name = ItemsInstance.GameStatLabels.transform.GetChild( l_j ).name;
-
-            gameStatsUiList.Add(l_stats);
-        }
-        l_i = ItemsInstance.WeaponInventoryLabels.transform.childCount;
-
-        for (var l_j = 0; l_j < l_i; l_j++)
-        {
-
-            Stats l_stats;
-            l_stats.Obj = ItemsInstance.WeaponInventoryLabels.transform.GetChild(l_j).GetComponent<TextMeshProUGUI>();
-            l_stats.Name = ItemsInstance.WeaponInventoryLabels.transform.GetChild(l_j).name;
-
-            weaponInventoryStatsUiList.Add(l_stats);
-        }
-        l_i = ItemsInstance.GameInventoryStatLabels.transform.childCount;
-
-        for (var l_j = 0; l_j < l_i; l_j++)
-        {
-
-            Stats l_stats;
-            l_stats.Obj = ItemsInstance.GameInventoryStatLabels.transform.GetChild(l_j).GetComponent<TextMeshProUGUI>();
-            l_stats.Name = ItemsInstance.GameInventoryStatLabels.transform.GetChild(l_j).name;
-
-            gameInventoryStatsUiList.Add(l_stats);
-        }
-
-
     }
     public void ShowNotification(string _message, float _time ) {
         ItemsInstance.DialogueUI.GetComponentInChildren<TextMeshProUGUI>().text = _message;
@@ -169,7 +98,6 @@ public class UIInventory : MonoBehaviour
         l_newContainer.transform.SetParent(ItemsInstance.InventoryContainer.transform.parent);
         l_newContainer.transform.position = pos;
         l_newContainer.transform.localScale = ItemsInstance.InventoryContainer.transform.localScale;
-        Set(_item, l_newContainer);
         Slots.Add(l_newContainer);
     }
 
@@ -187,58 +115,24 @@ public class UIInventory : MonoBehaviour
         ItemsInstance.BackpackContainer.SetActive(false);
 
     }
-
-    public void UpdateStats(Stat _stats ) {
-        for ( var l_i = 0 ; l_i < statUiList.Count ; l_i++ ){
-            var l_a = _stats[ statUiList[ l_i ].Name ];
-            statUiList[ l_i ].Obj.text = l_a.ToString( );
-        }
-
-    }
-
-    public void UpdateWeaponStats(WeaponItem _item ) {
-        for ( var l_i = 0 ; l_i < weaponUiList.Count ; l_i++ ){
-            var l_a = _item[ weaponUiList[ l_i ].Name ];
-            weaponUiList[ l_i ].Obj.text = "+" + l_a.ToString( );
-        }
-        
-    }
     
-
-    public void UpdateGameWeaponStats( GunType _obj ) {
-        for ( var l_i = 0 ; l_i < gameStatsUiList.Count ; l_i++ ){
-            var l_a = _obj[ gameStatsUiList[ l_i ].Name ];
-            gameStatsUiList[ l_i ].Obj.text = l_a.ToString( );
-        }
-    }
-
-    public void UpdateWeaponInventoryStats(WeaponItem _obj)
+    public void UpdateStats(Stat _stats, UIItemsWithLabels instanceToUpdate)
     {
-        for (var l_i = 0; l_i < weaponInventoryStatsUiList.Count; l_i++)
+        for (var l_i = 0; l_i < instanceToUpdate.Labels.Count; l_i++)
         {
-            var l_a = _obj[weaponInventoryStatsUiList[l_i].Name];
-            weaponInventoryStatsUiList[l_i].Obj.text = l_a.ToString();
-        }
-    }
-    public void UpdateGameInventoryStats(GunType _item) {
-
-        for (var l_i = 0; l_i < gameInventoryStatsUiList.Count; l_i++)
-        {
-            var l_a = _item[gameInventoryStatsUiList[l_i].Name];
-            gameInventoryStatsUiList[l_i].Obj.text = l_a.ToString();
+            var l_a = _stats[instanceToUpdate.Labels[l_i].ToString()];
+            instanceToUpdate.Labels[l_i].labelText.text = l_a.ToString();
         }
 
     }
-    public void UpdateCompanionStats(Stat _stats)
-    {
-        for (var l_i = 0; l_i < companionUiList.Count; l_i++)
-        {
-            var l_a = _stats[companionUiList[l_i].Name];
-            companionUiList[l_i].Obj.text = l_a.ToString();
-        }
 
+    public void UpdateStats( WeaponItem _object , UIItemsWithLabels instanceToUpdate ) {
+        for ( int i = 0 ; i < instanceToUpdate.Labels.Count ; i++ ){
+            var a = _object[ instanceToUpdate.Labels[ i ].ToString( ) ];
+            instanceToUpdate.Labels[ i ].labelText.text = a.ToString( );
+        }
     }
-    public void Remove(WeaponObject _item)
+    public void RemoveMainInventory(WeaponObject _item)
     {
         for (var l_i = 0; l_i < Slots.Count; l_i++)
         {
@@ -260,41 +154,8 @@ public class UIInventory : MonoBehaviour
             }
         }
     }
-    public void Set(WeaponObject _weapons, GameObject _container_p)
-    {
-        var l_transforms = _container_p.GetComponentsInChildren<TextMeshProUGUI>();
-        _container_p.name = _weapons.name + "Slot";
-        foreach ( var l_t in l_transforms ){
-            switch (l_t.name)
-            {
-                case "ItemName":
-                    l_t.GetComponent<TextMeshProUGUI>().text = _weapons.WeaponStats.objectName.ToString();
-                    break;
-                case "ItemValue":
-                    l_t.GetComponent<TextMeshProUGUI>().text = _weapons.WeaponStats.value.ToString();
-                    break;
-                case "ItemWeight":
-                    l_t.GetComponent<TextMeshProUGUI>().text = _weapons.WeaponStats.weight.ToString();
-                    break;
-                case "ItemDurability":
-                    l_t.GetComponent<TextMeshProUGUI>().text = _weapons.WeaponStats.durability.ToString();
-                    break;
-                default:
-                    break;
-            }
-        }
-        _container_p.GetComponentInChildren<RawImage>().texture = _weapons.WeaponStats.icon;
-    }
-
-    public void SetBackpack( WeaponObject _weapons, GameObject _container ) {
-        _container.GetComponentInChildren < TextMeshProUGUI >( ).text = _weapons.WeaponStats.objectName;
-        _container.transform.Find( "icon" ).GetComponent < RawImage >( ).texture = _weapons.WeaponStats.icon;
-    }
     
-    public void ShowPauseMenu(bool _show_pause)
-    {
-        ItemsInstance.PauseUI.SetActive(_show_pause);
-    }
+    
 
     // Update is called once per frame
     public WeaponObject SelectedItem;
@@ -338,7 +199,7 @@ public class UIInventory : MonoBehaviour
             SelectedItem.gameObject.SetActive(false);
         }
         if ( Input.GetKeyDown(KeyCode.Escape) ){
-            ShowPauseMenu(Show);
+            ItemsInstance.PauseUI.SetActive(true);
             Time.timeScale = 0;
         }
         StaticManager.UiInventory.ViewEnemyStats();
@@ -358,12 +219,12 @@ public class UIInventory : MonoBehaviour
                 Debug.Log("Hit " + l_hitInfo.transform.gameObject.name);
                 if (l_hitInfo.transform.gameObject.tag == "Enemy" || l_hitInfo.transform.gameObject.tag == "Player" || l_hitInfo.transform.gameObject.tag == "Companion")
                 {
-                    UpdateStats(l_hitInfo.transform.gameObject.GetComponent<Stat>());
+                    //UpdateStats(l_hitInfo.transform.gameObject.GetComponent<Stat>(), ItemsInstance.StatUI);
                    
                 }
                 else if (l_hitInfo.transform.gameObject.tag == "Weapon")
                 {
-                    UpdateWeaponStats(l_hitInfo.transform.gameObject.GetComponent<WeaponObject>().WeaponStats);
+                   //UpdateStats(l_hitInfo.transform.gameObject.GetComponent<WeaponObject>().WeaponStats, ItemsInstance.WeaponStatsUI);
                     //UpdateGameWeaponStats(l_hitInfo.]transform.gameObject.GetComponent<GunType>());
                 }
             }

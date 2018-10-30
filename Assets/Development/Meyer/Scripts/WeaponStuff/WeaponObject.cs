@@ -1,8 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Assets.Meyer.TestScripts.Player;
+
+using TMPro;
+
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
+
 public class WeaponObject : MonoBehaviour
 {
     /// Variables should be protected NOT public or private
@@ -16,9 +21,8 @@ public class WeaponObject : MonoBehaviour
     public bool isMainInventory = true;
     protected virtual void Start()
     {
-        
         animator = gameObject.GetComponent<Animation>();
-        weaponStats = StaticManager.Inventory.get_item(weaponName);
+        weaponStats = StaticManager.Inventory.GetItemFromAssetList( weaponName );
         Assert.IsNotNull(weaponStats, "WeaponItem name not added in inspector " + gameObject.name);
         weapon = this.gameObject;
     }
@@ -27,9 +31,17 @@ public class WeaponObject : MonoBehaviour
         get { return this.GetType().GetField(propertyName).GetValue(this); }
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
-    
-    
 
+    public void PickUp( ) {
+        StaticManager.UiInventory.AddSlot(this);
+        StaticManager.Inventory.MainInventoryList.Add(this);
+    }
+
+    public void MoveToBackPack( ) {
+        StaticManager.UiInventory.ItemsInstance.BackPackUI.GetComponentInChildren<RawImage>().texture = WeaponStats.icon;
+        StaticManager.UiInventory.ItemsInstance.BackPackUI.GetComponentInChildren<TextMeshProUGUI>().text = WeaponStats.objectName;
+
+    }
     public virtual void Attack()
     {
           Debug.Log("Object has attacked!");
@@ -46,27 +58,32 @@ public class WeaponObject : MonoBehaviour
 
         else if ( collider.tag == "Player" && StaticManager.UiInventory.Dragging && StaticManager.UiInventory.IsMainInventory){
             StaticManager.UiInventory.Dragging = false;
-            StaticManager.UiInventory.AttachedWeapons.Add(this);
-            var ob = StaticManager.UiInventory.AttachedWeapons[ 0 ];
-            StaticManager.UiInventory.AttachedWeapons.RemoveAt(0);
-            if (ob.isMainInventory)
-            {
-               // StaticManager.UiInventory.AddSlot(ob);
-            }
-            else
-            {
-               //StaticManager.UiInventory.AddBackpackSlot(ob);
-            }
+            gameObject.SetActive(true);
 
-            ob.gameObject.SetActive(false);
+            if ( StaticManager.UiInventory.AttachedWeapons.Count > 0 ){
+                StaticManager.UiInventory.AttachedWeapons.Add(this);
+                var ob = StaticManager.UiInventory.AttachedWeapons[0];
+                StaticManager.UiInventory.AttachedWeapons.RemoveAt(0);
+                if (ob.isMainInventory)
+                {
+                    StaticManager.UiInventory.AddSlot(ob);
+                }
+                else
+                {
+                    StaticManager.UiInventory.AddBackpackSlot(ob);
+                }
+
+                ob.gameObject.SetActive(false);
+            }
+           
             this.GetComponent<BoxCollider>().enabled = false;
 
-            StaticManager.UiInventory.Remove(this);
+            StaticManager.UiInventory.RemoveMainInventory(this);
             this.gameObject.transform.position = StaticManager.Character.Cube.transform.position;
             this.gameObject.transform.rotation = StaticManager.Character.Cube.transform.rotation;
             this.gameObject.transform.SetParent(StaticManager.Character.Cube.transform);
             
-            StaticManager.Inventory.IncreaseStats(this.WeaponStats);
+            //StaticManager.Inventory.IncreaseStats(this.WeaponStats);
             collider.gameObject.GetComponent<Stat>().AdjustScale(collider.gameObject.GetComponent<Stat>().Strength);
         }
     }

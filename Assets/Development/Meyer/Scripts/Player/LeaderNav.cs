@@ -22,16 +22,17 @@ public class LeaderNav : CompanionNav {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButtonDown(0)){
+        if (Input.GetMouseButtonDown(0) && !StaticManager.UiInventory.Dragging){
 			Ray l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 	        if ( Physics.Raycast(l_ray, out hit) ){
-		        if ( hit.collider.name == "Terrain" ){
+		        if ( hit.collider.name == "Terrain"  ){
 					SetState = state.MOVE;
                 }
 		        else if (hit.collider.tag == "Enemy"){
 					character.enemies.Clear();
-			        character.enemies.Add(hit.collider.GetComponent < Enemy >( ));
-			        SetState = state.ATTACKING;
+                    character.enemies.Add(hit.collider.GetComponent < Enemy >( ));
+
+                    SetState = state.ATTACKING;
 		        }
             }
         }
@@ -43,12 +44,6 @@ public class LeaderNav : CompanionNav {
                 if (StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_REACHED_DESTINATION)
                 {
                     SetState = state.FREEZE;
-                    character.AnimationClass.Play(AnimationClass.states.Attacking);
-
-                    character.enemies[0].AnimationClass.Play(AnimationClass.states.DamageText);
-                    character.enemies[0].damageText.text = StaticManager.DamageCalc.CalcAttack(character.enemies[0].stats, character.stats).ToString();
-                    character.enemies[0].damage += (int)StaticManager.DamageCalc.CalcAttack(character.enemies[0].stats, character.stats);
-                    character.enemies[0].damageText.text = character.enemies[0].damage.ToString();
                 }
 
                 break;
@@ -65,12 +60,9 @@ public class LeaderNav : CompanionNav {
 
 				break;
 			case state.FREEZE:
-				timer += Time.deltaTime;
-				if ( timer > 1.0f ){
-					timer = 0;
-					character.enemies[ 0 ].damage -= ( int )StaticManager.DamageCalc.CalcAttack( character.enemies[ 0 ].stats , character.stats );
-					character.AnimationClass.Stop(AnimationClass.states.Attacking);
-					SetState = state.FOLLOW;
+
+				if ( !character.AnimationClass.animation.GetBool("Attacking") && Input.GetMouseButton(0)){
+					character.AnimationClass.Play(AnimationClass.states.Attacking);
 				}
 				break;
 			default:
