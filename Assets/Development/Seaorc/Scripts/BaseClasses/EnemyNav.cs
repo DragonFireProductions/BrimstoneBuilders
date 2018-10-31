@@ -11,7 +11,7 @@ public class EnemyNav : BaseNav {
 
     private Enemy character;
 
-    [ SerializeField ] private GameObject location;
+    [ SerializeField ] public GameObject location;
 
     [ SerializeField ] private float maintainAttackDistance;
 

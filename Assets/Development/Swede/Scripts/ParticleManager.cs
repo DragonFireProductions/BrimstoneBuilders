@@ -26,7 +26,7 @@ public class ParticleManager : MonoBehaviour
     }
 
 
-    //Returns the State(particle system) of the given index.
+    //Returns the State(particle system) at the given index.
     public static string GetName(int index)
     {
         var StateName = (states) index;

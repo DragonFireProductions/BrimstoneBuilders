@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
 
-//Test script to ensure particles fire off properly
+//Test script to ensure particles fire off properly.
 public class TestParticle : MonoBehaviour
 {
-    //All particle systems being tested must have a bool and matching Particle system
+    //All particle systems being tested must have a bool and matching Particle system.
     private bool active_rain, active_smoke, active_selected, active_embers;
     private ParticleSystem particle_rain, particle_smoke, particle_selected, particle_embers;
 
@@ -14,11 +14,14 @@ public class TestParticle : MonoBehaviour
 
     private void Update()
     {
-        //If corresponding number is pressed, flips the bool. Then, if true, calls play from the Particle Manager script
+        //If corresponding number is pressed, flips the bool. Then, if true, calls play from the Particle Manager script.
 
         if(Input.GetKeyDown(KeyCode.Alpha1)) //Number 1
         {
+            //Flips bool
             active_rain = !active_rain;
+
+            //If bool is true, calls play from the ParticleManager to play the ParticleSystem at the player's position.
             if(active_rain)
                 particle_rain = StaticManager.particleManager.Play(ParticleManager.states.Rain,
                     StaticManager.Character.transform.position);
