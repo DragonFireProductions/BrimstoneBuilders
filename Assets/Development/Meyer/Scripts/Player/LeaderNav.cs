@@ -22,6 +22,7 @@ public class LeaderNav : CompanionNav {
 		hit = new RaycastHit();
 		character = GetComponent < Character >( );
 		character.enemies = new List < Enemy >();
+		message = GameObject.Find( "GoForward" ).GetComponent < TextMeshProUGUI >( );
 	}
 
 	// Update is called once per frame
@@ -49,11 +50,11 @@ public class LeaderNav : CompanionNav {
         displaytimer -= 0.005f;
         if (displaytimer > 0.0f)
         {
-            message.text = "Go forth young warrior, ad make your ancestors proud!";
+           message.enabled = true;
         }
         else
         {
-            message.text = " ";
+			message.enabled = false;
         }
         switch ( State ){
 			case state.ATTACKING:

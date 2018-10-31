@@ -22,6 +22,12 @@ namespace Kristal {
         protected void Start( ) {
             material.color = BaseColor;
             Nav            = gameObject.GetComponent < EnemyNav >( );
+            threat_signal = gameObject.transform.Find("ThreatSignal").GetComponent<SpriteRenderer>();
+
+            if (threat_signal)
+            {
+                threat_signal.enabled = false;
+            }
         }
         
 

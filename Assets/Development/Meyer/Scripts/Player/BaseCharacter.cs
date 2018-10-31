@@ -51,6 +51,8 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public int damage = 0;
 
+	public SpriteRenderer threat_signal;
+
 
 	protected void Awake( ) {
         stats = gameObject.GetComponent<Stat>();
@@ -61,6 +63,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 		animator = gameObject.GetComponent < Animator >( );
 		AnimationClass = gameObject.GetComponent< AnimationClass >( );
 		damageText = transform.Find( "DamageText/Gamobj" ).GetComponent < TextMeshPro >( );
+		
 	}
 	
     // Update is called once per frame

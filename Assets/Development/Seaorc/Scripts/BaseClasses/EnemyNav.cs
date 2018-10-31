@@ -22,8 +22,7 @@ public class EnemyNav : BaseNav {
     [ SerializeField ] private float wanderDelay;
 
     [ SerializeField ] private float wanderDistance;
-
-    [SerializeField] private SpriteRenderer threat_signal;
+   
 
     private Stat stats;
 
@@ -42,13 +41,8 @@ public class EnemyNav : BaseNav {
     private void Update( ) {
         timer += Time.deltaTime;
 
-        if (stats.Health >= 10.0f)
-        {
-            threat_signal.enabled = true;
-        }
-        else
-        {
-            threat_signal.enabled = false;
+        if ( character.threat_signal ){
+           character.threat_signal.enabled = stats.Health >= 10.0f;
         }
 
         switch ( State ){
