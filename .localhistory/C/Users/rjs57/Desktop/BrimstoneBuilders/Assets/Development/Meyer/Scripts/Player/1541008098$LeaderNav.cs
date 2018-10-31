@@ -52,13 +52,11 @@ public class LeaderNav : CompanionNav {
         displaytimer -= 0.005f;
         if (displaytimer > 0.0f)
         {
-            image.SetActive(true);
             message.text = "Go forth young warrior, and make your ancestors proud!";
           // message.enabled = true;
         }
         else
         {
-            image.SetActive(false);
             message.text = " ";
 			//message.enabled = false;
         }

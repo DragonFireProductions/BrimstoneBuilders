@@ -15,7 +15,7 @@ public class UIInventory : MonoBehaviour
 {
     public UIItems ItemsInstance;
 
-
+   
     private bool showWindow;
 
     public struct Stats {
@@ -39,17 +39,17 @@ public class UIInventory : MonoBehaviour
     private List < Stats > gameInventoryStatsUiList;
 
     public List < WeaponObject > AttachedWeapons;
-
+    
     private Vector3 pos;
 
     private Vector3 pos2;
-
+    
     public List<GameObject> Slots;
 
     public List < GameObject > BackpackSlots;
 
     public bool Dragging = false;
-
+    
     // Use this for initialization
     public void Start( ) {
         StartScript();
@@ -59,7 +59,6 @@ public class UIInventory : MonoBehaviour
         ItemsInstance = gameObject.GetComponent < UIItems >( );
         ItemsInstance.Start();
         pos = ItemsInstance.InventoryContainer.gameObject.transform.position;
-        ItemsInstance.DialogueUI.SetActive(true);
     }
     public void ShowNotification(string _message, float _time ) {
         ItemsInstance.DialogueUI.GetComponentInChildren<TextMeshProUGUI>().text = _message;
@@ -71,7 +70,7 @@ public class UIInventory : MonoBehaviour
         ItemsInstance.DialogueUI.GetComponentInChildren<TextMeshProUGUI>().text = "";
 
     }
-
+    
 
     private bool active = false;
     public void ToggleShow(GameObject _obj ) {
@@ -83,7 +82,7 @@ public class UIInventory : MonoBehaviour
         _obj.SetActive(false);
 
     }
-
+    
     public bool Show {
         get {
             showWindow = !showWindow;
@@ -116,7 +115,7 @@ public class UIInventory : MonoBehaviour
         ItemsInstance.BackpackContainer.SetActive(false);
 
     }
-
+    
     public void UpdateStats(Stat _stats, UIItemsWithLabels instanceToUpdate)
     {
         for (var l_i = 0; l_i < instanceToUpdate.Labels.Count; l_i++)
@@ -155,8 +154,8 @@ public class UIInventory : MonoBehaviour
             }
         }
     }
-
-
+    
+    
 
     // Update is called once per frame
     public WeaponObject SelectedItem;
@@ -168,7 +167,7 @@ public class UIInventory : MonoBehaviour
     public Vector3 ScreenPoint;
 
     public bool IsMainInventory = true;
-
+    
     void Update () {
         if ( Dragging /*&& Input.GetMouseButton(0)*/){
             SelectedItem.gameObject.SetActive(true);
@@ -191,7 +190,7 @@ public class UIInventory : MonoBehaviour
             l_curPosition.x = Mathf.Clamp( l_curPosition.x , StaticManager.Character.gameObject.transform.position.x - 2 ,StaticManager.Character.gameObject.transform.position.x + 2 );
             l_curPosition.z = Mathf.Clamp( l_curPosition.z ,StaticManager.Character.gameObject.transform.position.z -2 ,StaticManager.Character.gameObject.transform.position.z + 2 );
             SelectedItem.transform.position = l_curPosition;
-
+            
         }
 
         if (Input.GetMouseButtonUp(0) && Dragging)
@@ -206,7 +205,7 @@ public class UIInventory : MonoBehaviour
         StaticManager.UiInventory.ViewEnemyStats();
 
     }
-
+  
     public void ViewEnemyStats()
     {
         if (Input.GetMouseButton(1))
@@ -221,7 +220,7 @@ public class UIInventory : MonoBehaviour
                 if (l_hitInfo.transform.gameObject.tag == "Enemy" || l_hitInfo.transform.gameObject.tag == "Player" || l_hitInfo.transform.gameObject.tag == "Companion")
                 {
                     //UpdateStats(l_hitInfo.transform.gameObject.GetComponent<Stat>(), ItemsInstance.StatUI);
-
+                   
                 }
                 else if (l_hitInfo.transform.gameObject.tag == "Weapon")
                 {

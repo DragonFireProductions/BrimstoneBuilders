@@ -17,8 +17,6 @@ public class LeaderNav : CompanionNav {
 
     [SerializeField] private TextMeshProUGUI message;
     private float displaytimer;
-
-    [SerializeField] private GameObject image;
 	void Start () {
 		base.Start();
 		hit = new RaycastHit();
@@ -52,15 +50,11 @@ public class LeaderNav : CompanionNav {
         displaytimer -= 0.005f;
         if (displaytimer > 0.0f)
         {
-            image.SetActive(true);
-            message.text = "Go forth young warrior, and make your ancestors proud!";
-          // message.enabled = true;
+           message.enabled = true;
         }
         else
         {
-            image.SetActive(false);
-            message.text = " ";
-			//message.enabled = false;
+			message.enabled = false;
         }
         switch ( State ){
 			case state.ATTACKING:
