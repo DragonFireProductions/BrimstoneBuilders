@@ -161,6 +161,7 @@ public class Stat : MonoBehaviour {
         Strength = _item.durability;
         Agility += _item.attackSpeed;
         Strength += _item.baseDamage;
+        health += _item.durability * 5;
     }
 
     private struct Info {

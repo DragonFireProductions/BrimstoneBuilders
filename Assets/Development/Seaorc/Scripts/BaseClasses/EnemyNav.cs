@@ -40,10 +40,7 @@ public class EnemyNav : BaseNav {
 
     private void Update( ) {
         timer += Time.deltaTime;
-
-        if ( character.threat_signal ){
-           character.threat_signal.enabled = stats.Health >= 10.0f;
-        }
+        
 
         switch ( State ){
             case state.IDLE: {

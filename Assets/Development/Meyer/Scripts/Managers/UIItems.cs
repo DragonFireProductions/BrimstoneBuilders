@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -11,9 +12,8 @@ public class UIItems : MonoBehaviour {
 
 	
 	// Use this for initialization
-	public GameObject InventoryContainer;
-
-	public GameObject InventoryContainerPanel;
+	[SerializeField]
+	public UIItemsWithLabels InventoryContainer;
 	
     public GameObject PauseUI;
 
@@ -53,10 +53,10 @@ public class UIItems : MonoBehaviour {
 		    }
 	    }
 	}
-
+	
 	public UIItemsWithLabels obj(UIItemsWithLabels obj, string name ) {
 		obj = new UIItemsWithLabels();
-		obj.obj = GameObject.Find(name);
+		obj.obj = GameObject.Find(name).gameObject;
 		int count = obj.obj.transform.Find("Labels").childCount;
 		obj.Labels = new List<UIItemsWithLabels.Label>();
 
@@ -65,15 +65,36 @@ public class UIItems : MonoBehaviour {
 			label = new UIItemsWithLabels.Label();
 			label.labelObject = obj.obj.transform.Find( "Labels" ).GetChild( i ).gameObject;
 			label.labelText = obj.obj.transform.Find( "Labels" ).GetChild( i ).gameObject.GetComponent < TextMeshProUGUI >( );
+			label.name = label.labelObject.name;
 			obj.Labels.Add(label);
 		}
-
+		obj.obj.SetActive(false);
 		return obj;
 	}
-}
+    public UIItemsWithLabels obj(GameObject _obj)
+    {
+        UIItemsWithLabels obj = new UIItemsWithLabels();
+	    obj.obj = _obj;
+        int count = obj.obj.transform.Find("Labels").childCount;
+        obj.Labels = new List<UIItemsWithLabels.Label>();
 
+        UIItemsWithLabels.Label label;
+        for (int i = 0; i < count; i++)
+        {
+            label = new UIItemsWithLabels.Label();
+            label.labelObject = obj.obj.transform.Find("Labels").GetChild(i).gameObject;
+            label.labelText = obj.obj.transform.Find("Labels").GetChild(i).gameObject.GetComponent<TextMeshProUGUI>();
+            label.name = label.labelObject.name;
+            obj.Labels.Add(label);
+        }
+        obj.obj.SetActive(false);
+        return obj;
+    }
+}
+[Serializable]
 public class UIItemsWithLabels {
 
+	[Serializable]
 	public struct Label {
 
 		public TextMeshProUGUI labelText;
@@ -84,8 +105,8 @@ public class UIItemsWithLabels {
 
 	}
 
-	public GameObject obj;
-	public List < Label > Labels;
+	[SerializeField] public GameObject obj;
+	[SerializeField] public List < Label > Labels;
 
 	public void SetLabels( Stat stats ) {
 		for ( int i = 0 ; i < Labels.Count ; i++ ){

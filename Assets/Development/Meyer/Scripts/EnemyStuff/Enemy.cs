@@ -24,10 +24,9 @@ namespace Kristal {
             Nav            = gameObject.GetComponent < EnemyNav >( );
             threat_signal = gameObject.transform.Find("ThreatSignal").GetComponent<SpriteRenderer>();
 
-            if (threat_signal)
-            {
-                threat_signal.enabled = false;
-            }
+            threat_signal.enabled = stats.Strength > 10;
+
+
         }
         
 

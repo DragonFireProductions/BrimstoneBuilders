@@ -41,13 +41,11 @@ public class BackpackContainerScript : MonoBehaviour {
         }
         else if (data.currentInputModule.input.GetMouseButton(0)){
             StaticManager.UiInventory.ItemsInstance.PlayerUI.SetActive(false);
-            StaticManager.UiInventory.IsMainInventory = false;
-            StaticManager.UiInventory.Dragging = true;
+            name = gameObject.transform.Find("ItemName").GetComponentInChildren<TextMeshProUGUI>().text;
+            StaticManager.Inventory.selectedObject = StaticManager.Inventory.GetItemFromInventory(name);
+
 
             Debug.Log("OnPointerDownDelegate called.");
-            name = gameObject.transform.Find("ItemName").GetComponentInChildren<TextMeshProUGUI>().text;
-            StaticManager.UiInventory.SelectedItem = StaticManager.Inventory.GetItemFromInventory(name);
-            selected = true;
         }
     }
 }
