@@ -1,71 +1,59 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+
+//Test script to ensure particles fire off properly
 public class TestParticle : MonoBehaviour
 {
-    bool active_rain = false, active_smoke = false, active_selected = false, active_embers = false;
-    ParticleSystem particle_rain = null, particle_smoke = null, particle_selected = null, particle_embers = null;
+    //All particle systems being tested must have a bool and matching Particle system
+    private bool active_rain, active_smoke, active_selected, active_embers;
+    private ParticleSystem particle_rain, particle_smoke, particle_selected, particle_embers;
 
-    // Use this for initialization
-    void Start()
+    private void Start()
     {
-
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        //If corresponding number is pressed, flips the bool. Then, if true, calls play from the Particle Manager script
+
+        if(Input.GetKeyDown(KeyCode.Alpha1)) //Number 1
         {
             active_rain = !active_rain;
-            if (active_rain == true)
-            {
-                particle_rain = StaticManager.particleManager.Play(ParticleManager.states.Rain, StaticManager.Character.transform.position);
-            }
+            if(active_rain)
+                particle_rain = StaticManager.particleManager.Play(ParticleManager.states.Rain,
+                    StaticManager.Character.transform.position);
             else
-            {
                 StaticManager.particleManager.Stop(particle_rain);
-            }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if(Input.GetKeyDown(KeyCode.Alpha2)) //Number 2
         {
             active_smoke = !active_smoke;
-            if (active_smoke == true)
-            {
-                particle_smoke = StaticManager.particleManager.Play(ParticleManager.states.Smoke, StaticManager.Character.transform.position);
-            }
+            if(active_smoke)
+                particle_smoke = StaticManager.particleManager.Play(ParticleManager.states.Smoke,
+                    StaticManager.Character.transform.position);
             else
-            {
                 StaticManager.particleManager.Stop(particle_smoke);
-            }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if(Input.GetKeyDown(KeyCode.Alpha3)) //Number 3
         {
             active_selected = !active_selected;
-            if (active_selected == true)
-            {
-                particle_selected = StaticManager.particleManager.Play(ParticleManager.states.Selected, StaticManager.Character.transform.position, StaticManager.Character.transform);
-            }
+            if(active_selected)
+                particle_selected = StaticManager.particleManager.Play(ParticleManager.states.Selected,
+                    StaticManager.Character.transform.position, StaticManager.Character.transform);
             else
-            {
                 StaticManager.particleManager.Stop(particle_selected);
-            }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha4))
+        if(Input.GetKeyDown(KeyCode.Alpha4)) //Number 4
         {
             active_embers = !active_embers;
-            if (active_embers == true)
-            {
-                particle_embers = StaticManager.particleManager.Play(ParticleManager.states.Embers, StaticManager.Character.transform.position);
-            }
+            if(active_embers)
+                particle_embers = StaticManager.particleManager.Play(ParticleManager.states.Embers,
+                    StaticManager.Character.transform.position);
             else
-            {
                 StaticManager.particleManager.Stop(particle_embers);
-            }
         }
     }
 }
