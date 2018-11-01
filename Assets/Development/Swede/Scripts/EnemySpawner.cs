@@ -1,5 +1,6 @@
 ﻿using Kristal;
 using UnityEngine;
+using System.Collections;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -8,10 +9,9 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float spawnRadius = 10;
 
     [SerializeField] private GameObject[] enemies;
+
     private float playerDistance;
-
     private bool isActive = false;
-
 
     // Use this for initialization
     private void Start()
@@ -27,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
             Vector3.Distance(StaticManager.Character.transform.position, this.gameObject.transform.position);
         if (playerDistance <= minRange && isActive == false)
         {
-            Spawn();
+            StartCoroutine(Spawn());
             isActive = true;
         }
         else if (playerDistance > maxRange && isActive == true)
@@ -37,16 +37,18 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void Spawn()
+    private IEnumerator Spawn()
     {
         for (int i = 0; i < enemies.Length; i++)
         {
             var newEnemy = Instantiate(enemies[i].gameObject);
             Enemy[] em = newEnemy.gameObject.GetComponentsInChildren<Enemy>();
+
+            yield return new WaitForSeconds(2.0f);
             foreach (var variable in em)
             {
                 Vector3 position = Random.insideUnitSphere * spawnRadius + this.gameObject.transform.position;
-                position.y = StaticManager.Character.gameObject.transform.position.y;
+                position.y = 2;
                 variable.transform.position = position;
                 variable.GetComponent<EnemyNav>().location = this.gameObject;
             }

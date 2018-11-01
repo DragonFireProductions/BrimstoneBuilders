@@ -23,7 +23,11 @@ public class CompanionNav : BaseNav {
         }
         switch ( State ){
             case state.FOLLOW: {
-                Agent.destination = Character.Player.transform.position;
+                if(Agent.isOnNavMesh)
+                {
+                     Agent.destination = Character.Player.transform.position;
+                }
+               
 
                 if ( character.enemies.Count > 0 ){
                     SetState = state.ATTACKING;
