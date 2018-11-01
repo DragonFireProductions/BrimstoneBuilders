@@ -22,7 +22,8 @@ public class ParticleManager : MonoBehaviour
         Rain = 0,
         Smoke,
         Selected,
-        Embers
+        Embers,
+        Damage
     }
 
 
@@ -33,7 +34,7 @@ public class ParticleManager : MonoBehaviour
         return StateName.ToString();
     }
 
-    public void Start()
+    public void Awake()
     {
         //Local variable grabs the whole particle system GameObject from the hierarchy
         //GameObject -MUST- be called "Particles"
@@ -69,8 +70,8 @@ public class ParticleManager : MonoBehaviour
     //Instantiates the selected particle state at the selected position.
     public ParticleSystem Play(states state, Vector3 position)
     {
-        var newsystem = Instantiate(Systems[(int) state].gameObject, position,
-            Systems[(int) state].gameObject.transform.rotation);
+        var newsystem = Instantiate(Systems[(int) state].gameObject);
+        newsystem.transform.position = position;
 
         newsystem.SetActive(true);
         newsystem.GetComponent<ParticleSystem>().Play();
@@ -78,7 +79,12 @@ public class ParticleManager : MonoBehaviour
         return newsystem.GetComponent<ParticleSystem>();
     }
 
-
+    public IEnumerator Play(ParticleManager.states state, Vector3 position, int time)
+    {
+        ParticleSystem system = StaticManager.particleManager.Play(state, position);
+        yield return new WaitForSeconds(time);
+        StaticManager.particleManager.Stop(system);
+    }
     //Instantiates the selected particle state at the selected position and parents the particle system to the selected parent.
     public ParticleSystem Play(states state, Vector3 position, Transform parent)
     {

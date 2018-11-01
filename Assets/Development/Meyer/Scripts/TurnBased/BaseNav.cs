@@ -7,7 +7,7 @@ public class BaseNav : MonoBehaviour {
 
 	public NavMeshAgent Agent;
 
-	[ SerializeField ] protected float stoppingDistance = 4;
+	[ SerializeField ] public float stoppingDistance = 4;
 
 	[SerializeField] protected state State;
 	
@@ -48,7 +48,7 @@ public class BaseNav : MonoBehaviour {
 		    }
 
 		    if ( value == state.MOVE ){
-			    Agent.stoppingDistance = 0;
+			    Agent.stoppingDistance = 2;
 		    }
 
 		    if ( value == state.ENEMY_CLICKED ){

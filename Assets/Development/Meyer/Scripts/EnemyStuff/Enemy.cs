@@ -22,20 +22,26 @@ namespace Kristal {
         protected void Start( ) {
             material.color = BaseColor;
             Nav            = gameObject.GetComponent < EnemyNav >( );
+            threat_signal = gameObject.transform.Find("ThreatSignal").GetComponent<SpriteRenderer>();
         }
         
 
         public void Remove( BaseCharacter chara ) { }
 
-        public override void Damage( ) {
-            
+        public override void Damage( int _damage ) {
+
             if ( stats.Health > 0){
 
-                stats.Health -= damage;
+                stats.Health -= _damage;
             }
             else{
+                //enemies[0].damage -= (int) StaticManager.DamageCalc.CalcAttack(enemies[0].stats, stats);
+                AnimationClass.Stop(AnimationClass.states.DamageText);
+                AnimationClass.Stop(AnimationClass.states.Attacking);
                 Destroy(gameObject);
             }
+
+            damage -= _damage;
         }
         public void ChooseEnemy()
         {
@@ -68,15 +74,18 @@ namespace Kristal {
         //runs when enemy's animation is half way through
         public void Attack(Companion enemy ) {
             //plays character damage animation
-            enemies[0].AnimationClass.Play(AnimationClass.states.AttackText);
+            StartCoroutine(StaticManager.particleManager.Play( ParticleManager.states.Damage , enemies[ 0 ].transform.position, 1 ));
             //gets the damage value
             float l_damage = StaticManager.DamageCalc.CalcAttack(enemies[0].stats, stats);
-            //sets the text value to the damage done
-            enemies[0].damageText.text = ((int)l_damage).ToString();
             //adds the value to the total damage
-            enemies[0].damage += (int)l_damage;
 
+            enemies[ 0 ].damage += (int)l_damage;
+            //sets the text value to the damage done
+            enemies[0].damageText.text = enemies[0].damage.ToString();
             
+            enemies[0].Damage((int) l_damage );
+
+            enemies[0].AnimationClass.Play(AnimationClass.states.DamageText);
         }
     }
 
