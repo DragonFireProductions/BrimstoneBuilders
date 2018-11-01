@@ -21,14 +21,15 @@ public class PlayerInventory : MonoBehaviour {
 
     [ HideInInspector ] public WeaponObject selectedObject { get; set; }
 
+
     public void Awake( ) {
         WeaponAssetList = itemList.itemList;
     }
-
+    //returns the first occurance of an item from the WeaponAsset list 
     public WeaponItem GetItemFromAssetList( string name ) {
         return WeaponAssetList.FirstOrDefault( _t => _t.objectName == name );
     }
-
+    //returns 
     public WeaponObject GetItemFromInventory( string name ) {
         return PickedUpWeapons.FirstOrDefault( _t => _t.WeaponStats.objectName == name );
     }

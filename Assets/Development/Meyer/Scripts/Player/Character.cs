@@ -27,9 +27,7 @@ namespace Assets.Meyer.TestScripts.Player {
         }
 
         private void OnTriggerEnter( Collider collider ) {
-            if ( collider.tag == "Weapon" ){
-                //StaticManager.Inventory.Add(collider.GetComponent<WeaponObject>());
-            }
+            
         }
 
         // Update is called once per framed
