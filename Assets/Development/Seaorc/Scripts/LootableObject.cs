@@ -16,7 +16,7 @@ public class LootableObject : MonoBehaviour
 
             if (Input.GetButtonDown("Interact"))
             {
-                float Distance = Vector3.Distance(transform.position, StaticManager.character.gameObject.transform.position);
+                float Distance = Vector3.Distance(transform.position, StaticManager.Character.gameObject.transform.position);
 
                 if (Distance <= 4)
                 {
