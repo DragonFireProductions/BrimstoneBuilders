@@ -44,7 +44,7 @@ public class UIInventory : MonoBehaviour
 
     private Vector3 pos2;
 
-    public List<GameObject> Slots;
+    public List<UIItemsWithLabels> Slots;
 
     public List < GameObject > BackpackSlots;
 
@@ -52,13 +52,17 @@ public class UIInventory : MonoBehaviour
 
     // Use this for initialization
     public void Start( ) {
+        AttachedWeapons = new List < WeaponObject >();
+        AttachedWeapons.Add(StaticManager.Character.gameObject.transform.Find("Cube/EnemySword").gameObject.GetComponent<WeaponObject>());
+        StaticManager.Inventory.PickedUpWeapons.Add(AttachedWeapons[0]);
         StartScript();
+
     }
 
     public void StartScript() {
         ItemsInstance = gameObject.GetComponent < UIItems >( );
         ItemsInstance.Start();
-        pos = ItemsInstance.InventoryContainer.gameObject.transform.position;
+        pos = ItemsInstance.InventoryContainer.obj.gameObject.transform.position;
         ItemsInstance.DialogueUI.SetActive(true);
     }
     public void ShowNotification(string _message, float _time ) {
@@ -81,7 +85,6 @@ public class UIInventory : MonoBehaviour
     public void Quit(GameObject _obj)
     {
         _obj.SetActive(false);
-
     }
 
     public bool Show {
@@ -94,12 +97,18 @@ public class UIInventory : MonoBehaviour
     }
     public void AddSlot(WeaponObject _item)
     {
-        var l_newContainer = Instantiate(ItemsInstance.InventoryContainer);
+        var l_newContainer = Instantiate(ItemsInstance.InventoryContainer.obj);
         l_newContainer.SetActive(true);
-        l_newContainer.transform.SetParent(ItemsInstance.InventoryContainer.transform.parent);
+        l_newContainer.transform.SetParent(ItemsInstance.InventoryContainer.obj.transform.parent);
         l_newContainer.transform.position = pos;
-        l_newContainer.transform.localScale = ItemsInstance.InventoryContainer.transform.localScale;
-        Slots.Add(l_newContainer);
+        l_newContainer.transform.localScale = ItemsInstance.InventoryContainer.obj.transform.localScale;
+        l_newContainer.name = _item.WeaponStats.objectName + "Slot";
+        UIItemsWithLabels newLabel = ItemsInstance.obj( l_newContainer );
+        newLabel.obj.SetActive(true);
+        Slots.Add(newLabel);
+        UpdateStats( _item.WeaponStats, newLabel );
+
+        l_newContainer.transform.Find( "ItemIconContainer/RawImage" ).GetComponent < RawImage >( ).texture = _item.WeaponStats.icon;
     }
 
     public void AddBackpackSlot(WeaponObject _item)
@@ -129,7 +138,7 @@ public class UIInventory : MonoBehaviour
 
     public void UpdateStats( WeaponItem _object , UIItemsWithLabels instanceToUpdate ) {
         for ( int i = 0 ; i < instanceToUpdate.Labels.Count ; i++ ){
-            var a = _object[ instanceToUpdate.Labels[ i ].ToString( ) ];
+            var a = _object[ instanceToUpdate.Labels[ i ].name ];
             instanceToUpdate.Labels[ i ].labelText.text = a.ToString( );
         }
     }
@@ -137,9 +146,9 @@ public class UIInventory : MonoBehaviour
     {
         for (var l_i = 0; l_i < Slots.Count; l_i++)
         {
-            if (Slots[l_i].name  == _item.name + "Slot")
+            if (Slots[l_i].obj.name  == _item.WeaponStats.objectName + "Slot")
             {
-                var l_slot = Slots[l_i].gameObject;
+                var l_slot = Slots[l_i].obj;
                 Slots.RemoveAt(l_i);
                 Destroy(l_slot);
             }
@@ -156,7 +165,11 @@ public class UIInventory : MonoBehaviour
         }
     }
 
-
+    public void SelectItem( WeaponObject obj ) {
+        SelectedItem = obj;
+        SelectedItem.gameObject.SetActive(true);
+        Dragging = true;
+    }
 
     // Update is called once per frame
     public WeaponObject SelectedItem;
@@ -171,7 +184,6 @@ public class UIInventory : MonoBehaviour
 
     void Update () {
         if ( Dragging /*&& Input.GetMouseButton(0)*/){
-            SelectedItem.gameObject.SetActive(true);
             SelectedItem.GetComponent < BoxCollider >( ).enabled = true;
             var l_x = StaticManager.Character.gameObject.transform.position.x;
             var l_worldPoint = Camera.main.WorldToScreenPoint(Input.mousePosition);
@@ -188,8 +200,8 @@ public class UIInventory : MonoBehaviour
 
             var l_distanceToScreen = Camera.main.WorldToScreenPoint(SelectedItem.transform.position).z;
             var l_curPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, l_distanceToScreen));
-            l_curPosition.x = Mathf.Clamp( l_curPosition.x , StaticManager.Character.gameObject.transform.position.x - 2 ,StaticManager.Character.gameObject.transform.position.x + 2 );
-            l_curPosition.z = Mathf.Clamp( l_curPosition.z ,StaticManager.Character.gameObject.transform.position.z -2 ,StaticManager.Character.gameObject.transform.position.z + 2 );
+            l_curPosition.x = Mathf.Clamp( l_curPosition.x , StaticManager.Character.gameObject.transform.position.x ,StaticManager.Character.gameObject.transform.position.x );
+            l_curPosition.z = Mathf.Clamp( l_curPosition.z ,StaticManager.Character.gameObject.transform.position.z ,StaticManager.Character.gameObject.transform.position.z);
             SelectedItem.transform.position = l_curPosition;
 
         }

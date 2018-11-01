@@ -67,11 +67,11 @@ public abstract class BaseCharacter : MonoBehaviour {
 	}
 	
     // Update is called once per frame
-    void Update () {
+    protected void Update () {
 
 	}
 	
-	public abstract void Damage();
+	public abstract void Damage( int _damage );
 
 
 }

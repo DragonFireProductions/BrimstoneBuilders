@@ -13,12 +13,12 @@ public class UIUpdate : MonoBehaviour
     public TextMeshProUGUI HpText;
     public TextMeshProUGUI StaminaText;
 
-    Stat Selected = null;
+    private Stat Selected;
     
     
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+        Selected = StaticManager.Character.stats;
         //if (TurnBasedController.instance != null && TurnBasedController.instance._player.selectedAttacker!= null)
         //{
         //    Selected = TurnBasedController.instance._player.selectedAttacker.stats;

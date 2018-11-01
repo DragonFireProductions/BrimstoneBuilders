@@ -11,7 +11,7 @@ public class EnemyNav : BaseNav {
 
     private Enemy character;
 
-    [ SerializeField ] private GameObject location;
+    [ SerializeField ] public GameObject location;
 
     [ SerializeField ] private float maintainAttackDistance;
 
@@ -40,14 +40,13 @@ public class EnemyNav : BaseNav {
 
     private void Update( ) {
         timer += Time.deltaTime;
-
-        if ( character.threat_signal ){
-           character.threat_signal.enabled = stats.Health >= 10.0f;
-        }
+        
 
         switch ( State ){
             case state.IDLE: {
-                var l_check = StaticManager.Utility.NavDistanceCheck( Agent );
+                    character.threat_signal.enabled = stats.Strength > 10;
+
+                    var l_check = StaticManager.Utility.NavDistanceCheck( Agent );
 
                 if ( wanderDelay <= timer && ( l_check == DistanceCheck.HAS_REACHED_DESTINATION || l_check == DistanceCheck.PATH_INVALID ) || StaticManager.Utility.NavDistanceCheck( Agent ) == DistanceCheck.HAS_NO_PATH ){
                     Agent.destination = Random.insideUnitSphere * wanderDistance + location.transform.position;

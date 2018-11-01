@@ -18,17 +18,20 @@ public class LeaderNav : CompanionNav {
     [SerializeField] private TextMeshProUGUI message;
     private float displaytimer;
 
-    [SerializeField] private GameObject image;
+	private ParticleSystem selected;
 	void Start () {
 		base.Start();
 		hit = new RaycastHit();
 		character = GetComponent < Character >( );
 		character.enemies = new List < Enemy >();
 		message = GameObject.Find( "GoForward" ).GetComponent < TextMeshProUGUI >( );
+		selected = StaticManager.particleManager.Play( ParticleManager.states.Selected , gameObject.transform.position );
+
 	}
 
 	// Update is called once per frame
 	void Update () {
+		selected.gameObject.transform.position = gameObject.transform.position;
         if (Input.GetMouseButtonDown(0) && !StaticManager.UiInventory.Dragging){
 			Ray l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 	        if ( Physics.Raycast(l_ray, out hit) ){
@@ -37,7 +40,7 @@ public class LeaderNav : CompanionNav {
                 }
 		        else if (hit.collider.tag == "Enemy"){
 					character.enemies.Clear();
-                    character.enemies.Add(hit.collider.GetComponent < Enemy >( ));
+                    character.enemies.Insert(0, hit.collider.GetComponent < Enemy >( ));
 
                     SetState = state.ATTACKING;
 		        }
@@ -45,23 +48,19 @@ public class LeaderNav : CompanionNav {
 		        {
                     //Debug.Log("got the post");
 		            displaytimer = 3.0f;
+			        message.text = "GO FORTH";
 		        }
+				else if ( hit.collider.tag == "Weapon" ){
+			        displaytimer = 2.0f;
+			        message.text = "Run over me and drag from inventory! (KeyCode-I) ";
+			     
             }
+        }
         }
 
         displaytimer -= 0.005f;
-        if (displaytimer > 0.0f)
-        {
-            image.SetActive(true);
-            message.text = "Go forth young warrior, and make your ancestors proud!";
-          // message.enabled = true;
-        }
-        else
-        {
-            image.SetActive(false);
-            message.text = " ";
-			//message.enabled = false;
-        }
+        message.enabled = displaytimer > 0.0f;
+		
         switch ( State ){
 			case state.ATTACKING:
 

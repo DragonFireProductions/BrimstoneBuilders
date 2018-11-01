@@ -35,6 +35,7 @@ public class WeaponObject : MonoBehaviour
     public void PickUp( ) {
         StaticManager.UiInventory.AddSlot(this);
         StaticManager.Inventory.MainInventoryList.Add(this);
+        gameObject.SetActive(false);
     }
 
     public void MoveToBackPack( ) {
@@ -51,7 +52,7 @@ public class WeaponObject : MonoBehaviour
     {
         if (collider.tag == "Player" && !StaticManager.UiInventory.Dragging)
         {
-            //StaticManager.Inventory.Add(this);
+            StaticManager.Inventory.PickUp(this);
             this.GetComponent<BoxCollider>().enabled = false;
    
         }
@@ -59,7 +60,7 @@ public class WeaponObject : MonoBehaviour
         else if ( collider.tag == "Player" && StaticManager.UiInventory.Dragging && StaticManager.UiInventory.IsMainInventory){
             StaticManager.UiInventory.Dragging = false;
             gameObject.SetActive(true);
-
+            
             if ( StaticManager.UiInventory.AttachedWeapons.Count > 0 ){
                 StaticManager.UiInventory.AttachedWeapons.Add(this);
                 var ob = StaticManager.UiInventory.AttachedWeapons[0];
@@ -83,7 +84,7 @@ public class WeaponObject : MonoBehaviour
             this.gameObject.transform.rotation = StaticManager.Character.Cube.transform.rotation;
             this.gameObject.transform.SetParent(StaticManager.Character.Cube.transform);
             
-            //StaticManager.Inventory.IncreaseStats(this.WeaponStats);
+            StaticManager.Character.stats.IncreaseStats(WeaponStats);
             collider.gameObject.GetComponent<Stat>().AdjustScale(collider.gameObject.GetComponent<Stat>().Strength);
         }
     }

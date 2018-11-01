@@ -22,6 +22,8 @@ public class StaticManager : MonoBehaviour {
 
     public static RealTime RealTime;
 
+    public static ParticleManager particleManager;
+
     // Use this for initialization
     public void Awake( ) {
         if ( Instance == null ){
@@ -45,6 +47,8 @@ public class StaticManager : MonoBehaviour {
         DamageCalc = GameObject.Find( "ManagerHolder" ).GetComponent < DamageCalc >( );
 
         RealTime = GameObject.Find( "ManagerHolder" ).GetComponent < RealTime >( );
+
+        particleManager = GameObject.Find( "ManagerHolder" ).GetComponent < ParticleManager >( );
     }
 
     public void LoadMainMenu( ) {
