@@ -22,6 +22,9 @@ public class EnemyNav : BaseNav {
     [ SerializeField ] private float wanderDelay;
 
     [ SerializeField ] private float wanderDistance;
+   
+
+    private Stat stats;
 
     private void Awake( ) {
         timer = Time.deltaTime;
@@ -32,14 +35,18 @@ public class EnemyNav : BaseNav {
         character         = GetComponent < Enemy >( );
         Agent.destination = Random.insideUnitSphere * wanderDistance + location.transform.position;
         character.enemies = new List < Companion >( );
+        stats = GetComponent<Stat>();
     }
 
     private void Update( ) {
         timer += Time.deltaTime;
+        
 
         switch ( State ){
             case state.IDLE: {
-                var l_check = StaticManager.Utility.NavDistanceCheck( Agent );
+                    character.threat_signal.enabled = stats.Strength > 10;
+
+                    var l_check = StaticManager.Utility.NavDistanceCheck( Agent );
 
                 if ( wanderDelay <= timer && ( l_check == DistanceCheck.HAS_REACHED_DESTINATION || l_check == DistanceCheck.PATH_INVALID ) || StaticManager.Utility.NavDistanceCheck( Agent ) == DistanceCheck.HAS_NO_PATH ){
                     Agent.destination = Random.insideUnitSphere * wanderDistance + location.transform.position;
@@ -57,7 +64,7 @@ public class EnemyNav : BaseNav {
             }
 
                 break;
-            
+
             case state.ATTACKING: {
                 //Removes the current enemy that this character is attacking from attack list if null
                 if ( character.enemies[0] == null ){

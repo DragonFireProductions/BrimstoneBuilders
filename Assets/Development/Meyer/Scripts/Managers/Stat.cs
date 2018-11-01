@@ -1,6 +1,7 @@
 ﻿using TMPro;
 
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Stat : MonoBehaviour {
 
@@ -117,12 +118,12 @@ public class Stat : MonoBehaviour {
 
     // Use this for initialization
     private void Start( ) {
-        health = 100;
+        health = 20;
         name   = gameObject.name;
         health = Random.Range( 5 , 100 );
 
         if ( gameObject != StaticManager.Character.gameObject ){
-            strength = Random.Range( 0 , 20 );
+           // strength = Random.Range( 0 , 20 );
             agility  = Random.Range( 0 , 30 );
         }
 
@@ -149,6 +150,8 @@ public class Stat : MonoBehaviour {
                 transform.localScale = new Vector3( 1 , 1 , 1 );
                 var l_scaling = _strength * 0.03f;
                 transform.localScale = new Vector3( transform.localScale.x + l_scaling , transform.localScale.y + l_scaling , transform.localScale.z + l_scaling );
+                gameObject.GetComponent < NavMeshAgent >( ).radius += 0.5f;
+                gameObject.GetComponent < BaseNav >( ).stoppingDistance = 5;
             }
         }
         else{
@@ -161,6 +164,7 @@ public class Stat : MonoBehaviour {
         Strength = _item.durability;
         Agility += _item.attackSpeed;
         Strength += _item.baseDamage;
+        health += _item.durability * 5;
     }
 
     private struct Info {
