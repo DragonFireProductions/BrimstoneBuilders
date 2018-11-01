@@ -31,6 +31,8 @@ namespace Kristal
 
         private Quaternion startRotation;
 
+        public LootableObject Loot;
+
         // Use this for initialization
         void Awake( ) {
             base.Awake( );
@@ -40,6 +42,10 @@ namespace Kristal
         protected void Start( ) {
             this.material.color = BaseColor;
             Nav = gameObject.GetComponent<EnemyNav>();
+
+            if (gameObject.GetComponent<LootableObject>())
+                Loot = gameObject.GetComponent<LootableObject>();
+            
         }
         
 
