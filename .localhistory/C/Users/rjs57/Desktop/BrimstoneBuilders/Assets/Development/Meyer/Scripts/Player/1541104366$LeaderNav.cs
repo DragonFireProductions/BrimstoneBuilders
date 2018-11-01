@@ -22,16 +22,11 @@ public class LeaderNav : CompanionNav {
     [SerializeField] private TextMeshProUGUI left_arm;
     [SerializeField] private TextMeshProUGUI right_arm;
     [SerializeField] private TextMeshProUGUI body;
+    [SerializeField] private TextMeshProUGUI torso;
     [SerializeField] private TextMeshProUGUI legs;
     [SerializeField] private TextMeshProUGUI feet;
 
     [SerializeField] private RawImage image;
-    [SerializeField] private RawImage a_head;
-    [SerializeField] private RawImage a_left_arm;
-    [SerializeField] private RawImage a_right_arm;
-    [SerializeField] private RawImage a_body;
-    [SerializeField] private RawImage a_legs;
-    [SerializeField] private RawImage a_feet;
     private bool showArmor = false;
 
 	private ParticleSystem selected;
@@ -74,7 +69,7 @@ public class LeaderNav : CompanionNav {
         }
         }
 
-	    if (Input.GetKeyDown(KeyCode.A))
+	    if (Input.GetKey(KeyCode.A))
 	    {
 	        showArmor = !showingArmor();
 	    }
@@ -86,14 +81,8 @@ public class LeaderNav : CompanionNav {
 	        left_arm.enabled = true;
 	        right_arm.enabled = true;
 	        body.enabled = true;
-	        legs.enabled = true;
+	        torso.enabled = true;
 	        feet.enabled = true;
-	        a_head.enabled = true;
-	        a_left_arm.enabled = true;
-	        a_right_arm.enabled = true;
-	        a_body.enabled = true;
-	        a_legs.enabled = true;
-	        a_feet.enabled = true;
 	    }
 	    else
         {
@@ -102,14 +91,8 @@ public class LeaderNav : CompanionNav {
             left_arm.enabled = false;
             right_arm.enabled = false;
             body.enabled = false;
-            legs.enabled = false;
+            torso.enabled = false;
             feet.enabled = false;
-            a_head.enabled = false;
-            a_left_arm.enabled = false;
-            a_right_arm.enabled = false;
-            a_body.enabled = false;
-            a_legs.enabled = false;
-            a_feet.enabled = false;
         }
 
         displaytimer -= 0.005f;

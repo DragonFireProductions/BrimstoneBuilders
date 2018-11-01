@@ -26,12 +26,6 @@ public class LeaderNav : CompanionNav {
     [SerializeField] private TextMeshProUGUI feet;
 
     [SerializeField] private RawImage image;
-    [SerializeField] private RawImage a_head;
-    [SerializeField] private RawImage a_left_arm;
-    [SerializeField] private RawImage a_right_arm;
-    [SerializeField] private RawImage a_body;
-    [SerializeField] private RawImage a_legs;
-    [SerializeField] private RawImage a_feet;
     private bool showArmor = false;
 
 	private ParticleSystem selected;
@@ -74,7 +68,7 @@ public class LeaderNav : CompanionNav {
         }
         }
 
-	    if (Input.GetKeyDown(KeyCode.A))
+	    if (Input.GetKey(KeyCode.A))
 	    {
 	        showArmor = !showingArmor();
 	    }
@@ -88,12 +82,6 @@ public class LeaderNav : CompanionNav {
 	        body.enabled = true;
 	        legs.enabled = true;
 	        feet.enabled = true;
-	        a_head.enabled = true;
-	        a_left_arm.enabled = true;
-	        a_right_arm.enabled = true;
-	        a_body.enabled = true;
-	        a_legs.enabled = true;
-	        a_feet.enabled = true;
 	    }
 	    else
         {
@@ -104,12 +92,6 @@ public class LeaderNav : CompanionNav {
             body.enabled = false;
             legs.enabled = false;
             feet.enabled = false;
-            a_head.enabled = false;
-            a_left_arm.enabled = false;
-            a_right_arm.enabled = false;
-            a_body.enabled = false;
-            a_legs.enabled = false;
-            a_feet.enabled = false;
         }
 
         displaytimer -= 0.005f;

@@ -18,22 +18,6 @@ public class LeaderNav : CompanionNav {
     [SerializeField] private TextMeshProUGUI message;
     private float displaytimer;
 
-    [SerializeField] private TextMeshProUGUI head;
-    [SerializeField] private TextMeshProUGUI left_arm;
-    [SerializeField] private TextMeshProUGUI right_arm;
-    [SerializeField] private TextMeshProUGUI body;
-    [SerializeField] private TextMeshProUGUI legs;
-    [SerializeField] private TextMeshProUGUI feet;
-
-    [SerializeField] private RawImage image;
-    [SerializeField] private RawImage a_head;
-    [SerializeField] private RawImage a_left_arm;
-    [SerializeField] private RawImage a_right_arm;
-    [SerializeField] private RawImage a_body;
-    [SerializeField] private RawImage a_legs;
-    [SerializeField] private RawImage a_feet;
-    private bool showArmor = false;
-
 	private ParticleSystem selected;
 	void Start () {
 		base.Start();
@@ -41,13 +25,13 @@ public class LeaderNav : CompanionNav {
 		character = GetComponent < Character >( );
 		character.enemies = new List < Enemy >();
 		message = GameObject.Find( "GoForward" ).GetComponent < TextMeshProUGUI >( );
-		//selected = StaticManager.particleManager.Play( ParticleManager.states.Selected , gameObject.transform.position );
+		selected = StaticManager.particleManager.Play( ParticleManager.states.Selected , gameObject.transform.position );
 
 	}
 
 	// Update is called once per frame
 	void Update () {
-		//selected.gameObject.transform.position = gameObject.transform.position;
+		selected.gameObject.transform.position = gameObject.transform.position;
         if (Input.GetMouseButtonDown(0) && !StaticManager.UiInventory.Dragging){
 			Ray l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 	        if ( Physics.Raycast(l_ray, out hit) ){
@@ -69,52 +53,14 @@ public class LeaderNav : CompanionNav {
 				else if ( hit.collider.tag == "Weapon" ){
 			        displaytimer = 2.0f;
 			        message.text = "Run over me and drag from inventory! (KeyCode-I) ";
-
+			     
             }
         }
         }
 
-	    if (Input.GetKeyDown(KeyCode.A))
-	    {
-	        showArmor = !showingArmor();
-	    }
-
-	    if (showArmor)
-	    {
-	        image.enabled = true;
-	        head.enabled = true;
-	        left_arm.enabled = true;
-	        right_arm.enabled = true;
-	        body.enabled = true;
-	        legs.enabled = true;
-	        feet.enabled = true;
-	        a_head.enabled = true;
-	        a_left_arm.enabled = true;
-	        a_right_arm.enabled = true;
-	        a_body.enabled = true;
-	        a_legs.enabled = true;
-	        a_feet.enabled = true;
-	    }
-	    else
-        {
-	        image.enabled = false;
-            head.enabled = false;
-            left_arm.enabled = false;
-            right_arm.enabled = false;
-            body.enabled = false;
-            legs.enabled = false;
-            feet.enabled = false;
-            a_head.enabled = false;
-            a_left_arm.enabled = false;
-            a_right_arm.enabled = false;
-            a_body.enabled = false;
-            a_legs.enabled = false;
-            a_feet.enabled = false;
-        }
-
         displaytimer -= 0.005f;
         message.enabled = displaytimer > 0.0f;
-
+		
         switch ( State ){
 			case state.ATTACKING:
 
@@ -150,9 +96,6 @@ public class LeaderNav : CompanionNav {
 		}
 	}
 
-    bool showingArmor()
-    {
-        return showArmor;
-    }
+
 
 }
