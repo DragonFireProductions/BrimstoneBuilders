@@ -37,7 +37,7 @@ public class UIItems : MonoBehaviour {
         get { return this.GetType().GetField(propertyName).GetValue(this); }
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
-    public void Start () {
+    public void Awake () {
         var properties = this.GetType().GetFields();
         
 

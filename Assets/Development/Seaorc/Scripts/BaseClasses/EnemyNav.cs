@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 using Kristal;
 
@@ -22,7 +23,7 @@ public class EnemyNav : BaseNav {
     [ SerializeField ] private float wanderDelay;
 
     [ SerializeField ] private float wanderDistance;
-   
+    public bool started = false;
 
     private Stat stats;
 
@@ -33,15 +34,27 @@ public class EnemyNav : BaseNav {
     private void Start( ) {
         base.Start( );
         character         = GetComponent < Enemy >( );
-        Agent.destination = Random.insideUnitSphere * wanderDistance + location.transform.position;
         character.enemies = new List < Companion >( );
         stats = GetComponent<Stat>();
+        started = false;
+        StartCoroutine(Nav());
+    }
+
+    public IEnumerator Nav()
+    {
+        while (!Agent.isOnNavMesh)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        Agent.destination = Random.insideUnitSphere * wanderDistance + location.transform.position;
+        started = true;
+
     }
 
     private void Update( ) {
         timer += Time.deltaTime;
         
-
+        if (started)
         switch ( State ){
             case state.IDLE: {
                     character.threat_signal.enabled = stats.Strength > 10;

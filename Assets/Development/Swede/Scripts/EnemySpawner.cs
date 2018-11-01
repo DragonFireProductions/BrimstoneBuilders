@@ -48,8 +48,8 @@ public class EnemySpawner : MonoBehaviour
             foreach (var variable in em)
             {
                 Vector3 position = Random.insideUnitSphere * spawnRadius + this.gameObject.transform.position;
-                position.y = 2;
-                variable.transform.position = position;
+                position.y = StaticManager.Character.gameObject.transform.position.y ;
+                variable.Nav.Agent.Warp(position);
                 variable.GetComponent<EnemyNav>().location = this.gameObject;
             }
         }

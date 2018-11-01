@@ -61,7 +61,6 @@ public class UIInventory : MonoBehaviour
 
     public void StartScript() {
         ItemsInstance = gameObject.GetComponent < UIItems >( );
-        ItemsInstance.Start();
         pos = ItemsInstance.InventoryContainer.obj.gameObject.transform.position;
         ItemsInstance.DialogueUI.SetActive(true);
     }
