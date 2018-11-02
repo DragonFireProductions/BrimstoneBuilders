@@ -37,7 +37,8 @@ public class LeaderNav : CompanionNav {
 	        if ( Physics.Raycast(l_ray, out hit) ){
 		        if ( hit.collider.name == "Terrain"  ){
 					SetState = state.MOVE;
-                }
+		            StaticManager.particleManager.Play(ParticleManager.states.Click, hit.point);
+		        }
 		        else if (hit.collider.tag == "Enemy"){
 					character.enemies.Clear();
                     character.enemies.Insert(0, hit.collider.GetComponent < Enemy >( ));

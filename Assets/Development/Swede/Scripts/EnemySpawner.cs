@@ -42,17 +42,21 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < enemies.Length; i++)
         {
             var newEnemy = Instantiate(enemies[i].gameObject);
+            //newEnemy.SetActive(false);
             Enemy[] em = newEnemy.gameObject.GetComponentsInChildren<Enemy>();
 
-            yield return new WaitForSeconds(2.0f);
             foreach (var variable in em)
             {
                 Vector3 position = Random.insideUnitSphere * spawnRadius + this.gameObject.transform.position;
-                position.y = StaticManager.Character.gameObject.transform.position.y ;
+                position.y = StaticManager.Character.gameObject.transform.position.y;
+                StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
+                yield return new WaitForSeconds(1.0f);
+                //variable.gameObject.SetActive(true);
                 variable.Nav.Agent.Warp(position);
                 variable.GetComponent<EnemyNav>().location = this.gameObject;
             }
         }
+
     }
 
     private void Despawn()

@@ -23,7 +23,10 @@ public class ParticleManager : MonoBehaviour
         Smoke,
         Selected,
         Embers,
-        Damage
+        Damage,
+        Spawn,
+        Shock,
+        Click
     }
 
 
