@@ -45,7 +45,7 @@ public class LeaderNav : CompanionNav {
 
     [SerializeField] private GameObject friends;
     private Companion[] comp;
-    private int i = 0;
+    private int i = 1;
     [SerializeField]private GameObject companionSpawner;
 
     private bool isActive = false;
@@ -89,27 +89,27 @@ public class LeaderNav : CompanionNav {
         }
         }
 
-        if (Input.GetKeyDown("]"))
-        {
-            //StartCoroutine(CompanionSpawn());
-            var newEnemy = Instantiate(friends.gameObject);
-            newEnemy.transform.position = companionSpawner.transform.position;
-            comp = newEnemy.gameObject.GetComponentsInChildren<Companion>();
-            //++i;
+	    if (Input.GetKeyDown("]"))
+	    {
+	        //StartCoroutine(CompanionSpawn());
+	        var newEnemy = Instantiate(friends.gameObject);
+	        newEnemy.transform.position = companionSpawner.transform.position;
+	        comp = newEnemy.gameObject.GetComponentsInChildren<Companion>();
+	        //++i;
             Debug.Log(comp.Length);
-            foreach (var companion in comp)
-            {
-                Vector3 pos = Random.insideUnitSphere + companionSpawner.transform.position;
-                companion.Nav.Agent.Warp(pos);
-            }
-            //Instantiate(friends[i].gameObject);
+            foreach (var companion in comp )
+	        {
+	            Vector3 pos = Random.insideUnitSphere + companionSpawner.transform.position;
+	            companion.Nav.Agent.Warp(pos);
+	        }
+	        //Instantiate(friends[i].gameObject);
 
-        }
+	    }
         else if (Input.GetKeyDown("["))
-        {
-            Destroy(comp[i].gameObject);
-            //--i;
-        }
+	    {
+	        Destroy(comp[i]);
+	       // --i;
+	    }
 
         if (Input.GetKeyDown(KeyCode.A))
 	    {

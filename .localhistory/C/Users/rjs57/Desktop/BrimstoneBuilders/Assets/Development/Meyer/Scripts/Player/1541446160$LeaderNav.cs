@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+
 using Assets.Meyer.TestScripts.Player;
 
 using Kristal;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class LeaderNav : CompanionNav {
 
@@ -36,20 +35,6 @@ public class LeaderNav : CompanionNav {
     private bool showArmor = false;
 
 	private ParticleSystem selected;
-
-
-    [SerializeField] private float minRange = 15.0f;
-    [SerializeField] private float maxRange = 25.0f;
-    [SerializeField] private float spawnRadius = 10.0f;
-    //[SerializeField]private float gang = 10.0f;
-
-    [SerializeField] private GameObject friends;
-    private Companion[] comp;
-    private int i = 0;
-    [SerializeField]private GameObject companionSpawner;
-
-    private bool isActive = false;
-
 	void Start () {
 		base.Start();
 		hit = new RaycastHit();
@@ -89,29 +74,7 @@ public class LeaderNav : CompanionNav {
         }
         }
 
-        if (Input.GetKeyDown("]"))
-        {
-            //StartCoroutine(CompanionSpawn());
-            var newEnemy = Instantiate(friends.gameObject);
-            newEnemy.transform.position = companionSpawner.transform.position;
-            comp = newEnemy.gameObject.GetComponentsInChildren<Companion>();
-            //++i;
-            Debug.Log(comp.Length);
-            foreach (var companion in comp)
-            {
-                Vector3 pos = Random.insideUnitSphere + companionSpawner.transform.position;
-                companion.Nav.Agent.Warp(pos);
-            }
-            //Instantiate(friends[i].gameObject);
-
-        }
-        else if (Input.GetKeyDown("["))
-        {
-            Destroy(comp[i].gameObject);
-            //--i;
-        }
-
-        if (Input.GetKeyDown(KeyCode.A))
+	    if (Input.GetKeyDown(KeyCode.A))
 	    {
 	        showArmor = !showingArmor();
 	    }
@@ -192,31 +155,4 @@ public class LeaderNav : CompanionNav {
         return showArmor;
     }
 
-    //private IEnumerator CompanionSpawn()
-    //{
-    //    for (; i < friends.Length;)
-    //    {
-    //        var newFriend = Instantiate(friends[i].gameObject);
-
-    //        Companion[] companion = newFriend.gameObject.GetComponentsInChildren<Companion>();
-
-    //        foreach (var comp in companion)
-    //        {
-    //            Vector3 position = Random.insideUnitSphere * spawnRadius + this.gameObject.transform.position;
-    //            //position.y = StaticManager.Character.gameObject.transform.position.y;
-    //           // StaticManager.particleManager.Play()
-    //            yield return new WaitForSeconds(1.0f);
-    //            comp.Nav.Agent.Warp(position);
-    //            comp.GetComponent<CompanionNav>().transform.position = this.gameObject.transform.position;
-    //        }
-    //    }
-    //}
-
-    //private void Despawn()
-    //{
-    //    for (; i < friends.Length;)
-    //    {
-    //        Destroy(friends[i].gameObject);
-    //    }
-    //}
 }

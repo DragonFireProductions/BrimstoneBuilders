@@ -44,8 +44,7 @@ public class LeaderNav : CompanionNav {
     //[SerializeField]private float gang = 10.0f;
 
     [SerializeField] private GameObject friends;
-    private Companion[] comp;
-    private int i = 0;
+    private int i;
     [SerializeField]private GameObject companionSpawner;
 
     private bool isActive = false;
@@ -89,27 +88,19 @@ public class LeaderNav : CompanionNav {
         }
         }
 
-        if (Input.GetKeyDown("]"))
-        {
-            //StartCoroutine(CompanionSpawn());
-            var newEnemy = Instantiate(friends.gameObject);
-            newEnemy.transform.position = companionSpawner.transform.position;
-            comp = newEnemy.gameObject.GetComponentsInChildren<Companion>();
-            //++i;
-            Debug.Log(comp.Length);
-            foreach (var companion in comp)
-            {
-                Vector3 pos = Random.insideUnitSphere + companionSpawner.transform.position;
-                companion.Nav.Agent.Warp(pos);
-            }
-            //Instantiate(friends[i].gameObject);
-
-        }
+	    if (Input.GetKeyDown("]"))
+	    {
+	        //StartCoroutine(CompanionSpawn());
+	        var newEnemy = Instantiate(friends.gameObject);
+	        newEnemy.transform.position = companionSpawner.transform.position;
+	        //Instantiate(friends[i].gameObject);
+	        ++i;
+	    }
         else if (Input.GetKeyDown("["))
-        {
-            Destroy(comp[i].gameObject);
-            //--i;
-        }
+	    {
+	        --i;
+	         Despawn();
+	    }
 
         if (Input.GetKeyDown(KeyCode.A))
 	    {
@@ -212,11 +203,11 @@ public class LeaderNav : CompanionNav {
     //    }
     //}
 
-    //private void Despawn()
-    //{
-    //    for (; i < friends.Length;)
-    //    {
-    //        Destroy(friends[i].gameObject);
-    //    }
-    //}
+    private void Despawn()
+    {
+        for (; i < friends.Length;)
+        {
+            Destroy(friends[i].gameObject);
+        }
+    }
 }

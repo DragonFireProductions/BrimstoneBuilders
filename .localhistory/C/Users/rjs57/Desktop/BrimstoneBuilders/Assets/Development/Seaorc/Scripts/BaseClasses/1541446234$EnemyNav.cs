@@ -44,7 +44,7 @@ public class EnemyNav : BaseNav {
 
         switch ( State ){
             case state.IDLE: {
-                //Debug.Log(stats.Strength);
+                Debug.Log(stats.Strength);
                     character.threat_signal.enabled = stats.Strength > 10;
 
                     var l_check = StaticManager.Utility.NavDistanceCheck( Agent );
