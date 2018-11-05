@@ -25,7 +25,7 @@ public class EnemyHealth : MonoBehaviour
 	{
 	    enemy = gameObject.GetComponent<Enemy>().stats;
 
-       // transform.LookAt(Camera.main.transform.position);
+        transform.LookAt(Camera.main.transform.position);
 
 	    if (enemy != null)
 	    {
@@ -35,11 +35,6 @@ public class EnemyHealth : MonoBehaviour
 
 	            HPbar.fillAmount = hp;
 	            HPbar.color = Color.Lerp(Color.red, Color.green, hp);
-	        }
-
-	        if (HPtext != null)
-	        {
-	            HPtext.text = enemy.Health.ToString() + "/" + enemy.MaxHealth.ToString();
 	        }
 	    }
 	}

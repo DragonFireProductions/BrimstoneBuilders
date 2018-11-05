@@ -25,7 +25,7 @@ public class EnemyHealth : MonoBehaviour
 	{
 	    enemy = gameObject.GetComponent<Enemy>().stats;
 
-       // transform.LookAt(Camera.main.transform.position);
+        transform.LookAt(Camera.main.transform.position);
 
 	    if (enemy != null)
 	    {
