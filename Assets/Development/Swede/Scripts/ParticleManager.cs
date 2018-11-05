@@ -26,7 +26,8 @@ public class ParticleManager : MonoBehaviour
         Damage,
         Spawn,
         Shock,
-        Click
+        Click,
+        Snow
     }
 
 
