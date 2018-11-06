@@ -29,8 +29,8 @@ public class EnemyLeader : Enemy {
         if ( characterObjs.Count != 0 ){
             foreach (var l_gameObject in characterObjs)
             {
-                characters.Add(l_gameObject.GetComponent<Enemy>());
-                l_gameObject.GetComponent<Enemy>().leader = this;
+                //characters.Add(l_gameObject.GetComponent<Enemy>());
+                //l_gameObject.GetComponent<Enemy>().leader = this;
             }
         }
     }

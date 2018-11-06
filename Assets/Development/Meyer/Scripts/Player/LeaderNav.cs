@@ -65,7 +65,7 @@ public class LeaderNav : CompanionNav {
 		if ( !StaticManager.RealTime.Attacking ){
 			 colliders = Physics.OverlapSphere(transform.position, 10, mask);
 			
-			if ( colliders.Length > 1 ){
+			if ( colliders.Length > 0 ){
 				StartCoroutine( yield( ) );
 			}
 
@@ -107,7 +107,7 @@ public class LeaderNav : CompanionNav {
 
 	IEnumerator yield( ) {
 
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5f);
 		colliders = Physics.OverlapSphere(transform.position, 10, mask);
         foreach (var l_collider in colliders)
         {

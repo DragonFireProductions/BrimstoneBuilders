@@ -28,7 +28,10 @@ public class WeaponObject : MonoBehaviour
     public BaseCharacter AttacheBaseCharacter;
     
     protected void OnEnable( ) {
+        if ( tag != "PickUp" ){
         AttacheBaseCharacter = transform.parent.parent.GetComponent < BaseCharacter >( );
+
+        }
     }
     protected virtual void Start() {
         AnimationClass = gameObject.GetComponent < AnimationClass >( );

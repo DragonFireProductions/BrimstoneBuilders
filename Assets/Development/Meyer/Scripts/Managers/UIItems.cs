@@ -40,7 +40,7 @@ public class UIItems : MonoBehaviour {
         get { return this.GetType().GetField(propertyName).GetValue(this); }
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
-    public void Start () {
+    public void Initalize () {
         var properties = this.GetType().GetFields();
         
 
