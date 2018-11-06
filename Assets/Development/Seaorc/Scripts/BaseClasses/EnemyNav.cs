@@ -21,7 +21,7 @@ public class EnemyNav : BaseNav {
     [ SerializeField ] private float wanderDelay;
 
     [ SerializeField ] private float wanderDistance;
-   
+
 
     private Stat stats;
     private void Awake( ) {
@@ -40,10 +40,11 @@ public class EnemyNav : BaseNav {
     private void Update( ) {
         base.Update();
         timer += Time.deltaTime;
-        
+
 
         switch ( State ){
             case state.IDLE: {
+                //Debug.Log(stats.Strength);
                     character.threat_signal.enabled = stats.Strength > 10;
 
                     var l_check = StaticManager.Utility.NavDistanceCheck( Agent );
