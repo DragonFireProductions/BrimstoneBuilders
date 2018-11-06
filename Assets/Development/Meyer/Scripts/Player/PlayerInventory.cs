@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
+using Assets.Meyer.TestScripts.Player;
+
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour {
@@ -69,6 +71,7 @@ public class PlayerInventory : MonoBehaviour {
         selectedObject.name = "Sword";
         selectedObject.tag = "Weapon";
         StaticManager.Character.attachedWeapon = selectedObject;
+        selectedObject.AttacheBaseCharacter = StaticManager.Character;
         if (StaticManager.UiInventory.AttachedWeapons.Count > 0)
         {
             StaticManager.UiInventory.AttachedWeapons.Add(selectedObject);

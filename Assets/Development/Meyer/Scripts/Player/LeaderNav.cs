@@ -66,6 +66,7 @@ public class LeaderNav : CompanionNav {
 			 colliders = Physics.OverlapSphere(transform.position, 10, mask);
 			
 			if ( colliders.Length > 0 ){
+				StaticManager.RealTime.Attacking = true;
 				StartCoroutine( yield( ) );
 			}
 
@@ -113,7 +114,7 @@ public class LeaderNav : CompanionNav {
         {
             StaticManager.RealTime.Attacking = true;
             StaticManager.RealTime.Enemies.Add(l_collider.gameObject.GetComponent<Enemy>());
-
+	        StaticManager.RealTime.Attacking = true;
             SetState = state.ATTACKING;
         }
 
