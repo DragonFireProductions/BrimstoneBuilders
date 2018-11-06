@@ -36,7 +36,17 @@ public class LeaderNav : CompanionNav {
     private bool showArmor = false;
 
 	private ParticleSystem selected;
-    
+
+
+    [SerializeField] private float minRange = 15.0f;
+    [SerializeField] private float maxRange = 25.0f;
+    [SerializeField] private float spawnRadius = 10.0f;
+    //[SerializeField]private float gang = 10.0f;
+
+    [SerializeField] private GameObject friends;
+    private Companion[] comp;
+    private int i = 0;
+    [SerializeField]private GameObject companionSpawner;
 
     private bool isActive = false;
 
@@ -79,7 +89,29 @@ public class LeaderNav : CompanionNav {
         }
         }
 
-        
+        if (Input.GetKeyDown("]"))
+        {
+            //StartCoroutine(CompanionSpawn());
+            var newFriend = Instantiate(friends.gameObject);
+            newFriend.transform.position = companionSpawner.transform.position;
+            comp = newFriend.gameObject.GetComponentsInChildren<Companion>();
+            //++i;
+            Debug.Log(comp.Length);
+            foreach (var companion in comp)
+            {
+                Vector3 pos = Random.insideUnitSphere + companionSpawner.transform.position;
+                companion.Nav.Agent.Warp(pos);
+            }
+            //Instantiate(friends[i].gameObject);
+
+        }
+        else if (Input.GetKeyDown("["))
+        {
+                Debug.Log(comp[0].gameObject);
+                Destroy(comp[0].gameObject);
+                //--i;
+
+        }
 
         if (Input.GetKeyDown(KeyCode.A))
 	    {
