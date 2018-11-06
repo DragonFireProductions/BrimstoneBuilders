@@ -14,15 +14,21 @@ namespace Assets.Meyer.TestScripts.Player {
 
         public GameObject Cube;
 
+        public GameObject[] line;
 
         //CharacterController controller;
         // Use this for initialization
         private void Awake()
         {
             base.Awake();
+            line = new GameObject[transform.Find("Line").transform.childCount];
+            for ( int i = 0 ; i < line.Length ; i++ ){
+                line[ i ] = transform.Find( "Line" ).GetChild( i ).gameObject;
+            }
             Player = GameObject.FindWithTag("Player");
             Cube = Player.transform.Find("Cube").gameObject;
             Nav = gameObject.GetComponent<LeaderNav>();
+            
            
         }
 

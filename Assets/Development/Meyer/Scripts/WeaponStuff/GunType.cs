@@ -25,7 +25,7 @@ public class GunType : WeaponObject {
         set { GetType( ).GetField( _property_name ).SetValue( this , value ); }
     }
     
-    public override void Attack( ) {
+    public void Attack( ) {
         Debug.Log( "Attacking" );
 
         if ( canFire && Ammo > 0 ){

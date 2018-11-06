@@ -27,11 +27,14 @@ public class UIItems : MonoBehaviour {
 
     public GameObject BackpackContainer;
 
-	public GameObject AttackConfirmation;
+	public GameObject Equip;
+
+    public GameObject AttackConfirmation;
 
 	public GameObject BattleWon;
 
 	public GameObject DamageText;
+
     public object this[string propertyName]
     {
         get { return this.GetType().GetField(propertyName).GetValue(this); }

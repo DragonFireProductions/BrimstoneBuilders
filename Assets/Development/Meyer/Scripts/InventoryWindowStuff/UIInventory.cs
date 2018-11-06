@@ -53,7 +53,7 @@ public class UIInventory : MonoBehaviour
     // Use this for initialization
     public void Start( ) {
         AttachedWeapons = new List < WeaponObject >();
-        AttachedWeapons.Add(StaticManager.Character.gameObject.transform.Find("Cube/EnemySword").gameObject.GetComponent<WeaponObject>());
+        AttachedWeapons.Add(StaticManager.Character.gameObject.transform.Find("Cube/Sword").gameObject.GetComponent<WeaponObject>());
         StaticManager.Inventory.PickedUpWeapons.Add(AttachedWeapons[0]);
         StartScript();
 

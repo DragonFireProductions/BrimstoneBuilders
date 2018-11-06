@@ -19,18 +19,21 @@ public class LeaderNav : CompanionNav {
     private float displaytimer;
 
 	private ParticleSystem selected;
+
+	private LayerMask mask;
+
+	private Collider[] colliders;
 	void Start () {
 		base.Start();
 		hit = new RaycastHit();
 		character = GetComponent < Character >( );
-		character.enemies = new List < Enemy >();
 		message = GameObject.Find( "GoForward" ).GetComponent < TextMeshProUGUI >( );
 		selected = StaticManager.particleManager.Play( ParticleManager.states.Selected , gameObject.transform.position );
-
+		mask = LayerMask.GetMask("Enemy");
 	}
 
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
 		selected.gameObject.transform.position = gameObject.transform.position;
         if (Input.GetMouseButtonDown(0) && !StaticManager.UiInventory.Dragging){
 			Ray l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -39,10 +42,10 @@ public class LeaderNav : CompanionNav {
 					SetState = state.MOVE;
                 }
 		        else if (hit.collider.tag == "Enemy"){
-					character.enemies.Clear();
-                    character.enemies.Insert(0, hit.collider.GetComponent < Enemy >( ));
-
-                    SetState = state.ATTACKING;
+			        if ( Vector3.Distance(hit.collider.gameObject.transform.position, gameObject.transform.position) < 3 ){
+				      character.AnimationClass.Play(AnimationClass.states.AttackTrigger);
+						character.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
+			        }
 		        }
                 else if (hit.collider.tag == "Post")
 		        {
@@ -55,7 +58,18 @@ public class LeaderNav : CompanionNav {
 			        message.text = "Run over me and drag from inventory! (KeyCode-I) ";
 			     
             }
+          }
+
         }
+
+		if ( !StaticManager.RealTime.Attacking ){
+			 colliders = Physics.OverlapSphere(transform.position, 10, mask);
+			
+			if ( colliders.Length > 1 ){
+				StartCoroutine( yield( ) );
+			}
+
+           
         }
 
         displaytimer -= 0.005f;
@@ -63,13 +77,7 @@ public class LeaderNav : CompanionNav {
 		
         switch ( State ){
 			case state.ATTACKING:
-
-                Agent.SetDestination(character.enemies[0].transform.position);
-
-                if (StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_REACHED_DESTINATION)
-                {
-                    SetState = state.FREEZE;
-                }
+				
 
                 break;
 			case state.MOVE:
@@ -87,15 +95,32 @@ public class LeaderNav : CompanionNav {
 			case state.FREEZE:
 
 				if ( !character.AnimationClass.animation.GetBool("Attacking") && Input.GetMouseButton(0)){
-					character.AnimationClass.Play(AnimationClass.states.Attacking);
+					character.AnimationClass.Play(AnimationClass.states.AttackTrigger);
+					character.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
 				}
 				break;
-			default:
+		default:
 
 				break;
 		}
 	}
 
+	IEnumerator yield( ) {
+
+		yield return new WaitForSeconds(1);
+		colliders = Physics.OverlapSphere(transform.position, 10, mask);
+        foreach (var l_collider in colliders)
+        {
+            StaticManager.RealTime.Attacking = true;
+            StaticManager.RealTime.Enemies.Add(l_collider.gameObject.GetComponent<Enemy>());
+
+            SetState = state.ATTACKING;
+        }
+
+
+        StaticManager.RealTime.SetAttackCompanions();
+        StaticManager.RealTime.SetAttackEnemies();
+    }
 
 
 }

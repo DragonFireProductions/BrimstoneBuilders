@@ -54,12 +54,49 @@ public class PlayerInventory : MonoBehaviour {
 
             if ( isInventoryActive ){
                 StaticManager.UiInventory.ItemsInstance.PlayerUI.SetActive( true );
+                Time.timeScale = 0;
             }
 
             if ( isInventoryActive == false ){
                 StaticManager.UiInventory.ItemsInstance.PlayerUI.SetActive( false );
+                Time.timeScale = 1;
             }
         }
+    }
+    public void Equip()
+    {
+        selectedObject.gameObject.SetActive(true);
+        selectedObject.name = "Sword";
+        selectedObject.tag = "Weapon";
+        StaticManager.Character.attachedWeapon = selectedObject;
+        if (StaticManager.UiInventory.AttachedWeapons.Count > 0)
+        {
+            StaticManager.UiInventory.AttachedWeapons.Add(selectedObject);
+            var ob = StaticManager.UiInventory.AttachedWeapons[0];
+            StaticManager.UiInventory.AttachedWeapons.RemoveAt(0);
+            if (ob.isMainInventory)
+            {
+                StaticManager.UiInventory.AddSlot(ob);
+                ob.attached = false;
+            }
+            else
+            {
+                StaticManager.UiInventory.AddBackpackSlot(ob);
+            }
+
+            ob.transform.parent = GameObject.Find("Weapons").transform;
+            ob.gameObject.name = ob.WeaponStats.objectName;
+            ob.gameObject.SetActive(false);
+        }
+
+        selectedObject.GetComponent<BoxCollider>().enabled = false;
+
+        StaticManager.UiInventory.RemoveMainInventory(selectedObject);
+        selectedObject.gameObject.transform.position = StaticManager.Character.Cube.transform.position;
+        selectedObject.gameObject.transform.rotation = StaticManager.Character.Cube.transform.rotation;
+        selectedObject.gameObject.transform.SetParent(StaticManager.Character.Cube.transform);
+
+        StaticManager.Character.stats.IncreaseStats(selectedObject.WeaponStats);
     }
 
 }
