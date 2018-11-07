@@ -27,17 +27,20 @@ public class UIItems : MonoBehaviour {
 
     public GameObject BackpackContainer;
 
+	public GameObject Equip;
+
 	public GameObject AttackConfirmation;
 
 	public GameObject BattleWon;
 
 	public GameObject DamageText;
+
     public object this[string propertyName]
     {
         get { return this.GetType().GetField(propertyName).GetValue(this); }
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
-    public void Awake () {
+    public void Initalize () {
         var properties = this.GetType().GetFields();
         
 

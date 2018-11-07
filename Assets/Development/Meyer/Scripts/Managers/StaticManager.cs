@@ -24,8 +24,10 @@ public class StaticManager : MonoBehaviour {
 
     public static ParticleManager particleManager;
 
+    public FloatingText text;
     // Use this for initialization
     public void Awake( ) {
+
         if ( Instance == null ){
             Instance = this;
         }
@@ -49,8 +51,11 @@ public class StaticManager : MonoBehaviour {
         RealTime = GameObject.Find( "ManagerHolder" ).GetComponent < RealTime >( );
 
         particleManager = GameObject.Find( "ManagerHolder" ).GetComponent < ParticleManager >( );
-    }
 
+        InstatiateFloatingText.Initalize();
+
+    }
+    
     public void LoadMainMenu( ) {
         SceneManager.LoadScene( 0 );
     }
@@ -58,6 +63,10 @@ public class StaticManager : MonoBehaviour {
     public void ReloadLevel( ) {
         SceneManager.LoadScene( 1 );
     }
-    
+
+    public void UnFreeze(GameObject obj ) {
+        Time.timeScale = 1;
+        obj.SetActive(false);
+    }
 
 }
