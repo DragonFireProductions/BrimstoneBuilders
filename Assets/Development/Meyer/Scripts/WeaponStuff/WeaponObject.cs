@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Assets.Meyer.TestScripts.Player;
 
+using Kristal;
+
 using TMPro;
 
 using UnityEngine;
@@ -16,12 +18,24 @@ public class WeaponObject : MonoBehaviour
     [SerializeField] protected WeaponItem weaponStats; // contains inventory information
 
     [SerializeField] protected string weaponName; // references InventoryManager items
-    protected Animation animator;
 
     public bool isMainInventory = true;
-    protected virtual void Start()
-    {
-        animator = gameObject.GetComponent<Animation>();
+
+    public bool attached = false;
+   
+    public AnimationClass AnimationClass;
+
+    public BaseCharacter AttacheBaseCharacter;
+    
+    protected void OnEnable( ) {
+        
+        if ( tag != "PickUp" ){
+        AttacheBaseCharacter = transform.parent.parent.GetComponent < BaseCharacter >( );
+
+        }
+    }
+    protected virtual void Start() {
+        AnimationClass = gameObject.GetComponent < AnimationClass >( );
         weaponStats = StaticManager.Inventory.GetItemFromAssetList( weaponName );
         Assert.IsNotNull(weaponStats, "WeaponItem name not added in inspector " + gameObject.name);
         weapon = this.gameObject;
@@ -33,9 +47,12 @@ public class WeaponObject : MonoBehaviour
     }
 
     public void PickUp( ) {
+        if ( AttacheBaseCharacter == null ){
         StaticManager.UiInventory.AddSlot(this);
         StaticManager.Inventory.MainInventoryList.Add(this);
         gameObject.SetActive(false);
+        }
+        
     }
 
     public void MoveToBackPack( ) {
@@ -43,49 +60,22 @@ public class WeaponObject : MonoBehaviour
         StaticManager.UiInventory.ItemsInstance.BackPackUI.GetComponentInChildren<TextMeshProUGUI>().text = WeaponStats.objectName;
 
     }
-    public virtual void Attack()
-    {
-          Debug.Log("Object has attacked!");
-    }
     
     protected void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag == "Player" && !StaticManager.UiInventory.Dragging)
+        if (collider.tag == "Player" && !StaticManager.UiInventory.Dragging && !attached && tag == "PickUp")
         {
             StaticManager.Inventory.PickUp(this);
             this.GetComponent<BoxCollider>().enabled = false;
-   
         }
 
-        else if ( collider.tag == "Player" && StaticManager.UiInventory.Dragging && StaticManager.UiInventory.IsMainInventory){
-            StaticManager.UiInventory.Dragging = false;
-            gameObject.SetActive(true);
-            
-            if ( StaticManager.UiInventory.AttachedWeapons.Count > 0 ){
-                StaticManager.UiInventory.AttachedWeapons.Add(this);
-                var ob = StaticManager.UiInventory.AttachedWeapons[0];
-                StaticManager.UiInventory.AttachedWeapons.RemoveAt(0);
-                if (ob.isMainInventory)
-                {
-                    StaticManager.UiInventory.AddSlot(ob);
+        if ((collider.tag == "Enemy"  || collider.tag == "Companion" || collider.tag == "Player") && tag == "Weapon"){
+            if ( collider.tag != AttacheBaseCharacter.tag){
+                if ( AttacheBaseCharacter.tag == "Companion" && collider.tag == "Player" ){
+                    return;
                 }
-                else
-                {
-                    StaticManager.UiInventory.AddBackpackSlot(ob);
-                }
-
-                ob.gameObject.SetActive(false);
+                collider.gameObject.GetComponent<BaseCharacter>().Attack(AttacheBaseCharacter);
             }
-           
-            this.GetComponent<BoxCollider>().enabled = false;
-
-            StaticManager.UiInventory.RemoveMainInventory(this);
-            this.gameObject.transform.position = StaticManager.Character.Cube.transform.position;
-            this.gameObject.transform.rotation = StaticManager.Character.Cube.transform.rotation;
-            this.gameObject.transform.SetParent(StaticManager.Character.Cube.transform);
-            
-            StaticManager.Character.stats.IncreaseStats(WeaponStats);
-            collider.gameObject.GetComponent<Stat>().AdjustScale(collider.gameObject.GetComponent<Stat>().Strength);
         }
     }
     

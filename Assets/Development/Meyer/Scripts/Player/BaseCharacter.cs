@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mail;
 
 using Assets.Meyer.TestScripts;
 
@@ -11,6 +12,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
+using UnityEngine.Playables;
 
 using Random = System.Random;
 
@@ -43,17 +45,21 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public AnimationClass AnimationClass;
 
-	public TextMeshPro damageText;
-
 	public BaseNav Nav;
-
-	public bool isCaught = false;
 
 	public int damage = 0;
 
 	public SpriteRenderer threat_signal;
 
+	public WeaponObject attachedWeapon;
 
+	public BaseCharacter enemy;
+
+	public List < BaseCharacter > attackers;
+
+	public List < GameObject > damageNumbers;
+
+	public GameObject canvas;
 	protected void Awake( ) {
         stats = gameObject.GetComponent<Stat>();
 		Assert.IsNotNull(stats, "Stats not found on " + this.gameObject.name);
@@ -62,16 +68,17 @@ public abstract class BaseCharacter : MonoBehaviour {
         material = gameObject.GetComponent<Renderer>().material;
 		animator = gameObject.GetComponent < Animator >( );
 		AnimationClass = gameObject.GetComponent< AnimationClass >( );
-		damageText = transform.Find( "DamageText/Gamobj" ).GetComponent < TextMeshPro >( );
-		
+		attachedWeapon = transform.GetComponentInChildren < WeaponObject >( );
+		attackers = new List < BaseCharacter >();
+		canvas = transform.Find( "Canvas" ).gameObject;
 	}
-	
+
+	public abstract void Attack( BaseCharacter attacker );
+
     // Update is called once per frame
     protected void Update () {
 
 	}
 	
-	public abstract void Damage( int _damage );
-
 
 }

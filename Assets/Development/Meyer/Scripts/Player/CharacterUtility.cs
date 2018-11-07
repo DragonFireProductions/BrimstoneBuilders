@@ -27,6 +27,20 @@ namespace Assets.Meyer.TestScripts {
 
     public class CharacterUtility : MonoBehaviour {
 
+        public void LookAt( Transform from , Vector3 to ) {
+            StartCoroutine( Rotate( from , to ) );
+        }
+
+        private IEnumerator Rotate(Transform from, Vector3 to ) {
+            var dir = to - from.position;
+            dir.y = 0;
+            var rot = Quaternion.LookRotation( dir );
+
+            while (from != null && to != null && from.rotation != rot  ){
+                from.rotation = Quaternion.Slerp( from.rotation , rot , 5 * Time.deltaTime );
+                yield return new WaitForEndOfFrame();
+            }
+        }
         public DistanceCheck NavDistanceCheck( NavMeshAgent _m_nav_mesh_agent )
         {
             bool activated = false;

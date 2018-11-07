@@ -145,18 +145,18 @@ public class Stat : MonoBehaviour {
 
     //Handles the scaling of all characters based on Strength stat
     public void AdjustScale( float _strength ) {
-        if ( _strength > 10.0f ){
-            if ( gameObject.tag == "Player" || gameObject.tag == "Companion" || gameObject.tag == "Enemy" ){
-                transform.localScale = new Vector3( 1 , 1 , 1 );
-                var l_scaling = _strength * 0.03f;
-                transform.localScale = new Vector3( transform.localScale.x + l_scaling , transform.localScale.y + l_scaling , transform.localScale.z + l_scaling );
-                gameObject.GetComponent < NavMeshAgent >( ).radius += 0.5f;
-                gameObject.GetComponent < BaseNav >( ).stoppingDistance = 5;
-            }
-        }
-        else{
-            transform.localScale = new Vector3( 1 , 1 , 1 );
-        }
+        //if ( _strength > 10.0f ){
+        //    if ( gameObject.tag == "Player" || gameObject.tag == "Companion" || gameObject.tag == "Enemy" ){
+        //        transform.localScale = new Vector3( 1 , 1 , 1 );
+        //        var l_scaling = _strength * 0.03f;
+        //        transform.localScale = new Vector3( transform.localScale.x + l_scaling , transform.localScale.y + l_scaling , transform.localScale.z + l_scaling );
+        //        gameObject.GetComponent < NavMeshAgent >( ).radius += 0.5f;
+        //        gameObject.GetComponent < BaseNav >( ).stoppingDistance = 5;
+        //    }
+        //}
+        //else{
+        //    transform.localScale = new Vector3( 1 , 1 , 1 );
+        //}
     }
 
     public void IncreaseStats(WeaponItem _item)
