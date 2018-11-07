@@ -19,6 +19,10 @@ public class LeaderNav : CompanionNav {
     private float displaytimer;
 
 	private ParticleSystem selected;
+    private ParticleSystem rain;
+
+    Vector3 rainPosition;
+
 	void Start () {
 		base.Start();
 		hit = new RaycastHit();
@@ -26,12 +30,15 @@ public class LeaderNav : CompanionNav {
 		character.enemies = new List < Enemy >();
 		message = GameObject.Find( "GoForward" ).GetComponent < TextMeshProUGUI >( );
 		selected = StaticManager.particleManager.Play( ParticleManager.states.Selected , gameObject.transform.position );
-
+	    rain = StaticManager.particleManager.Play(ParticleManager.states.Rain, gameObject.transform.position);
 	}
 
 	// Update is called once per frame
 	void Update () {
 		selected.gameObject.transform.position = gameObject.transform.position;
+	    rainPosition = new Vector3(gameObject.transform.position.x, 10, gameObject.transform.position.z);
+	    rain.gameObject.transform.position = rainPosition;
+
         if (Input.GetMouseButtonDown(0) && !StaticManager.UiInventory.Dragging){
 			Ray l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 	        if ( Physics.Raycast(l_ray, out hit) ){
@@ -96,7 +103,4 @@ public class LeaderNav : CompanionNav {
 				break;
 		}
 	}
-
-
-
 }
