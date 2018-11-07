@@ -29,6 +29,7 @@ public class BaseNav : MonoBehaviour {
             case state.ATTACKING:
                 {
 			        character.attackers.RemoveAll(item => item == null );
+					StaticManager.RealTime.Companions.RemoveAll(item => item == null  );
 	                StaticManager.RealTime.Enemies.RemoveAll( item => item == null );
                     if (character.attackers.Count > 0 && character.enemy == null)
                     {
