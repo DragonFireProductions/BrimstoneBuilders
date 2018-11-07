@@ -22,7 +22,10 @@ public class RealTime : MonoBehaviour {
 	
 
 	public void SetAttackCompanions( ) {
-		foreach ( var l_companion in Companions ){
+        StaticManager.RealTime.Companions.RemoveAll(item => item == null);
+		StaticManager.RealTime.Enemies.RemoveAll( item => item == null );
+
+        foreach ( var l_companion in Companions ){
 			if ( l_companion.enemy == null ){
 
 
@@ -39,6 +42,8 @@ public class RealTime : MonoBehaviour {
 
 	public void SetAttackEnemies( ) {
 
+        StaticManager.RealTime.Companions.RemoveAll(item => item == null);
+		StaticManager.RealTime.Enemies.RemoveAll( item => item == null );
         foreach (var l_enemy in Enemies)
         {
             if (l_enemy.enemy == null){
@@ -52,7 +57,26 @@ public class RealTime : MonoBehaviour {
         }
     }
 
-	public BaseCharacter getnewType( BaseCharacter character ) {
+    public void SetAttackCompanion()
+    {
+
+        StaticManager.RealTime.Companions.RemoveAll(item => item == null);
+        StaticManager.RealTime.Enemies.RemoveAll(item => item == null);
+        foreach (var l_enemy in Companions)
+        {
+            if (l_enemy.enemy == null)
+            {
+                int random = Random.Range(0, Companions.Count);
+                l_enemy.enemy = Enemies[random];
+                l_enemy.Nav.SetDestination(l_enemy.enemy.transform.position);
+                Enemies[random].attackers.Add(l_enemy);
+            }
+            l_enemy.Nav.SetState = BaseNav.state.ATTACKING;
+
+        }
+    }
+
+    public BaseCharacter getnewType( BaseCharacter character ) {
 		if (character is Enemy && Companions.Count > 0){
 			return Companions[ Random.Range( 0 , Companions.Count ) ];
 		}
