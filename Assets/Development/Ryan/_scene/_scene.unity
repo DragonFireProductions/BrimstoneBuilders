@@ -11621,6 +11621,7 @@ GameObject:
   - component: {fileID: 903928015}
   - component: {fileID: 903928014}
   - component: {fileID: 903928013}
+  - component: {fileID: 903928024}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -11675,11 +11676,6 @@ MonoBehaviour:
   a_body: {fileID: 1110961147}
   a_legs: {fileID: 2125196502}
   a_feet: {fileID: 1804194275}
-  minRange: 15
-  maxRange: 25
-  spawnRadius: 10
-  friends: {fileID: 1500014652}
-  companionSpawner: {fileID: 392998159}
 --- !u!114 &903928014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11884,6 +11880,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cf85b7086c5ef44da0633fb38fdb4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &903928024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 903928011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea38b17395682814eb7238d904e84d40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  friends: {fileID: 1500014656}
+  companionspawner: {fileID: 392998159}
 --- !u!1 &908366699
 GameObject:
   m_ObjectHideFlags: 0
