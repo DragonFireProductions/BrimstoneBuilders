@@ -40,6 +40,10 @@ public class LeaderNav : CompanionNav {
 
     Vector3 rainPosition;
 
+	private LayerMask mask;
+
+	private Collider[] colliders;
+
 	void Start () {
 		base.Start();
 		hit = new RaycastHit();
@@ -84,27 +88,27 @@ public class LeaderNav : CompanionNav {
 
         }
 
-        if (Input.GetKeyDown("]"))
-        {
-            //StartCoroutine(CompanionSpawn());
-            var newEnemy = Instantiate(friends.gameObject);
-            newEnemy.transform.position = companionSpawner.transform.position;
-            comp = newEnemy.gameObject.GetComponentsInChildren<Companion>();
-            //++i;
-            Debug.Log(comp.Length);
-            foreach (var companion in comp)
-            {
-                Vector3 pos = Random.insideUnitSphere + companionSpawner.transform.position;
-                companion.Nav.Agent.Warp(pos);
-            }
-            //Instantiate(friends[i].gameObject);
+        //if (Input.GetKeyDown("]"))
+        //{
+        //    //StartCoroutine(CompanionSpawn());
+        //    var newEnemy = Instantiate(friends.gameObject);
+        //    newEnemy.transform.position = companionSpawner.transform.position;
+        //    comp = newEnemy.gameObject.GetComponentsInChildren<Companion>();
+        //    //++i;
+        //    Debug.Log(comp.Length);
+        //    foreach (var companion in comp)
+        //    {
+        //        Vector3 pos = Random.insideUnitSphere + companionSpawner.transform.position;
+        //        companion.Nav.Agent.Warp(pos);
+        //    }
+        //    //Instantiate(friends[i].gameObject);
 
-        }
-        else if (Input.GetKeyDown("["))
-        {
-            Destroy(comp[i].gameObject);
-            //--i;
-        }
+        //}
+        //else if (Input.GetKeyDown("["))
+        //{
+        //    Destroy(comp[i].gameObject);
+        //    //--i;
+        //}
 
      //   if (Input.GetKeyDown(KeyCode.A))
 	    //{
