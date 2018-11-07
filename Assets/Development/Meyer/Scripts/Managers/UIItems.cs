@@ -29,7 +29,7 @@ public class UIItems : MonoBehaviour {
 
 	public GameObject Equip;
 
-    public GameObject AttackConfirmation;
+	public GameObject AttackConfirmation;
 
 	public GameObject BattleWon;
 

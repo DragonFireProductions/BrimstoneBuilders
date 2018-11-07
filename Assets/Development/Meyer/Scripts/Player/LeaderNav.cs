@@ -49,19 +49,20 @@ public class LeaderNav : CompanionNav {
 		hit = new RaycastHit();
 		character = GetComponent < Character >( );
 		message = GameObject.Find( "GoForward" ).GetComponent < TextMeshProUGUI >( );
-		//selected = StaticManager.particleManager.Play( ParticleManager.states.Selected , gameObject.transform.position );
+		selected = StaticManager.particleManager.Play( ParticleManager.states.Selected , gameObject.transform.position );
 		mask = LayerMask.GetMask("Enemy");
 	}
 
 	// Update is called once per frame
 	protected override void Update () {
-		//selected.gameObject.transform.position = gameObject.transform.position;
+		selected.gameObject.transform.position = gameObject.transform.position;
         if (Input.GetMouseButtonDown(0) && !StaticManager.UiInventory.Dragging){
 			Ray l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 	        if ( Physics.Raycast(l_ray, out hit) ){
 		        if ( hit.collider.name == "Terrain"  ){
 					SetState = state.MOVE;
-                }
+		            StaticManager.particleManager.Play(ParticleManager.states.Click, hit.point);
+		        }
 		        else if (hit.collider.tag == "Enemy"){
 			        if ( Vector3.Distance(hit.collider.gameObject.transform.position, gameObject.transform.position) < 3 ){
 				      character.AnimationClass.Play(AnimationClass.states.AttackTrigger);
@@ -70,16 +71,16 @@ public class LeaderNav : CompanionNav {
 		        }
                 else if (hit.collider.tag == "Post")
 		        {
+			        if ( hit.collider.name == "End" ){
+				        message.text = "The End is Neigh!";
+			        }
+			        else{
+				        message.text = "Go Forth!";
+			        }
                     //Debug.Log("got the post");
-		            displaytimer = 3.0f;
-			        message.text = "GO FORTH";
+			        StartCoroutine( show( ) );
 		        }
-				else if ( hit.collider.tag == "Weapon" ){
-			        displaytimer = 2.0f;
-			        message.text = "Run over me and drag from inventory! (KeyCode-I) ";
-			     
             }
-          }
 
         }
 
@@ -133,14 +134,13 @@ public class LeaderNav : CompanionNav {
 
            
         }
-
-        displaytimer -= 0.005f;
-        message.enabled = displaytimer > 0.0f;
+        if (StaticManager.RealTime.Enemies.Count == 0)
+        {
+            StaticManager.RealTime.Attacking = false;
+        }
 		
         switch ( State ){
 			case state.ATTACKING:
-				
-
                 break;
 			case state.MOVE:
 				Agent.SetDestination( hit.point );
@@ -173,10 +173,15 @@ public class LeaderNav : CompanionNav {
     //    return showArmor;
     //}
 
-  
+	IEnumerator show( ) {
+		message.enabled = true;
+		yield return  new WaitForSeconds(2);
+
+		message.enabled = false;
+	}
 IEnumerator yield( ) {
 		yield return new WaitForSeconds(0.5f);
-		colliders = Physics.OverlapSphere(transform.position, 10, mask);
+		colliders = Physics.OverlapSphere(transform.position, 20, mask);
         foreach (var l_collider in colliders)
         {
             StaticManager.RealTime.Attacking = true;

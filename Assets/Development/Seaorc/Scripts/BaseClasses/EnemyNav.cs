@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
 
 using Kristal;
 
@@ -8,7 +8,6 @@ public class EnemyNav : BaseNav {
 
     /// <remarks>Set in Inspector</remarks>
     [ SerializeField ] private Animator animator;
-    
 
     [ SerializeField ] public GameObject location;
 
@@ -22,46 +21,55 @@ public class EnemyNav : BaseNav {
 
     [ SerializeField ] private float wanderDistance;
 
+    public bool started;
 
     private Stat stats;
+
     private void Awake( ) {
         timer = Time.deltaTime;
     }
 
     private void Start( ) {
         base.Start( );
-        character         = GetComponent < Enemy >( );
-        Agent.destination = Random.insideUnitSphere * wanderDistance + location.transform.position;
-        stats = GetComponent<Stat>();
+        character      = GetComponent < Enemy >( );
+        stats          = GetComponent < Stat >( );
         battleDistance = 3;
-
+        SetState = state.IDLE;
     }
-    
+
+    public IEnumerator Nav( ) {
+        while ( !Agent.isOnNavMesh ){
+            yield return new WaitForEndOfFrame( );
+        }
+
+        Agent.destination = Random.insideUnitSphere * wanderDistance + location.transform.position;
+        started           = true;
+    }
+
     private void Update( ) {
-        base.Update();
+        base.Update( );
         timer += Time.deltaTime;
-
-
-        switch ( State ){
-            case state.IDLE: {
-                //Debug.Log(stats.Strength);
+        
+            switch ( State ){
+                case state.IDLE: {
+                    //Debug.Log(stats.Strength);
                     character.threat_signal.enabled = stats.Strength > 10;
 
                     var l_check = StaticManager.Utility.NavDistanceCheck( Agent );
 
-                if ( wanderDelay <= timer && ( l_check == DistanceCheck.HAS_REACHED_DESTINATION || l_check == DistanceCheck.PATH_INVALID ) || StaticManager.Utility.NavDistanceCheck( Agent ) == DistanceCheck.HAS_NO_PATH ){
-                    Agent.destination = Random.insideUnitSphere * wanderDistance + location.transform.position;
-                    timer             = 0;
+                    if ( wanderDelay <= timer && ( l_check == DistanceCheck.HAS_REACHED_DESTINATION || l_check == DistanceCheck.PATH_INVALID ) || StaticManager.Utility.NavDistanceCheck( Agent ) == DistanceCheck.HAS_NO_PATH ){
+                        Agent.destination = Random.insideUnitSphere * wanderDistance + location.transform.position;
+                        timer             = 0;
+                    }
                 }
-            }
 
-                break;
-            case state.FOLLOW: {
-                Agent.destination = character.leader.transform.position;
-            }
+                    break;
+                case state.FOLLOW: {
+                    Agent.destination = character.leader.transform.position;
+                }
 
-                break;
-        }
+                    break;
+            }
     }
 
 }

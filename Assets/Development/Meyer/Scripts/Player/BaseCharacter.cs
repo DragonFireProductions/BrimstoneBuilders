@@ -9,8 +9,6 @@ using Kristal;
 
 using TMPro;
 
-using UnityEditorInternal;
-
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Assertions;

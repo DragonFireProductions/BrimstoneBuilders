@@ -19,7 +19,7 @@ namespace Kristal {
         protected void Start( ) {
             material.color = BaseColor;
             Nav            = gameObject.GetComponent < EnemyNav >( );
-            threat_signal = gameObject.transform.Find("ThreatSignal").GetComponent<SpriteRenderer>();
+            threat_signal = gameObject.transform.Find("Canvas/ThreatSignal").GetComponent<SpriteRenderer>();
         }
 
         public void Remove( BaseCharacter chara ) { }

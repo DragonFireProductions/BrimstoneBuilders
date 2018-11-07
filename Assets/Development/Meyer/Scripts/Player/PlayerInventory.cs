@@ -67,7 +67,6 @@ public class PlayerInventory : MonoBehaviour {
     }
     public void Equip()
     {
-        selectedObject.gameObject.SetActive(true);
         selectedObject.name = "Sword";
         selectedObject.tag = "Weapon";
         StaticManager.Character.attachedWeapon = selectedObject;
@@ -77,15 +76,8 @@ public class PlayerInventory : MonoBehaviour {
             StaticManager.UiInventory.AttachedWeapons.Add(selectedObject);
             var ob = StaticManager.UiInventory.AttachedWeapons[0];
             StaticManager.UiInventory.AttachedWeapons.RemoveAt(0);
-            if (ob.isMainInventory)
-            {
                 StaticManager.UiInventory.AddSlot(ob);
                 ob.attached = false;
-            }
-            else
-            {
-                StaticManager.UiInventory.AddBackpackSlot(ob);
-            }
 
             ob.transform.parent = GameObject.Find("Weapons").transform;
             ob.gameObject.name = ob.WeaponStats.objectName;
@@ -100,6 +92,8 @@ public class PlayerInventory : MonoBehaviour {
         selectedObject.gameObject.transform.SetParent(StaticManager.Character.Cube.transform);
 
         StaticManager.Character.stats.IncreaseStats(selectedObject.WeaponStats);
+        selectedObject.gameObject.SetActive(true);
+
     }
 
 }

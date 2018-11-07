@@ -10,7 +10,6 @@ public class EnemyHealth : MonoBehaviour
 {
 
     public Image HPbar;
-    public TextMeshProUGUI HPtext;
 
     private Stat enemy;
 
@@ -23,7 +22,7 @@ public class EnemyHealth : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-	    enemy = gameObject.GetComponent<Enemy>().stats;
+	    enemy = gameObject.GetComponent<BaseCharacter>().stats;
 
        // transform.LookAt(Camera.main.transform.position);
 
@@ -35,11 +34,6 @@ public class EnemyHealth : MonoBehaviour
 
 	            HPbar.fillAmount = hp;
 	            HPbar.color = Color.Lerp(Color.red, Color.green, hp);
-	        }
-
-	        if (HPtext != null)
-	        {
-	            HPtext.text = enemy.Health.ToString() + "/" + enemy.MaxHealth.ToString();
 	        }
 	    }
 	}

@@ -20,20 +20,14 @@ public class CompanionNav : BaseNav {
         battleDistance = 4;
         des = LineManager.assignIndex( );
     }
-    public void SetAttack()
-    {
-
-       
-
-    }
 
     protected override void Update( ) {
         base.Update( );
         switch ( State ){
             case state.IDLE: {
                 Agent.destination = Character.Player.transform.position + (Vector3.right  * des);
-            }
-
+                        }
+                
                 break;
             default:
 

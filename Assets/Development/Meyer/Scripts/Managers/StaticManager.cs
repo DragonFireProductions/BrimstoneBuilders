@@ -63,6 +63,10 @@ public class StaticManager : MonoBehaviour {
     public void ReloadLevel( ) {
         SceneManager.LoadScene( 1 );
     }
-    
+
+    public void UnFreeze(GameObject obj ) {
+        Time.timeScale = 1;
+        obj.SetActive(false);
+    }
 
 }

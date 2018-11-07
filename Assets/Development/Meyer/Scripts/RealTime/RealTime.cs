@@ -23,14 +23,18 @@ public class RealTime : MonoBehaviour {
 
 	public void SetAttackCompanions( ) {
 		foreach ( var l_companion in Companions ){
-			int random = Random.Range( 0 , Enemies.Count );
-			l_companion.enemy = Enemies[ random ];
-			Enemies[ random ].enemy = l_companion;
-			l_companion.Nav.SetDestination(Enemies[random].transform.position);
-			l_companion.Nav.SetState = BaseNav.state.ATTACKING;
-			Enemies[random].attackers.Add(l_companion);
-			l_companion.attackers.Add(Enemies[random]);
-        }
+			if ( l_companion.enemy == null ){
+
+
+				int random = Random.Range( 0 , Enemies.Count );
+				l_companion.enemy       = Enemies[ random ];
+				Enemies[ random ].enemy = l_companion;
+				l_companion.Nav.SetDestination( Enemies[ random ].transform.position );
+				l_companion.Nav.SetState = BaseNav.state.ATTACKING;
+				Enemies[ random ].attackers.Add( l_companion );
+				l_companion.attackers.Add( Enemies[ random ] );
+			}
+		}
     }
 
 	public void SetAttackEnemies( ) {
@@ -46,6 +50,28 @@ public class RealTime : MonoBehaviour {
 	        l_enemy.Nav.SetState = BaseNav.state.ATTACKING;
 
         }
-
     }
+
+	public BaseCharacter getnewType( BaseCharacter character ) {
+		if (character is Enemy && Companions.Count > 0){
+			return Companions[ Random.Range( 0 , Companions.Count ) ];
+		}
+
+		else if ( character is Companion && Enemies.Count > 0 ){
+			return Enemies[ Random.Range( 0 , Enemies.Count ) ];
+		}
+		else return null;
+	}
+
+	public bool GetCount( BaseCharacter character ) {
+        if (character is Enemy && Companions.Count > 0){
+	        return true;
+        }
+
+        if (character is Companion && Enemies.Count > 0){
+	        return false;
+        }
+
+		return false;
+	}
 }

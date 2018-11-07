@@ -29,20 +29,20 @@ public class BaseNav : MonoBehaviour {
             case state.ATTACKING:
                 {
 			        character.attackers.RemoveAll(item => item == null );
+	                StaticManager.RealTime.Enemies.RemoveAll( item => item == null );
                     if (character.attackers.Count > 0 && character.enemy == null)
                     {
                         var enemy = character.attackers[Random.Range(0, character.attackers.Count)];
                         character.enemy = enemy;
                         enemy.attackers.Add(character);
                     }
-                    else if (StaticManager.RealTime.Enemies.Count > 0 && character.enemy == null)
-                    {
-                        var enemy = StaticManager.RealTime.Enemies[Random.Range(0, StaticManager.RealTime.Enemies.Count)];
+                    else if (StaticManager.RealTime.GetCount(character) && character.enemy == null){
+	                    var enemy = StaticManager.RealTime.getnewType( character );
                         character.enemy = enemy;
                         enemy.attackers.Add(character);
                     }
-                    else if (StaticManager.RealTime.Enemies.Count <= 0 && character.enemy == null){
-	                    StaticManager.RealTime.Attacking = false;
+                    else if (character.enemy == null && character is Companion){
+		                StaticManager.RealTime.Attacking = false;
                         SetState = state.IDLE;
                         return;
                     }
