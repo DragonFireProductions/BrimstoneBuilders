@@ -24,6 +24,7 @@ public class ContainerScript : MonoBehaviour /*IPointerDownHandler*/ {
             StaticManager.Inventory.selectedObject = StaticManager.Inventory.GetItemFromInventory( name );
             StaticManager.UiInventory.ItemsInstance.Equip.SetActive(true);
         }
+
         //else if ( data.currentInputModule.input.GetMouseButton( 0 ) ){
         //    name = gameObject.transform.Find("objectName").GetComponentInChildren<TextMeshProUGUI>().text;
         //    StaticManager.UiInventory.ItemsInstance.PlayerUI.SetActive( false );
@@ -31,6 +32,10 @@ public class ContainerScript : MonoBehaviour /*IPointerDownHandler*/ {
 
         //}
     }
-    
+
+
+    private void OnMouseOver()
+    {
+    }
 
 }

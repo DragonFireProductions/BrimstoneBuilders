@@ -15,7 +15,7 @@ public class ParticleManager : MonoBehaviour
 
 
     //There's a state enum for every particle system type.
-    //If more particle systems are added, a state also needs to be added.
+    //If more particle systems are added, a state also needs to be added with the exact same name as the particle system.
     //Order does not need to match hierarchy.
     public enum states
     {
@@ -84,6 +84,7 @@ public class ParticleManager : MonoBehaviour
         return newsystem.GetComponent<ParticleSystem>();
     }
 
+    //Instantiates the selected particle state at the selected position for the passed in amount of time.
     public IEnumerator Play(ParticleManager.states state, Vector3 position, int time)
     {
         ParticleSystem system = StaticManager.particleManager.Play(state, position);
