@@ -35,7 +35,7 @@ public class companionSpawner : MonoBehaviour
         StaticManager.RealTime.Companions.RemoveAll(nulls => nulls == null);
         for (int i = 0; i < numberofcompanions; i++)
         {
-            var newEnemy = Instantiate(Resources.Load<Companion>("Companion"));
+            var newEnemy = Instantiate(Resources.Load<GameObject>("Companion"));
             Vector3 position = Random.insideUnitSphere + this.gameObject.transform.position;
             newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
 
@@ -55,9 +55,8 @@ public class companionSpawner : MonoBehaviour
     {
         for (int i = 0; i < comp.Count; i++)
         {
-            StaticManager.RealTime.Companions.Remove(comp[i].GetComponent<Companion>());
             Destroy(comp[i]);
         }
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }

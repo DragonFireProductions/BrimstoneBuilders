@@ -40,7 +40,7 @@ public class companionSpawner : MonoBehaviour
             newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
 
             position.y = StaticManager.Character.gameObject.transform.position.y;
-            StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
+            StaticManager.particleManager.Play(ParticleManager.states.Spawn, position, 3);
             yield return new WaitForSeconds(1.0f);
             //variable.gameObject.SetActive(true);
             newEnemy.GetComponent<Companion>().Nav.Agent.Warp(position);
@@ -55,7 +55,6 @@ public class companionSpawner : MonoBehaviour
     {
         for (int i = 0; i < comp.Count; i++)
         {
-            StaticManager.RealTime.Companions.Remove(comp[i].GetComponent<Companion>());
             Destroy(comp[i]);
         }
         //gameObject.SetActive(false);

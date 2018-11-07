@@ -23,10 +23,19 @@ public class companionSpawner : MonoBehaviour
         if (Input.GetKeyDown("]"))
         {
             StartCoroutine(CompSpawn());
+
+
         }
         else if (Input.GetKeyDown("["))
         {
             Kill();
+            //comp.RemoveAt(comp.Count);
+            //i = comp.Length - 1;
+            //Debug.Log("comp length after subtracting a companion:" + i);
+            //Debug.Log(i);
+            //Destroy(comp[i].gameObject);
+            //Destroy(comp[i]);
+            //--i;
         }
     }
 
@@ -35,7 +44,7 @@ public class companionSpawner : MonoBehaviour
         StaticManager.RealTime.Companions.RemoveAll(nulls => nulls == null);
         for (int i = 0; i < numberofcompanions; i++)
         {
-            var newEnemy = Instantiate(Resources.Load<Companion>("Companion"));
+            var newEnemy = Instantiate(Resources.Load<GameObject>("Companion (1) (Companion)"));
             Vector3 position = Random.insideUnitSphere + this.gameObject.transform.position;
             newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
 
@@ -55,9 +64,8 @@ public class companionSpawner : MonoBehaviour
     {
         for (int i = 0; i < comp.Count; i++)
         {
-            StaticManager.RealTime.Companions.Remove(comp[i].GetComponent<Companion>());
             Destroy(comp[i]);
         }
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }

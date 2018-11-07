@@ -55,7 +55,6 @@ public class companionSpawner : MonoBehaviour
     {
         for (int i = 0; i < comp.Count; i++)
         {
-            StaticManager.RealTime.Companions.Remove(comp[i].GetComponent<Companion>());
             Destroy(comp[i]);
         }
         //gameObject.SetActive(false);

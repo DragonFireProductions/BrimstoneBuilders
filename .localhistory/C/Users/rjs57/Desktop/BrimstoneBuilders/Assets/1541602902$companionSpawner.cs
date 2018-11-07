@@ -23,31 +23,40 @@ public class companionSpawner : MonoBehaviour
         if (Input.GetKeyDown("]"))
         {
             StartCoroutine(CompSpawn());
+
+
         }
         else if (Input.GetKeyDown("["))
         {
             Kill();
+            //comp.RemoveAt(comp.Count);
+            //i = comp.Length - 1;
+            //Debug.Log("comp length after subtracting a companion:" + i);
+            //Debug.Log(i);
+            //Destroy(comp[i].gameObject);
+            //Destroy(comp[i]);
+            //--i;
         }
     }
 
     private IEnumerator CompSpawn()
     {
-        StaticManager.RealTime.Companions.RemoveAll(nulls => nulls == null);
+        StaticManager.RealTime.Enemies.RemoveAll(nulls => nulls == null);
         for (int i = 0; i < numberofcompanions; i++)
         {
-            var newEnemy = Instantiate(Resources.Load<Companion>("Companion"));
+            var newEnemy = Instantiate(Resources.Load<GameObject>("EnemyLeader"));
             Vector3 position = Random.insideUnitSphere + this.gameObject.transform.position;
-            newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
+            newEnemy.GetComponent<EnemyNav>().location = gameObject;
 
             position.y = StaticManager.Character.gameObject.transform.position.y;
             StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
             yield return new WaitForSeconds(1.0f);
             //variable.gameObject.SetActive(true);
-            newEnemy.GetComponent<Companion>().Nav.Agent.Warp(position);
-            newEnemy.GetComponent<CompanionNav>().transform.position = this.gameObject.transform.position;
+            newEnemy.GetComponent<Enemy>().Nav.Agent.Warp(position);
+            newEnemy.GetComponent<EnemyNav>().location = this.gameObject;
             comp.Add(newEnemy.gameObject);
-            StaticManager.RealTime.Companions.Add(newEnemy.GetComponent<Companion>());
-            StaticManager.RealTime.SetAttackCompanions();
+            StaticManager.RealTime.Enemies.Add(newEnemy.GetComponent<Enemy>());
+            StaticManager.RealTime.SetAttackEnemies();
         }
     }
 
@@ -55,9 +64,8 @@ public class companionSpawner : MonoBehaviour
     {
         for (int i = 0; i < comp.Count; i++)
         {
-            StaticManager.RealTime.Companions.Remove(comp[i].GetComponent<Companion>());
             Destroy(comp[i]);
         }
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }
