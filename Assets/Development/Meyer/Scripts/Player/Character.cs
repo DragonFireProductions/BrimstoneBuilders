@@ -18,8 +18,7 @@ namespace Assets.Meyer.TestScripts.Player {
 
         //CharacterController controller;
         // Use this for initialization
-        private void Awake()
-        {
+        private void Awake() {
             base.Awake();
             line = new GameObject[transform.Find("Line").transform.childCount];
             for ( int i = 0 ; i < line.Length ; i++ ){

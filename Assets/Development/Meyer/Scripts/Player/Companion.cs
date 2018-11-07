@@ -10,11 +10,14 @@ using UnityEngine;
 
 public class Companion : BaseCharacter {
     // Use this for initialization
+
+    public PlayerInventory inventory;
     private void Start( ) {
         Awake( );
         material.color = BaseColor;
         Nav            = gameObject.GetComponent < CompanionNav >( );
         StaticManager.RealTime.Companions.Add(this);
+        inventory = gameObject.GetComponent < PlayerInventory >( );
 
     }
 

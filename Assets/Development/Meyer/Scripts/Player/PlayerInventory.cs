@@ -23,8 +23,16 @@ public class PlayerInventory : MonoBehaviour {
 
     [ HideInInspector ] public WeaponObject selectedObject { get; set; }
 
+    public GameObject parent;
+
+    public List<UIItemsWithLabels> Slots;
+
 
     public void Awake( ) {
+        parent = new GameObject();
+        parent.transform.SetParent(GameObject.Find("Inventory").gameObject.transform);
+        parent.name = gameObject.name + "Inventory";
+        Slots = new List < UIItemsWithLabels >();
         WeaponAssetList = itemList.itemList;
     }
     //returns the first occurance of an item from the WeaponAsset list 
@@ -40,16 +48,7 @@ public class PlayerInventory : MonoBehaviour {
         PickedUpWeapons.Add( weapon );
         weapon.PickUp( );
     }
-
-    public void MoveToBackPack( WeaponObject selectedItem ) {
-        //StaticManager.UiInventory.ItemsInstance.WeaponOptions.SetActive( false );
-        StaticManager.UiInventory.RemoveMainInventory( selectedItem );
-        MainInventoryList.Remove( selectedItem );
-        BackPackInventoryList.Add( selectedItem );
-        StaticManager.UiInventory.AddBackpackSlot( selectedItem );
-        selectedItem.MoveToBackPack( );
-    }
-
+    
     private void Update( ) {
         if ( Input.GetButtonDown( "Inventory" ) ){
             isInventoryActive = !isInventoryActive;
@@ -76,7 +75,7 @@ public class PlayerInventory : MonoBehaviour {
             StaticManager.UiInventory.AttachedWeapons.Add(selectedObject);
             var ob = StaticManager.UiInventory.AttachedWeapons[0];
             StaticManager.UiInventory.AttachedWeapons.RemoveAt(0);
-                StaticManager.UiInventory.AddSlot(ob);
+                StaticManager.UiInventory.AddSlot(ob, StaticManager.Character.inventory);
                 ob.attached = false;
 
             ob.transform.parent = GameObject.Find("Weapons").transform;

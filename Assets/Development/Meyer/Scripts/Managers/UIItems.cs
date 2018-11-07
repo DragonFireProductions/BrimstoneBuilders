@@ -27,13 +27,17 @@ public class UIItems : MonoBehaviour {
 
     public GameObject BackpackContainer;
 
-	public GameObject Equip;
+    public GameObject Equip;
+
+	public GameObject Tab;
 
 	public GameObject AttackConfirmation;
 
 	public GameObject BattleWon;
 
 	public GameObject DamageText;
+
+
 
     public object this[string propertyName]
     {

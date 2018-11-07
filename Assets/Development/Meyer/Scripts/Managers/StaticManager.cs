@@ -3,6 +3,7 @@ using Assets.Meyer.TestScripts.Player;
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StaticManager : MonoBehaviour {
 
@@ -11,8 +12,6 @@ public class StaticManager : MonoBehaviour {
     public static Character Character;
 
     public static CharacterUtility Utility;
-
-    public static PlayerInventory Inventory;
 
     public static UIInventory UiInventory;
 
@@ -25,6 +24,8 @@ public class StaticManager : MonoBehaviour {
     public static ParticleManager particleManager;
 
     public FloatingText text;
+
+    public static MultipleInventoryHolder inventories;
     // Use this for initialization
     public void Awake( ) {
 
@@ -41,8 +42,6 @@ public class StaticManager : MonoBehaviour {
 
         Utility = GameObject.Find( "ManagerHolder" ).GetComponent < CharacterUtility >( );
 
-        Inventory = GameObject.Find( "ManagerHolder" ).GetComponent < PlayerInventory >( );
-
         UiInventory = GameObject.Find( "ManagerHolder" ).GetComponent < UIInventory >( );
         //UiInventory.Start( );
 
@@ -53,6 +52,8 @@ public class StaticManager : MonoBehaviour {
         particleManager = GameObject.Find( "ManagerHolder" ).GetComponent < ParticleManager >( );
 
         InstatiateFloatingText.Initalize();
+
+        inventories = GameObject.Find( "ManagerHolder" ).GetComponent < MultipleInventoryHolder >( );
 
     }
     
@@ -68,5 +69,5 @@ public class StaticManager : MonoBehaviour {
         Time.timeScale = 1;
         obj.SetActive(false);
     }
-
+    
 }
