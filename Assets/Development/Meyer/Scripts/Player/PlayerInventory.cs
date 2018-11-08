@@ -3,34 +3,54 @@ using System.Linq;
 
 using Assets.Meyer.TestScripts.Player;
 
+using TMPro;
+
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour {
 
     public static UIInventory uiInventory = StaticManager.UiInventory;
 
-    [ HideInInspector ] public static List < WeaponItem > WeaponAssetList; //public list of weapons from WeaponListAsset 
 
     [ HideInInspector ] public List < WeaponObject > BackPackInventoryList;
 
     [ HideInInspector ] public bool isInventoryActive;
 
-    [ SerializeField ] private WeaponItemList itemList; //WeaponListAsset set in inspector
-
-    [ HideInInspector ] public List < WeaponObject > MainInventoryList;
-
     [ HideInInspector ] public List < WeaponObject > PickedUpWeapons; //Current list of items the player has picked up
 
     [ HideInInspector ] public WeaponObject selectedObject { get; set; }
 
+    public GameObject parent;
+
+    public List<UIItemsWithLabels> Slots;
+
+    public BaseCharacter character;
+
+    public List < WeaponObject > AttachedWeapons;
+
+    public GameObject Tab;
+
 
     public void Awake( ) {
-        WeaponAssetList = itemList.itemList;
+        AttachedWeapons = new List < WeaponObject >();
+        AttachedWeapons.Add(gameObject.transform.Find("Cube/Sword").gameObject.GetComponent<WeaponObject>());
+        
+        character = GetComponent < BaseCharacter >( );
+        
+        Slots = new List < UIItemsWithLabels >();
+     
+    }
+
+    public void Start( ) {
+        PickedUpWeapons.Add(gameObject.transform.Find("Cube/Sword").gameObject.GetComponent<WeaponObject>());
+        parent = StaticManager.inventories.setParent( gameObject );
+        StaticManager.inventories.alllables.Add(this);
+        StaticManager.inventories.setSendButton( character as Companion );
+        Tab = StaticManager.inventories.AddCompanionInventory( character as Companion );
     }
     //returns the first occurance of an item from the WeaponAsset list 
-    public WeaponItem GetItemFromAssetList( string name ) {
-        return WeaponAssetList.FirstOrDefault( _t => _t.objectName == name );
-    }
+   
     //returns 
     public WeaponObject GetItemFromInventory( string name ) {
         return PickedUpWeapons.FirstOrDefault( _t => _t.WeaponStats.objectName == name );
@@ -40,16 +60,7 @@ public class PlayerInventory : MonoBehaviour {
         PickedUpWeapons.Add( weapon );
         weapon.PickUp( );
     }
-
-    public void MoveToBackPack( WeaponObject selectedItem ) {
-        //StaticManager.UiInventory.ItemsInstance.WeaponOptions.SetActive( false );
-        StaticManager.UiInventory.RemoveMainInventory( selectedItem );
-        MainInventoryList.Remove( selectedItem );
-        BackPackInventoryList.Add( selectedItem );
-        StaticManager.UiInventory.AddBackpackSlot( selectedItem );
-        selectedItem.MoveToBackPack( );
-    }
-
+    
     private void Update( ) {
         if ( Input.GetButtonDown( "Inventory" ) ){
             isInventoryActive = !isInventoryActive;
@@ -65,35 +76,6 @@ public class PlayerInventory : MonoBehaviour {
             }
         }
     }
-    public void Equip()
-    {
-        selectedObject.name = "Sword";
-        selectedObject.tag = "Weapon";
-        StaticManager.Character.attachedWeapon = selectedObject;
-        selectedObject.AttacheBaseCharacter = StaticManager.Character;
-        if (StaticManager.UiInventory.AttachedWeapons.Count > 0)
-        {
-            StaticManager.UiInventory.AttachedWeapons.Add(selectedObject);
-            var ob = StaticManager.UiInventory.AttachedWeapons[0];
-            StaticManager.UiInventory.AttachedWeapons.RemoveAt(0);
-                StaticManager.UiInventory.AddSlot(ob);
-                ob.attached = false;
-
-            ob.transform.parent = GameObject.Find("Weapons").transform;
-            ob.gameObject.name = ob.WeaponStats.objectName;
-            ob.gameObject.SetActive(false);
-        }
-
-        selectedObject.GetComponent<BoxCollider>().enabled = false;
-
-        StaticManager.UiInventory.RemoveMainInventory(selectedObject);
-        selectedObject.gameObject.transform.position = StaticManager.Character.Cube.transform.position;
-        selectedObject.gameObject.transform.rotation = StaticManager.Character.Cube.transform.rotation;
-        selectedObject.gameObject.transform.SetParent(StaticManager.Character.Cube.transform);
-
-        StaticManager.Character.stats.IncreaseStats(selectedObject.WeaponStats);
-        selectedObject.gameObject.SetActive(true);
-
-    }
+   
 
 }

@@ -25,38 +25,24 @@ public class UIInventory : MonoBehaviour
        public string Name;
 
     }
+    
 
-    private List < Stats > statUiList;
-
-    private List < Stats > companionWindowStats;
-
-    private List < Stats > weaponWindowStats;
-
-    private List < Stats > gameStatsUiList;
-
-    private List < Stats > weaponInventoryStatsUiList;
-
-    private List < Stats > gameInventoryStatsUiList;
-
-    public List < WeaponObject > AttachedWeapons;
+    
 
     private Vector3 pos;
 
     private Vector3 pos2;
 
-    public List<UIItemsWithLabels> Slots;
 
     public List < GameObject > BackpackSlots;
 
     public bool Dragging = false;
 
     // Use this for initialization
-    public void Start( ) {
-        AttachedWeapons = new List < WeaponObject >();
+    public void Awake( ) {
+        
         ItemsInstance = gameObject.GetComponent<UIItems>();
         ItemsInstance.Initalize();
-        AttachedWeapons.Add(StaticManager.Character.gameObject.transform.Find("Cube/Sword").gameObject.GetComponent<WeaponObject>());
-        StaticManager.Inventory.PickedUpWeapons.Add(AttachedWeapons[0]);
         StartScript();
 
     }
@@ -95,19 +81,18 @@ public class UIInventory : MonoBehaviour
         }
         set { showWindow = value; }
     }
-    public void AddSlot(WeaponObject _item)
+    public void AddSlot(WeaponObject _item, PlayerInventory inventory)
     {
         var l_newContainer = Instantiate(ItemsInstance.InventoryContainer.obj);
         l_newContainer.SetActive(true);
-        l_newContainer.transform.SetParent(ItemsInstance.InventoryContainer.obj.transform.parent);
-        l_newContainer.transform.position = pos;
-        l_newContainer.transform.localScale = ItemsInstance.InventoryContainer.obj.transform.localScale;
+        l_newContainer.transform.SetParent(inventory.parent.transform);
+        l_newContainer.transform.position = StaticManager.UiInventory.ItemsInstance.InventoryContainer.obj.transform.position;
+        l_newContainer.transform.localScale = new Vector3(1,1,1);
         l_newContainer.name = _item.WeaponStats.objectName + "Slot";
         UIItemsWithLabels newLabel = ItemsInstance.obj( l_newContainer );
         newLabel.obj.SetActive(true);
-        Slots.Add(newLabel);
+        inventory.Slots.Add(newLabel);
         UpdateStats( _item.WeaponStats, newLabel );
-
         l_newContainer.transform.Find( "ItemIconContainer/RawImage" ).GetComponent < RawImage >( ).texture = _item.WeaponStats.icon;
     }
 
@@ -142,14 +127,14 @@ public class UIInventory : MonoBehaviour
             instanceToUpdate.Labels[ i ].labelText.text = a.ToString( );
         }
     }
-    public void RemoveMainInventory(WeaponObject _item)
+    public void RemoveMainInventory(WeaponObject _item, PlayerInventory inventory)
     {
-        for (var l_i = 0; l_i < Slots.Count; l_i++)
+        for (var l_i = 0; l_i < inventory.Slots.Count; l_i++)
         {
-            if (Slots[l_i].obj.name  == _item.WeaponStats.objectName + "Slot")
+            if ( inventory.Slots[l_i].obj.name  == _item.WeaponStats.objectName + "Slot")
             {
-                var l_slot = Slots[l_i].obj;
-                Slots.RemoveAt(l_i);
+                var l_slot =  inventory.Slots[l_i].obj;
+                 inventory.Slots.RemoveAt(l_i);
                 Destroy(l_slot);
             }
         }
@@ -179,8 +164,7 @@ public class UIInventory : MonoBehaviour
     public Vector3 Offset;
 
     public Vector3 ScreenPoint;
-
-    public bool IsMainInventory = true;
+    
 
     void Update () {
         if ( Dragging /*&& Input.GetMouseButton(0)*/){

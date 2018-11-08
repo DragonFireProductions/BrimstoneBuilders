@@ -3,6 +3,7 @@ using Assets.Meyer.TestScripts.Player;
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StaticManager : MonoBehaviour {
 
@@ -11,8 +12,6 @@ public class StaticManager : MonoBehaviour {
     public static Character Character;
 
     public static CharacterUtility Utility;
-
-    public static PlayerInventory Inventory;
 
     public static UIInventory UiInventory;
 
@@ -25,6 +24,8 @@ public class StaticManager : MonoBehaviour {
     public static ParticleManager particleManager;
 
     public FloatingText text;
+
+    public static MultipleInventoryHolder inventories;
     // Use this for initialization
     public void Awake( ) {
 
@@ -34,14 +35,11 @@ public class StaticManager : MonoBehaviour {
         else if ( Instance != this ){
             Destroy( gameObject );
         }
-
         Manager = FindObjectOfType < AudioManager >( );
 
         Character = GameObject.Find( "Player" ).GetComponent < Character >( );
 
         Utility = GameObject.Find( "ManagerHolder" ).GetComponent < CharacterUtility >( );
-
-        Inventory = GameObject.Find( "ManagerHolder" ).GetComponent < PlayerInventory >( );
 
         UiInventory = GameObject.Find( "ManagerHolder" ).GetComponent < UIInventory >( );
         //UiInventory.Start( );
@@ -54,6 +52,8 @@ public class StaticManager : MonoBehaviour {
 
         InstatiateFloatingText.Initalize();
 
+        inventories = GameObject.Find( "ManagerHolder" ).GetComponent < MultipleInventoryHolder >( );
+
     }
     
     public void LoadMainMenu( ) {
@@ -62,6 +62,7 @@ public class StaticManager : MonoBehaviour {
 
     public void ReloadLevel( ) {
         SceneManager.LoadScene( 1 );
+        Time.timeScale = 1;
     }
 
     public void UnFreeze(GameObject obj ) {
@@ -69,4 +70,11 @@ public class StaticManager : MonoBehaviour {
         obj.SetActive(false);
     }
 
+    public void Freeze( ) {
+        Time.timeScale = 0;
+    }
+    public void EnableSendTo( ) {
+        UiInventory.ItemsInstance.SendToCompanion.SetActive(true);
+    }
+    
 }
