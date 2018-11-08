@@ -26,8 +26,12 @@ public class ContainerScript : MonoBehaviour /*IPointerDownHandler*/ {
             inventory.selectedObject = inventory.GetItemFromInventory( name );
             StaticManager.UiInventory.ItemsInstance.Equip.SetActive(true);
         }
-        
+
     }
-    
+
+
+    private void OnMouseOver()
+    {
+    }
 
 }
