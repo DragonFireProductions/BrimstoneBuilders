@@ -57,12 +57,13 @@ public class EnemySpawner : MonoBehaviour
                 instantiated.Add(newEnemy.gameObject);
             StaticManager.RealTime.Enemies.Add(newEnemy.GetComponent<Enemy>());
             StaticManager.RealTime.SetAttackEnemies();
+            StaticManager.RealTime.SetAttackCompanion();
         }
 
     }
 
     private void Despawn() {
-       
+        instantiated.RemoveAll( item => item == null );
         for (int i = 0; i < instantiated.Count; i++){
             Destroy(instantiated[i]);
         }

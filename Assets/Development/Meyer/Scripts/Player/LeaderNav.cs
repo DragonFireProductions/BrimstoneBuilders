@@ -171,12 +171,6 @@ public class LeaderNav : CompanionNav {
 		}
 	}
 
-    //bool showingArmor()
-	
-    //{
-    //    return showArmor;
-    //}
-
 	IEnumerator show( ) {
 		message.enabled = true;
 		yield return  new WaitForSeconds(2);
@@ -191,8 +185,8 @@ IEnumerator yield( ) {
             StaticManager.RealTime.Attacking = true;
             StaticManager.RealTime.Enemies.Add(l_collider.gameObject.GetComponent<Enemy>());
 	        StaticManager.RealTime.Attacking = true;
-			StaticManager.RealTime.SetAttackCompanions();
 			StaticManager.RealTime.SetAttackEnemies();
+			StaticManager.RealTime.SetAttackCompanion();
             SetState = state.ATTACKING;
         }
 
