@@ -31,21 +31,17 @@ public class BaseNav : MonoBehaviour {
 			        character.attackers.RemoveAll(item => item == null );
 					StaticManager.RealTime.Companions.RemoveAll(item => item == null  );
 	                StaticManager.RealTime.Enemies.RemoveAll( item => item == null );
-
-                    //if current attacker dies and someone is still attacking
                     if (character.attackers.Count > 0 && character.enemy == null)
                     {
                         var enemy = character.attackers[Random.Range(0, character.attackers.Count)];
                         character.enemy = enemy;
                         enemy.attackers.Add(character);
                     }
-                    //if no one is attacking current character and still enemies in the scene
                     else if (StaticManager.RealTime.GetCount(character) && character.enemy == null){
 	                    var enemy = StaticManager.RealTime.getnewType( character );
                         character.enemy = enemy;
                         enemy.attackers.Add(character);
                     }
-                    //no enemies are alive
                     else if (character.enemy == null && character is Companion){
 		                StaticManager.RealTime.Attacking = false;
                         SetState = state.IDLE;
@@ -80,7 +76,7 @@ public class BaseNav : MonoBehaviour {
 	public void SetDestination( Transform transform ) {
 		Agent.SetDestination( transform.position );
 	}
-    public enum state { IDLE, ATTACKING, FOLLOW, MOVE, ENEMY_CLICKED, FREEZE, PROVOKED, BERZERK, CHILL, DEFENSIVE }
+    public enum state { IDLE, ATTACKING, FOLLOW, MOVE, ENEMY_CLICKED, FREEZE }
     public state SetState
     {
         get { return State; }

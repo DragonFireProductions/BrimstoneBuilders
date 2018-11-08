@@ -45,7 +45,6 @@ public class CompanionNav : BaseNav {
                     //if no one is attacking current character and still enemies in the scene
                     else if (StaticManager.RealTime.GetCount(character) && character.enemy == null)
                     {
-                        Debug.Log("there's still enemies that need to be taken out");
                         var enemy = StaticManager.RealTime.getnewType(character);
                         character.enemy = enemy;
                         enemy.attackers.Add(character);

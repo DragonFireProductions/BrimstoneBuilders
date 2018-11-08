@@ -14,12 +14,12 @@ public class RealTime : MonoBehaviour {
 	public List < Companion > Companions;
 
 	[SerializeField] public Color ClickedColor { get; set; }
-
+	
 	public void Awake( ) {
 		Companions = new List < Companion >();
 		Enemies = new List < Enemy >();
 	}
-
+	
 
 	//public void SetAttackCompanions( ) {
  //       StaticManager.RealTime.Companions.RemoveAll(item => item == null);
@@ -95,7 +95,7 @@ public class RealTime : MonoBehaviour {
         }
 
         if (character is Companion && Enemies.Count > 0){
-	        return true;
+	        return false;
         }
 
 		return false;

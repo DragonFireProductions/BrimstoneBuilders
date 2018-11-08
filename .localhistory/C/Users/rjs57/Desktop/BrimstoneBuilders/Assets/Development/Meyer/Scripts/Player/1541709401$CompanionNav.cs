@@ -37,7 +37,6 @@ public class CompanionNav : BaseNav {
                     //if current attacker dies and someone is still attacking
                     if (character.attackers.Count > 0 && character.enemy == null)
                     {
-                        Debug.Log("need to shift my focus");
                         var enemy = character.attackers[Random.Range(0, character.attackers.Count)];
                         character.enemy = enemy;
                         enemy.attackers.Add(character);
@@ -45,7 +44,6 @@ public class CompanionNav : BaseNav {
                     //if no one is attacking current character and still enemies in the scene
                     else if (StaticManager.RealTime.GetCount(character) && character.enemy == null)
                     {
-                        Debug.Log("there's still enemies that need to be taken out");
                         var enemy = StaticManager.RealTime.getnewType(character);
                         character.enemy = enemy;
                         enemy.attackers.Add(character);
