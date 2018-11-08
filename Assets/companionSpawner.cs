@@ -7,6 +7,8 @@ public class companionSpawner : MonoBehaviour
 {
 
     [SerializeField] private Companion friends;
+
+    public int index;
     private List<GameObject> comp;
     [SerializeField] private GameObject companionspawner;
 
@@ -30,10 +32,11 @@ public class companionSpawner : MonoBehaviour
         }
     }
 
-    private IEnumerator CompSpawn()
-    {
+    private IEnumerator CompSpawn() {
+        index++;
         StaticManager.RealTime.Companions.RemoveAll(nulls => nulls == null);
             var newEnemy = Instantiate(Resources.Load<Companion>("Companion"));
+        newEnemy.name = newEnemy.name + index.ToString( );
             Vector3 position = Random.insideUnitSphere + this.gameObject.transform.position;
             newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
 
@@ -48,8 +51,8 @@ public class companionSpawner : MonoBehaviour
             StaticManager.RealTime.SetAttackCompanion();
     }
 
-    private void Kill()
-    {
+    private void Kill() {
+        index--;
             StaticManager.RealTime.Companions.Remove(comp[0].GetComponent<Companion>());
         var gameObj = comp[ 0 ];
         comp.RemoveAt(0);
