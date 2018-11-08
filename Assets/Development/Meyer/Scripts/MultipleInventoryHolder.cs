@@ -57,6 +57,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
     }
 
 	public PlayerInventory GetInventory(string parentName ) {
+		alllables.RemoveAll( item => item == null );
 		foreach ( var l_playerInventory in alllables ){
 			if (  l_playerInventory.parent.name == parentName ){
 				return l_playerInventory;
