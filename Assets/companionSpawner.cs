@@ -53,7 +53,7 @@ public class companionSpawner : MonoBehaviour
             StaticManager.RealTime.Companions.Remove(comp[0].GetComponent<Companion>());
         var gameObj = comp[ 0 ];
         comp.RemoveAt(0);
-
+        StaticManager.inventories.Destroy(gameObj.GetComponent<PlayerInventory>());
             Destroy(gameObj);
     }
 }

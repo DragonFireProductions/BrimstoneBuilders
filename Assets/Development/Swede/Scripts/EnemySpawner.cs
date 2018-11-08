@@ -56,7 +56,6 @@ public class EnemySpawner : MonoBehaviour
             //Randomizes the spawn position (within the set range) of the current enemy.
             Vector3 position = Random.insideUnitSphere * spawnRadius + this.gameObject.transform.position;
             newEnemy.GetComponent<EnemyNav>().location = gameObject;
-
             //Adjust for y to properly place on nav mesh.
             position.y = StaticManager.Character.gameObject.transform.position.y;
             //Plays the spawn animation
@@ -70,15 +69,14 @@ public class EnemySpawner : MonoBehaviour
             instantiated.Add(newEnemy.gameObject);
             StaticManager.RealTime.Enemies.Add(newEnemy.GetComponent<Enemy>());
             StaticManager.RealTime.SetAttackEnemies();
+            StaticManager.RealTime.SetAttackCompanion();
         }
 
     }
 
-    private void Despawn()
-    {
-        //Destroys each enemy from the list of instantiated enemies.
-        for (int i = 0; i < instantiated.Count; i++)
-        {
+    private void Despawn() {
+        instantiated.RemoveAll( item => item == null );
+        for (int i = 0; i < instantiated.Count; i++){
             Destroy(instantiated[i]);
         }
         gameObject.SetActive(false);
