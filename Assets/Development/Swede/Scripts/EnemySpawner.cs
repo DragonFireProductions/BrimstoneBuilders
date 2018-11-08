@@ -48,7 +48,6 @@ public class EnemySpawner : MonoBehaviour
             var newEnemy = Instantiate(Resources.Load<GameObject>("EnemyLeader"));
                 Vector3 position = Random.insideUnitSphere * spawnRadius + this.gameObject.transform.position;
             newEnemy.GetComponent < EnemyNav >( ).location = gameObject;
-
                 position.y = StaticManager.Character.gameObject.transform.position.y;
                 StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
                 yield return new WaitForSeconds(1.0f);
@@ -58,12 +57,13 @@ public class EnemySpawner : MonoBehaviour
                 instantiated.Add(newEnemy.gameObject);
             StaticManager.RealTime.Enemies.Add(newEnemy.GetComponent<Enemy>());
             StaticManager.RealTime.SetAttackEnemies();
+            StaticManager.RealTime.SetAttackCompanion();
         }
 
     }
 
     private void Despawn() {
-       
+        instantiated.RemoveAll( item => item == null );
         for (int i = 0; i < instantiated.Count; i++){
             Destroy(instantiated[i]);
         }

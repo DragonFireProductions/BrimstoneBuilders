@@ -20,16 +20,13 @@ public class ContainerScript : MonoBehaviour /*IPointerDownHandler*/ {
 
     public void OnPointerDownDelegate( PointerEventData data ) {
         if ( data.currentInputModule.input.GetMouseButton( 1 ) ){
+            var inventory = StaticManager.inventories.GetInventory( transform.parent.parent.name );
+            StaticManager.inventories.inventory = inventory;
             name                                 = gameObject.transform.Find( "objectName" ).GetComponentInChildren < TextMeshProUGUI >( ).text;
-            StaticManager.Inventory.selectedObject = StaticManager.Inventory.GetItemFromInventory( name );
+            inventory.selectedObject = inventory.GetItemFromInventory( name );
             StaticManager.UiInventory.ItemsInstance.Equip.SetActive(true);
         }
-        //else if ( data.currentInputModule.input.GetMouseButton( 0 ) ){
-        //    name = gameObject.transform.Find("objectName").GetComponentInChildren<TextMeshProUGUI>().text;
-        //    StaticManager.UiInventory.ItemsInstance.PlayerUI.SetActive( false );
-        //    StaticManager.UiInventory.SelectItem( StaticManager.Inventory.GetItemFromInventory(name));
-
-        //}
+        
     }
     
 
