@@ -62,6 +62,7 @@ public class StaticManager : MonoBehaviour {
 
     public void ReloadLevel( ) {
         SceneManager.LoadScene( 1 );
+        Time.timeScale = 1;
     }
 
     public void UnFreeze(GameObject obj ) {
@@ -69,6 +70,9 @@ public class StaticManager : MonoBehaviour {
         obj.SetActive(false);
     }
 
+    public void Freeze( ) {
+        Time.timeScale = 0;
+    }
     public void EnableSendTo( ) {
         UiInventory.ItemsInstance.SendToCompanion.SetActive(true);
     }

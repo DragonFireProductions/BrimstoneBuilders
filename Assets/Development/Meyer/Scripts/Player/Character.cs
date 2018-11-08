@@ -33,6 +33,7 @@ namespace Assets.Meyer.TestScripts.Player {
         private void Start( ) {
             cube = transform.Find("Cube").gameObject;
             inventory = GetComponent < PlayerInventory >( );
+            StaticManager.RealTime.Companions.Add(this);
 
         }
     }

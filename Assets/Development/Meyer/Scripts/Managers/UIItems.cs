@@ -23,6 +23,13 @@ public class UIItems : MonoBehaviour {
 
 	public GameObject Inventory;
 
+	public GameObject Equip;
+
+    public GameObject SendCompanionButton;
+
+    public GameObject SendToCompanion;
+
+
     public GameObject PlayerUI;
 	
 	public GameObject DialogueUI;
@@ -33,12 +40,8 @@ public class UIItems : MonoBehaviour {
 
     public GameObject BackpackContainer;
 
-    public GameObject Equip;
-
-	public GameObject SendCompanionButton;
-
-	public GameObject SendToCompanion;
-
+	public GameObject GameWon;
+	
 	public GameObject AttackConfirmation;
 
 	public GameObject BattleWon;
