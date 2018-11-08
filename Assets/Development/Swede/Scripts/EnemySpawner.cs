@@ -48,7 +48,6 @@ public class EnemySpawner : MonoBehaviour
             var newEnemy = Instantiate(Resources.Load<GameObject>("EnemyLeader"));
                 Vector3 position = Random.insideUnitSphere * spawnRadius + this.gameObject.transform.position;
             newEnemy.GetComponent < EnemyNav >( ).location = gameObject;
-
                 position.y = StaticManager.Character.gameObject.transform.position.y;
                 StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
                 yield return new WaitForSeconds(1.0f);

@@ -60,6 +60,8 @@ public abstract class BaseCharacter : MonoBehaviour {
 	public List < GameObject > damageNumbers;
 
 	public GameObject canvas;
+
+	public GameObject cube;
 	protected void Awake( ) {
         stats = gameObject.GetComponent<Stat>();
 		Assert.IsNotNull(stats, "Stats not found on " + this.gameObject.name);

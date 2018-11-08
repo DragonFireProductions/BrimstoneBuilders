@@ -10,11 +10,16 @@ using UnityEngine;
 
 public class Companion : BaseCharacter {
     // Use this for initialization
+
+    public PlayerInventory inventory;
+    
     private void Start( ) {
         Awake( );
         material.color = BaseColor;
         Nav            = gameObject.GetComponent < CompanionNav >( );
         StaticManager.RealTime.Companions.Add(this);
+        inventory = GetComponent < PlayerInventory >( );
+        cube = transform.Find("Cube").gameObject;
 
     }
 
@@ -34,6 +39,7 @@ public class Companion : BaseCharacter {
                 Time.timeScale = 0;
             }
             StaticManager.RealTime.Companions.Remove( this );
+            StaticManager.inventories.Destroy(inventory);
            Destroy(gameObject);
         }
         damage -= _damage;

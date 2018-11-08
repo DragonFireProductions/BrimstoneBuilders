@@ -36,7 +36,7 @@ public class WeaponObject : MonoBehaviour
     }
     protected virtual void Start() {
         AnimationClass = gameObject.GetComponent < AnimationClass >( );
-        weaponStats = StaticManager.Inventory.GetItemFromAssetList( weaponName );
+        weaponStats = StaticManager.inventories.GetItemFromAssetList( weaponName );
         Assert.IsNotNull(weaponStats, "WeaponItem name not added in inspector " + gameObject.name);
         weapon = this.gameObject;
     }
@@ -48,8 +48,7 @@ public class WeaponObject : MonoBehaviour
 
     public void PickUp( ) {
         if ( AttacheBaseCharacter == null ){
-        StaticManager.UiInventory.AddSlot(this);
-        StaticManager.Inventory.MainInventoryList.Add(this);
+        StaticManager.UiInventory.AddSlot(this, StaticManager.Character.inventory);
         gameObject.SetActive(false);
         }
         
@@ -65,7 +64,7 @@ public class WeaponObject : MonoBehaviour
     {
         if (collider.tag == "Player" && !StaticManager.UiInventory.Dragging && !attached && tag == "PickUp")
         {
-            StaticManager.Inventory.PickUp(this);
+            StaticManager.Character.inventory.PickUp(this);
             this.GetComponent<BoxCollider>().enabled = false;
         }
 

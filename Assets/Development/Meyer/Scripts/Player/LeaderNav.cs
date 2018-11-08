@@ -145,6 +145,7 @@ public class LeaderNav : CompanionNav {
 		
         switch ( State ){
 			case state.ATTACKING:
+
                 break;
 			case state.MOVE:
 				Agent.SetDestination( hit.point );
@@ -153,7 +154,6 @@ public class LeaderNav : CompanionNav {
 
 				break;
 			case state.IDLE:
-
 				break;
 			case state.FOLLOW:
 
