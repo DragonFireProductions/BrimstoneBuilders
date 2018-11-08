@@ -31,6 +31,8 @@ public class PlayerInventory : MonoBehaviour {
 
     public GameObject Tab;
 
+    public int coinCount;
+
 
     public void Awake( ) {
         AttachedWeapons = new List < WeaponObject >();
@@ -48,8 +50,9 @@ public class PlayerInventory : MonoBehaviour {
         StaticManager.inventories.alllables.Add(this);
         StaticManager.inventories.setSendButton( character as Companion );
         Tab = StaticManager.inventories.AddCompanionInventory( character as Companion );
+        coinCount = 0;
     }
-    //returns the first occurance of an item from the WeaponAsset list 
+    //returns the first occurrence of an item from the WeaponAsset list 
    
     //returns 
     public WeaponObject GetItemFromInventory( string name ) {
@@ -59,6 +62,11 @@ public class PlayerInventory : MonoBehaviour {
     public void PickUp( WeaponObject weapon ) {
         PickedUpWeapons.Add( weapon );
         weapon.PickUp( );
+    }
+
+    public void PickUp(//Coin Script goes here)
+    {
+        StaticManager.currencyManager.AddCoins(1);
     }
     
     private void Update( ) {
