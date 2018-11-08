@@ -36,7 +36,7 @@ public class WeaponObject : MonoBehaviour
     }
     protected virtual void Start() {
         AnimationClass = gameObject.GetComponent < AnimationClass >( );
-        weaponStats = StaticManager.Character.inventory.GetItemFromAssetList( weaponName );
+        weaponStats = StaticManager.inventories.GetItemFromAssetList( weaponName );
         Assert.IsNotNull(weaponStats, "WeaponItem name not added in inspector " + gameObject.name);
         weapon = this.gameObject;
     }

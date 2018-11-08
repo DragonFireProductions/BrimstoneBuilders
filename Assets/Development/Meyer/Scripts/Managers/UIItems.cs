@@ -16,9 +16,15 @@ public class UIItems : MonoBehaviour {
 	public UIItemsWithLabels InventoryContainer;
 	
     public GameObject PauseUI;
+	
+	public GameObject Tab;
 
-	public GameObject PlayerUI;
+    public GameObject Tabs;
 
+	public GameObject Inventory;
+
+    public GameObject PlayerUI;
+	
 	public GameObject DialogueUI;
 
 	public GameObject GameOverUI;
@@ -29,7 +35,9 @@ public class UIItems : MonoBehaviour {
 
     public GameObject Equip;
 
-	public GameObject Tab;
+	public GameObject SendCompanionButton;
+
+	public GameObject SendToCompanion;
 
 	public GameObject AttackConfirmation;
 
@@ -54,7 +62,11 @@ public class UIItems : MonoBehaviour {
                 if (GameObject.Find(l_fieldInfo.Name) != null)
                 {
                     this[l_fieldInfo.Name] = GameObject.Find(l_fieldInfo.Name);
-                    GameObject.Find(l_fieldInfo.Name).SetActive(false);
+
+	                if (l_fieldInfo.Name != "Tabs" && l_fieldInfo.Name != "Inventory" ){
+		                GameObject.Find(l_fieldInfo.Name).SetActive(false);
+
+                    }
                 }
             }
 

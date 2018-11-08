@@ -69,5 +69,9 @@ public class StaticManager : MonoBehaviour {
         Time.timeScale = 1;
         obj.SetActive(false);
     }
+
+    public void EnableSendTo( ) {
+        UiInventory.ItemsInstance.SendToCompanion.SetActive(true);
+    }
     
 }

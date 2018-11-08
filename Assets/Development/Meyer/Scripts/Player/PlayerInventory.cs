@@ -3,21 +3,19 @@ using System.Linq;
 
 using Assets.Meyer.TestScripts.Player;
 
+using TMPro;
+
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour {
 
     public static UIInventory uiInventory = StaticManager.UiInventory;
 
-    [ HideInInspector ] public static List < WeaponItem > WeaponAssetList; //public list of weapons from WeaponListAsset 
 
     [ HideInInspector ] public List < WeaponObject > BackPackInventoryList;
 
     [ HideInInspector ] public bool isInventoryActive;
-
-    [ SerializeField ] private WeaponItemList itemList; //WeaponListAsset set in inspector
-
-    [ HideInInspector ] public List < WeaponObject > MainInventoryList;
 
     [ HideInInspector ] public List < WeaponObject > PickedUpWeapons; //Current list of items the player has picked up
 
@@ -27,18 +25,40 @@ public class PlayerInventory : MonoBehaviour {
 
     public List<UIItemsWithLabels> Slots;
 
+    public BaseCharacter character;
+
+    public List < WeaponObject > AttachedWeapons;
+
 
     public void Awake( ) {
-        parent = new GameObject();
-        parent.transform.SetParent(GameObject.Find("Inventory").gameObject.transform);
-        parent.name = gameObject.name + "Inventory";
+        AttachedWeapons = new List < WeaponObject >();
+        AttachedWeapons.Add(gameObject.transform.Find("Cube/Sword").gameObject.GetComponent<WeaponObject>());
+        
+        character = GetComponent < BaseCharacter >( );
+        
         Slots = new List < UIItemsWithLabels >();
-        WeaponAssetList = itemList.itemList;
+     
+    }
+
+    public void Start( ) {
+        PickedUpWeapons.Add(gameObject.transform.Find("Cube/Sword").gameObject.GetComponent<WeaponObject>());
+        parent = Instantiate( StaticManager.UiInventory.ItemsInstance.Inventory );
+        parent.transform.SetParent(StaticManager.UiInventory.ItemsInstance.Inventory.gameObject.transform.parent);
+        parent.name = gameObject.name + "Inventory";
+        parent.GetComponent < Image >( ).enabled = false;
+        parent.transform.position = StaticManager.UiInventory.ItemsInstance.Inventory.transform.position;
+        parent.transform.localScale = new Vector3(1,1,1);
+        StaticManager.inventories.alllables.Add(this);
+        var send = Instantiate( StaticManager.UiInventory.ItemsInstance.SendCompanionButton );
+        send.transform.position = StaticManager.UiInventory.ItemsInstance.SendCompanionButton.transform.position;
+        send.transform.SetParent(StaticManager.UiInventory.ItemsInstance.SendCompanionButton.transform.parent);
+        send.GetComponentInChildren<TextMeshProUGUI>().text = character.name;
+        send.name = character.name;
+        send.transform.localScale = new Vector3(1,1,1);
+        send.SetActive(true);
     }
     //returns the first occurance of an item from the WeaponAsset list 
-    public WeaponItem GetItemFromAssetList( string name ) {
-        return WeaponAssetList.FirstOrDefault( _t => _t.objectName == name );
-    }
+   
     //returns 
     public WeaponObject GetItemFromInventory( string name ) {
         return PickedUpWeapons.FirstOrDefault( _t => _t.WeaponStats.objectName == name );
@@ -64,35 +84,6 @@ public class PlayerInventory : MonoBehaviour {
             }
         }
     }
-    public void Equip()
-    {
-        selectedObject.name = "Sword";
-        selectedObject.tag = "Weapon";
-        StaticManager.Character.attachedWeapon = selectedObject;
-        selectedObject.AttacheBaseCharacter = StaticManager.Character;
-        if (StaticManager.UiInventory.AttachedWeapons.Count > 0)
-        {
-            StaticManager.UiInventory.AttachedWeapons.Add(selectedObject);
-            var ob = StaticManager.UiInventory.AttachedWeapons[0];
-            StaticManager.UiInventory.AttachedWeapons.RemoveAt(0);
-                StaticManager.UiInventory.AddSlot(ob, StaticManager.Character.inventory);
-                ob.attached = false;
-
-            ob.transform.parent = GameObject.Find("Weapons").transform;
-            ob.gameObject.name = ob.WeaponStats.objectName;
-            ob.gameObject.SetActive(false);
-        }
-
-        selectedObject.GetComponent<BoxCollider>().enabled = false;
-
-        StaticManager.UiInventory.RemoveMainInventory(selectedObject);
-        selectedObject.gameObject.transform.position = StaticManager.Character.Cube.transform.position;
-        selectedObject.gameObject.transform.rotation = StaticManager.Character.Cube.transform.rotation;
-        selectedObject.gameObject.transform.SetParent(StaticManager.Character.Cube.transform);
-
-        StaticManager.Character.stats.IncreaseStats(selectedObject.WeaponStats);
-        selectedObject.gameObject.SetActive(true);
-
-    }
+   
 
 }

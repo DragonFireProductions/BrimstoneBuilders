@@ -38,7 +38,7 @@ public class UIInventory : MonoBehaviour
 
     private List < Stats > gameInventoryStatsUiList;
 
-    public List < WeaponObject > AttachedWeapons;
+    
 
     private Vector3 pos;
 
@@ -50,11 +50,10 @@ public class UIInventory : MonoBehaviour
     public bool Dragging = false;
 
     // Use this for initialization
-    public void Start( ) {
-        AttachedWeapons = new List < WeaponObject >();
+    public void Awake( ) {
+        
         ItemsInstance = gameObject.GetComponent<UIItems>();
         ItemsInstance.Initalize();
-        AttachedWeapons.Add(StaticManager.Character.gameObject.transform.Find("Cube/Sword").gameObject.GetComponent<WeaponObject>());
         StartScript();
 
     }
@@ -98,8 +97,8 @@ public class UIInventory : MonoBehaviour
         var l_newContainer = Instantiate(ItemsInstance.InventoryContainer.obj);
         l_newContainer.SetActive(true);
         l_newContainer.transform.SetParent(inventory.parent.transform);
-        l_newContainer.transform.position = pos;
-        l_newContainer.transform.localScale = ItemsInstance.InventoryContainer.obj.transform.localScale;
+        l_newContainer.transform.position = StaticManager.UiInventory.ItemsInstance.InventoryContainer.obj.transform.position;
+        l_newContainer.transform.localScale = new Vector3(1,1,1);
         l_newContainer.name = _item.WeaponStats.objectName + "Slot";
         UIItemsWithLabels newLabel = ItemsInstance.obj( l_newContainer );
         newLabel.obj.SetActive(true);
@@ -176,8 +175,7 @@ public class UIInventory : MonoBehaviour
     public Vector3 Offset;
 
     public Vector3 ScreenPoint;
-
-    public bool IsMainInventory = true;
+    
 
     void Update () {
         if ( Dragging /*&& Input.GetMouseButton(0)*/){
