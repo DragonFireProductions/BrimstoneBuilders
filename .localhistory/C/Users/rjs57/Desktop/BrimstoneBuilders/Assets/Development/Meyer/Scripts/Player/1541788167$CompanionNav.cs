@@ -13,7 +13,11 @@ public class CompanionNav : BaseNav {
 
     private int des;
 
-
+    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private Button berzerk;
+    [SerializeField] private Button passive;
+    [SerializeField] private Button chill;
+    [SerializeField] private Button provoked;
 
     public void Start( ) {
         base.Start( );
@@ -22,10 +26,32 @@ public class CompanionNav : BaseNav {
         randDistance = Random.Range( 1.5f, 1.5f + 2);
         battleDistance = 4;
         des = LineManager.assignIndex( );
+        //text.enabled = true;
+        //berzerk.enabled = true;
+        //passive.enabled = true;
+        //chill.enabled = true;
+        //provoked.enabled = true;
+    }
 
+    void awake()
+    {
+        text = GetComponent<TextMeshProUGUI>();
+        berzerk = GetComponent<Button>();
+        passive = GetComponent<Button>();
+        chill = GetComponent<Button>();
+        provoked = GetComponent<Button>();
     }
 
     protected override void Update( ) {
+
+        //if (StaticManager.Character.stats.Health <= 0)
+        //{
+        //    text.enabled = false;
+        //    berzerk.enabled = false;
+        //    passive.enabled = false;
+        //    chill.enabled = false;
+        //    provoked.enabled = false;
+        //}
         switch ( State ){
             case state.IDLE: {
                 Agent.destination = Character.Player.transform.position + (Vector3.right  * des);

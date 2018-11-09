@@ -13,7 +13,7 @@ public class CompanionNav : BaseNav {
 
     private int des;
 
-
+    
 
     public void Start( ) {
         base.Start( );
@@ -22,7 +22,7 @@ public class CompanionNav : BaseNav {
         randDistance = Random.Range( 1.5f, 1.5f + 2);
         battleDistance = 4;
         des = LineManager.assignIndex( );
-
+        
     }
 
     protected override void Update( ) {
