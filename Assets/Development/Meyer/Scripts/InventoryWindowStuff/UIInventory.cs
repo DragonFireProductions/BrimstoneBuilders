@@ -38,6 +38,8 @@ public class UIInventory : MonoBehaviour
 
     public bool Dragging = false;
 
+   
+
     // Use this for initialization
     public void Awake( ) {
         
@@ -49,7 +51,7 @@ public class UIInventory : MonoBehaviour
 
     public void StartScript() {
         pos = ItemsInstance.InventoryContainer.obj.gameObject.transform.position;
-        ItemsInstance.DialogueUI.SetActive(true);
+       ItemsInstance.DialogueUI.SetActive(true);
     }
     public void ShowNotification(string _message, float _time ) {
         ItemsInstance.DialogueUI.GetComponentInChildren<TextMeshProUGUI>().text = _message;
@@ -95,27 +97,13 @@ public class UIInventory : MonoBehaviour
         UpdateStats( _item.WeaponStats, newLabel );
         l_newContainer.transform.Find( "ItemIconContainer/RawImage" ).GetComponent < RawImage >( ).texture = _item.WeaponStats.icon;
     }
-
-    public void AddBackpackSlot(WeaponObject _item)
-    {
-        ItemsInstance.BackpackContainer.SetActive(true);
-        var l_newContainer = Instantiate( ItemsInstance.BackpackContainer );
-        l_newContainer.name = _item.gameObject.name + "Slot";
-        l_newContainer.transform.SetParent(ItemsInstance.BackpackContainer.transform.parent);
-        l_newContainer.transform.position = pos2;
-        l_newContainer.transform.localScale = ItemsInstance.BackpackContainer.transform.localScale;
-        BackpackSlots.Add(l_newContainer);
-        l_newContainer.GetComponentInChildren<RawImage>().texture     = _item.WeaponStats.icon;
-        l_newContainer.GetComponentInChildren<TextMeshProUGUI>().text = _item.WeaponStats.objectName;
-        ItemsInstance.BackpackContainer.SetActive(false);
-
-    }
+    
 
     public void UpdateStats(Stat _stats, UIItemsWithLabels instanceToUpdate)
     {
         for (var l_i = 0; l_i < instanceToUpdate.Labels.Count; l_i++)
         {
-            var l_a = _stats[instanceToUpdate.Labels[l_i].ToString()];
+            var l_a = _stats[instanceToUpdate.Labels[l_i].name.ToString()];
             instanceToUpdate.Labels[l_i].labelText.text = l_a.ToString();
         }
 
@@ -196,13 +184,35 @@ public class UIInventory : MonoBehaviour
             SelectedItem.gameObject.SetActive(false);
         }
         if ( Input.GetKeyDown(KeyCode.Escape) ){
-            ItemsInstance.PauseUI.SetActive(true);
+            ShowWindow(ItemsInstance.PauseUI);
             Time.timeScale = 0;
         }
         StaticManager.UiInventory.ViewEnemyStats();
 
     }
 
+    public void CloseWindow( GameObject item = null )
+    {
+        if ( item == null ){
+            var window = ItemsInstance.openedWindow[ItemsInstance.openedWindow.Count - 1];
+            window.SetActive(false);
+            ItemsInstance.openedWindow.RemoveAt(ItemsInstance.openedWindow.Count - 1);
+        }
+        else{
+            item.SetActive(false);
+            ItemsInstance.openedWindow.Remove( item );
+        }
+        if ( ItemsInstance.openedWindow.Count == 0 ){
+            ItemsInstance.windowIsOpen = false;
+        }
+    }
+    public void ShowWindow(GameObject item)
+    {
+        item.SetActive(true);
+        ItemsInstance.windowIsOpen = item;
+        ItemsInstance.openedWindow.Add(item);
+
+    }
     public void ViewEnemyStats()
     {
         if (Input.GetMouseButton(1))

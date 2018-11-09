@@ -29,6 +29,9 @@ public class UIItems : MonoBehaviour {
 
     public GameObject SendToCompanion;
 
+	public UIItemsWithLabels WeaponInventoryStats;
+
+	public UIItemsWithLabels CharacterInventoryStats;
 
     public GameObject PlayerUI;
 	
@@ -41,6 +44,12 @@ public class UIItems : MonoBehaviour {
     public GameObject BackpackContainer;
 
 	public GameObject GameWon;
+
+	public UIItemsWithLabels CharacterStats;
+
+	public UIItemsWithLabels AttachedWeapon;
+
+	public GameObject PlayerStats;
 	
 	public GameObject AttackConfirmation;
 
@@ -49,6 +58,9 @@ public class UIItems : MonoBehaviour {
 	public GameObject DamageText;
 
 
+    public bool windowIsOpen;
+    public List <GameObject> openedWindow { get; set; }
+
 
     public object this[string propertyName]
     {
@@ -56,6 +68,7 @@ public class UIItems : MonoBehaviour {
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
     public void Initalize () {
+		openedWindow = new List < GameObject >();
         var properties = this.GetType().GetFields();
         
 
@@ -66,7 +79,7 @@ public class UIItems : MonoBehaviour {
                 {
                     this[l_fieldInfo.Name] = GameObject.Find(l_fieldInfo.Name);
 
-	                if (l_fieldInfo.Name != "Tabs" && l_fieldInfo.Name != "Inventory" ){
+	                if (l_fieldInfo.Name != "Tabs" && l_fieldInfo.Name != "Inventory" && l_fieldInfo.Name != "CharacterStats" && l_fieldInfo.Name != "AttachedWeapon" ){
 		                GameObject.Find(l_fieldInfo.Name).SetActive(false);
                     }
                 }
@@ -92,9 +105,16 @@ public class UIItems : MonoBehaviour {
 			label.name = label.labelObject.name;
 			obj.Labels.Add(label);
 		}
+
+		if ( obj.obj.name == "InventoryContainer"){
 		obj.obj.SetActive(false);
-		return obj;
+
+        }
+        return obj;
 	}
+
+	
+	
     public UIItemsWithLabels obj(GameObject _obj)
     {
         UIItemsWithLabels obj = new UIItemsWithLabels();

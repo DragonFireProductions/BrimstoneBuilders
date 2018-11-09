@@ -60,10 +60,10 @@ public class LeaderNav : CompanionNav {
 	    rainPosition = new Vector3(gameObject.transform.position.x, 10, gameObject.transform.position.z);
 	    rain.gameObject.transform.position = rainPosition;
 
-        if (Input.GetMouseButtonDown(0) && !StaticManager.UiInventory.Dragging){
+        if (Input.GetMouseButtonDown(0) && !StaticManager.UiInventory.ItemsInstance.windowIsOpen ){
 			Ray l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 	        if ( Physics.Raycast(l_ray, out hit) ){
-		        if ( hit.collider.name == "Terrain"  ){
+		        if ( hit.collider.name == "Terrain" ){
 					SetState = state.MOVE;
 		            StaticManager.particleManager.Play(ParticleManager.states.Click, hit.point);
 		        }
@@ -88,9 +88,30 @@ public class LeaderNav : CompanionNav {
 
         }
 
+		if ( StaticManager.UiInventory.ItemsInstance.windowIsOpen == false ){
 
 
-     //   if (Input.GetKeyDown(KeyCode.A))
+			if ( Input.GetMouseButtonDown( 1 ) ){
+				Ray l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );
+
+				if ( Physics.Raycast( l_ray , out hit ) ){
+					if ( hit.collider.tag == "Companion" || hit.collider.tag == "Player" ){
+						StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.PlayerStats );
+						StaticManager.UiInventory.UpdateStats( hit.collider.GetComponent < BaseCharacter >( ).attachedWeapon.WeaponStats , StaticManager.UiInventory.ItemsInstance.AttachedWeapon );
+						StaticManager.UiInventory.UpdateStats( hit.collider.GetComponent < BaseCharacter >( ).stats ,                      StaticManager.UiInventory.ItemsInstance.CharacterStats );
+						StaticManager.UiInventory.ItemsInstance.PlayerStats.transform.Find( "WeaponImage" ).GetComponent < RawImage >( ).texture = hit.collider.GetComponent < BaseCharacter >( ).attachedWeapon.WeaponStats.icon;
+					}
+				}
+			}
+		}
+
+		if ( Input.GetMouseButtonUp( 1 ) ){
+				StaticManager.UiInventory.CloseWindow(StaticManager.UiInventory.ItemsInstance.PlayerStats );
+			}
+		
+
+
+		//   if (Input.GetKeyDown(KeyCode.A))
 	    //{
 	    //    showArmor = !showingArmor();
 	    //}

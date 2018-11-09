@@ -95,7 +95,7 @@ public class RealTime : MonoBehaviour {
         }
 
         if (character is Companion && Enemies.Count > 0){
-	        return false;
+	        return true;
         }
 
 		return false;

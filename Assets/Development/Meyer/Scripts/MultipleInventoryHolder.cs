@@ -20,10 +20,20 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
 	public List < GameObject > tabs;
 
-    public void Awake( ) {
-		tabs = new List < GameObject >();
+	public Camera playerCam;
+
+	public void Awake( ) {
+		tabs            = new List < GameObject >( );
 		WeaponAssetList = itemList.itemList;
-		alllables = new List < PlayerInventory >();
+		alllables       = new List < PlayerInventory >( );
+		playerCam       = GameObject.Find( "PlayerCamera" ).GetComponent<Camera>();
+	}
+
+	public void SetPosOfCam( ) {
+		Vector3 pos = inventory.character.transform.position + (inventory.character.transform.forward * 3);
+		pos.y = 1;
+        playerCam.transform.position = pos;
+        playerCam.transform.LookAt(inventory.character.transform);
 	}
 	public void SwitchInventory(GameObject tab ) {
 		string sub = tab.name.Substring( 0 , tab.name.Length - 3 );
@@ -32,10 +42,15 @@ public class MultipleInventoryHolder : MonoBehaviour {
 			if ( l_inventory == _inventory ){
 				l_inventory.parent.SetActive(true);
 				l_inventory.Tab.GetComponent < Image >( ).color = Color.red;
+				inventory = l_inventory;
+				SetPosOfCam();
+				StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
+				StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats );
 			}
 			else{
 				l_inventory.parent.SetActive(false);
 				l_inventory.Tab.GetComponent < Image >( ).color = Color.gray;
+				l_inventory.character.gameObject.layer = 11;
 			}
 		}
 	}
@@ -122,6 +137,9 @@ public class MultipleInventoryHolder : MonoBehaviour {
         inventory.selectedObject.gameObject.transform.SetParent(inventory.character.cube.transform);
 
         inventory.character.stats.IncreaseStats(inventory.selectedObject.WeaponStats);
+		StaticManager.UiInventory.UpdateStats(inventory.selectedObject.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
+	    StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats);
+
         inventory.selectedObject.gameObject.SetActive(true);
 
     }

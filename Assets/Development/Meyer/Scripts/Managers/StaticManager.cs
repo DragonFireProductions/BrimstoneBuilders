@@ -60,9 +60,9 @@ public class StaticManager : MonoBehaviour {
         SceneManager.LoadScene( 0 );
     }
 
-    public void ReloadLevel( ) {
+    public void ReloadLevel(GameObject obj ) {
         SceneManager.LoadScene( 1 );
-        Time.timeScale = 1;
+        UnFreeze(obj);
     }
 
     public void UnFreeze(GameObject obj ) {

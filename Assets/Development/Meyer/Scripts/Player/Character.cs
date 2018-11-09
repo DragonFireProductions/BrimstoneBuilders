@@ -18,7 +18,6 @@ namespace Assets.Meyer.TestScripts.Player {
         // Use this for initialization
         private void Awake() {
             base.Awake();
-
             line = new GameObject[transform.Find("Line").transform.childCount];
             for ( int i = 0 ; i < line.Length ; i++ ){
                 line[ i ] = transform.Find( "Line" ).GetChild( i ).gameObject;
@@ -34,7 +33,6 @@ namespace Assets.Meyer.TestScripts.Player {
             cube = transform.Find("Cube").gameObject;
             inventory = GetComponent < PlayerInventory >( );
             StaticManager.RealTime.Companions.Add(this);
-
         }
     }
 

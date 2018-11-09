@@ -25,8 +25,6 @@ public class Stat : MonoBehaviour {
 
     [ SerializeField ] private float luck;
 
-    public int maxAttackpoints = 6;
-
     [ SerializeField ] private float maxHealth;
 
     [ SerializeField ] private float maxStamina;
@@ -38,6 +36,9 @@ public class Stat : MonoBehaviour {
     [ SerializeField ] private float stamina;
 
     [ SerializeField ] private float strength;
+
+    public int maxAttackpoints = 6;
+
 
     public object this[ string _property_name ] {
         get { return GetType( ).GetProperty( _property_name ).GetValue( this , null ); }

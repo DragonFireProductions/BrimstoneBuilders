@@ -39,15 +39,18 @@ public class PlayerInventory : MonoBehaviour {
         character = GetComponent < BaseCharacter >( );
         
         Slots = new List < UIItemsWithLabels >();
-     
     }
-
+    
     public void Start( ) {
         PickedUpWeapons.Add(gameObject.transform.Find("Cube/Sword").gameObject.GetComponent<WeaponObject>());
         parent = StaticManager.inventories.setParent( gameObject );
         StaticManager.inventories.alllables.Add(this);
         StaticManager.inventories.setSendButton( character as Companion );
         Tab = StaticManager.inventories.AddCompanionInventory( character as Companion );
+
+        if ( character is Character ){
+            StaticManager.inventories.SwitchInventory(Tab);
+        }
     }
     //returns the first occurance of an item from the WeaponAsset list 
    
@@ -66,12 +69,12 @@ public class PlayerInventory : MonoBehaviour {
             isInventoryActive = !isInventoryActive;
 
             if ( isInventoryActive ){
-                StaticManager.UiInventory.ItemsInstance.PlayerUI.SetActive( true );
+              StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PlayerUI);
+                StaticManager.inventories.SetPosOfCam();
                 Time.timeScale = 0;
             }
-
             if ( isInventoryActive == false ){
-                StaticManager.UiInventory.ItemsInstance.PlayerUI.SetActive( false );
+                StaticManager.UiInventory.CloseWindow();
                 Time.timeScale = 1;
             }
         }

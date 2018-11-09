@@ -20,7 +20,7 @@ public class WeaponItem
         Type4
     };
 
-    public string objectName;
+        public string objectName;
         public int weight;
         public int durability;
         public int value;
