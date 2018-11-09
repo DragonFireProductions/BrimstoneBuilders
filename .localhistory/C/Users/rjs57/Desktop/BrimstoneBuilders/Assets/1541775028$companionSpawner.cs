@@ -3,10 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class companionSpawner : MonoBehaviour
 {
-    [SerializeField] bool useBrackets = true;
 
     [SerializeField] private Companion friends;
 
@@ -24,29 +22,23 @@ public class companionSpawner : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-	    if (useBrackets)
-	    {
-	        if (Input.GetKeyDown("]"))
-	        {
-	            StartCoroutine(CompSpawn());
-	        }
-	        else if (Input.GetKeyDown("["))
-	        {
-	            Kill();
-	        }
-	    }
-	    else
-	    {
-
-	    }
-	}
+        if (Input.GetKeyDown("]"))
+        {
+            StartCoroutine(CompSpawn());
+        }
+        else if (Input.GetKeyDown("["))
+        {
+            Kill();
+        }
+    }
 
     private IEnumerator CompSpawn() {
-       // Debug.Log(index);
+        Debug.Log(index);
         if (index >= numberofcompanions)
         {
             Debug.Log("cant have anymore companions");
         }
+
         else
         {
 

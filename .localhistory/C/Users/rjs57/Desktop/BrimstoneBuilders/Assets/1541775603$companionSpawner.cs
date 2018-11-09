@@ -47,6 +47,7 @@ public class companionSpawner : MonoBehaviour
         {
             Debug.Log("cant have anymore companions");
         }
+
         else
         {
 

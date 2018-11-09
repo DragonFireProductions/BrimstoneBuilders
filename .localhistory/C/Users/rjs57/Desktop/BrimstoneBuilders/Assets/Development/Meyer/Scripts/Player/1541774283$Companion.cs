@@ -7,18 +7,12 @@ using Kristal;
 using TMPro;
 
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Companion : BaseCharacter {
     // Use this for initialization
 
     public PlayerInventory inventory;
-    [SerializeField] private RawImage image;
-    [SerializeField] private Button berzerk;
-    [SerializeField] private Button passive;
-    [SerializeField] private Button chill;
-    [SerializeField] private Button provoked;
-
+    
     private void Start( ) {
         Awake( );
         material.color = BaseColor;
@@ -26,15 +20,11 @@ public class Companion : BaseCharacter {
         StaticManager.RealTime.Companions.Add(this);
         inventory = GetComponent < PlayerInventory >( );
         cube = transform.Find("Cube").gameObject;
-        image = GetComponent<RawImage>();
-        berzerk = GetComponent<Button>();
-        passive = GetComponent<Button>();
-        chill = GetComponent<Button>();
-        provoked = GetComponent<Button>();
+
     }
 
     public void OnTriggerEnter(Collider collider ) {
-
+        
     }
     public void Damage(int _damage, BaseCharacter attacker)
     {
@@ -42,7 +32,7 @@ public class Companion : BaseCharacter {
             InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.blue);
             stats.Health -= _damage;
         }
-
+        
         if ( stats.Health <= 0 ){
             if ( this == StaticManager.Character ){
                StaticManager.UiInventory.ItemsInstance.GameOverUI.SetActive(true);
@@ -50,11 +40,6 @@ public class Companion : BaseCharacter {
             }
             StaticManager.RealTime.Companions.Remove( this );
             StaticManager.inventories.Destroy(inventory);
-            image.enabled = false;
-            berzerk.enabled = false;
-            passive.enabled = false;
-            chill.enabled = false;
-            provoked.enabled = false;
            Destroy(gameObject);
         }
         damage -= _damage;
@@ -63,17 +48,17 @@ public class Companion : BaseCharacter {
     public override  void Attack(BaseCharacter chara) {
      //gets the damage value
      float l_damage = StaticManager.DamageCalc.CalcAttack( stats , chara.stats );
-
+     
      //adds the value to the total damage
      damage += ( int )l_damage;
-
+     
      //sets the text value to the damage done
      //damageText.text = damage.ToString( );
-
+     
      Damage( ( int )l_damage, chara );
 
     }
-
+    
     public void Remove( BaseCharacter _chara ) { }
 
 }
