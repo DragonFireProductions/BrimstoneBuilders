@@ -64,7 +64,7 @@ public class PlayerInventory : MonoBehaviour {
         weapon.PickUp( );
     }
 
-    public void PickUp(//Coin Script goes here)
+    public void PickUpCoin()
     {
         StaticManager.currencyManager.AddCoins(1);
     }
