@@ -17,8 +17,6 @@ public class companionSpawner : MonoBehaviour
 
     public int numberofcompanions;
 
-    [SerializeField] private Button button;
-
     // Use this for initialization
     void Start()
 	{
@@ -60,10 +58,6 @@ public class companionSpawner : MonoBehaviour
         newEnemy.name = newEnemy.name + index.ToString( );
             Vector3 position = Random.insideUnitSphere + this.gameObject.transform.position;
             newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
-
-            var newButton = Instantiate(button);
-            newEnemy.behaviors = button.GetComponent<companionBehaviors>();
-            newButton.GetComponent<companionBehaviors>().newFriend = newEnemy;
 
             position.y = StaticManager.Character.gameObject.transform.position.y;
             StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);

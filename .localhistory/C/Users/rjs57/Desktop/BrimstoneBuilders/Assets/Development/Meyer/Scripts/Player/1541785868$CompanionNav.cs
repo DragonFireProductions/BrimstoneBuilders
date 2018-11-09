@@ -13,7 +13,11 @@ public class CompanionNav : BaseNav {
 
     private int des;
 
-
+    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private Button berzerk;
+    [SerializeField] private Button passive;
+    [SerializeField] private Button chill;
+    [SerializeField] private Button provoked;
 
     public void Start( ) {
         base.Start( );

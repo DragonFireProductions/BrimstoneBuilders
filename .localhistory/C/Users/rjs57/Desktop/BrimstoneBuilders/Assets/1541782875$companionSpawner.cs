@@ -1,9 +1,8 @@
 ﻿using Kristal;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class companionSpawner : MonoBehaviour
 {
@@ -16,9 +15,6 @@ public class companionSpawner : MonoBehaviour
     [SerializeField] private GameObject companionspawner;
 
     public int numberofcompanions;
-
-    [SerializeField] private Button button;
-
     // Use this for initialization
     void Start()
 	{
@@ -61,10 +57,6 @@ public class companionSpawner : MonoBehaviour
             Vector3 position = Random.insideUnitSphere + this.gameObject.transform.position;
             newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
 
-            var newButton = Instantiate(button);
-            newEnemy.behaviors = button.GetComponent<companionBehaviors>();
-            newButton.GetComponent<companionBehaviors>().newFriend = newEnemy;
-
             position.y = StaticManager.Character.gameObject.transform.position.y;
             StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
             yield return new WaitForSeconds(1.0f);
@@ -74,23 +66,16 @@ public class companionSpawner : MonoBehaviour
             comp.Add(newEnemy.gameObject);
             StaticManager.RealTime.Companions.Add(newEnemy.GetComponent<Companion>());
             StaticManager.RealTime.SetAttackCompanion();
+
         }
     }
 
     private void Kill() {
-        if (index <= 0)
-        {
-            Debug.Log("no companions to despawn");
-            index = 0;
-        }
-        else
-        {
-        StaticManager.RealTime.Companions.Remove(comp[0].GetComponent<Companion>());
-        var gameObj = comp[ 0 ];
-        comp.RemoveAt(0);
+            StaticManager.RealTime.Companions.Remove(comp[index].GetComponent<Companion>());
+        var gameObj = comp[ index ];
+        comp.RemoveAt(index);
         StaticManager.inventories.Destroy(gameObj.GetComponent<PlayerInventory>());
             Destroy(gameObj);
         index--;
-        }
     }
 }

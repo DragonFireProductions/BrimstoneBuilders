@@ -14,10 +14,6 @@ public class Companion : BaseCharacter {
 
     public PlayerInventory inventory;
 
-    public enum AggressionStates { BERZERK, PASSIVE, DEFEND, PROVOKED}
-
-    public AggressionStates state;
-    public companionBehaviors behaviors;
 
     private void Start( ) {
         Awake( );
@@ -68,11 +64,5 @@ public class Companion : BaseCharacter {
     }
 
     public void Remove( BaseCharacter _chara ) { }
-
-    public AggressionStates mood
-    {
-        get { return state; }
-        set { state = value; }
-    }
 
 }

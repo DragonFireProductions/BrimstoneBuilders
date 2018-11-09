@@ -3,17 +3,14 @@
 using Assets.Meyer.TestScripts.Player;
 
 using Kristal;
-using TMPro;
+
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CompanionNav : BaseNav {
 
     private float randDistance;
 
     private int des;
-
-
 
     public void Start( ) {
         base.Start( );
@@ -22,7 +19,6 @@ public class CompanionNav : BaseNav {
         randDistance = Random.Range( 1.5f, 1.5f + 2);
         battleDistance = 4;
         des = LineManager.assignIndex( );
-
     }
 
     protected override void Update( ) {

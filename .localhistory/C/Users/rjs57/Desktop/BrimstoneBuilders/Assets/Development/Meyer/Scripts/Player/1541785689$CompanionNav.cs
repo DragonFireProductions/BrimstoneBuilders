@@ -3,17 +3,14 @@
 using Assets.Meyer.TestScripts.Player;
 
 using Kristal;
-using TMPro;
+
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CompanionNav : BaseNav {
 
     private float randDistance;
 
     private int des;
-
-
 
     public void Start( ) {
         base.Start( );

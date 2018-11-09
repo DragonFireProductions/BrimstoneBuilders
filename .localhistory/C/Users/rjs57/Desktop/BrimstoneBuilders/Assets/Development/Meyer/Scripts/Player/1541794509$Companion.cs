@@ -14,10 +14,10 @@ public class Companion : BaseCharacter {
 
     public PlayerInventory inventory;
 
-    public enum AggressionStates { BERZERK, PASSIVE, DEFEND, PROVOKED}
+    public enum AggressionStates { BERZERK, PASSIVE, CHILL, PROVOKED}
 
-    public AggressionStates state;
-    public companionBehaviors behaviors;
+    private AggressionStates state;
+
 
     private void Start( ) {
         Awake( );

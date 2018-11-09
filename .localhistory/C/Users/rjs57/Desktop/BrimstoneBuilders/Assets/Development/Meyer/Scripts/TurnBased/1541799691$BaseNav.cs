@@ -21,7 +21,7 @@ public class BaseNav : MonoBehaviour {
 		Agent.stoppingDistance = stoppingDistance;
 		character = gameObject.GetComponent < BaseCharacter >( );
 	}
-
+	
 	// Update is called once per frame
 	protected virtual void Update () {
         switch (State)
@@ -80,7 +80,7 @@ public class BaseNav : MonoBehaviour {
 	public void SetDestination( Transform transform ) {
 		Agent.SetDestination( transform.position );
 	}
-    public enum state { IDLE, ATTACKING, FOLLOW, MOVE, ENEMY_CLICKED, FREEZE }
+    public enum state { IDLE, ATTACKING, FOLLOW, MOVE, ENEMY_CLICKED, FREEZE, PROVOKED, BERZERK, CHILL, DEFENSIVE }
     public state SetState
     {
         get { return State; }
@@ -105,7 +105,7 @@ public class BaseNav : MonoBehaviour {
 			    Agent.stoppingDistance = stoppingDistance;
 		    }
 
-
+			
 		    State = value;
 	    }
     }

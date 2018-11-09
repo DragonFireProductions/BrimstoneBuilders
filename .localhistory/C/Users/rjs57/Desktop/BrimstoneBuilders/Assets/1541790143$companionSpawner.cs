@@ -17,8 +17,12 @@ public class companionSpawner : MonoBehaviour
 
     public int numberofcompanions;
 
-    [SerializeField] private Button button;
 
+    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private Button berzerk;
+    [SerializeField] private Button passive;
+    [SerializeField] private Button chill;
+    [SerializeField] private Button provoked;
     // Use this for initialization
     void Start()
 	{
@@ -61,10 +65,6 @@ public class companionSpawner : MonoBehaviour
             Vector3 position = Random.insideUnitSphere + this.gameObject.transform.position;
             newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
 
-            var newButton = Instantiate(button);
-            newEnemy.behaviors = button.GetComponent<companionBehaviors>();
-            newButton.GetComponent<companionBehaviors>().newFriend = newEnemy;
-
             position.y = StaticManager.Character.gameObject.transform.position.y;
             StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
             yield return new WaitForSeconds(1.0f);
@@ -74,6 +74,11 @@ public class companionSpawner : MonoBehaviour
             comp.Add(newEnemy.gameObject);
             StaticManager.RealTime.Companions.Add(newEnemy.GetComponent<Companion>());
             StaticManager.RealTime.SetAttackCompanion();
+            text.enabled = true;
+            berzerk.enabled = true;
+            passive.enabled = true;
+            chill.enabled = true;
+            provoked.enabled = true;
         }
     }
 

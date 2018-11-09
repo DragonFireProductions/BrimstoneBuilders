@@ -13,7 +13,11 @@ public class CompanionNav : BaseNav {
 
     private int des;
 
-
+    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private Button berzerk;
+    [SerializeField] private Button passive;
+    [SerializeField] private Button chill;
+    [SerializeField] private Button provoked;
 
     public void Start( ) {
         base.Start( );
@@ -22,7 +26,16 @@ public class CompanionNav : BaseNav {
         randDistance = Random.Range( 1.5f, 1.5f + 2);
         battleDistance = 4;
         des = LineManager.assignIndex( );
-
+        text = GetComponent<TextMeshProUGUI>();
+        berzerk = GetComponent<Button>();
+        passive = GetComponent<Button>();
+        chill = GetComponent<Button>();
+        provoked = GetComponent<Button>();
+        text.enabled = true;
+        berzerk.enabled = true;
+        passive.enabled = true;
+        chill.enabled = true;
+        provoked.enabled = true;
     }
 
     protected override void Update( ) {
