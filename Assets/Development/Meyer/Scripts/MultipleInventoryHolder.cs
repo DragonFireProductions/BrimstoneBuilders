@@ -30,10 +30,12 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	}
 
 	public void SetPosOfCam( ) {
-		Vector3 pos = inventory.character.transform.position + (inventory.character.transform.forward * 3);
-		pos.y = 1;
+		Vector3 pos = inventory.character.transform.position + (inventory.character.transform.forward * 4);
+		pos.y = 0.77f;
         playerCam.transform.position = pos;
-        playerCam.transform.LookAt(inventory.character.transform);
+
+        playerCam.transform.LookAt(inventory.character.transform.position + (inventory.transform.up * 0.77f));
+		
 	}
 	public void SwitchInventory(GameObject tab ) {
 		string sub = tab.name.Substring( 0 , tab.name.Length - 3 );
@@ -45,13 +47,32 @@ public class MultipleInventoryHolder : MonoBehaviour {
 				inventory = l_inventory;
 				SetPosOfCam();
 				StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
-				StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats );
-			}
+				StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false );
+                l_inventory.character.gameObject.layer = LayerMask.NameToLayer("Character");
+
+                for (int i = 0; i < l_inventory.character.transform.childCount; i++)
+                {
+                    if (l_inventory.character.transform.GetChild(i).gameObject.layer != LayerMask.NameToLayer("UI"))
+                    {
+                        l_inventory.character.transform.GetChild(i).gameObject.layer = LayerMask.NameToLayer("Character");
+
+                    }
+                }
+            }
 			else{
 				l_inventory.parent.SetActive(false);
 				l_inventory.Tab.GetComponent < Image >( ).color = Color.gray;
 				l_inventory.character.gameObject.layer = 11;
-			}
+                l_inventory.character.gameObject.layer = LayerMask.NameToLayer("Default");
+
+                for (int i = 0; i < l_inventory.character.transform.childCount; i++)
+                {
+	                if ( l_inventory.character.transform.GetChild(i).gameObject.layer != LayerMask.NameToLayer("UI") ){
+		                l_inventory.character.transform.GetChild(i).gameObject.layer = LayerMask.NameToLayer("Default");
+
+                    }
+                }
+            }
 		}
 	}
     public WeaponItem GetItemFromAssetList(string name)
@@ -138,7 +159,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
         inventory.character.stats.IncreaseStats(inventory.selectedObject.WeaponStats);
 		StaticManager.UiInventory.UpdateStats(inventory.selectedObject.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
-	    StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats);
+	    StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false);
 
         inventory.selectedObject.gameObject.SetActive(true);
 

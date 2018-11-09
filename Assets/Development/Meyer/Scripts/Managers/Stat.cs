@@ -168,6 +168,14 @@ public class Stat : MonoBehaviour {
         health += _item.durability * 5;
     }
 
+    public Stat difference(WeaponItem _item ) {
+        Stat stat = new Stat();
+        stat.strength = _item.durability;
+        stat.agility += _item.attackSpeed;
+        stat.health += _item.durability * 5;
+
+        return stat;
+    }
     private struct Info {
 
         private TextMeshProUGUI text;

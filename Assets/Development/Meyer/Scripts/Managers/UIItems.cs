@@ -29,6 +29,10 @@ public class UIItems : MonoBehaviour {
 
     public GameObject SendToCompanion;
 
+	public UIItemsWithLabels ComparedCharacterStats;
+
+	public UIItemsWithLabels ComparedStats;
+
 	public UIItemsWithLabels WeaponInventoryStats;
 
 	public UIItemsWithLabels CharacterInventoryStats;

@@ -98,7 +98,7 @@ public class LeaderNav : CompanionNav {
 					if ( hit.collider.tag == "Companion" || hit.collider.tag == "Player" ){
 						StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.PlayerStats );
 						StaticManager.UiInventory.UpdateStats( hit.collider.GetComponent < BaseCharacter >( ).attachedWeapon.WeaponStats , StaticManager.UiInventory.ItemsInstance.AttachedWeapon );
-						StaticManager.UiInventory.UpdateStats( hit.collider.GetComponent < BaseCharacter >( ).stats ,                      StaticManager.UiInventory.ItemsInstance.CharacterStats );
+						StaticManager.UiInventory.UpdateStats( hit.collider.GetComponent < BaseCharacter >( ).stats ,                      StaticManager.UiInventory.ItemsInstance.CharacterStats, false );
 						StaticManager.UiInventory.ItemsInstance.PlayerStats.transform.Find( "WeaponImage" ).GetComponent < RawImage >( ).texture = hit.collider.GetComponent < BaseCharacter >( ).attachedWeapon.WeaponStats.icon;
 					}
 				}
