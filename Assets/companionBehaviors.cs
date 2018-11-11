@@ -6,7 +6,7 @@ public class companionBehaviors : MonoBehaviour
 {
     [SerializeField] private Companion.AggressionStates currentstate;
 
-    [SerializeField] public Companion newFriend;
+    public Companion newFriend;
 	// Use this for initialization
 	void Start()
 	{

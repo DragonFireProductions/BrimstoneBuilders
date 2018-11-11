@@ -16,7 +16,7 @@ public class Companion : BaseCharacter {
 
     public enum AggressionStates { BERZERK, PASSIVE, DEFEND, PROVOKED}
 
-    public AggressionStates state;
+    public AggressionStates aggState;
     public companionBehaviors behaviors;
 
     private void Start( ) {
@@ -71,8 +71,8 @@ public class Companion : BaseCharacter {
 
     public AggressionStates mood
     {
-        get { return state; }
-        set { state = value; }
+        get { return aggState; }
+        set { aggState = value; }
     }
 
 }
