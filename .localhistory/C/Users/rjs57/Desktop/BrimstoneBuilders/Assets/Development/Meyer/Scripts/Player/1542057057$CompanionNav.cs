@@ -20,93 +20,64 @@ public class CompanionNav : BaseNav {
 
     public AggressionStates aggState;
     public companionBehaviors behaviors;
-    //List of enemies to attack
-    public List<Enemy> enemiesToAttack;
     public void Start( ) {
         base.Start( );
-        enemiesToAttack = new List<Enemy>();
         SetState          = state.IDLE;
         character         = GetComponent < Companion >( );
         randDistance = Random.Range( 1.5f, 1.5f + 2);
         battleDistance = 4;
         des = LineManager.assignIndex( );
         companion = GetComponent<Companion>();
-        SetAgreesionState = AggressionStates.PASSIVE;
     }
 
-    //Handles assigning enemies for companion
     public AggressionStates SetAgreesionState
     {
         get { return aggState; }
         set
         {
-            enemiesToAttack.Clear();
-            if (value == AggressionStates.BERZERK)
+            character.attackers.Clear();
+            if (aggState == AggressionStates.BERZERK)
             {
                 LayerMask mask = LayerMask.NameToLayer("Enemy");
-                Collider[] colliders = Physics.OverlapSphere(transform.position, 20);
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 20, mask);
                 foreach (var collider1 in colliders)
                 {
-                    if (collider1.tag == "Enemy")
-                    {
-                        enemiesToAttack.Add(collider1.GetComponent<Enemy>());
-
-                    }
+                    character.attackers.Add(collider1.GetComponent<Enemy>());
                 }
 
-                character.enemy = enemiesToAttack[0];
-                aggState = AggressionStates.BERZERK;
+                character.enemy = character.attackers[0];
             }
-            else if (value == AggressionStates.DEFEND)
+            else if (aggState == AggressionStates.DEFEND)
             {
-                if (StaticManager.Character.attackers.Count <= 0)
-                {
-                    aggState = AggressionStates.PASSIVE;
-                }
-                else
-                {
-                    character.enemy = StaticManager.Character.attackers[Random.Range(1, StaticManager.Character.attackers.Count)];
-                }
-                /// StaticManger.Character.attackers .. pick random to attack from list
-                // or if there are none then passive
+
             }
-            else if (value == AggressionStates.PASSIVE)
+            else if (aggState == AggressionStates.PASSIVE)
             {
-                aggState = AggressionStates.PASSIVE;
+
             }
-            else if (value == AggressionStates.PROVOKED)
+            else if (aggState == AggressionStates.PROVOKED)
             {
-                // if character.attackers. count > 0 ... attack random index
-                // if there are none, then defend
+
             }
         }
 
     }
-
-    // What happens to enemies when it attacks
     protected override void Update( ) {
         switch ( aggState ){
 
 
 
-            case AggressionStates.PASSIVE:
+            case.PASSIVE:
             {
                 Agent.destination = Character.Player.transform.position + (Vector3.right * des);
             }
                 break;
             case AggressionStates.BERZERK:
             {
-                enemiesToAttack.RemoveAll(item => item == null);
-                if (enemiesToAttack.Count  > 0 && !character.enemy)
-                {
-                    character.enemy = enemiesToAttack[0];
-                }
                 if (character.attackers.Count <= 0)
                 {
-                    SetAgreesionState = AggressionStates.PASSIVE;
-                    // if breaks, switch to passive
+                    SetAgreesionState = AggressionStates.BERZERK;
                 }
-
                     Agent.SetDestination(character.enemy.transform.position);
                     float dist = Vector3.Distance(transform.position, character.enemy.transform.position);
                     transform.LookAt(character.enemy.transform.position);
@@ -116,6 +87,7 @@ public class CompanionNav : BaseNav {
                         character.AnimationClass.Play(AnimationClass.states.AttackTrigger);
                         character.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
                     }
+
                 }
                 break;
             case AggressionStates.DEFEND:

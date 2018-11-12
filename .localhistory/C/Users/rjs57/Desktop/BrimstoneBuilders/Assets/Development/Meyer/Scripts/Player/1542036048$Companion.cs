@@ -14,7 +14,10 @@ public class Companion : BaseCharacter {
 
     public PlayerInventory inventory;
 
+    public enum AggressionStates { BERZERK, PASSIVE, DEFEND, PROVOKED}
 
+    public AggressionStates aggState;
+    public companionBehaviors behaviors;
 
     private void Start( ) {
         Awake( );
@@ -23,6 +26,7 @@ public class Companion : BaseCharacter {
         StaticManager.RealTime.Companions.Add(this);
         inventory = GetComponent < PlayerInventory >( );
         cube = transform.Find("Cube").gameObject;
+
     }
 
     public void OnTriggerEnter(Collider collider ) {
@@ -42,8 +46,6 @@ public class Companion : BaseCharacter {
                StaticManager.UiInventory.ItemsInstance.GameOverUI.SetActive(true);
                 Time.timeScale = 0;
             }
-
-            Destroy(GetComponent<CompanionNav>().behaviors.gameObject);
             StaticManager.RealTime.Companions.Remove( this );
             StaticManager.inventories.Destroy(inventory);
             Destroy(gameObject);
@@ -66,5 +68,11 @@ public class Companion : BaseCharacter {
     }
 
     public void Remove( BaseCharacter _chara ) { }
+
+    public AggressionStates mood
+    {
+        get { return aggState; }
+        set { aggState = value; }
+    }
 
 }

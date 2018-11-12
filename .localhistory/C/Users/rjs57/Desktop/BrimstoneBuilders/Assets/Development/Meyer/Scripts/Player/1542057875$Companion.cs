@@ -42,8 +42,6 @@ public class Companion : BaseCharacter {
                StaticManager.UiInventory.ItemsInstance.GameOverUI.SetActive(true);
                 Time.timeScale = 0;
             }
-
-            Destroy(GetComponent<CompanionNav>().behaviors.gameObject);
             StaticManager.RealTime.Companions.Remove( this );
             StaticManager.inventories.Destroy(inventory);
             Destroy(gameObject);

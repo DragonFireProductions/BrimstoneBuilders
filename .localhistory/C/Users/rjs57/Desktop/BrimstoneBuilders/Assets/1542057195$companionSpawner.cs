@@ -63,7 +63,7 @@ public class companionSpawner : MonoBehaviour
             newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
 
             var newButton = Instantiate(Resources.Load<companionBehaviors>("Panel"));
-            newEnemy.GetComponent<CompanionNav>().behaviors = newButton.GetComponent<companionBehaviors>();
+            newEnemy.behaviors = newButton.GetComponent<companionBehaviors>();
             newButton.GetComponent<companionBehaviors>().newFriend = newEnemy;
 
             position.y = StaticManager.Character.gameObject.transform.position.y;

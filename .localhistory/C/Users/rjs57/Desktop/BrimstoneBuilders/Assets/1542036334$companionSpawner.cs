@@ -17,13 +17,12 @@ public class companionSpawner : MonoBehaviour
 
     public int numberofcompanions;
 
-
+    [SerializeField] private Button button;
 
     // Use this for initialization
     void Start()
 	{
         comp = new List<GameObject>();
-
 	}
 
 	// Update is called once per frame
@@ -62,8 +61,8 @@ public class companionSpawner : MonoBehaviour
             Vector3 position = Random.insideUnitSphere + this.gameObject.transform.position;
             newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
 
-            var newButton = Instantiate(Resources.Load<companionBehaviors>("Panel"));
-            newEnemy.GetComponent<CompanionNav>().behaviors = newButton.GetComponent<companionBehaviors>();
+            var newButton = Instantiate(button);
+            newEnemy.behaviors = button.GetComponent<companionBehaviors>();
             newButton.GetComponent<companionBehaviors>().newFriend = newEnemy;
 
             position.y = StaticManager.Character.gameObject.transform.position.y;
@@ -75,7 +74,6 @@ public class companionSpawner : MonoBehaviour
             comp.Add(newEnemy.gameObject);
             StaticManager.RealTime.Companions.Add(newEnemy.GetComponent<Companion>());
             StaticManager.RealTime.SetAttackCompanion();
-            newButton.newFriend = newEnemy.GetComponent<Companion>();
         }
     }
 
