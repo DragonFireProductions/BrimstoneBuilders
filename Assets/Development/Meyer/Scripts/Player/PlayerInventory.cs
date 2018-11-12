@@ -64,7 +64,7 @@ public class PlayerInventory : MonoBehaviour {
 
             if ( isInventoryActive ){
               StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PlayerUI);
-                StaticManager.inventories.SetPosOfCam();
+                StaticManager.inventories.SwitchInventory(StaticManager.tabManager.GetTab(StaticManager.Character));
                 Time.timeScale = 0;
             }
             if ( isInventoryActive == false ){

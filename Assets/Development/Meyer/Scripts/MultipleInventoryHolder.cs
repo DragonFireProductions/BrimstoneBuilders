@@ -20,6 +20,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
 	public Camera playerCam;
 
+	public Vector3 prevPos;
+
 	public Tab previousInventory;
 	public void Awake( ) {
 		WeaponAssetList = itemList.itemList;
@@ -30,32 +32,30 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	public void Start( ) {
 		inventory = StaticManager.Character.GetComponent < PlayerInventory >( );
 	}
-	public void SetPosOfCam( ) {
-		Vector3 characterpos = new Vector3(inventory.character.transform.position.x, 30, inventory.character.transform.position.z);
-		inventory.character.transform.position = characterpos;
-		Vector3 pos = characterpos + (inventory.character.transform.forward * 4);
-		pos.y = 30.77f;
-        playerCam.transform.position = pos;
-        playerCam.transform.LookAt(inventory.character.transform.position + (inventory.transform.up * 0.77f));
-		StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
-		StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false);
-		
-	}
 	public void SwitchInventory(Tab tab ) {
 		if ( previousInventory ){
 
             previousInventory.companion.inventory.parent.gameObject.SetActive(false);
             previousInventory.GetComponent<Image>().color = Color.gray;
-            previousInventory.companion.agent.Warp(new Vector3(previousInventory.companion.transform.position.x, 0, previousInventory.companion.transform.position.y));
-        }
-		
-		tab.companion.inventory.parent.SetActive(true);
+			previousInventory.companion.transform.position = prevPos;
+		}
+        Vector3 characterpos = new Vector3(inventory.character.transform.position.x, 30, inventory.character.transform.position.z);
+        inventory.character.transform.position = characterpos;
+        Vector3 pos = characterpos + (inventory.character.transform.forward * 4);
+        pos.y = 30.77f;
+        playerCam.transform.position = pos;
+
+
+        playerCam.transform.LookAt(inventory.character.transform.position + (inventory.transform.up * 0.77f));
+        StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
+        StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false);
+        tab.companion.inventory.parent.SetActive(true);
 		tab.GetComponent < Image >( ).color = Color.red;
 		inventory = tab.companion.inventory;
-		SetPosOfCam();
 		StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
 		StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false );
 		previousInventory = tab;
+		prevPos = inventory.character.transform.position;
 
     }
     public WeaponItem GetItemFromAssetList(string name)

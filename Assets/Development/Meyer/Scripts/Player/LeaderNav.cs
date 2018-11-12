@@ -90,7 +90,7 @@ public class LeaderNav : CompanionNav {
 				Ray l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );
 				RaycastHit hit1 = new RaycastHit();
 				if ( Physics.Raycast( l_ray , out hit1 ) ){
-					if ( hit1.collider.tag == "Companion" || hit.collider.tag == "Player" ){
+					if ( hit1.collider.tag == "Companion" || hit1.collider.tag == "Player" ){
 						StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.PlayerStats );
 						StaticManager.UiInventory.UpdateStats( hit1.collider.GetComponent < BaseCharacter >( ).attachedWeapon.WeaponStats , StaticManager.UiInventory.ItemsInstance.AttachedWeapon );
 						StaticManager.UiInventory.UpdateStats( hit1.collider.GetComponent < BaseCharacter >( ).stats ,                      StaticManager.UiInventory.ItemsInstance.CharacterStats, false );
