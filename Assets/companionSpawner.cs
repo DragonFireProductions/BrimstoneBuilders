@@ -37,15 +37,14 @@ public class companionSpawner : MonoBehaviour
         StaticManager.RealTime.Companions.RemoveAll(nulls => nulls == null);
             var newEnemy = Instantiate(Resources.Load<Companion>("Companion"));
         newEnemy.name = newEnemy.name + index.ToString( );
-            Vector3 position = Random.insideUnitSphere + this.gameObject.transform.position;
+            Vector3 position = Random.insideUnitSphere * 5 + this.gameObject.transform.position;
             newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
 
             position.y = StaticManager.Character.gameObject.transform.position.y;
             StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
             yield return new WaitForSeconds(1.0f);
-            //variable.gameObject.SetActive(true);
             newEnemy.GetComponent<Companion>().Nav.Agent.Warp(position);
-            newEnemy.GetComponent<CompanionNav>().transform.position = this.gameObject.transform.position;
+            newEnemy.GetComponent<CompanionNav>().transform.position = position;
             comp.Add(newEnemy.gameObject);
             StaticManager.RealTime.Companions.Add(newEnemy.GetComponent<Companion>());
             StaticManager.RealTime.SetAttackCompanion();
