@@ -46,7 +46,10 @@ public class LeaderNav : CompanionNav {
 
 	public Enemy enemy;
 
-	void Start () {
+    public ParticleSystem enemySystem;
+
+
+    void Start () {
 		base.Start();
 		hit = new RaycastHit();
 		character = GetComponent < Character >( );
@@ -68,9 +71,18 @@ public class LeaderNav : CompanionNav {
 		        if ( hit.collider.name == "Terrain" ){
 					SetState = state.MOVE;
 		            StaticManager.particleManager.Play(ParticleManager.states.Click, hit.point);
-		        }
+
+			        if ( enemySystem ){
+					Destroy(enemySystem.gameObject);
+
+                    }
+                }
 		        else if (hit.collider.tag == "Enemy"){
+					
+					Destroy(enemySystem);
 			        enemy = hit.collider.GetComponent < Enemy >( );
+			        enemySystem = StaticManager.particleManager.Play( ParticleManager.states.EnemySelected , enemy.transform.position );
+					enemySystem.transform.SetParent(enemy.transform);
 			        SetState = state.ENEMY_CLICKED;
 		        }
                 else if (hit.collider.tag == "Post"){
