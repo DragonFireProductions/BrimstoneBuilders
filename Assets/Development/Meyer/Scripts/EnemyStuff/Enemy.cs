@@ -47,7 +47,7 @@ namespace Kristal
                 //
                 for (int i = 0; i < MaxCoinCount; i++)
                 {
-                    deadPos = UnityEngine.Random.insideUnitSphere * 1 + this.gameObject.transform.position;
+                    deadPos = UnityEngine.Random.insideUnitSphere * 2 + this.gameObject.transform.position;
                     deadPos.y = StaticManager.Character.gameObject.transform.position.y;
                     var newCoin = Instantiate(Resources.Load<GameObject>("Coin"));
                     newCoin.gameObject.transform.position = deadPos;

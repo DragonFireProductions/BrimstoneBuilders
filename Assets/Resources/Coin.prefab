@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4238296479051094}
   - component: {fileID: 33460507705793234}
   - component: {fileID: 23300713805998554}
-  - component: {fileID: 136841453752417668}
   - component: {fileID: 54648304409419886}
   - component: {fileID: 114094167982023470}
+  - component: {fileID: 135082942809086180}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -39,7 +39,7 @@ Transform:
   m_GameObject: {fileID: 1531782500733556}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 194.69, y: 0, z: 19.55}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.868453, y: 0.868453, z: 0.868453}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -59,7 +59,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c68bf035574a52c4f9f6d3c32107b0b2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -85,7 +85,7 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1531782500733556}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 32e4bcb3a94eb15458ab750d2df01c5a, type: 3}
 --- !u!54 &54648304409419886
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -112,8 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac1e8d699925be34f921d39c634828b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &136841453752417668
-CapsuleCollider:
+--- !u!135 &135082942809086180
+SphereCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -121,7 +121,6 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 2.4376404
-  m_Height: 4.875281
-  m_Direction: 1
-  m_Center: {x: 0, y: -0.000003973643, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.5715819
+  m_Center: {x: 0, y: 0, z: 0}
