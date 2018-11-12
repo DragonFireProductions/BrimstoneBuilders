@@ -9,6 +9,7 @@ namespace Assets.Meyer.TestScripts.Player {
     public class Character : Companion {
 
         public static GameObject Player;
+        public companionSpawner spawner;
 
         [ SerializeField ] private GameObject camHolder;
 
@@ -23,7 +24,7 @@ namespace Assets.Meyer.TestScripts.Player {
                 line[ i ] = transform.Find( "Line" ).GetChild( i ).gameObject;
             }
             Player = GameObject.FindWithTag("Player");
-         
+            spawner = gameObject.GetComponent<companionSpawner>();
             Nav = gameObject.GetComponent<LeaderNav>();
             
            

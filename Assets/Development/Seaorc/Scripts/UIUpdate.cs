@@ -13,12 +13,17 @@ public class UIUpdate : MonoBehaviour
     public TextMeshProUGUI HpText;
     public TextMeshProUGUI StaminaText;
 
+    public TextMeshProUGUI CoinText;
+
     private Stat Selected;
-    
-    
+    private int Coins;
+
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         Selected = StaticManager.Character.stats;
+
+        Coins = StaticManager.Character.inventory.coinCount;
         //if (TurnBasedController.instance != null && TurnBasedController.instance._player.selectedAttacker!= null)
         //{
         //    Selected = TurnBasedController.instance._player.selectedAttacker.stats;
@@ -49,5 +54,10 @@ public class UIUpdate : MonoBehaviour
             if (StaminaText != null)
                 StaminaText.text = Selected.Stamina.ToString() + " / " + (Selected.Endurance * 10).ToString();
         }
+
+        if(Coins == 0)
+            CoinText.text = "0";
+        else
+            CoinText.text = Coins.ToString();
     }
 }

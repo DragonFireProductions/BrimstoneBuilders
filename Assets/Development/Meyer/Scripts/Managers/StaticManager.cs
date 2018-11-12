@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class StaticManager : MonoBehaviour {
+public class StaticManager : MonoBehaviour
+{
 
     public static AudioManager Manager;
 
@@ -28,40 +29,48 @@ public class StaticManager : MonoBehaviour {
     public static MultipleInventoryHolder inventories;
 
     public static TabManager tabManager;
-    // Use this for initialization
-    public void Awake( ) {
 
-        if ( Instance == null ){
+    public static Currency currencyManager;
+    // Use this for initialization
+    public void Awake()
+    {
+
+        if (Instance == null)
+        {
             Instance = this;
         }
-        else if ( Instance != this ){
-            Destroy( gameObject );
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
         }
-        Manager = FindObjectOfType < AudioManager >( );
+        Manager = FindObjectOfType<AudioManager>();
 
-        Character = GameObject.Find( "Player" ).GetComponent < Character >( );
+        Character = GameObject.Find("Player").GetComponent<Character>();
 
-        Utility = GameObject.Find( "ManagerHolder" ).GetComponent < CharacterUtility >( );
+        Utility = GameObject.Find("ManagerHolder").GetComponent<CharacterUtility>();
 
-        UiInventory = GameObject.Find( "ManagerHolder" ).GetComponent < UIInventory >( );
+        UiInventory = GameObject.Find("ManagerHolder").GetComponent<UIInventory>();
         //UiInventory.Start( );
 
-        DamageCalc = GameObject.Find( "ManagerHolder" ).GetComponent < DamageCalc >( );
+        DamageCalc = GameObject.Find("ManagerHolder").GetComponent<DamageCalc>();
 
-        RealTime = GameObject.Find( "ManagerHolder" ).GetComponent < RealTime >( );
+        RealTime = GameObject.Find("ManagerHolder").GetComponent<RealTime>();
 
-        particleManager = GameObject.Find( "ManagerHolder" ).GetComponent < ParticleManager >( );
+        particleManager = GameObject.Find("ManagerHolder").GetComponent<ParticleManager>();
 
         InstatiateFloatingText.Initalize();
 
-        inventories = GameObject.Find( "ManagerHolder" ).GetComponent < MultipleInventoryHolder >( );
+        inventories = GameObject.Find("ManagerHolder").GetComponent<MultipleInventoryHolder>();
 
         tabManager = GetComponent < TabManager >( );
 
+        currencyManager = GameObject.Find("ManagerHolder").GetComponent<Currency>();
+
     }
-    
-    public void LoadMainMenu( ) {
-        SceneManager.LoadScene( 0 );
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void ReloadLevel(GameObject obj ) {
@@ -69,16 +78,19 @@ public class StaticManager : MonoBehaviour {
         UnFreeze(obj);
     }
 
-    public void UnFreeze(GameObject obj ) {
+    public void UnFreeze(GameObject obj)
+    {
         Time.timeScale = 1;
         obj.SetActive(false);
     }
 
-    public void Freeze( ) {
+    public void Freeze()
+    {
         Time.timeScale = 0;
     }
-    public void EnableSendTo( ) {
+    public void EnableSendTo()
+    {
         UiInventory.ItemsInstance.SendToCompanion.SetActive(true);
     }
-    
+
 }

@@ -79,6 +79,13 @@ public class LeaderNav : CompanionNav {
 			        //Debug.Log("got the post");
 			        StartCoroutine( show( ) );
 		        }
+                //
+                else if (hit.collider.tag == "ShopKeeper") //Left Click
+		        {
+		            StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.ShopUI.obj);
+		            StaticManager.Instance.Freeze();
+		        }
+                //
             }
 
         }

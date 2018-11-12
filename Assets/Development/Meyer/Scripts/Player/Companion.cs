@@ -12,8 +12,8 @@ public class Companion : BaseCharacter {
     // Use this for initialization
 
     public PlayerInventory inventory;
-   
-    
+
+
     private void Start( ) {
         Awake( );
         material.color = BaseColor;

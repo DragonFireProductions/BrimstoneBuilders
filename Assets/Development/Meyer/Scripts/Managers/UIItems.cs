@@ -61,11 +61,24 @@ public class UIItems : MonoBehaviour {
 
 	public GameObject DamageText;
 
+    public UIItemsWithLabels ShopUI;
+
 
     public bool windowIsOpen;
     public List <GameObject> openedWindow { get; set; }
 
+    public TextMeshProUGUI GetLabel(string name, UIItemsWithLabels labels)
+    {
+        foreach (var VARIABLE in labels.Labels)
+        {
+            if(VARIABLE.name == name)
+            {
+                return VARIABLE.labelText;
+            }
+        }
 
+        return null;
+    }
     public object this[string propertyName]
     {
         get { return this.GetType().GetField(propertyName).GetValue(this); }
@@ -110,7 +123,7 @@ public class UIItems : MonoBehaviour {
 			obj.Labels.Add(label);
 		}
 
-		if ( obj.obj.name == "InventoryContainer"){
+		if ( obj.obj.name == "InventoryContainer" || obj.obj.name == "ShopUI"){
 		obj.obj.SetActive(false);
 
         }
