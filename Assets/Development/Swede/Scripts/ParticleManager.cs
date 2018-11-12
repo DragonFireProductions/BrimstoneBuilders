@@ -29,7 +29,8 @@ public class ParticleManager : MonoBehaviour
         Click,
         Snow,
         Leaves,
-        EnemySelected
+        EnemySelected,
+        Blood
     }
 
 

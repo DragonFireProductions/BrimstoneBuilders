@@ -14,6 +14,7 @@ namespace Assets.Meyer.TestScripts.Player {
 
         public GameObject[] line;
 
+
         //CharacterController controller;
         // Use this for initialization
         private void Awake() {
