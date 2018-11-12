@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4306655951720004}
-  m_Layer: 11
+  m_Layer: 9
   m_Name: SwordTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 114489902128811058}
   - component: {fileID: 95487029119854218}
   - component: {fileID: 54568903915480432}
-  m_Layer: 11
+  m_Layer: 9
   m_Name: Sword
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 4786545345961382}
   - component: {fileID: 198967091706794474}
   - component: {fileID: 199495470919106390}
-  m_Layer: 11
+  m_Layer: 9
   m_Name: SwordTrail_Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 4163522455712000}
   - component: {fileID: 198244827764673502}
   - component: {fileID: 199821238213797072}
-  m_Layer: 11
+  m_Layer: 9
   m_Name: SwordTrail_Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 4288107529737628}
   - component: {fileID: 198315536599547864}
   - component: {fileID: 199862853365921886}
-  m_Layer: 11
+  m_Layer: 9
   m_Name: SwordTrail_Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +180,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4076562394990466}
-  m_Layer: 11
+  m_Layer: 9
   m_Name: TempSword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 4937122022304936}
   - component: {fileID: 33425879616908938}
   - component: {fileID: 23857786244796656}
-  m_Layer: 11
+  m_Layer: 9
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,6 +237,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1861860584219942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4877820313036488}
+  m_Layer: 11
+  m_Name: Scripts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1962906262000458
 GameObject:
   m_ObjectHideFlags: 1
@@ -262,12 +277,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1232946431525932}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 11.71, y: -0.44, z: 11.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4853313485897388}
   - {fileID: 4876187990571036}
   - {fileID: 224596210792848096}
+  - {fileID: 4877820313036488}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -382,6 +398,19 @@ Transform:
   m_Father: {fileID: 4042382521905864}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 37.689003, y: 0, z: 0}
+--- !u!4 &4877820313036488
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1861860584219942}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4042382521905864}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4937122022304936
 Transform:
   m_ObjectHideFlags: 1
@@ -799,7 +828,6 @@ MonoBehaviour:
   Slots: []
   character: {fileID: 0}
   AttachedWeapons: []
-  Tab: {fileID: 0}
   companion: {fileID: 0}
 --- !u!114 &114921211119869274
 MonoBehaviour:

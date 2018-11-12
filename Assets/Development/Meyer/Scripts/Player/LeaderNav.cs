@@ -73,15 +73,10 @@ public class LeaderNav : CompanionNav {
 						character.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
 			        }
 		        }
-                else if (hit.collider.tag == "Post")
-		        {
-			        if ( hit.collider.name == "End" ){
-				        message.text = "The End is Neigh!";
-			        }
-			        else{
-				        message.text = "Go Forth!";
-			        }
-                    //Debug.Log("got the post");
+                else if (hit.collider.tag == "Post"){
+			        message.text = hit.collider.name == "End" ? "The End is Neigh!" : "Go Forth!";
+
+			        //Debug.Log("got the post");
 			        StartCoroutine( show( ) );
 		        }
             }
@@ -93,13 +88,13 @@ public class LeaderNav : CompanionNav {
 
 			if ( Input.GetMouseButtonDown( 1 ) ){
 				Ray l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );
-
-				if ( Physics.Raycast( l_ray , out hit ) ){
-					if ( hit.collider.tag == "Companion" || hit.collider.tag == "Player" ){
+				RaycastHit hit1 = new RaycastHit();
+				if ( Physics.Raycast( l_ray , out hit1 ) ){
+					if ( hit1.collider.tag == "Companion" || hit.collider.tag == "Player" ){
 						StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.PlayerStats );
-						StaticManager.UiInventory.UpdateStats( hit.collider.GetComponent < BaseCharacter >( ).attachedWeapon.WeaponStats , StaticManager.UiInventory.ItemsInstance.AttachedWeapon );
-						StaticManager.UiInventory.UpdateStats( hit.collider.GetComponent < BaseCharacter >( ).stats ,                      StaticManager.UiInventory.ItemsInstance.CharacterStats, false );
-						StaticManager.UiInventory.ItemsInstance.PlayerStats.transform.Find( "WeaponImage" ).GetComponent < RawImage >( ).texture = hit.collider.GetComponent < BaseCharacter >( ).attachedWeapon.WeaponStats.icon;
+						StaticManager.UiInventory.UpdateStats( hit1.collider.GetComponent < BaseCharacter >( ).attachedWeapon.WeaponStats , StaticManager.UiInventory.ItemsInstance.AttachedWeapon );
+						StaticManager.UiInventory.UpdateStats( hit1.collider.GetComponent < BaseCharacter >( ).stats ,                      StaticManager.UiInventory.ItemsInstance.CharacterStats, false );
+						StaticManager.UiInventory.ItemsInstance.PlayerStats.transform.Find( "WeaponImage" ).GetComponent < RawImage >( ).texture = hit1.collider.GetComponent < BaseCharacter >( ).attachedWeapon.WeaponStats.icon;
 					}
 				}
 			}

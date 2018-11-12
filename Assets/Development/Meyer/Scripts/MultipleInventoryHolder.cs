@@ -31,10 +31,10 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		inventory = StaticManager.Character.GetComponent < PlayerInventory >( );
 	}
 	public void SetPosOfCam( ) {
-		Vector3 characterpos = new Vector3(inventory.character.transform.position.x, 15, inventory.character.transform.position.z);
+		Vector3 characterpos = new Vector3(inventory.character.transform.position.x, 30, inventory.character.transform.position.z);
 		inventory.character.transform.position = characterpos;
 		Vector3 pos = characterpos + (inventory.character.transform.forward * 4);
-		pos.y = 15.77f;
+		pos.y = 30.77f;
         playerCam.transform.position = pos;
         playerCam.transform.LookAt(inventory.character.transform.position + (inventory.transform.up * 0.77f));
 		
@@ -42,7 +42,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	public void SwitchInventory(Tab tab ) {
 		if ( previousInventory ){
 
-            previousInventory.transform.parent.gameObject.SetActive(false);
+            previousInventory.companion.inventory.parent.gameObject.SetActive(false);
             previousInventory.GetComponent<Image>().color = Color.gray;
             previousInventory.companion.agent.Warp(new Vector3(previousInventory.companion.transform.position.x, 0, previousInventory.companion.transform.position.y));
         }
