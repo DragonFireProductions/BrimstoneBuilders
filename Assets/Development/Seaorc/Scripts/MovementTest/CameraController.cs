@@ -129,7 +129,7 @@ public class CameraController : MonoBehaviour
 
             transform.position = new Vector3(transform.position.x, colonyCam.position.y + zoom, transform.position.z);
         }
-        if (Mode == CameraMode.PLAYER && !StaticManager.UiInventory.ItemsInstance.windowIsOpen)
+        if (Mode == CameraMode.PLAYER && !StaticManager.UiInventory.ItemsInstance.windowIsOpen &&  StaticManager.Character.Nav.SetState != BaseNav.state.ATTACKING )
         {
             camRig.position = playerTransform.position;
 

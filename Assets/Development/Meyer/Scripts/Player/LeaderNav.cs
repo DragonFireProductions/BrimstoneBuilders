@@ -44,6 +44,8 @@ public class LeaderNav : CompanionNav {
 
 	private Collider[] colliders;
 
+	public Enemy enemy;
+
 	void Start () {
 		base.Start();
 		hit = new RaycastHit();
@@ -68,10 +70,8 @@ public class LeaderNav : CompanionNav {
 		            StaticManager.particleManager.Play(ParticleManager.states.Click, hit.point);
 		        }
 		        else if (hit.collider.tag == "Enemy"){
-			        if ( Vector3.Distance(hit.collider.gameObject.transform.position, gameObject.transform.position) < 3 ){
-				      character.AnimationClass.Play(AnimationClass.states.AttackTrigger);
-						character.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
-			        }
+			        enemy = hit.collider.GetComponent < Enemy >( );
+			        SetState = state.ENEMY_CLICKED;
 		        }
                 else if (hit.collider.tag == "Post"){
 			        message.text = hit.collider.name == "End" ? "The End is Neigh!" : "Go Forth!";
@@ -162,12 +162,29 @@ public class LeaderNav : CompanionNav {
         switch ( State ){
 			case state.ATTACKING:
 
+				if ( Vector3.Distance(enemy.transform.position, gameObject.transform.position) > 3  ){
+					SetState = state.ENEMY_CLICKED;
+				}
+
+				if ( enemy == null ){
+					SetState = state.FREEZE;
+				}
+					character.transform.LookAt(enemy.transform.position);
+                    character.AnimationClass.Play(AnimationClass.states.AttackTrigger);
+                    character.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
+
                 break;
 			case state.MOVE:
 				Agent.SetDestination( hit.point );
 				break;
 			case state.ENEMY_CLICKED:
 
+				if (Vector3.Distance(enemy.transform.position, gameObject.transform.position) < 3  ){
+					SetState = state.ATTACKING;
+				}
+				else{
+					Agent.SetDestination( enemy.transform.position );
+				}
 				break;
 			case state.IDLE:
 				break;
