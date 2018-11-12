@@ -37,6 +37,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		pos.y = 30.77f;
         playerCam.transform.position = pos;
         playerCam.transform.LookAt(inventory.character.transform.position + (inventory.transform.up * 0.77f));
+		StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
+		StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false);
 		
 	}
 	public void SwitchInventory(Tab tab ) {
