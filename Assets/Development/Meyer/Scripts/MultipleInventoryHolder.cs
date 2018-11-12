@@ -39,15 +39,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
             previousInventory.GetComponent<Image>().color = Color.gray;
 			previousInventory.companion.transform.position = prevPos;
 		}
-        Vector3 characterpos = new Vector3(inventory.character.transform.position.x, 30, inventory.character.transform.position.z);
-        inventory.character.transform.position = characterpos;
-        Vector3 pos = characterpos + (inventory.character.transform.forward * 4);
-        pos.y = 30.77f;
-        playerCam.transform.position = pos;
-
-
-        playerCam.transform.LookAt(inventory.character.transform.position + (inventory.transform.up * 0.77f));
-        StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
+        
+		StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
         StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false);
         tab.companion.inventory.parent.SetActive(true);
 		tab.GetComponent < Image >( ).color = Color.red;
@@ -56,6 +49,13 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false );
 		previousInventory = tab;
 		prevPos = inventory.character.transform.position;
+
+        Vector3 characterpos = new Vector3(inventory.character.transform.position.x, 30, inventory.character.transform.position.z);
+        inventory.character.transform.position = characterpos;
+        Vector3 pos = characterpos + (inventory.character.transform.forward * 4);
+        pos.y = 30.77f;
+        playerCam.transform.position = pos;
+        playerCam.transform.LookAt(inventory.character.transform.position + (inventory.transform.up * 0.77f));
 
     }
     public WeaponItem GetItemFromAssetList(string name)
@@ -95,8 +95,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
     }
 
 	public void Destroy(PlayerInventory inventory ) {
-		Destroy(StaticManager.tabManager.GetTab(inventory.character as Companion));
-		Destroy(inventory.parent);
+		Destroy(StaticManager.tabManager.GetTab(inventory.character as Companion).gameObject);
+		Destroy(inventory.parent.gameObject);
 		if ( inventory == this.inventory ){
 			SwitchInventory(StaticManager.tabManager.GetTab(StaticManager.Character));
 		}
