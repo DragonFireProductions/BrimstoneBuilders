@@ -64,7 +64,7 @@ public class ContainerScript : MonoBehaviour /*IPointerDownHandler*/ {
 
         StaticManager.UiInventory.ItemsInstance.ComparedStats.Labels[ labels.Count - 1 ].labelText.text = weapon.objectName;
         StaticManager.UiInventory.UpdateStats(StaticManager.inventories.inventory.character.attachedWeapon.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
-        StaticManager.UiInventory.UpdateStats(StaticManager.inventories.inventory.character.stats.difference(weapon), StaticManager.UiInventory.ItemsInstance.ComparedCharacterStats, true);
+        StaticManager.UiInventory.UpdateStats(StaticManager.inventories.inventory.character.stats.difference(weapon, currentWeapon), StaticManager.UiInventory.ItemsInstance.ComparedCharacterStats, true);
     }
 
     public void OnPointerExit( PointerEventData data ) {

@@ -119,6 +119,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
             ob.transform.parent = GameObject.Find("Weapons").transform;
             ob.gameObject.name = ob.WeaponStats.objectName;
             ob.gameObject.SetActive(false);
+			inventory.character.stats.ResetStats(ob.WeaponStats);
         }
 
         inventory.selectedObject.GetComponent<BoxCollider>().enabled = false;
