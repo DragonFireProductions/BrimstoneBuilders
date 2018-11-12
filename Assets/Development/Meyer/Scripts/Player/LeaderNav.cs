@@ -162,14 +162,18 @@ public class LeaderNav : CompanionNav {
         switch ( State ){
 			case state.ATTACKING:
 
-				if ( Vector3.Distance(enemy.transform.position, gameObject.transform.position) > 3  ){
-					SetState = state.ENEMY_CLICKED;
-				}
+				
 
 				if ( enemy == null ){
 					SetState = state.FREEZE;
+
+					return;
 				}
-					character.transform.LookAt(enemy.transform.position);
+                if (Vector3.Distance(enemy.transform.position, gameObject.transform.position) > 3)
+                {
+                    SetState = state.ENEMY_CLICKED;
+                }
+                character.transform.LookAt(enemy.transform.position);
                     character.AnimationClass.Play(AnimationClass.states.AttackTrigger);
                     character.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
 
@@ -192,11 +196,6 @@ public class LeaderNav : CompanionNav {
 
 				break;
 			case state.FREEZE:
-
-				if ( !character.AnimationClass.animation.GetBool("Attacking") && Input.GetMouseButton(0)){
-					character.AnimationClass.Play(AnimationClass.states.AttackTrigger);
-					character.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
-				}
 				break;
 		default:
 
