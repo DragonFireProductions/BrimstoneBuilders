@@ -26,6 +26,8 @@ public class StaticManager : MonoBehaviour {
     public FloatingText text;
 
     public static MultipleInventoryHolder inventories;
+
+    public static TabManager tabManager;
     // Use this for initialization
     public void Awake( ) {
 
@@ -53,6 +55,8 @@ public class StaticManager : MonoBehaviour {
         InstatiateFloatingText.Initalize();
 
         inventories = GameObject.Find( "ManagerHolder" ).GetComponent < MultipleInventoryHolder >( );
+
+        tabManager = GetComponent < TabManager >( );
 
     }
     

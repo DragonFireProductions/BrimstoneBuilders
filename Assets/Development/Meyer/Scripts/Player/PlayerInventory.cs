@@ -29,8 +29,6 @@ public class PlayerInventory : MonoBehaviour {
 
     public List < WeaponObject > AttachedWeapons;
 
-    public GameObject Tab;
-
 
     public void Awake( ) {
         AttachedWeapons = new List < WeaponObject >();
@@ -46,11 +44,7 @@ public class PlayerInventory : MonoBehaviour {
         parent = StaticManager.inventories.setParent( gameObject );
         StaticManager.inventories.alllables.Add(this);
         StaticManager.inventories.setSendButton( character as Companion );
-        Tab = StaticManager.inventories.AddCompanionInventory( character as Companion );
-
-        if ( character is Character ){
-            StaticManager.inventories.SwitchInventory(Tab);
-        }
+        StaticManager.inventories.AddCompanionInventory( character as Companion );
     }
     //returns the first occurance of an item from the WeaponAsset list 
    

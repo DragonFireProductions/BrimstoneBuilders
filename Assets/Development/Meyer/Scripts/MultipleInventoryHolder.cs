@@ -18,63 +18,44 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
 	public PlayerInventory inventory;
 
-	public List < GameObject > tabs;
-
 	public Camera playerCam;
 
+	public Tab previousInventory;
 	public void Awake( ) {
-		tabs            = new List < GameObject >( );
 		WeaponAssetList = itemList.itemList;
 		alllables       = new List < PlayerInventory >( );
 		playerCam       = GameObject.Find( "PlayerCamera" ).GetComponent<Camera>();
 	}
 
+	public void Start( ) {
+		inventory = StaticManager.Character.GetComponent < PlayerInventory >( );
+	}
 	public void SetPosOfCam( ) {
-		Vector3 pos = inventory.character.transform.position + (inventory.character.transform.forward * 4);
-		pos.y = 0.77f;
+		Vector3 characterpos = new Vector3(inventory.character.transform.position.x, 15, inventory.character.transform.position.z);
+		inventory.character.transform.position = characterpos;
+		Vector3 pos = characterpos + (inventory.character.transform.forward * 4);
+		pos.y = 15.77f;
         playerCam.transform.position = pos;
-
         playerCam.transform.LookAt(inventory.character.transform.position + (inventory.transform.up * 0.77f));
 		
 	}
-	public void SwitchInventory(GameObject tab ) {
-		string sub = tab.name.Substring( 0 , tab.name.Length - 3 );
-		var _inventory = GetInventory( sub + "Inventory" );
-		foreach ( var l_inventory in alllables ){
-			if ( l_inventory == _inventory ){
-				l_inventory.parent.SetActive(true);
-				l_inventory.Tab.GetComponent < Image >( ).color = Color.red;
-				inventory = l_inventory;
-				SetPosOfCam();
-				StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
-				StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false );
-                l_inventory.character.gameObject.layer = LayerMask.NameToLayer("Character");
+	public void SwitchInventory(Tab tab ) {
+		if ( previousInventory ){
 
-                for (int i = 0; i < l_inventory.character.transform.childCount; i++)
-                {
-                    if (l_inventory.character.transform.GetChild(i).gameObject.layer != LayerMask.NameToLayer("UI"))
-                    {
-                        l_inventory.character.transform.GetChild(i).gameObject.layer = LayerMask.NameToLayer("Character");
+            previousInventory.transform.parent.gameObject.SetActive(false);
+            previousInventory.GetComponent<Image>().color = Color.gray;
+            previousInventory.companion.agent.Warp(new Vector3(previousInventory.companion.transform.position.x, 0, previousInventory.companion.transform.position.y));
+        }
+		
+		tab.companion.inventory.parent.SetActive(true);
+		tab.GetComponent < Image >( ).color = Color.red;
+		inventory = tab.companion.inventory;
+		SetPosOfCam();
+		StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
+		StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false );
+		previousInventory = tab;
 
-                    }
-                }
-            }
-			else{
-				l_inventory.parent.SetActive(false);
-				l_inventory.Tab.GetComponent < Image >( ).color = Color.gray;
-				l_inventory.character.gameObject.layer = 11;
-                l_inventory.character.gameObject.layer = LayerMask.NameToLayer("Default");
-
-                for (int i = 0; i < l_inventory.character.transform.childCount; i++)
-                {
-	                if ( l_inventory.character.transform.GetChild(i).gameObject.layer != LayerMask.NameToLayer("UI") ){
-		                l_inventory.character.transform.GetChild(i).gameObject.layer = LayerMask.NameToLayer("Default");
-
-                    }
-                }
-            }
-		}
-	}
+    }
     public WeaponItem GetItemFromAssetList(string name)
     {
         return WeaponAssetList.FirstOrDefault(_t => _t.objectName == name);
@@ -82,12 +63,12 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
     public GameObject AddCompanionInventory(Companion companion ) {
 		var tab = Instantiate(StaticManager.UiInventory.ItemsInstance.Tab);
-		tab.name = companion.name + "Tab";
+	    tab.GetComponent < Tab >( ).companion = companion;
 		tab.transform.SetParent(StaticManager.UiInventory.ItemsInstance.Tabs.gameObject.transform);
 	    tab.transform.localScale = new Vector3(1,1,1);
 		tab.SetActive(true);
 	    tab.GetComponentInChildren < TextMeshProUGUI >( ).text = companion.name;
-		tabs.Add(tab);
+		StaticManager.tabManager.tabs.Add(tab.GetComponent<Tab>());
 
 	    return tab;
     }
@@ -102,32 +83,20 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		Assert.IsNotNull(null, "Cannot Find inventory parent with name" + parentName + " Line number : 29 - MultipleInventoryHolder");
 		return null;
 	}
-
-	public GameObject GetTab(string CompanionName ) {
-		foreach ( var l_gameObject in tabs ){
-			if ( l_gameObject.name == CompanionName + "Tab" ){
-				return l_gameObject;
-			}
-		}
-		Assert.IsNotNull(null, "Tab for " + CompanionName + " couldn't be found");
-
-		return null;
-	}
 	public void SendToCompanion(GameObject name) {
 		string _name = name.name.ToString( );
 		GetInventory(_name + "Inventory").PickedUpWeapons.Add(inventory.selectedObject);
 		StaticManager.UiInventory.AddSlot(inventory.selectedObject, GetInventory(_name + "Inventory"));
 		StaticManager.UiInventory.RemoveMainInventory(inventory.selectedObject, inventory);
-		SwitchInventory(GetTab(name.name));
 		//inventory.PickedUpWeapons.Remove(inventory.selectedObject);
 
     }
 
 	public void Destroy(PlayerInventory inventory ) {
-		Destroy(inventory.Tab);
+		Destroy(StaticManager.tabManager.GetTab(inventory.character as Companion));
 		Destroy(inventory.parent);
 		if ( inventory == this.inventory ){
-			SwitchInventory(StaticManager.Character.inventory.Tab);
+			SwitchInventory(StaticManager.tabManager.GetTab(StaticManager.Character));
 		}
 		
 	}
