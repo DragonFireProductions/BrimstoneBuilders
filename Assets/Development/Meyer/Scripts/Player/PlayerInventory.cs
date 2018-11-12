@@ -63,11 +63,13 @@ public class PlayerInventory : MonoBehaviour {
             isInventoryActive = !isInventoryActive;
 
             if ( isInventoryActive ){
+                StaticManager.inventories.prevPos = StaticManager.Character.transform.position;
               StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PlayerUI);
                 StaticManager.inventories.SwitchInventory(StaticManager.tabManager.GetTab(StaticManager.Character));
                 Time.timeScale = 0;
             }
             if ( isInventoryActive == false ){
+                StaticManager.UiInventory.ItemsInstance.ComparedStats.obj.SetActive(false);
                 StaticManager.UiInventory.CloseWindow();
                 Time.timeScale = 1;
             }
