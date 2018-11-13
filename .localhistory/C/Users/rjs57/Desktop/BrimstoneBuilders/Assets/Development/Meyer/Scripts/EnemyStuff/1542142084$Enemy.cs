@@ -17,7 +17,6 @@ namespace Kristal {
         
 
         protected void Start( ) {
-            StaticManager.RealTime.AllEnemies.Add(this);
             material.color = BaseColor;
             Nav            = gameObject.GetComponent < EnemyNav >( );
             threat_signal = gameObject.transform.Find("Canvas/ThreatSignal").GetComponent<SpriteRenderer>();

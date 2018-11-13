@@ -52,10 +52,9 @@ public class EnemySpawner : MonoBehaviour
 
         for (int i = 0; i < numberofEnemies; i++)
         {
-            Vector3 position = Random.insideUnitSphere * spawnRadius + this.gameObject.transform.position;
-
             var newEnemy = Instantiate(Resources.Load<GameObject>("EnemyLeader"));
             //Randomizes the spawn position (within the set range) of the current enemy.
+            Vector3 position = Random.insideUnitSphere * spawnRadius + this.gameObject.transform.position;
             newEnemy.GetComponent<EnemyNav>().location = gameObject;
             //Adjust for y to properly place on nav mesh.
             position.y = StaticManager.Character.gameObject.transform.position.y;

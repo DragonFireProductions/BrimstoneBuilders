@@ -130,19 +130,19 @@ public class LeaderNav : CompanionNav {
 
 		if ( !StaticManager.RealTime.Attacking ){
 			 colliders = Physics.OverlapSphere(transform.position, 10, mask);
-
+			
 			if ( colliders.Length > 0 ){
 				StaticManager.RealTime.Attacking = true;
 				StartCoroutine( yield( ) );
 			}
 
-
+           
         }
         if (StaticManager.RealTime.Enemies.Count == 0)
         {
             StaticManager.RealTime.Attacking = false;
         }
-
+		
         switch ( State ){
 			case state.ATTACKING:
 
@@ -186,6 +186,7 @@ IEnumerator yield( ) {
             StaticManager.RealTime.Enemies.Add(l_collider.gameObject.GetComponent<Enemy>());
 	        StaticManager.RealTime.Attacking = true;
 			StaticManager.RealTime.SetAttackEnemies();
+			StaticManager.RealTime.SetAttackCompanion();
             SetState = state.ATTACKING;
         }
 

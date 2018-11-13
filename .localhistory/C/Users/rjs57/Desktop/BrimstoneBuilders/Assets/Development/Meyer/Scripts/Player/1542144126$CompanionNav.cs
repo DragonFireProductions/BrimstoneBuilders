@@ -125,6 +125,7 @@ public class CompanionNav : BaseNav {
             case AggressionStates.DEFEND:
             {
                 Debug.Log("now in the defend state");
+                    enemiesToAttack.RemoveAll(item => item == null);
                 if (StaticManager.Character.attackers.Count > 0)
                 {
                     character.enemy = StaticManager.Character.attackers[0];

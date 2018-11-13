@@ -51,7 +51,7 @@ public class RealTime : MonoBehaviour {
             if (l_enemy.enemy == null){
 	            int random = Random.Range( 0 , Companions.Count );
 	            l_enemy.enemy = Companions[random  ];
-                l_enemy.Nav.Agent.SetDestination(l_enemy.enemy.transform.position);
+                l_enemy.Nav.SetDestination(l_enemy.enemy.transform.position);
 				Companions[random].attackers.Add(l_enemy);
             }
 	        l_enemy.Nav.SetState = BaseNav.state.ATTACKING;

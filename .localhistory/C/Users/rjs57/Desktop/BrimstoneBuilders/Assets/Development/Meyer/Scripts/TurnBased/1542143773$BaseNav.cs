@@ -69,7 +69,17 @@ public class BaseNav : MonoBehaviour {
                 break;
         }
     }
-    
+
+
+	public void SetDestination(Vector3 _des)
+	{
+		Agent.SetDestination(_des);
+
+	}
+
+	public void SetDestination( Transform transform ) {
+		Agent.SetDestination( transform.position );
+	}
     public enum state { IDLE, ATTACKING, FOLLOW, MOVE, ENEMY_CLICKED, FREEZE }
     public state SetState
     {

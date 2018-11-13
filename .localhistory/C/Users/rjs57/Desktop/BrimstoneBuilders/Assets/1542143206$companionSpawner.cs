@@ -74,6 +74,7 @@ public class companionSpawner : MonoBehaviour
             newEnemy.GetComponent<CompanionNav>().transform.position = this.gameObject.transform.position;
             comp.Add(newEnemy.gameObject);
             StaticManager.RealTime.Companions.Add(newEnemy.GetComponent<Companion>());
+            StaticManager.RealTime.SetAttackCompanion();
             newButton.newFriend = newEnemy.GetComponent<Companion>();
         }
     }

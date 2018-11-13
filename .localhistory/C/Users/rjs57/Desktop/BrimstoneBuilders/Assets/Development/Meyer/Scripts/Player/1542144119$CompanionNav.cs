@@ -46,7 +46,18 @@ public class CompanionNav : BaseNav {
             }
             else if (value == AggressionStates.DEFEND)
             {
+                enemiesToAttack.Clear();
+                LayerMask mask = LayerMask.NameToLayer("Enemy");
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 10);
+                foreach (var collider in colliders)
+                {
+                    if (collider.tag == "Enemy")
+                    {
+                        enemiesToAttack.Add(collider.GetComponent<Enemy>());
+                    }
+                }
 
+                character.enemy = enemiesToAttack[0];
                 aggState = AggressionStates.DEFEND;
 
                 /// StaticManger.Character.attackers .. pick random to attack from list
@@ -125,9 +136,10 @@ public class CompanionNav : BaseNav {
             case AggressionStates.DEFEND:
             {
                 Debug.Log("now in the defend state");
-                if (StaticManager.Character.attackers.Count > 0)
+                    enemiesToAttack.RemoveAll(item => item == null);
+                if (enemiesToAttack.Count > 0)
                 {
-                    character.enemy = StaticManager.Character.attackers[0];
+                    character.enemy = enemiesToAttack[0];
                     Agent.SetDestination(character.enemy.transform.position);
                     transform.LookAt(character.enemy.transform.position);
                     float distance = Vector3.Distance(transform.position, character.enemy.transform.position);
@@ -138,9 +150,10 @@ public class CompanionNav : BaseNav {
                     }
                     //SetAgreesionState = AggressionStates.PASSIVE;
                 }
-                else if (StaticManager.Character.attackers.Count == 0)
+                else if (character.attackers.Count == 0)
                 {
                     Agent.destination = Character.Player.transform.position + (Vector3.right * des);
+                        //SetAgreesionState = AggressionStates.PASSIVE;
                 }
 
             }
