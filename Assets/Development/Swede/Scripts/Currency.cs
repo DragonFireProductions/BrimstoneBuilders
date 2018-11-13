@@ -55,9 +55,7 @@ public class Currency : MonoBehaviour
     }
     public void SellCompanion(Shop shop)
     {
-        if (StaticManager.Character.spawner.comp.Count == 0) { }
-
-        else
+        if(StaticManager.Character.spawner.comp.Count != 0)
         {
             AddCoins(shop.resaleWorth);
             StaticManager.Character.spawner.Kill();
