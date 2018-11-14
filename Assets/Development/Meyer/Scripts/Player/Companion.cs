@@ -7,6 +7,7 @@ using Kristal;
 using TMPro;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Companion : BaseCharacter {
     // Use this for initialization
@@ -21,19 +22,18 @@ public class Companion : BaseCharacter {
         StaticManager.RealTime.Companions.Add(this);
         inventory = GetComponent < PlayerInventory >( );
         cube = transform.Find("Cube").gameObject;
-
     }
 
     public void OnTriggerEnter(Collider collider ) {
-        
+
     }
     public void Damage(int _damage, BaseCharacter attacker)
     {
         if (stats.Health > 0){
             InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.blue);
             stats.Health -= _damage;
-            var blood = StaticManager.particleManager.Play(ParticleManager.states.Blood, transform.position);
-            blood.transform.SetParent(gameObject.transform);
+
+
         }
 
         if ( stats.Health <= 0 ){
@@ -41,9 +41,11 @@ public class Companion : BaseCharacter {
                StaticManager.UiInventory.ItemsInstance.GameOverUI.SetActive(true);
                 Time.timeScale = 0;
             }
+
+            Destroy(GetComponent<CompanionNav>().behaviors.gameObject);
             StaticManager.RealTime.Companions.Remove( this );
             StaticManager.inventories.Destroy(inventory);
-           Destroy(gameObject);
+            Destroy(gameObject);
         }
         damage -= _damage;
     }
@@ -51,17 +53,17 @@ public class Companion : BaseCharacter {
     public override  void Attack(BaseCharacter chara) {
      //gets the damage value
      float l_damage = StaticManager.DamageCalc.CalcAttack( stats , chara.stats );
-     
+
      //adds the value to the total damage
      damage += ( int )l_damage;
-     
+
      //sets the text value to the damage done
      //damageText.text = damage.ToString( );
-     
+
      Damage( ( int )l_damage, chara );
 
     }
-    
+
     public void Remove( BaseCharacter _chara ) { }
 
 }

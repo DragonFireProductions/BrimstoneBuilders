@@ -12,14 +12,16 @@ public class RealTime : MonoBehaviour {
 
 	public List < Enemy > Enemies;
 	public List < Companion > Companions;
+    public List<Enemy> AllEnemies;
 
 	[SerializeField] public Color ClickedColor { get; set; }
-	
+
 	public void Awake( ) {
+        AllEnemies = new List<Enemy>();
 		Companions = new List < Companion >();
 		Enemies = new List < Enemy >();
 	}
-	
+
 
 	//public void SetAttackCompanions( ) {
  //       StaticManager.RealTime.Companions.RemoveAll(item => item == null);
@@ -49,34 +51,13 @@ public class RealTime : MonoBehaviour {
             if (l_enemy.enemy == null){
 	            int random = Random.Range( 0 , Companions.Count );
 	            l_enemy.enemy = Companions[random  ];
-                l_enemy.Nav.SetDestination(l_enemy.enemy.transform.position);
+                l_enemy.Nav.Agent.SetDestination(l_enemy.enemy.transform.position);
 				Companions[random].attackers.Add(l_enemy);
             }
 	        l_enemy.Nav.SetState = BaseNav.state.ATTACKING;
         }
     }
 
-    public void SetAttackCompanion()
-    {
-	    if ( Enemies.Count > 0 ){
-
-
-		    StaticManager.RealTime.Companions.RemoveAll( item => item == null );
-		    StaticManager.RealTime.Enemies.RemoveAll( item => item    == null );
-
-		    foreach ( var l_enemy in Companions ){
-			    if ( l_enemy.enemy == null ){
-				    int random = Random.Range( 0 , Enemies.Count );
-				    l_enemy.enemy = Enemies[ random ];
-				    l_enemy.Nav.SetDestination( l_enemy.enemy.transform.position );
-				    Enemies[ random ].attackers.Add( l_enemy );
-			    }
-
-			    l_enemy.Nav.SetState = BaseNav.state.ATTACKING;
-
-		    }
-	    }
-    }
 
     public BaseCharacter getnewType( BaseCharacter character ) {
 		if (character is Enemy && Companions.Count > 0){

@@ -1,11 +1,15 @@
 ﻿using Kristal;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class companionSpawner : MonoBehaviour
 {
     public bool DevTools;
+    [SerializeField] bool useBrackets = true;
+
     [SerializeField] private Companion friends;
 
     public int index;
@@ -13,10 +17,14 @@ public class companionSpawner : MonoBehaviour
     [SerializeField] private GameObject companionspawner;
 
     public int numberofcompanions;
+
+
+
     // Use this for initialization
     void Start()
     {
         comp = new List<GameObject>();
+
     }
 
     // Update is called once per frame
@@ -24,43 +32,80 @@ public class companionSpawner : MonoBehaviour
     {
         if (DevTools)
         {
-            if (Input.GetKeyDown("]"))
+            if (useBrackets)
             {
-                StartCoroutine(CompSpawn());
+                if (Input.GetKeyDown("]"))
+                {
+                    StartCoroutine(CompSpawn());
+                }
+                else if (Input.GetKeyDown("["))
+                {
+                    Kill();
+                }
             }
-            else if (Input.GetKeyDown("["))
+            else
             {
-                Kill();
+
             }
         }
     }
 
     public IEnumerator CompSpawn()
     {
-        index++;
+        // Debug.Log(index);
+        if (index >= numberofcompanions)
+        {
+            Debug.Log("cant have anymore companions");
+            index = numberofcompanions;
+        }
+        else
+        {
+            index++;
+            StaticManager.RealTime.Companions.RemoveAll(nulls => nulls == null);
+        }
+
         StaticManager.RealTime.Companions.RemoveAll(nulls => nulls == null);
         var newEnemy = Instantiate(Resources.Load<Companion>("Companion"));
         newEnemy.name = newEnemy.name + index.ToString();
-            Vector3 position = Random.insideUnitSphere * 5 + this.gameObject.transform.position;
+        Vector3 position = Random.insideUnitSphere * 5 + this.gameObject.transform.position;
         newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
         comp.Add(newEnemy.gameObject);
+        var location = GameObject.Find("panel_location");
+        var newButton = Instantiate(Resources.Load<companionBehaviors>("Panel"));
+        newEnemy.GetComponent<CompanionNav>().behaviors = newButton.GetComponent<companionBehaviors>();
+        newButton.GetComponent<companionBehaviors>().newFriend = newEnemy;
 
         position.y = StaticManager.Character.gameObject.transform.position.y;
         StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
-        yield return new WaitForSeconds(0.45f);
+        newButton.transform.SetParent(location.transform, false);
+
+        newButton.transform.position = location.transform.position;
+        yield return new WaitForSeconds(1.0f);
+        //variable.gameObject.SetActive(true);
         newEnemy.GetComponent<Companion>().Nav.Agent.Warp(position);
-            newEnemy.GetComponent<CompanionNav>().transform.position = position;
+        newEnemy.GetComponent<CompanionNav>().transform.position = this.gameObject.transform.position;
+        comp.Add(newEnemy.gameObject);
         StaticManager.RealTime.Companions.Add(newEnemy.GetComponent<Companion>());
-        StaticManager.RealTime.SetAttackCompanion();
+        newButton.newFriend = newEnemy.GetComponent<Companion>();
+
     }
 
-    public void Kill()
+
+public void Kill()
     {
-        index--;
-        StaticManager.RealTime.Companions.Remove(comp[0].GetComponent<Companion>());
-        var gameObj = comp[0];
-        comp.RemoveAt(0);
-        StaticManager.inventories.Destroy(gameObj.GetComponent<PlayerInventory>());
-        Destroy(gameObj);
+        if (index <= 0)
+        {
+            Debug.Log("no companions to despawn");
+            index = 0;
+        }
+        else
+        {
+            StaticManager.RealTime.Companions.Remove(comp[0].GetComponent<Companion>());
+            var gameObj = comp[0];
+            comp.RemoveAt(0);
+            StaticManager.inventories.Destroy(gameObj.GetComponent<PlayerInventory>());
+            Destroy(gameObj);
+            index--;
+        }
     }
 }
