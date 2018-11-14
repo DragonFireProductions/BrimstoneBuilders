@@ -60,11 +60,7 @@ public class CompanionNav : BaseNav {
             {
                 //LayerMask mask = LayerMask.NameToLayer("Enemy");
                 //Collider[] colliders = Physics.OverlapSphere(transform.position, 5.0f);
-                if (character.attackers.Count > 0)
-                {
                 character.enemy = character.attackers[0];
-
-                }
                 aggState = AggressionStates.PROVOKED;
 
 

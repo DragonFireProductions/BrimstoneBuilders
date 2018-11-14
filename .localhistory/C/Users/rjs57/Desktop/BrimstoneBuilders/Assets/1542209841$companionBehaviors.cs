@@ -15,7 +15,10 @@ public class companionBehaviors : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        name  = transform.Find("character_name").GetComponent<TextMeshProUGUI>();
+        name = GameObject.Find("character_name").GetComponent<TextMeshProUGUI>();
+	    var location = GameObject.Find("panel_location");
+	    this.gameObject.transform.parent = location.transform;
+	    this.gameObject.transform.position = location.transform.position;
         name.text = newFriend.stats.name;
     }
 

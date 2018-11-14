@@ -61,16 +61,13 @@ public class companionSpawner : MonoBehaviour
         newEnemy.name = newEnemy.name + index.ToString( );
             Vector3 position = Random.insideUnitSphere + this.gameObject.transform.position;
             newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
-            var location = GameObject.Find("panel_location");
+
             var newButton = Instantiate(Resources.Load<companionBehaviors>("Panel"));
             newEnemy.GetComponent<CompanionNav>().behaviors = newButton.GetComponent<companionBehaviors>();
             newButton.GetComponent<companionBehaviors>().newFriend = newEnemy;
 
             position.y = StaticManager.Character.gameObject.transform.position.y;
             StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
-            newButton.transform.SetParent(location.transform, false);
-
-            newButton.transform.position = location.transform.position;
             yield return new WaitForSeconds(1.0f);
             //variable.gameObject.SetActive(true);
             newEnemy.GetComponent<Companion>().Nav.Agent.Warp(position);
@@ -78,7 +75,6 @@ public class companionSpawner : MonoBehaviour
             comp.Add(newEnemy.gameObject);
             StaticManager.RealTime.Companions.Add(newEnemy.GetComponent<Companion>());
             newButton.newFriend = newEnemy.GetComponent<Companion>();
-
         }
     }
 

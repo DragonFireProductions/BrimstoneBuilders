@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,15 +10,15 @@ public class companionBehaviors : MonoBehaviour
     public Companion newFriend;
     private GameObject prev_button;
 
-    private TextMeshProUGUI name;
     // Use this for initialization
     void Start()
-    {
-        name  = transform.Find("character_name").GetComponent<TextMeshProUGUI>();
-        name.text = newFriend.stats.name;
-    }
+	{
+	    var location = GameObject.Find("panel_location");
+	    this.gameObject.transform.parent = location.transform;
+	    this.gameObject.transform.position = location.transform.position;
+	}
 
-    public void onClick(int state)
+    public void onClick(int state, GameObject go)
     {
         if (prev_button)
         {
@@ -27,11 +26,6 @@ public class companionBehaviors : MonoBehaviour
         }
         newFriend.GetComponent<CompanionNav>().SetAgreesionState = (CompanionNav.AggressionStates) state;
 
-
-    }
-
-    public void color(GameObject go)
-    {
         go.GetComponent<Image>().color = Color.green;
 
 

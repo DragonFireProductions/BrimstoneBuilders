@@ -16,6 +16,7 @@ public class companionBehaviors : MonoBehaviour
     void Start()
     {
         name  = transform.Find("character_name").GetComponent<TextMeshProUGUI>();
+	
         name.text = newFriend.stats.name;
     }
 

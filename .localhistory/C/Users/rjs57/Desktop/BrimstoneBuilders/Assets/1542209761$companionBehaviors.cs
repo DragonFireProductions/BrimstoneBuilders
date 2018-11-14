@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,13 +10,13 @@ public class companionBehaviors : MonoBehaviour
     public Companion newFriend;
     private GameObject prev_button;
 
-    private TextMeshProUGUI name;
     // Use this for initialization
     void Start()
-    {
-        name  = transform.Find("character_name").GetComponent<TextMeshProUGUI>();
-        name.text = newFriend.stats.name;
-    }
+	{
+	    var location = GameObject.Find("panel_location");
+	    this.gameObject.transform.parent = location.transform;
+	    this.gameObject.transform.position = location.transform.position;
+	}
 
     public void onClick(int state)
     {

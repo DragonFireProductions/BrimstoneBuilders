@@ -58,14 +58,18 @@ public class CompanionNav : BaseNav {
             }
             else if (value == AggressionStates.PROVOKED)
             {
-                //LayerMask mask = LayerMask.NameToLayer("Enemy");
-                //Collider[] colliders = Physics.OverlapSphere(transform.position, 5.0f);
-                if (character.attackers.Count > 0)
+                LayerMask mask = LayerMask.NameToLayer("Enemy");
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 5.0f);
+                foreach (var enemy in colliders)
                 {
-                character.enemy = character.attackers[0];
-
+                    //Debug.Log(enemy.tag);
+                    if (enemy.tag == "Enemy")
+                    {
+                        enemiesToAttack.Add(enemy.GetComponent<Enemy>());
+                    }
                 }
                 aggState = AggressionStates.PROVOKED;
+                character.enemy = enemiesToAttack[0];
 
 
                 // if character.attackers. count > 0 ... attack random index
@@ -144,8 +148,8 @@ public class CompanionNav : BaseNav {
             case AggressionStates.PROVOKED:
             {
                     Debug.Log("now in the provoked state");
-                character.attackers.RemoveAll(item => item == null);
-                    if (character.attackers.Count > 0)
+                    enemiesToAttack.RemoveAll(item => item == null);
+                    if (enemiesToAttack.Count > 0)
                     {
                         character.enemy = enemiesToAttack[0];
                         Agent.SetDestination(character.enemy.transform.position);
@@ -155,7 +159,16 @@ public class CompanionNav : BaseNav {
                     }
                     else
                     {
-
+                        LayerMask mask = LayerMask.NameToLayer("Enemy");
+                        Collider[] colliders = Physics.OverlapSphere(transform.position, 5.0f);
+                        foreach (var enemy in colliders)
+                        {
+                            //Debug.Log(enemy.tag);
+                            if (enemy.tag == "Enemy")
+                            {
+                                enemiesToAttack.Add(enemy.GetComponent<Enemy>());
+                            }
+                        }
                         Agent.destination = Character.Player.transform.position + (Vector3.right * des);
                     }
 
