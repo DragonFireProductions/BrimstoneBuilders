@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 using Assets.Meyer.TestScripts.Player;
@@ -72,16 +73,17 @@ public class PlayerInventory : MonoBehaviour {
             isInventoryActive = !isInventoryActive;
 
             if ( isInventoryActive ){
+                StaticManager.inventories.prevPos = StaticManager.Character.transform.position;
               StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PlayerUI);
-                StaticManager.inventories.SetPosOfCam();
+                StaticManager.inventories.SwitchInventory(StaticManager.tabManager.GetTab(StaticManager.Character));
                 Time.timeScale = 0;
             }
             if ( isInventoryActive == false ){
-                StaticManager.UiInventory.CloseWindow();
+                StaticManager.UiInventory.ItemsInstance.ComparedStats.obj.SetActive(false);
                 Time.timeScale = 1;
+                StaticManager.UiInventory.CloseWindow();
             }
         }
     }
-   
 
 }

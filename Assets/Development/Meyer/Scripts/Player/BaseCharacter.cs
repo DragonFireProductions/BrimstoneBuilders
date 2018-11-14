@@ -62,6 +62,8 @@ public abstract class BaseCharacter : MonoBehaviour {
 	public GameObject canvas;
 
 	public GameObject cube;
+
+	public Projector projector;
 	protected void Awake( ) {
         stats = gameObject.GetComponent<Stat>();
 		Assert.IsNotNull(stats, "Stats not found on " + this.gameObject.name);
@@ -73,6 +75,8 @@ public abstract class BaseCharacter : MonoBehaviour {
 		attachedWeapon = transform.GetComponentInChildren < WeaponObject >( );
 		attackers = new List < BaseCharacter >();
 		canvas = transform.Find( "Canvas" ).gameObject;
+		projector = gameObject.transform.Find( "Projector" ).GetComponent < Projector >( );
+		projector.gameObject.SetActive(false);
 	}
 
 	public abstract void Attack( BaseCharacter attacker );

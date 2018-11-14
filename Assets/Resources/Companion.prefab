@@ -220,6 +220,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1749534922599008
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4242581296022966}
+  - component: {fileID: 119088188447211214}
+  m_Layer: 11
+  m_Name: Projector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1787517943302350
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,10 +293,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1232946431525932}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.71, y: -0.44, z: 11.54}
+  m_LocalPosition: {x: 374.06833, y: 0, z: 112.48971}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4853313485897388}
+  - {fileID: 4242581296022966}
   - {fileID: 4876187990571036}
   - {fileID: 224596210792848096}
   - {fileID: 4877820313036488}
@@ -314,6 +331,19 @@ Transform:
   m_Father: {fileID: 4306655951720004}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
+--- !u!4 &4242581296022966
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749534922599008}
+  m_LocalRotation: {x: 0.7425819, y: -0, z: -0, w: 0.66975534}
+  m_LocalPosition: {x: 0.10168457, y: 6.94, z: 0.710289}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4042382521905864}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 95.90399, y: -0.000015258789, z: -0.000015258789}
 --- !u!4 &4288107529737628
 Transform:
   m_ObjectHideFlags: 1
@@ -396,7 +426,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4042382521905864}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 37.689003, y: 0, z: 0}
 --- !u!4 &4877820313036488
 Transform:
@@ -409,7 +439,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4042382521905864}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4937122022304936
 Transform:
@@ -746,7 +776,7 @@ MonoBehaviour:
     isStackable: 0
     destroyOnUse: 0
     clip: {fileID: 0}
-  weaponName: Bow
+  weaponName: Wooden Sword
   isMainInventory: 0
   attached: 0
   AnimationClass: {fileID: 0}
@@ -786,6 +816,7 @@ MonoBehaviour:
   damageNumbers: []
   canvas: {fileID: 0}
   cube: {fileID: 0}
+  projector: {fileID: 0}
   inventory: {fileID: 0}
 --- !u!114 &114780804861231428
 MonoBehaviour:
@@ -828,6 +859,7 @@ MonoBehaviour:
   Slots: []
   character: {fileID: 0}
   AttachedWeapons: []
+  coinCount: 0
   companion: {fileID: 0}
 --- !u!114 &114921211119869274
 MonoBehaviour:
@@ -872,6 +904,24 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!119 &119088188447211214
+Projector:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1749534922599008}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_NearClipPlane: 0.01
+  m_FarClipPlane: 1000
+  m_FieldOfView: 35.87
+  m_AspectRatio: 1
+  m_Orthographic: 0
+  m_OrthographicSize: 10
+  m_Material: {fileID: 2100000, guid: f837356729b4258478bec7fab2636805, type: 2}
+  m_IgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 3584
 --- !u!195 &195494217127235904
 NavMeshAgent:
   m_ObjectHideFlags: 1
@@ -14848,7 +14898,7 @@ RectTransform:
   m_Children:
   - {fileID: 224901572076692340}
   m_Father: {fileID: 4042382521905864}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: -714.836, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

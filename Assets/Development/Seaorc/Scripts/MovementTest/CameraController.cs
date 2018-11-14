@@ -129,7 +129,7 @@ public class CameraController : MonoBehaviour
 
             transform.position = new Vector3(transform.position.x, colonyCam.position.y + zoom, transform.position.z);
         }
-        if (Mode == CameraMode.PLAYER && !StaticManager.UiInventory.ItemsInstance.windowIsOpen &&  StaticManager.Character.Nav.SetState != BaseNav.state.ATTACKING )
+        if (Mode == CameraMode.PLAYER && !StaticManager.UiInventory.ItemsInstance.windowIsOpen)
         {
             camRig.position = playerTransform.position;
 
@@ -138,7 +138,7 @@ public class CameraController : MonoBehaviour
             float l_raylength;
 
 
-            if (l_groundplane.Raycast(l_cameraray, out l_raylength))
+            if (l_groundplane.Raycast(l_cameraray, out l_raylength)&&  StaticManager.Character.Nav.SetState != BaseNav.state.ATTACKING &&  StaticManager.Character.Nav.SetState != BaseNav.state.ENEMY_CLICKED)
             {
                 var l_pointtolook = l_cameraray.GetPoint(l_raylength);
 

@@ -1,23 +1,39 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using System.Threading;
+
 using Assets.Meyer.TestScripts.Player;
 
 using Kristal;
+
 using TMPro;
+
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class LeaderNav : CompanionNav {
 
+    private Collider[] colliders;
+
+    private float count;
+
+    private float displaytimer;
+
+    public Enemy enemy;
+
+    public ParticleSystem enemySystem;
+
 	private RaycastHit hit;
 
-	private float timer = 0;
+    private Ray l_ray;
+
+    private LayerMask mask;
 
     [SerializeField] private TextMeshProUGUI message;
-    private float displaytimer;
+
+    private ParticleSystem rain;
+
+    private Vector3 rainPosition;
 
     //[SerializeField] private TextMeshProUGUI head;
     //[SerializeField] private TextMeshProUGUI left_arm;
@@ -36,42 +52,66 @@ public class LeaderNav : CompanionNav {
     //private bool showArmor = false;
 
 	private ParticleSystem selected;
-    private ParticleSystem rain;
 
-    Vector3 rainPosition;
+    private bool timerEnabled = false;
 
-	private LayerMask mask;
+    public List < Companion > highlightedCompanions;
 
-	private Collider[] colliders;
-
-	public Enemy enemy;
-
-	void Start () {
+    private void Start( ) {
 		base.Start();
+        highlightedCompanions = new List < Companion >();
 		hit = new RaycastHit();
 		character = GetComponent < Character >( );
 		message = GameObject.Find( "GoForward" ).GetComponent < TextMeshProUGUI >( );
-		selected = StaticManager.particleManager.Play( ParticleManager.states.Selected , gameObject.transform.position );
 		mask = LayerMask.GetMask("Enemy");
-	    rain = StaticManager.particleManager.Play(ParticleManager.states.Rain, gameObject.transform.position);
+        character.projector.gameObject.SetActive(true);
+
 	}
 
 	// Update is called once per frame
 	protected override void Update () {
-		selected.gameObject.transform.position = gameObject.transform.position;
-	    rainPosition = new Vector3(gameObject.transform.position.x, 10, gameObject.transform.position.z);
-	    rain.gameObject.transform.position = rainPosition;
 
-        if (Input.GetMouseButtonDown(0) && !StaticManager.UiInventory.ItemsInstance.windowIsOpen ){
-			Ray l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if ( Input.GetMouseButton( 0 ) && !StaticManager.UiInventory.ItemsInstance.windowIsOpen ){
+            l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );
+
 	        if ( Physics.Raycast(l_ray, out hit) ){
 		        if ( hit.collider.name == "Terrain" ){
 					SetState = state.MOVE;
+
+                    if ( enemy ){
+                    enemy.projector.gameObject.SetActive(false);
+
+                    }
 		            StaticManager.particleManager.Play(ParticleManager.states.Click, hit.point);
+
+                    if ( enemySystem ){
+                        Destroy( enemySystem.gameObject );
 		        }
-		        else if (hit.collider.tag == "Enemy"){
+                }
+            }
+        }
+
+		if ( Input.GetMouseButtonDown( 0 ) ){
+			if ( Physics.Raycast( l_ray , out hit ) ){
+				if (hit.collider.tag == "ShopKeeper" && !StaticManager.UiInventory.ItemsInstance.windowIsOpen) //Left Click
+				{
+					StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.ShopUI.obj );
+					StaticManager.Instance.Freeze( );
+				}
+			}
+		}
+
+		if ( Input.GetMouseButtonUp( 0 ) && !StaticManager.UiInventory.ItemsInstance.windowIsOpen && count < 0.4 ){
+            if ( Physics.Raycast( l_ray , out hit ) ){
+                if ( hit.collider.tag == "Enemy" ){
+                    if ( enemy ){
+                    enemy.projector.gameObject.SetActive(false);
+
+                    }
+                    Destroy( enemySystem );
 			        enemy = hit.collider.GetComponent < Enemy >( );
 			        SetState = state.ENEMY_CLICKED;
+                    enemy.projector.gameObject.SetActive(true);
 		        }
                 else if (hit.collider.tag == "Post"){
 			        message.text = hit.collider.name == "End" ? "The End is Neigh!" : "Go Forth!";
@@ -79,25 +119,20 @@ public class LeaderNav : CompanionNav {
 			        //Debug.Log("got the post");
 			        StartCoroutine( show( ) );
 		        }
-                //
-                else if (hit.collider.tag == "ShopKeeper") //Left Click
-		        {
-		            StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.ShopUI.obj);
-		            StaticManager.Instance.Freeze();
-		        }
+                
                 //
             }
 
         }
 
+
 		if ( StaticManager.UiInventory.ItemsInstance.windowIsOpen == false ){
+            if ( Input.GetMouseButtonDown( 1 ) ){
+                var l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );
+                var hit1  = new RaycastHit( );
 
-
-			if ( Input.GetMouseButtonDown( 1 ) ){
-				Ray l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );
-				RaycastHit hit1 = new RaycastHit();
 				if ( Physics.Raycast( l_ray , out hit1 ) ){
-					if ( hit1.collider.tag == "Companion" || hit.collider.tag == "Player" ){
+                    if ( hit1.collider.tag == "Companion" || hit1.collider.tag == "Player" ){
 						StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.PlayerStats );
 						StaticManager.UiInventory.UpdateStats( hit1.collider.GetComponent < BaseCharacter >( ).attachedWeapon.WeaponStats , StaticManager.UiInventory.ItemsInstance.AttachedWeapon );
 						StaticManager.UiInventory.UpdateStats( hit1.collider.GetComponent < BaseCharacter >( ).stats ,                      StaticManager.UiInventory.ItemsInstance.CharacterStats, false );
@@ -111,46 +146,6 @@ public class LeaderNav : CompanionNav {
 				StaticManager.UiInventory.CloseWindow(StaticManager.UiInventory.ItemsInstance.PlayerStats );
 			}
 		
-
-
-		//   if (Input.GetKeyDown(KeyCode.A))
-	    //{
-	    //    showArmor = !showingArmor();
-	    //}
-
-	    //if (showArmor)
-	    //{
-	    //    image.enabled = true;
-	    //    head.enabled = true;
-	    //    left_arm.enabled = true;
-	    //    right_arm.enabled = true;
-	    //    body.enabled = true;
-	    //    legs.enabled = true;
-	    //    feet.enabled = true;
-	    //    a_head.enabled = true;
-	    //    a_left_arm.enabled = true;
-	    //    a_right_arm.enabled = true;
-	    //    a_body.enabled = true;
-	    //    a_legs.enabled = true;
-	    //    a_feet.enabled = true;
-	    //}
-	    //else
-     //   {
-	    //    image.enabled = false;
-     //       head.enabled = false;
-     //       left_arm.enabled = false;
-     //       right_arm.enabled = false;
-     //       body.enabled = false;
-     //       legs.enabled = false;
-     //       feet.enabled = false;
-     //       a_head.enabled = false;
-     //       a_left_arm.enabled = false;
-     //       a_right_arm.enabled = false;
-     //       a_body.enabled = false;
-     //       a_legs.enabled = false;
-     //       a_feet.enabled = false;
-     //   }
-
 		if ( !StaticManager.RealTime.Attacking ){
 			 colliders = Physics.OverlapSphere(transform.position, 10, mask);
 			
@@ -158,28 +153,25 @@ public class LeaderNav : CompanionNav {
 				StaticManager.RealTime.Attacking = true;
 				StartCoroutine( yield( ) );
 			}
-
-           
         }
-        if (StaticManager.RealTime.Enemies.Count == 0)
-        {
+
+        if ( StaticManager.RealTime.Enemies.Count == 0 ){
             StaticManager.RealTime.Attacking = false;
         }
 		
         switch ( State ){
 			case state.ATTACKING:
 
-				
-
 				if ( enemy == null ){
 					SetState = state.FREEZE;
 
 					return;
 				}
-                if (Vector3.Distance(enemy.transform.position, gameObject.transform.position) > 3)
-                {
+
+                if ( Vector3.Distance( enemy.transform.position , gameObject.transform.position ) > 3 ){
                     SetState = state.ENEMY_CLICKED;
                 }
+
                 character.transform.LookAt(enemy.transform.position);
                     character.AnimationClass.Play(AnimationClass.states.AttackTrigger);
                     character.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
@@ -187,6 +179,7 @@ public class LeaderNav : CompanionNav {
                 break;
 			case state.MOVE:
 				Agent.SetDestination( hit.point );
+
 				break;
 			case state.ENEMY_CLICKED:
 
@@ -196,13 +189,16 @@ public class LeaderNav : CompanionNav {
 				else{
 					Agent.SetDestination( enemy.transform.position );
 				}
+
 				break;
 			case state.IDLE:
+
 				break;
 			case state.FOLLOW:
 
 				break;
 			case state.FREEZE:
+
 				break;
 		default:
 
@@ -210,17 +206,20 @@ public class LeaderNav : CompanionNav {
 		}
 	}
 
-	IEnumerator show( ) {
+    private IEnumerator show( ) {
 		message.enabled = true;
+
 		yield return  new WaitForSeconds(2);
 
 		message.enabled = false;
 	}
-IEnumerator yield( ) {
+
+    private IEnumerator yield( ) {
 		yield return new WaitForSeconds(0.5f);
+
 		colliders = Physics.OverlapSphere(transform.position, 20, mask);
-        foreach (var l_collider in colliders)
-        {
+
+        foreach ( var l_collider in colliders ){
             StaticManager.RealTime.Attacking = true;
             StaticManager.RealTime.Enemies.Add(l_collider.gameObject.GetComponent<Enemy>());
 	        StaticManager.RealTime.Attacking = true;
@@ -228,8 +227,8 @@ IEnumerator yield( ) {
 			StaticManager.RealTime.SetAttackCompanion();
             SetState = state.ATTACKING;
         }
-
     }
+
     //private IEnumerator CompanionSpawn()
     //{
     //    for (; i < friends.Length;)

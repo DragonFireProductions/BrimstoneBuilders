@@ -141,6 +141,7 @@ public class Stat : MonoBehaviour {
         AdjustScale( strength );
     }
 
+    private Stat baseStats;
     // Update is called once per frame
     private void Update( ) { }
 
@@ -160,20 +161,28 @@ public class Stat : MonoBehaviour {
         //}
     }
 
-    public void IncreaseStats(WeaponItem _item)
-    {
-        Strength = _item.durability;
+    public void ResetStats( WeaponItem oldWeapon ) {
+        Agility -= oldWeapon.attackSpeed;
+        Strength -= oldWeapon.baseDamage + oldWeapon.durability;
+        health -= oldWeapon.durability * 5;
+    }
+    public void IncreaseStats(WeaponItem _item) {
+       baseStats = new Stat();
+
+        Strength = _item.durability + _item.baseDamage;
         Agility += _item.attackSpeed;
-        Strength += _item.baseDamage;
         health += _item.durability * 5;
     }
 
-    public Stat difference(WeaponItem _item ) {
+    public Stat difference(WeaponItem _item, WeaponItem oldWeapon ) {
         Stat stat = new Stat();
-        stat.strength = _item.durability;
-        stat.agility += _item.attackSpeed;
-        stat.health += _item.durability * 5;
 
+        stat.strength = Strength - (oldWeapon.baseDamage + oldWeapon.durability);
+        stat.agility = Agility - oldWeapon.attackSpeed;
+        stat.health =  Health - oldWeapon.durability * 5;
+        stat.strength =( stat.strength + ( _item.baseDamage + _item.durability ) - Strength);
+        stat.health =  ( stat.health + ( _item.durability * 5 )  - Health);
+        stat.agility =  ( stat.agility + ( _item.attackSpeed ) - Agility);
         return stat;
     }
     private struct Info {

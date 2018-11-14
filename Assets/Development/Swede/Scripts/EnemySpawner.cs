@@ -39,7 +39,7 @@ public class EnemySpawner : MonoBehaviour
             isActive = true;
         }
         //If the player goes outside the maxRange, the instantiated enemies will despawn.
-        else if (playerDistance > maxRange && isActive == true)
+        else if (playerDistance > maxRange && isActive == true && !StaticManager.UiInventory.ItemsInstance.openedWindow.Contains(StaticManager.UiInventory.ItemsInstance.PlayerUI))
         {
             Despawn();
             isActive = false;
