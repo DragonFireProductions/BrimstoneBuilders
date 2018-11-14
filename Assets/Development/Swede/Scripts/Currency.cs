@@ -9,8 +9,6 @@ public class Currency : MonoBehaviour
     public int companionSellCost;
 
     public Shop _shop;
-    //handle instantiation when an enemy dies (spawn in coins at his last location).
-    //handle adding and removing coins from the player.
 
     public void AddCoins(Shop shop)
     {
@@ -55,9 +53,7 @@ public class Currency : MonoBehaviour
     }
     public void SellCompanion(Shop shop)
     {
-        if (StaticManager.Character.spawner.comp.Count == 0) { }
-
-        else
+        if(StaticManager.Character.spawner.comp.Count != 0)
         {
             AddCoins(shop.resaleWorth);
             StaticManager.Character.spawner.Kill();
