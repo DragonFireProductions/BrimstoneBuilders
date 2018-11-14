@@ -19,6 +19,8 @@ public class Shop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        StaticManager.Character.spawner.comp.RemoveAll(item => item == null);
+
         //SELLING
         if (StaticManager.Character.spawner.comp.Count == 0) //Player doesn't have any companions. SELLING
         {

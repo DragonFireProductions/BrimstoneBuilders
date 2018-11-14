@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using Kristal;
+
+using TMPro;
 
 using UnityEngine;
 using UnityEngine.AI;
@@ -117,17 +119,26 @@ public class Stat : MonoBehaviour {
         set { attackPoints = value; }
     }
 
+    public void UpdateStrength( ) {
+        gameObject.GetComponent<Enemy>().threat_signal.enabled = Strength > 10;
+    }
     // Use this for initialization
     private void Start( ) {
         health = 20;
         name   = gameObject.name;
-        health = Random.Range( 5 , 100 );
 
         if ( gameObject != StaticManager.Character.gameObject ){
            // strength = Random.Range( 0 , 20 );
             agility  = Random.Range( 0 , 30 );
         }
 
+        if ( gameObject == StaticManager.Character.gameObject ){
+            health = 100;
+        }
+        else{
+        health = Random.Range( 5 , 100 );
+
+        }
         endurance    = Random.Range( 0 , 30 );
         charisma     = Random.Range( 0 , 30 );
         perception   = Random.Range( 0 , 30 );

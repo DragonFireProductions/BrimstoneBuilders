@@ -43,8 +43,8 @@ public class Currency : MonoBehaviour
         }
     }
 
-    public void BuyCompanion(Shop shop)
-    {
+    public void BuyCompanion(Shop shop) {
+        StaticManager.Character.spawner.comp.RemoveAll( item => item == null );
         if (StaticManager.Character.spawner.comp.Count < 5)
         {
             if(RemoveCoins(shop.companionPrice)) 
@@ -53,7 +53,9 @@ public class Currency : MonoBehaviour
     }
     public void SellCompanion(Shop shop)
     {
-        if(StaticManager.Character.spawner.comp.Count != 0)
+        StaticManager.Character.spawner.comp.RemoveAll(item => item == null);
+
+        if (StaticManager.Character.spawner.comp.Count != 0)
         {
             AddCoins(shop.resaleWorth);
             StaticManager.Character.spawner.Kill();

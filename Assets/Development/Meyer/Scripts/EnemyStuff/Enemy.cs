@@ -19,6 +19,8 @@ namespace Kristal
         protected void Awake()
         {
             base.Awake();
+            threat_signal = gameObject.transform.Find("Canvas/ThreatSignal").GetComponent<SpriteRenderer>();
+
         }
 
 
@@ -27,7 +29,6 @@ namespace Kristal
             StaticManager.RealTime.AllEnemies.Add(this);
             material.color = BaseColor;
             Nav = gameObject.GetComponent<EnemyNav>();
-            threat_signal = gameObject.transform.Find("Canvas/ThreatSignal").GetComponent<SpriteRenderer>();
 
             MaxCoinCount = UnityEngine.Random.Range(1, MaxCoinCount);
 

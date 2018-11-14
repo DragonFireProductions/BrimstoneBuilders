@@ -77,6 +77,8 @@ public class CompanionNav : BaseNav {
 
     // What happens to enemies when it attacks
     protected override void Update( ) {
+        character.attackers.RemoveAll( item => item == null );
+        enemiesToAttack.RemoveAll( item => item == null );
         switch ( aggState ){
 
 
@@ -121,6 +123,7 @@ public class CompanionNav : BaseNav {
             case AggressionStates.DEFEND:
             {
                 Debug.Log("now in the defend state");
+                StaticManager.Character.attackers.RemoveAll( item => item == null );
                 if (StaticManager.Character.attackers.Count > 0)
                 {
                     character.enemy = StaticManager.Character.attackers[0];
@@ -147,7 +150,7 @@ public class CompanionNav : BaseNav {
                 character.attackers.RemoveAll(item => item == null);
                     if (character.attackers.Count > 0)
                     {
-                        character.enemy = enemiesToAttack[0];
+                        character.enemy = character.attackers[0];
                         Agent.SetDestination(character.enemy.transform.position);
                         transform.LookAt(character.enemy.transform.position);
                         character.AnimationClass.Play(AnimationClass.states.AttackTrigger);

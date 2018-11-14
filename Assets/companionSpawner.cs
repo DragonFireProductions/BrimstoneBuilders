@@ -93,7 +93,7 @@ public class companionSpawner : MonoBehaviour
 
 public void Kill()
     {
-        if (index <= 0)
+        if (comp.Count <= 0)
         {
             Debug.Log("no companions to despawn");
             index = 0;
@@ -103,6 +103,7 @@ public void Kill()
             StaticManager.RealTime.Companions.Remove(comp[0].GetComponent<Companion>());
             var gameObj = comp[0];
             comp.RemoveAt(0);
+            Destroy(gameObj.GetComponent < CompanionNav >( ).behaviors.gameObject);
             StaticManager.inventories.Destroy(gameObj.GetComponent<PlayerInventory>());
             Destroy(gameObj);
             index--;

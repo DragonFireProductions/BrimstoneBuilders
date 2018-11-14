@@ -11,11 +11,11 @@ public class companionBehaviors : MonoBehaviour
     public Companion newFriend;
     private GameObject prev_button;
 
-    private TextMeshProUGUI name;
+    private Text name;
     // Use this for initialization
     void Start()
     {
-        name  = transform.Find("character_name").GetComponent<TextMeshProUGUI>();
+        name  = transform.Find("character_name").GetComponent<Text>();
         name.text = newFriend.stats.name;
     }
 

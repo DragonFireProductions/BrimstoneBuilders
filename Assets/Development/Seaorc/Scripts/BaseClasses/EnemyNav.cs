@@ -53,8 +53,6 @@ public class EnemyNav : BaseNav {
             switch ( State ){
                 case state.IDLE: {
                     //Debug.Log(stats.Strength);
-                    character.threat_signal.enabled = stats.Strength > 10;
-
                     var l_check = StaticManager.Utility.NavDistanceCheck( Agent );
 
                     if ( wanderDelay <= timer && ( l_check == DistanceCheck.HAS_REACHED_DESTINATION || l_check == DistanceCheck.PATH_INVALID ) || StaticManager.Utility.NavDistanceCheck( Agent ) == DistanceCheck.HAS_NO_PATH ){

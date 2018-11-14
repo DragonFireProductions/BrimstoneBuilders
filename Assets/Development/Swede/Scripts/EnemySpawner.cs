@@ -13,6 +13,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float maxRange = 25;
     [SerializeField] private float spawnRadius = 10;
 
+    public float Strength;
+
     [SerializeField] private Enemy[] enemies;
 
     private List<GameObject> instantiated;
@@ -39,7 +41,7 @@ public class EnemySpawner : MonoBehaviour
             isActive = true;
         }
         //If the player goes outside the maxRange, the instantiated enemies will despawn.
-        else if (playerDistance > maxRange && isActive == true && !StaticManager.UiInventory.ItemsInstance.openedWindow.Contains(StaticManager.UiInventory.ItemsInstance.PlayerUI))
+        else if (playerDistance > maxRange && isActive == true && !StaticManager.UiInventory.ItemsInstance.windowIsOpen)
         {
             Despawn();
             isActive = false;
@@ -55,6 +57,9 @@ public class EnemySpawner : MonoBehaviour
             Vector3 position = Random.insideUnitSphere * spawnRadius + this.gameObject.transform.position;
 
             var newEnemy = Instantiate(Resources.Load<GameObject>("EnemyLeader"));
+
+            newEnemy.GetComponent < Enemy >( ).stats.Strength = Strength;
+            newEnemy.GetComponent<Enemy>().stats.UpdateStrength();
             //Randomizes the spawn position (within the set range) of the current enemy.
             newEnemy.GetComponent<EnemyNav>().location = gameObject;
             //Adjust for y to properly place on nav mesh.

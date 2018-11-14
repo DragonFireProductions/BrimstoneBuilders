@@ -218,8 +218,7 @@ public class UIInventory : MonoBehaviour
         if ( ItemsInstance.openedWindow.Count == 0 ){
             ItemsInstance.windowIsOpen = false;
         }
-
-        Time.timeScale = 1;
+        
     }
     public void ShowWindow(GameObject item)
     {

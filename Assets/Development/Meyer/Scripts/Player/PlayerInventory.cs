@@ -76,11 +76,15 @@ public class PlayerInventory : MonoBehaviour {
                 StaticManager.inventories.prevPos = StaticManager.Character.transform.position;
               StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PlayerUI);
                 StaticManager.inventories.SwitchInventory(StaticManager.tabManager.GetTab(StaticManager.Character));
+                StaticManager.inventories.inventory.character.projector.gameObject.SetActive(false);
                 Time.timeScale = 0;
             }
             if ( isInventoryActive == false ){
+                StaticManager.inventories.inventory.character.transform.position = StaticManager.inventories.prevPos;
                 StaticManager.UiInventory.ItemsInstance.ComparedStats.obj.SetActive(false);
                 Time.timeScale = 1;
+                StaticManager.Character.projector.gameObject.SetActive(true);
+
                 StaticManager.UiInventory.CloseWindow();
             }
         }
