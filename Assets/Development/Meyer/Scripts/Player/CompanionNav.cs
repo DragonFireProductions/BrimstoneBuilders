@@ -10,8 +10,7 @@ using UnityEngine.UI;
 public class CompanionNav : BaseNav {
 
     private float randDistance;
-
-    private int des;
+    
 
     public Companion companion;
     private int currenemy;
@@ -29,7 +28,6 @@ public class CompanionNav : BaseNav {
         character         = GetComponent < Companion >( );
         randDistance = Random.Range( 1.5f, 1.5f + 2);
         battleDistance = 4;
-        des = LineManager.assignIndex( );
         companion = GetComponent<Companion>();
         SetAgreesionState = AggressionStates.PASSIVE;
     }
@@ -86,7 +84,7 @@ public class CompanionNav : BaseNav {
             case AggressionStates.PASSIVE:
             {
                 Debug.Log("now in the passive state");
-                Agent.destination = Character.Player.transform.position + (Vector3.right * des);
+                Agent.destination = Character.Player.transform.position;
             }
                 break;
             case AggressionStates.BERZERK:
@@ -139,7 +137,7 @@ public class CompanionNav : BaseNav {
                 }
                 else if (StaticManager.Character.attackers.Count == 0)
                 {
-                    Agent.destination = Character.Player.transform.position + (Vector3.right * des);
+                    Agent.destination = Character.Player.transform.position;
                 }
 
             }
@@ -159,7 +157,7 @@ public class CompanionNav : BaseNav {
                     else
                     {
 
-                        Agent.destination = Character.Player.transform.position + (Vector3.right * des);
+                        Agent.destination = Character.Player.transform.position;
                     }
 
                 }
