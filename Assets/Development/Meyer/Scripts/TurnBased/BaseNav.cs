@@ -28,11 +28,10 @@ public class BaseNav : MonoBehaviour {
         {
             case state.ATTACKING:
                 {
-			        character.attackers.RemoveAll(item => item == null );
-					StaticManager.RealTime.Companions.RemoveAll(item => item == null  );
-	                StaticManager.RealTime.Enemies.RemoveAll( item => item == null );
-
-                    //if current attacker dies and someone is still attacking
+                    character.attackers.RemoveAll(item => item == null);
+                    StaticManager.RealTime.Companions.RemoveAll(item => item == null);
+                    StaticManager.RealTime.Enemies.RemoveAll(item => item == null);
+					
                     if (character.attackers.Count > 0 && character.enemy == null)
                     {
                         var enemy = character.attackers[Random.Range(0, character.attackers.Count)];
@@ -40,27 +39,41 @@ public class BaseNav : MonoBehaviour {
                         enemy.attackers.Add(character);
                     }
                     //if no one is attacking current character and still enemies in the scene
-                    else if (StaticManager.RealTime.GetCount(character) && character.enemy == null){
-	                    var enemy = StaticManager.RealTime.getnewType( character );
+                    else if (StaticManager.RealTime.GetCount(character) && character.enemy == null)
+                    {
+                        var enemy = StaticManager.RealTime.getnewType(character);
                         character.enemy = enemy;
                         enemy.attackers.Add(character);
                     }
                     //no enemies are alive
-                    else if (character.enemy == null && character is Companion){
-		                StaticManager.RealTime.Attacking = false;
+                    else if (character.enemy == null && character is Companion)
+                    {
+                        StaticManager.RealTime.Attacking = false;
                         SetState = state.IDLE;
                         return;
                     }
-                    SetState = state.ATTACKING;
-                    Agent.SetDestination(character.enemy.transform.position);
-                    transform.LookAt(character.enemy.transform);
-                    float distance = Vector3.Distance(transform.position, character.enemy.transform.position);
+                    switch ( character.attachedWeapon.WeaponStats.weaponType ){
+                        case WeaponItem.WeaponType.Gun:
+							transform.LookAt(character.enemy.transform);
+							character.attachedWeapon.Attack(character.enemy);
+	                        break;
+                        case WeaponItem.WeaponType.Sword:
+                            SetState = state.ATTACKING;
+                            Agent.SetDestination(character.enemy.transform.position);
+                            transform.LookAt(character.enemy.transform);
+                            float distance = Vector3.Distance(transform.position, character.enemy.transform.position);
 
-                    if (distance < battleDistance)
-                    {
-                        character.AnimationClass.Play(AnimationClass.states.AttackTrigger);
-                        character.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
-                    }
+                            if (distance < battleDistance)
+                            {
+                                character.attachedWeapon.Attack(character.enemy);
+                            }
+                            break;
+	                }
+			        
+
+                    //if current attacker dies and someone is still attacking
+                    
+                    
                 }
 
                 break;
@@ -85,6 +98,7 @@ public class BaseNav : MonoBehaviour {
 
 		    if ( value == state.MOVE ){
 			    Agent.stoppingDistance = 2;
+			    Agent.isStopped = false;
 		    }
 
 		    if ( value == state.ENEMY_CLICKED ){

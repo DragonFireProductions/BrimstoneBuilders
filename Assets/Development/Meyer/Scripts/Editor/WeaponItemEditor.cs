@@ -10,7 +10,7 @@ public class WeaponItemEditor : EditorWindow {
 
     private string[] weaponsType =
     {
-        WeaponItem.WeaponType.Type1.ToString(), WeaponItem.WeaponType.Type2.ToString(), WeaponItem.WeaponType.Type3.ToString(),
+        WeaponItem.WeaponType.Sword.ToString(), WeaponItem.WeaponType.Gun.ToString(), WeaponItem.WeaponType.Type3.ToString(),
         WeaponItem.WeaponType.Type4.ToString()
     };
 
@@ -186,10 +186,6 @@ public class WeaponItemEditor : EditorWindow {
                 GUILayout.EndHorizontal();
                 GUILayout.Space(40);
 
-                ///Sets weapon Type
-                GUILayout.Label("Weapon type", GUILayout.ExpandWidth(false));
-                WeaponItemList.itemList[viewIndex - 1].weaponType = (WeaponItem.WeaponType)EditorGUILayout.Popup(weaponChoice, weaponsType);
-
                 GUILayout.Space(20);
                 GUILayout.BeginHorizontal();
 
@@ -209,8 +205,18 @@ public class WeaponItemEditor : EditorWindow {
 
                 GUILayout.Label("Audio Clip:");
                 WeaponItemList.itemList[viewIndex - 1].clip = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].clip, typeof(AudioClip), true) as AudioClip;
+                
 
-            } 
+                ///Sets weapon Type
+                GUILayout.Label("Weapon type", GUILayout.ExpandWidth(false));
+                weaponChoice = EditorGUILayout.Popup(weaponChoice, weaponsType);
+                WeaponItemList.itemList[ viewIndex - 1 ].weaponType = ( WeaponItem.WeaponType )weaponChoice;
+
+                if ( weaponChoice == 1 ){
+                    
+                }
+
+            }
             else 
             {
                 GUILayout.Label ("This Inventory List is Empty.");

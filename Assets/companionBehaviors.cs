@@ -19,8 +19,8 @@ public class companionBehaviors : MonoBehaviour
         name.text = newFriend.stats.name;
     }
 
-    public void onClick(int state)
-    {
+    public void onClick(int state) {
+        StaticManager.Character.buttonIsClicked = true;
         if (prev_button)
         {
             prev_button.GetComponent<Image>().color = Color.white;

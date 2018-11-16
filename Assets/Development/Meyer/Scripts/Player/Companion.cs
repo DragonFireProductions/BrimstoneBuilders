@@ -27,7 +27,7 @@ public class Companion : BaseCharacter {
     public void OnTriggerEnter(Collider collider ) {
 
     }
-    public void Damage(int _damage, BaseCharacter attacker)
+    public override void Damage(int _damage)
     {
         if (stats.Health > 0){
             InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.blue);
@@ -60,7 +60,7 @@ public class Companion : BaseCharacter {
      //sets the text value to the damage done
      //damageText.text = damage.ToString( );
 
-     Damage( ( int )l_damage, chara );
+     Damage( ( int )l_damage);
 
     }
 

@@ -23,8 +23,9 @@ public class Projectile : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        
-        
+        if ( other.tag == "Enemy" || other.tag == "Companion"){
+            other.GetComponent<BaseCharacter>().Damage(Damage);
+        }
         Destroy(this.gameObject);
     }
 

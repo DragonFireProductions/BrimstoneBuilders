@@ -137,12 +137,16 @@ public class CameraController : MonoBehaviour
             var l_groundplane = new Plane(Vector3.up, Vector3.zero);
             float l_raylength;
 
+            var plane = new Plane(Vector3.up, playerTransform.position);
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition); //sends a line according to the z and x axis
+            
 
-            if (l_groundplane.Raycast(l_cameraray, out l_raylength)&&  StaticManager.Character.Nav.SetState != BaseNav.state.ATTACKING &&  StaticManager.Character.Nav.SetState != BaseNav.state.ENEMY_CLICKED)
+
+            if (plane.Raycast(ray, out l_raylength)&&  StaticManager.Character.Nav.SetState != BaseNav.state.ATTACKING &&  StaticManager.Character.Nav.SetState != BaseNav.state.ENEMY_CLICKED)
             {
-                var l_pointtolook = l_cameraray.GetPoint(l_raylength);
 
-                playerTransform.LookAt(new Vector3(l_pointtolook.x, playerTransform.position.y, l_pointtolook.z));
+                    var point = ray.GetPoint(l_raylength);
+                    playerTransform.transform.LookAt(point);
             }
 
             float l_rotation = 0;
@@ -152,10 +156,10 @@ public class CameraController : MonoBehaviour
                 l_rotation =  Input.GetAxis("Mouse X");
                 l_rotation *= mouseSensitivity;
             }
-            else if (Input.GetKey(KeyCode.Q)){
+            else if (Input.GetKey(KeyCode.A)){
                 l_rotation = -mouseSensitivity;
             }
-            else if (Input.GetKey(KeyCode.E)){
+            else if (Input.GetKey(KeyCode.D)){
                 l_rotation = mouseSensitivity;
             }
 
@@ -163,7 +167,12 @@ public class CameraController : MonoBehaviour
 
             camRig.Rotate(0, l_rotation, 0);
 
-            zoom += Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * mouseSensitivity;
+            if ( Input.GetKey(KeyCode.W) ){
+                zoom += Time.timeScale * mouseSensitivity;
+            }
+            else if ( Input.GetKeyDown( KeyCode.S ) ){
+                zoom -= Time.timeScale * mouseSensitivity;
+            }
             zoom =  Mathf.Clamp(zoom, -minZoom, maxZoom);
 
             transform.localPosition = new Vector3(0, 0, zoom);

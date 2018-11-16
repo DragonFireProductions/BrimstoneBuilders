@@ -90,7 +90,6 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		GetInventory(_name + "Inventory").PickedUpWeapons.Add(inventory.selectedObject);
 		StaticManager.UiInventory.AddSlot(inventory.selectedObject, GetInventory(_name + "Inventory"));
 		StaticManager.UiInventory.RemoveMainInventory(inventory.selectedObject, inventory);
-		//inventory.PickedUpWeapons.Remove(inventory.selectedObject);
 
     }
 

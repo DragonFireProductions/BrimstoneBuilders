@@ -36,7 +36,35 @@ namespace Kristal
 
         public void Remove(BaseCharacter chara) { }
 
-        public void Damage(int _damage, BaseCharacter attacker)
+        public  void Damage(int _damage, BaseCharacter attacker)
+        {
+
+            if (stats.Health > 0)
+            {
+                InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.red);
+                stats.Health -= _damage;
+                var blood = StaticManager.particleManager.Play(ParticleManager.states.Blood, transform.position);
+                blood.transform.SetParent(gameObject.transform);
+            }
+            else
+            {
+                //
+                for (int i = 0; i < MaxCoinCount; i++)
+                {
+                    deadPos = UnityEngine.Random.insideUnitSphere * 2.5f + this.gameObject.transform.position;
+                    deadPos.y = StaticManager.Character.gameObject.transform.position.y;
+                    var newCoin = Instantiate(Resources.Load<GameObject>("Coin"));
+                    newCoin.gameObject.transform.position = deadPos;
+                }
+                //
+                StaticManager.RealTime.Enemies.Remove(this);
+                Destroy(gameObject);
+            }
+
+            damage -= _damage;
+        }
+
+        public override void Damage(int _damage)
         {
 
             if (stats.Health > 0)

@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 
+using Kristal;
+
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class GunType : WeaponObject {
 
@@ -25,21 +28,21 @@ public class GunType : WeaponObject {
         set { GetType( ).GetField( _property_name ).SetValue( this , value ); }
     }
     
-    public void Attack( ) {
+    public override void Attack(BaseCharacter enemy ) {
         Debug.Log( "Attacking" );
 
         if ( canFire && Ammo > 0 ){
-            StartCoroutine( Fire( ) );
+            StartCoroutine( Fire(enemy ) );
         }
         else if ( !reloading && Ammo == 0 ){
             StartCoroutine( Reload( ) );
         }
     }
 
-    private IEnumerator Fire( ) {
+    private IEnumerator Fire(BaseCharacter enemy ) {
         canFire = false;
 
-        var l_projectile = Instantiate( this.projectile , transform.position + transform.forward , transform.rotation ).GetComponent < Projectile >( );
+        var l_projectile = Instantiate( this.projectile , AttacheBaseCharacter.transform.position + (AttacheBaseCharacter.transform.forward * 2) , transform.rotation ).GetComponent < Projectile >( );
         Destroy( l_projectile.gameObject , Range / l_projectile.GetSpeed( ) );
 
         Ammo -= 1;

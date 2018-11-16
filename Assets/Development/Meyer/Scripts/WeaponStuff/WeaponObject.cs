@@ -26,12 +26,16 @@ public class WeaponObject : MonoBehaviour
     public AnimationClass AnimationClass;
 
     public BaseCharacter AttacheBaseCharacter;
-    
+
+    public virtual void Attack(BaseCharacter enemy = null ) {
+       
+        AttacheBaseCharacter.AnimationClass.Play(AnimationClass.states.AttackTrigger);
+        AttacheBaseCharacter.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
+    }
     protected void OnEnable( ) {
         
         if ( tag != "PickUp" ){
         AttacheBaseCharacter = transform.parent.parent.GetComponent < BaseCharacter >( );
-
         }
     }
     protected virtual void Start() {

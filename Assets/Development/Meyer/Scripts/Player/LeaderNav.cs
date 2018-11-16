@@ -9,6 +9,7 @@ using Kristal;
 using TMPro;
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class LeaderNav : CompanionNav {
@@ -70,8 +71,7 @@ public class LeaderNav : CompanionNav {
 
 	// Update is called once per frame
 	protected override void Update () {
-
-        if ( Input.GetMouseButton( 0 ) && !StaticManager.UiInventory.ItemsInstance.windowIsOpen ){
+        if ( Input.GetMouseButton( 0 ) && !StaticManager.UiInventory.ItemsInstance.windowIsOpen && !EventSystem.current.IsPointerOverGameObject()){
             l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );
 
 	        if ( Physics.Raycast(l_ray, out hit) ){
@@ -91,6 +91,15 @@ public class LeaderNav : CompanionNav {
             }
         }
 
+		if ( Input.GetMouseButton(1) ){
+			Agent.isStopped = true;
+			SetState = state.FREEZE;
+			if (character.attachedWeapon is GunType && Physics.Raycast( l_ray , out hit ) ){
+				if ( hit.collider.tag != "Companion" && hit.collider.tag != "Player" ){
+					character.attachedWeapon.Attack(null);
+				}
+			}
+		}
 		if ( Input.GetMouseButtonDown( 0 ) ){
 			if ( Physics.Raycast( l_ray , out hit ) ){
 				if (hit.collider.tag == "ShopKeeper" && !StaticManager.UiInventory.ItemsInstance.windowIsOpen) //Left Click
@@ -144,9 +153,9 @@ public class LeaderNav : CompanionNav {
 
 		if ( Input.GetMouseButtonUp( 1 ) ){
 				StaticManager.UiInventory.CloseWindow(StaticManager.UiInventory.ItemsInstance.PlayerStats );
-			}
-		
-		if ( !StaticManager.RealTime.Attacking ){
+
+        }
+        if ( !StaticManager.RealTime.Attacking ){
 			 colliders = Physics.OverlapSphere(transform.position, 10, mask);
 
 			if ( colliders.Length > 0 ){
@@ -161,20 +170,24 @@ public class LeaderNav : CompanionNav {
 
         switch ( State ){
 			case state.ATTACKING:
+				switch ( character.attachedWeapon.WeaponStats.weaponType ){
+                    case WeaponItem.WeaponType.Sword:
+	                    if (enemy == null)
+	                    {
+		                   SetState = BaseNav.state.FREEZE;
+		                    return;
+	                    }
 
-				if ( enemy == null ){
-					SetState = state.FREEZE;
+	                    if (Vector3.Distance(enemy.transform.position, gameObject.transform.position) > 3)
+	                    {
+		                    SetState = BaseNav.state.ENEMY_CLICKED;
+	                    }
 
-					return;
-				}
-
-                if ( Vector3.Distance( enemy.transform.position , gameObject.transform.position ) > 3 ){
-                    SetState = state.ENEMY_CLICKED;
+	                    transform.LookAt(enemy.transform.position);
+                        character.attachedWeapon.Attack(character.enemy as Enemy);
+	                    break;
                 }
-
-                character.transform.LookAt(enemy.transform.position);
-                    character.AnimationClass.Play(AnimationClass.states.AttackTrigger);
-                    character.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
+				
 
                 break;
 			case state.MOVE:
@@ -183,12 +196,24 @@ public class LeaderNav : CompanionNav {
 				break;
 			case state.ENEMY_CLICKED:
 
-				if (Vector3.Distance(enemy.transform.position, gameObject.transform.position) < 3  ){
-					SetState = state.ATTACKING;
+				switch ( character.attachedWeapon.WeaponStats.weaponType ){
+                    case WeaponItem.WeaponType.Sword:
+                        if (Vector3.Distance(enemy.transform.position, gameObject.transform.position) < 3)
+                        {
+                            SetState = state.ATTACKING;
+                        }
+                        else
+                        {
+                            Agent.SetDestination(enemy.transform.position);
+                        }
+                        break;
+                    case WeaponItem.WeaponType.Gun:
+	                    character.attachedWeapon.Attack(enemy as Enemy);
+	                    SetState = state.IDLE;
+	                    break;
+						
 				}
-				else{
-					Agent.SetDestination( enemy.transform.position );
-				}
+				
 
 				break;
 			case state.IDLE:
@@ -204,6 +229,7 @@ public class LeaderNav : CompanionNav {
 
 				break;
 		}
+
 	}
 
     private IEnumerator show( ) {

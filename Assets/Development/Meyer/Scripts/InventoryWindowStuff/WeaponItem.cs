@@ -14,8 +14,8 @@ public class WeaponItem
 
     public enum WeaponType
     {
-        Type1,
-        Type2,
+        Sword,
+        Gun,
         Type3,
         Type4
     };

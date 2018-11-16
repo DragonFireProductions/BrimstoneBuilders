@@ -12,8 +12,8 @@ namespace Assets.Meyer.TestScripts.Player {
         public companionSpawner spawner;
 
         [ SerializeField ] private GameObject camHolder;
-        
 
+        public bool buttonIsClicked = false;
         //CharacterController controller;
         // Use this for initialization
         private void Awake() {
@@ -21,8 +21,6 @@ namespace Assets.Meyer.TestScripts.Player {
             Player = GameObject.FindWithTag("Player");
             spawner = gameObject.GetComponent<companionSpawner>();
             Nav = gameObject.GetComponent<LeaderNav>();
-            
-           
         }
         
         private void Start( ) {

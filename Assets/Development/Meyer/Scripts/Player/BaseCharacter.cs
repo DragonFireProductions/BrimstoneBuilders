@@ -81,6 +81,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public abstract void Attack( BaseCharacter attacker );
 
+	public abstract void Damage( int damage );
     // Update is called once per frame
     protected void Update () {
 
