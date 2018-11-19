@@ -92,48 +92,50 @@ public class CompanionNav : BaseNav {
                
                 Debug.Log("now in berzerk state");
                 enemiesToAttack = StaticManager.RealTime.AllEnemies;
-                 enemiesToAttack.RemoveAll(item => item == null);
-                if (enemiesToAttack.Count  > 0 && !character.enemy)
-                {
-                    character.enemy = enemiesToAttack[0];
-                }
-                    if (character.attachedWeapon is GunType)
-                    {
-                        if (Vector3.Distance(StaticManager.Character.transform.position, gameObject.transform.position) > 8)
-                        {
+                enemiesToAttack.RemoveAll(item => item == null);
+
+                if ( enemiesToAttack.Count > 0 && !character.enemy ){
+                    character.enemy = enemiesToAttack[ 0 ];
+
+                    if ( character.attachedWeapon is GunType ){
+                        if ( Vector3.Distance( StaticManager.Character.transform.position , gameObject.transform.position ) > 8 ){
                             Agent.isStopped = false;
-                            Agent.SetDestination(StaticManager.Character.transform.position);
+                            Agent.SetDestination( StaticManager.Character.transform.position );
                         }
-                        else
-                        {
+                        else{
                             Agent.isStopped = true;
                         }
-                        transform.LookAt(character.enemy.transform);
-                        character.attachedWeapon.Attack();
+
+                        transform.LookAt( character.enemy.transform );
+                        character.attachedWeapon.Attack( );
                     }
-                    else
-                    {
-                        if (character.enemy)
-                        {
-                            Agent.SetDestination(character.enemy.transform.position);
+                    else{
+                        if ( character.enemy ){
+                            Agent.SetDestination( character.enemy.transform.position );
 
                         }
-                        if (enemiesToAttack.Count == 0)
-                        {
-                            Agent.SetDestination(StaticManager.Character.transform.position);
+
+                        if ( enemiesToAttack.Count == 0 ){
+                            Agent.SetDestination( StaticManager.Character.transform.position );
+
                             return;
                         }
-                        float dist = Vector3.Distance(transform.position, character.enemy.transform.position);
-                        if (dist < battleDistance)
-                        {
-                            character.AnimationClass.Play(AnimationClass.states.AttackTrigger);
-                            character.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
-                            transform.LookAt(character.enemy.transform.position);
+
+                        float dist = Vector3.Distance( transform.position , character.enemy.transform.position );
+
+                        if ( dist < battleDistance ){
+                            character.AnimationClass.Play( AnimationClass.states.AttackTrigger );
+                            character.attachedWeapon.AnimationClass.Play( AnimationClass.weaponstates.EnabledTrigger );
+                            transform.LookAt( character.enemy.transform.position );
 
                         }
 
                     }
                 }
+                else{
+                    Agent.SetDestination( StaticManager.Character.transform.position );
+                }
+            }
                    
                 break;
             case AggressionStates.DEFEND:

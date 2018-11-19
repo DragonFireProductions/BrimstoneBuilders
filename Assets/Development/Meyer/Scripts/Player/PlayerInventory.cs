@@ -36,7 +36,7 @@ public class PlayerInventory : MonoBehaviour {
 
     public void Awake( ) {
         AttachedWeapons = new List < WeaponObject >();
-        AttachedWeapons.Add(gameObject.transform.Find("Cube/Sword").gameObject.GetComponent<WeaponObject>());
+        AttachedWeapons.Add(gameObject.transform.Find("Cube").gameObject.GetComponentInChildren<WeaponObject>());
         
         character = GetComponent < BaseCharacter >( );
         
@@ -44,7 +44,7 @@ public class PlayerInventory : MonoBehaviour {
     }
     
     public void Start( ) {
-        PickedUpWeapons.Add(gameObject.transform.Find("Cube/Sword").gameObject.GetComponent<WeaponObject>());
+        PickedUpWeapons.Add(gameObject.transform.Find("Cube").gameObject.GetComponentInChildren<WeaponObject>());
         parent = StaticManager.inventories.setParent( gameObject );
         StaticManager.inventories.alllables.Add(this);
         StaticManager.inventories.setSendButton( character as Companion );
