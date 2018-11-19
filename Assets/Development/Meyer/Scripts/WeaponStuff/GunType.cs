@@ -15,8 +15,6 @@ public class GunType : WeaponObject {
 
     [ SerializeField ] public float FireRate;
 
-    [ SerializeField ] public GameObject projectile;
-
     [ SerializeField ] public float Range;
 
     private bool reloading;
@@ -35,7 +33,7 @@ public class GunType : WeaponObject {
     public void FillBullets(GameObject collider ) {
         bullets = new Projectile[30];
         for ( int i = 0 ; i < bullets.Length ; i++ ){
-            bullets[ i ] = Instantiate( Resources.Load < Projectile >( "baseBullet" ) );
+            bullets[ i ] = Instantiate( weaponStats.Projectile.GetComponent<Projectile>() );
             bullets[i].gameObject.SetActive(false);
             bullets[ i ].gameObject.layer = collider.gameObject.layer;
             bullets[i].transform.SetParent(GameObject.Find("Bullets").transform);
@@ -83,7 +81,7 @@ public class GunType : WeaponObject {
     }
     protected override void OnTriggerEnter(Collider collider ) {
         base.OnTriggerEnter(collider);
-        projectile.layer = collider.gameObject.layer;
+       // projectile.layer = collider.gameObject.layer;
     }
 
     private IEnumerator Reload( ) {
