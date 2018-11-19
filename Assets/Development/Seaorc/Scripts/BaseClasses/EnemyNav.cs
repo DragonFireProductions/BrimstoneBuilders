@@ -13,8 +13,6 @@ public class EnemyNav : BaseNav {
 
     [ SerializeField ] private float maintainAttackDistance;
 
-    private float timer;
-
     [ SerializeField ] private float veiwDistance;
 
     [ SerializeField ] private float wanderDelay;
@@ -26,7 +24,6 @@ public class EnemyNav : BaseNav {
     private Stat stats;
 
     private void Awake( ) {
-        timer = Time.deltaTime;
     }
 
     private void Start( ) {

@@ -41,6 +41,22 @@ namespace Assets.Meyer.TestScripts {
                 yield return new WaitForEndOfFrame();
             }
         }
+
+        public Vector3 randomInsideDonut(float outerRadius, float innerRadius, Vector3 enemypos ) {
+            float wallRadius = (outerRadius - innerRadius) * 0.5f;
+            float ringRadius = wallRadius + innerRadius;
+
+            float randAngle = UnityEngine.Random.value * 6.28f;
+            float cx = Mathf.Sin(randAngle);
+            float cz = Mathf.Sin(randAngle);
+
+            var ringpos = new Vector3(cx, 0, cz);
+            ringpos *= ringRadius;
+
+            Vector3 sPos = UnityEngine.Random.insideUnitSphere * wallRadius + enemypos;
+
+            return ringpos + sPos;
+        }
         public DistanceCheck NavDistanceCheck( NavMeshAgent _m_nav_mesh_agent )
         {
             bool activated = false;

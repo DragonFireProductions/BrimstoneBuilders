@@ -15,14 +15,32 @@ public class GunType : WeaponObject {
 
     [ SerializeField ] public float FireRate;
 
-    [ SerializeField ] private GameObject projectile;
+    [ SerializeField ] public GameObject projectile;
 
     [ SerializeField ] public float Range;
 
     private bool reloading;
 
+    private Projectile[] bullets;
+
     [ SerializeField ] public float ReloadTime;
 
+    protected override void Start( ) {
+        base.Start();
+
+        if ( tag != "PickUp" ){
+            FillBullets(AttacheBaseCharacter.gameObject);
+        }
+    }
+    public void FillBullets(GameObject collider ) {
+        bullets = new Projectile[30];
+        for ( int i = 0 ; i < bullets.Length ; i++ ){
+            bullets[ i ] = Instantiate( Resources.Load < Projectile >( "baseBullet" ) );
+            bullets[i].gameObject.SetActive(false);
+            bullets[ i ].gameObject.layer = collider.gameObject.layer;
+            bullets[i].transform.SetParent(GameObject.Find("Bullets").transform);
+        }
+    }
     public override object this[ string _property_name ] {
         get { return GetType( ).GetField( _property_name ).GetValue( this ); }
         set { GetType( ).GetField( _property_name ).SetValue( this , value ); }
@@ -40,10 +58,13 @@ public class GunType : WeaponObject {
     }
 
     private IEnumerator Fire(BaseCharacter enemy ) {
-        canFire = false;
 
-        var l_projectile = Instantiate( this.projectile , AttacheBaseCharacter.transform.position + (AttacheBaseCharacter.transform.forward * 2) , transform.rotation ).GetComponent < Projectile >( );
-        Destroy( l_projectile.gameObject , Range / l_projectile.GetSpeed( ) );
+        canFire = false;
+        var proj = GetPulledBullets( );
+        proj.gameObject.transform.position = AttacheBaseCharacter.transform.position + ( AttacheBaseCharacter.transform.forward * 2 );
+        proj.transform.rotation = transform.rotation;
+        proj.gameObject.SetActive(true);
+        StartCoroutine( destroyBullet( proj ) );
 
         Ammo -= 1;
 
@@ -52,18 +73,41 @@ public class GunType : WeaponObject {
         canFire = true;
     }
 
+    IEnumerator destroyBullet(Projectile projectile ) {
+        yield return new WaitForSeconds( Range / projectile.GetSpeed( ) );
+        projectile.gameObject.SetActive(false);
+    }
+    public override void PickUp( ) {
+        base.PickUp();
+        FillBullets(StaticManager.Character.gameObject);
+    }
     protected override void OnTriggerEnter(Collider collider ) {
         base.OnTriggerEnter(collider);
-        projectile.layer = AttacheBaseCharacter.gameObject.layer;
+        projectile.layer = collider.gameObject.layer;
     }
 
     private IEnumerator Reload( ) {
         reloading = true;
 
         yield return new WaitForSeconds( ReloadTime );
-
         Ammo      = Capacity;
         reloading = false;
+    }
+    [HideInInspector] protected int _lastBullet;
+    public Projectile GetPulledBullets( ) {
+            Projectile currentBullet;
+            if (_lastBullet == bullets.Length - 1)
+            {
+                _lastBullet   = 0;
+                currentBullet = bullets[0];
+            }
+            else
+            {
+                currentBullet = bullets[_lastBullet];
+            }
+
+            _lastBullet += 1;
+            return currentBullet;
     }
 
 }
