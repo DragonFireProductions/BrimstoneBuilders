@@ -52,6 +52,11 @@ public class GunType : WeaponObject {
         canFire = true;
     }
 
+    protected override void OnTriggerEnter(Collider collider ) {
+        base.OnTriggerEnter(collider);
+        projectile.layer = AttacheBaseCharacter.gameObject.layer;
+    }
+
     private IEnumerator Reload( ) {
         reloading = true;
 

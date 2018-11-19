@@ -26,8 +26,8 @@ public class BaseNav : MonoBehaviour {
 	protected virtual void Update () {
         switch (State)
         {
-            case state.ATTACKING:
-                {
+            case state.ATTACKING: {
+	            
                     character.attackers.RemoveAll(item => item == null);
                     StaticManager.RealTime.Companions.RemoveAll(item => item == null);
                     StaticManager.RealTime.Enemies.RemoveAll(item => item == null);
@@ -54,6 +54,12 @@ public class BaseNav : MonoBehaviour {
                     }
                     switch ( character.attachedWeapon.WeaponStats.weaponType ){
                         case WeaponItem.WeaponType.Gun:
+
+	                        if ( StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_REACHED_DESTINATION ){
+                                int spawnRadius = Random.Range(1, 10);
+                                var pos = Random.insideUnitSphere * spawnRadius + this.gameObject.transform.position;
+		                        Agent.SetDestination( pos );
+	                        }
 							transform.LookAt(character.enemy.transform);
 							character.attachedWeapon.Attack(character.enemy);
 	                        break;

@@ -16,6 +16,8 @@ public class companionSpawner : MonoBehaviour
     public List<GameObject> comp;
     [SerializeField] private GameObject companionspawner;
 
+    [ SerializeField ] private Companion[] companion;
+
     public int numberofcompanions;
 
 
@@ -65,7 +67,7 @@ public class companionSpawner : MonoBehaviour
         }
 
         StaticManager.RealTime.Companions.RemoveAll(nulls => nulls == null);
-        var newEnemy = Instantiate(Resources.Load<Companion>("Companion"));
+        var newEnemy = Instantiate(companion[1]);
         newEnemy.name = newEnemy.name + index.ToString();
         Vector3 position = Random.insideUnitSphere * 5 + this.gameObject.transform.position;
         newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;

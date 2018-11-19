@@ -23,10 +23,10 @@ public class Projectile : MonoBehaviour
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
-        if ( other.tag == "Enemy" || other.tag == "Companion"){
+        if ( other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player" ){
             other.GetComponent<BaseCharacter>().Damage(Damage);
         }
-        Destroy(this.gameObject);
+        Destroy(this.gameObject, 1);
     }
 
     /// <summary>

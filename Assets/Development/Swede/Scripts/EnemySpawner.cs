@@ -56,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
         {
             Vector3 position = Random.insideUnitSphere * spawnRadius + this.gameObject.transform.position;
 
-            var newEnemy = Instantiate(Resources.Load<GameObject>("EnemyLeader"));
+            var newEnemy = Instantiate(enemies[Random.Range(0, enemies.Length)]);
 
             newEnemy.GetComponent < Enemy >( ).stats.Strength = Strength;
             newEnemy.GetComponent<Enemy>().stats.UpdateStrength();

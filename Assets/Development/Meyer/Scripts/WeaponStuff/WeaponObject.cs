@@ -64,7 +64,7 @@ public class WeaponObject : MonoBehaviour
 
     }
     
-    protected void OnTriggerEnter(Collider collider)
+    protected virtual void OnTriggerEnter(Collider collider)
     {
         if (collider.tag == "Player" && !StaticManager.UiInventory.Dragging && !attached && tag == "PickUp")
         {
