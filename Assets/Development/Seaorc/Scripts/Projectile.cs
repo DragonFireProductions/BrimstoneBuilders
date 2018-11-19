@@ -25,10 +25,15 @@ public class Projectile : MonoBehaviour
     {
         if ( other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player" ){
             other.GetComponent<BaseCharacter>().Damage(Damage);
+            StartCoroutine( stopBullet( ) );
         }
-        Destroy(this.gameObject, 1);
+        
     }
 
+    IEnumerator stopBullet( ) {
+        yield return new WaitForSeconds(1);
+        gameObject.SetActive(false);
+    }
     /// <summary>
     /// Returns the projectiles speed
     /// </summary>

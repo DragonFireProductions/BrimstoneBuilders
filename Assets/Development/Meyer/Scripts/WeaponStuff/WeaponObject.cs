@@ -32,7 +32,7 @@ public class WeaponObject : MonoBehaviour
         AttacheBaseCharacter.AnimationClass.Play(AnimationClass.states.AttackTrigger);
         AttacheBaseCharacter.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
     }
-    protected void OnEnable( ) {
+    protected virtual  void OnEnable( ) {
         
         if ( tag != "PickUp" ){
         AttacheBaseCharacter = transform.parent.parent.GetComponent < BaseCharacter >( );
@@ -50,7 +50,7 @@ public class WeaponObject : MonoBehaviour
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
 
-    public void PickUp( ) {
+    public virtual void PickUp( ) {
         if ( AttacheBaseCharacter == null ){
         StaticManager.UiInventory.AddSlot(this, StaticManager.Character.inventory);
         gameObject.SetActive(false);

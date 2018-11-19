@@ -34,7 +34,8 @@ public class WeaponItem
         public bool isStackable;
         public bool destroyOnUse;
         public AudioClip clip;
-
+    
+    public GameObject Projectile;
 
     public object this[string propertyName]
     {

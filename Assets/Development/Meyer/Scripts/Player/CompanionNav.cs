@@ -2,6 +2,8 @@
 using System.Net;
 using Assets.Meyer.TestScripts.Player;
 
+using JetBrains.Annotations;
+
 using Kristal;
 using TMPro;
 using UnityEngine;
@@ -14,13 +16,14 @@ public class CompanionNav : BaseNav {
 
     public Companion companion;
     private int currenemy;
-
+    
     public enum AggressionStates { BERZERK, PASSIVE, DEFEND, PROVOKED }
 
     public AggressionStates aggState;
     public companionBehaviors behaviors;
     //List of enemies to attack
     public List<Enemy> enemiesToAttack;
+    
     public void Start( ) {
         base.Start( );
         enemiesToAttack = new List<Enemy>();
@@ -30,6 +33,7 @@ public class CompanionNav : BaseNav {
         battleDistance = 4;
         companion = GetComponent<Companion>();
         SetAgreesionState = AggressionStates.PASSIVE;
+        
     }
 
     //Handles assigning enemies for companion
@@ -77,10 +81,11 @@ public class CompanionNav : BaseNav {
     protected override void Update( ) {
         character.attackers.RemoveAll( item => item == null );
         enemiesToAttack.RemoveAll( item => item == null );
+     
         switch ( aggState ){
 
 
-
+                
             case AggressionStates.PASSIVE:
             {
                 Debug.Log("now in the passive state");
@@ -94,21 +99,27 @@ public class CompanionNav : BaseNav {
                 enemiesToAttack = StaticManager.RealTime.AllEnemies;
                 enemiesToAttack.RemoveAll(item => item == null);
 
-                if ( enemiesToAttack.Count > 0 && !character.enemy ){
+                if ( enemiesToAttack.Count > 0  ){
+                    if (!character.enemy)
                     character.enemy = enemiesToAttack[ 0 ];
 
                     if ( character.attachedWeapon is GunType ){
-                        if ( Vector3.Distance( StaticManager.Character.transform.position , gameObject.transform.position ) > 8 ){
-                            Agent.isStopped = false;
-                            Agent.SetDestination( StaticManager.Character.transform.position );
-                        }
-                        else{
-                            Agent.isStopped = true;
+
+                        if (StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_REACHED_DESTINATION)
+                        {
+                            timer += Time.deltaTime;
+
+                            if (timer > waittime)
+                            {
+                                newpos = StaticManager.Utility.randomInsideDonut(outerRadius, innerRadius, character.enemy.transform.position);
+                                timer  = 0;
+                            }
                         }
 
-                        transform.LookAt( character.enemy.transform );
-                        character.attachedWeapon.Attack( );
-                    }
+                        transform.LookAt(character.enemy.transform);
+                        character.attachedWeapon.Attack();
+                        Agent.SetDestination(newpos);
+                        }
                     else{
                         if ( character.enemy ){
                             Agent.SetDestination( character.enemy.transform.position );
@@ -146,18 +157,26 @@ public class CompanionNav : BaseNav {
                 {
                     character.enemy = StaticManager.Character.attackers[0];
 
-                    if ( character.attachedWeapon is GunType ){
-                        if ( Vector3.Distance(StaticManager.Character.transform.position, gameObject.transform.position) > 8 ){
-                            Agent.isStopped = false;
-                            Agent.SetDestination( StaticManager.Character.transform.position );
+                        if (character.attachedWeapon is GunType)
+                        {
+
+                            if (StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_REACHED_DESTINATION)
+                            {
+                                timer += Time.deltaTime;
+
+                                if (timer > waittime)
+                                {
+                                    newpos = StaticManager.Utility.randomInsideDonut(outerRadius, innerRadius, character.enemy.transform.position);
+                                    timer  = 0;
+                                }
+                            }
+
+                            transform.LookAt(character.enemy.transform);
+                            character.attachedWeapon.Attack();
+                            Agent.SetDestination(newpos);
                         }
-                        else{
-                            Agent.isStopped = true;
-                        }
-                        transform.LookAt(character.enemy.transform);
-                        character.attachedWeapon.Attack();
-                    }
-                    else{
+                        else
+                        {
                             Agent.SetDestination(character.enemy.transform.position);
                             transform.LookAt(character.enemy.transform.position);
                             float distance = Vector3.Distance(transform.position, character.enemy.transform.position);
@@ -187,19 +206,24 @@ public class CompanionNav : BaseNav {
 
                         if (character.attachedWeapon is GunType)
                         {
-                            if (Vector3.Distance(StaticManager.Character.transform.position, gameObject.transform.position) > 8)
+
+                            if (StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_REACHED_DESTINATION)
                             {
-                                Agent.isStopped = false;
-                                Agent.SetDestination(StaticManager.Character.transform.position);
+                                timer += Time.deltaTime;
+
+                                if (timer > waittime)
+                                {
+                                    newpos = StaticManager.Utility.randomInsideDonut(outerRadius, innerRadius, character.enemy.transform.position);
+                                    timer  = 0;
+                                }
                             }
-                            else
-                            {
-                                Agent.isStopped = true;
-                            }
+
                             transform.LookAt(character.enemy.transform);
                             character.attachedWeapon.Attack();
+                            Agent.SetDestination(newpos);
                         }
-                        else{
+                        else
+                        {
                             Agent.SetDestination( character.enemy.transform.position );
                             transform.LookAt( character.enemy.transform.position );
                             character.AnimationClass.Play( AnimationClass.states.AttackTrigger );

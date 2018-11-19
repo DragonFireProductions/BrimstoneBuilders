@@ -212,8 +212,12 @@ public class WeaponItemEditor : EditorWindow {
                 weaponChoice = EditorGUILayout.Popup(weaponChoice, weaponsType);
                 WeaponItemList.itemList[ viewIndex - 1 ].weaponType = ( WeaponItem.WeaponType )weaponChoice;
 
-                if ( weaponChoice == 1 ){
-                    
+                if ( weaponChoice == (int)WeaponItem.WeaponType.Gun ){
+                    ///Projectile gameObject
+                    GUILayout.Label("Gun Projectile", GUILayout.ExpandWidth(false));
+                    WeaponItemList.itemList[viewIndex - 1].Projectile = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].Projectile, typeof(GameObject), true) as GameObject;
+
+
                 }
 
             }

@@ -77,6 +77,8 @@ public abstract class BaseCharacter : MonoBehaviour {
 		canvas = transform.Find( "Canvas" ).gameObject;
 		projector = gameObject.transform.Find( "Projector" ).GetComponent < Projector >( );
 		projector.gameObject.SetActive(false);
+
+		
 	}
 
 	public abstract void Attack( BaseCharacter attacker );
