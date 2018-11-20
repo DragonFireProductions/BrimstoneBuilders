@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ShockProjectile : Projectile {
 
+    private int hits = 3;
+
+     public float interval = 0.5f;
     public void Start()
     {
         DOT_interval = 1; //Time between DOT damage.
@@ -13,7 +16,7 @@ public class ShockProjectile : Projectile {
     {
         if (other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player")
         {
-            other.GetComponent<BaseCharacter>().DOT(Damage, 0.5f);
+            other.GetComponent<BaseCharacter>().DOT(Damage, interval, hits);
             //play particle.
         }
 

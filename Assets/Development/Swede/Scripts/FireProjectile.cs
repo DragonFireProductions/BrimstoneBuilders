@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using Kristal;
 using UnityEngine;
 
-public class FireProjectile : Projectile
-{
+public class FireProjectile : Projectile {
 
-
+    private int hits = 3;
+     public float interval = 0.5f;
     public void Start()
     {
         DOT_interval = 1; //Time between DOT damage.
@@ -16,7 +16,7 @@ public class FireProjectile : Projectile
     {
         if(other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player")
         {
-            other.GetComponent<BaseCharacter>().DOT(Damage, 0.5f);
+            other.GetComponent<BaseCharacter>().DOT(Damage, interval, hits);
             //play particle.
         }
 

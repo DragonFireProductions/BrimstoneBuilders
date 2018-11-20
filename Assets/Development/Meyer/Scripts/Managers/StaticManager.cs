@@ -31,6 +31,8 @@ public class StaticManager : MonoBehaviour
     public static TabManager tabManager;
 
     public static Currency currencyManager;
+
+    public static WeaponHolder weaponManager;
     // Use this for initialization
     public void Awake()
     {
@@ -65,6 +67,8 @@ public class StaticManager : MonoBehaviour
         tabManager = GetComponent < TabManager >( );
 
         currencyManager = GameObject.Find("ManagerHolder").GetComponent<Currency>();
+
+        weaponManager = GameObject.Find( "ManagerHolder" ).GetComponent < WeaponHolder >( );
 
     }
 

@@ -31,7 +31,7 @@ namespace Kristal
             Nav = gameObject.GetComponent<EnemyNav>();
 
             MaxCoinCount = UnityEngine.Random.Range(1, MaxCoinCount);
-
+            StaticManager.weaponManager.AttachWeapon(this);
         }
 
         public void Remove(BaseCharacter chara) { }

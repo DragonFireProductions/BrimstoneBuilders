@@ -181,7 +181,7 @@ public class WeaponItemEditor : EditorWindow {
 
                 ///Sets Equipment type
                 GUILayout.Label("Equipment type", GUILayout.ExpandWidth(false));
-                WeaponItemList.itemList[viewIndex - 1].equipType = (WeaponItem.EquipType)EditorGUILayout.Popup(equipChoice, equipType);
+                WeaponItemList.itemList[viewIndex - 1].equipType = (WeaponItem.EquipType)EditorGUILayout.EnumPopup("Weapon Type:", WeaponItemList.itemList[viewIndex - 1].equipType);
 
                 GUILayout.EndHorizontal();
                 GUILayout.Space(40);
@@ -209,15 +209,13 @@ public class WeaponItemEditor : EditorWindow {
 
                 ///Sets weapon Type
                 GUILayout.Label("Weapon type", GUILayout.ExpandWidth(false));
-                weaponChoice = EditorGUILayout.Popup(weaponChoice, weaponsType);
-                WeaponItemList.itemList[ viewIndex - 1 ].weaponType = ( WeaponItem.WeaponType )weaponChoice;
+                WeaponItemList.itemList[viewIndex - 1].weaponType =(WeaponItem.WeaponType) EditorGUILayout.EnumPopup("Weapon Type", WeaponItemList.itemList[viewIndex - 1].weaponType);
+             
 
-                if ( weaponChoice == (int)WeaponItem.WeaponType.Gun ){
+                if ( WeaponItemList.itemList[viewIndex - 1].weaponType == WeaponItem.WeaponType.Gun ){
                     ///Projectile gameObject
                     GUILayout.Label("Gun Projectile", GUILayout.ExpandWidth(false));
                     WeaponItemList.itemList[viewIndex - 1].Projectile = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].Projectile, typeof(GameObject), true) as GameObject;
-
-
                 }
 
             }

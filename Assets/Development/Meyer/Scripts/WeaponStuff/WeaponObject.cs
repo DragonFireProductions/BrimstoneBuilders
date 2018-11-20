@@ -32,12 +32,6 @@ public class WeaponObject : MonoBehaviour
         AttacheBaseCharacter.AnimationClass.Play(AnimationClass.states.AttackTrigger);
         AttacheBaseCharacter.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
     }
-    protected virtual  void OnEnable( ) {
-        
-        if ( tag != "PickUp" ){
-        AttacheBaseCharacter = transform.parent.parent.GetComponent < BaseCharacter >( );
-        }
-    }
     protected virtual void Start() {
         AnimationClass = gameObject.GetComponent < AnimationClass >( );
         weaponStats = StaticManager.inventories.GetItemFromAssetList( weaponName );
@@ -70,6 +64,7 @@ public class WeaponObject : MonoBehaviour
         {
             StaticManager.Character.inventory.PickUp(this);
             this.GetComponent<BoxCollider>().enabled = false;
+            AttacheBaseCharacter = StaticManager.Character;
         }
 
         if ((collider.tag == "Enemy"  || collider.tag == "Companion" || collider.tag == "Player") && tag == "Weapon"){

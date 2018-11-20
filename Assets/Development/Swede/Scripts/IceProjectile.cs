@@ -1,9 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
 using UnityEngine;
 
 public class IceProjectile : Projectile {
 
+    public int hits = 3;
+
+    public float interval = 0.5f;
     // Use this for initialization
     public void Start()
     {
@@ -14,7 +19,7 @@ public class IceProjectile : Projectile {
     {
         if (other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player")
         {
-            other.GetComponent<BaseCharacter>().DOT(Damage, 0.5f);
+            other.GetComponent<BaseCharacter>().DOT(Damage, interval, hits);
             //play particle.
         }
 

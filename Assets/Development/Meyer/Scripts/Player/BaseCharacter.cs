@@ -77,13 +77,13 @@ public abstract class BaseCharacter : MonoBehaviour {
 		canvas = transform.Find( "Canvas" ).gameObject;
 		projector = gameObject.transform.Find( "Projector" ).GetComponent < Projector >( );
 		projector.gameObject.SetActive(false);
+		cube = transform.Find( "Cube" ).gameObject;
 
-		
 	}
-    public IEnumerator EDOT(int damage, float interval)
+    public IEnumerator EDOT(int damage, float interval, int _hits)
     {
         int hits = 0;
-        while (hits < 10)
+        while (hits < _hits)
         {
             Damage(damage);
             hits++;
@@ -92,9 +92,9 @@ public abstract class BaseCharacter : MonoBehaviour {
             yield return new WaitForSeconds(interval);
         }
     }
-    public void DOT(int damage, float interval)
+    public void DOT(int damage, float interval, int hits)
     {
-        StartCoroutine(EDOT(damage, interval));
+        StartCoroutine(EDOT(damage, interval, hits));
 
     }
     public abstract void Attack( BaseCharacter attacker );

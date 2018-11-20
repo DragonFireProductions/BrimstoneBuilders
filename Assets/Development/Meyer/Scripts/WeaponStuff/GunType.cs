@@ -19,21 +19,20 @@ public class GunType : WeaponObject {
 
     private bool reloading;
 
-    private Projectile[] bullets;
+    private GameObject[] bullets;
 
     [ SerializeField ] public float ReloadTime;
 
     protected override void Start( ) {
         base.Start();
-
         if ( tag != "PickUp" ){
             FillBullets(AttacheBaseCharacter.gameObject);
         }
     }
     public void FillBullets(GameObject collider ) {
-        bullets = new Projectile[30];
+        bullets = new GameObject[30];
         for ( int i = 0 ; i < bullets.Length ; i++ ){
-            bullets[ i ] = Instantiate( weaponStats.Projectile.GetComponent<Projectile>() );
+            bullets[ i ] = Instantiate( weaponStats.Projectile );
             bullets[i].gameObject.SetActive(false);
             bullets[ i ].gameObject.layer = collider.gameObject.layer;
             bullets[i].transform.SetParent(GameObject.Find("Bullets").transform);
@@ -71,7 +70,7 @@ public class GunType : WeaponObject {
         canFire = true;
     }
 
-    IEnumerator destroyBullet(Projectile projectile ) {
+    IEnumerator destroyBullet(GameObject projectile ) {
         yield return new WaitForSeconds( 0.5f );
         projectile.gameObject.SetActive(false);
     }
@@ -92,8 +91,8 @@ public class GunType : WeaponObject {
         reloading = false;
     }
     [HideInInspector] protected int _lastBullet;
-    public Projectile GetPulledBullets( ) {
-            Projectile currentBullet;
+    public GameObject GetPulledBullets( ) {
+            GameObject currentBullet;
             if (_lastBullet == bullets.Length - 1)
             {
                 _lastBullet   = 0;
