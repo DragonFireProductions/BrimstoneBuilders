@@ -72,7 +72,7 @@ public class GunType : WeaponObject {
     }
 
     IEnumerator destroyBullet(Projectile projectile ) {
-        yield return new WaitForSeconds( Range / projectile.GetSpeed( ) );
+        yield return new WaitForSeconds( 0.5f );
         projectile.gameObject.SetActive(false);
     }
     public override void PickUp( ) {
