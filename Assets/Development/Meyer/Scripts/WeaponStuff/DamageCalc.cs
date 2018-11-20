@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class DamageCalc : MonoBehaviour {
 
@@ -26,5 +28,4 @@ public class DamageCalc : MonoBehaviour {
 
         return l_damageMultipler * 0.5f;
     }
-
 }

@@ -80,8 +80,24 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 		
 	}
+    public IEnumerator EDOT(int damage, float interval)
+    {
+        int hits = 0;
+        while (hits < 10)
+        {
+            Damage(damage);
+            hits++;
 
-	public abstract void Attack( BaseCharacter attacker );
+
+            yield return new WaitForSeconds(interval);
+        }
+    }
+    public void DOT(int damage, float interval)
+    {
+        StartCoroutine(EDOT(damage, interval));
+
+    }
+    public abstract void Attack( BaseCharacter attacker );
 
 	public abstract void Damage( int damage );
     // Update is called once per frame

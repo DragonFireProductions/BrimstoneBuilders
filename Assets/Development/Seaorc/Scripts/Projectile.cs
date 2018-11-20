@@ -6,8 +6,13 @@ using Kristal;
 public class Projectile : MonoBehaviour
 {
     /// <remarks> assign in inspector </remarks>
-    [SerializeField] int Damage;
+    [SerializeField] protected int Damage;
     [SerializeField] float Speed;
+    private int maxDOTduration = 5;
+    private float Timer = 0;
+    private float IntervalTimer = 0;
+
+    protected int DOT_interval; //Time between DOT damage.
 
     /// <summary>
     /// Moves the projectile in its forwoard derection
@@ -21,19 +26,22 @@ public class Projectile : MonoBehaviour
     /// Detects when the projectile hits an _enemy
     /// </summary>
     /// <param name="other"></param>
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
-        if ( other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player" ){
+        if (other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player")
+        {
             other.GetComponent<BaseCharacter>().Damage(Damage);
-            StartCoroutine( stopBullet( ) );
+            StartCoroutine(stopBullet());
         }
-        
+
     }
 
-    IEnumerator stopBullet( ) {
+    IEnumerator stopBullet()
+    {
         yield return new WaitForSeconds(1);
         gameObject.SetActive(false);
     }
+
     /// <summary>
     /// Returns the projectiles speed
     /// </summary>
@@ -42,4 +50,12 @@ public class Projectile : MonoBehaviour
     {
         return Speed;
     }
+
+    //Damage Over Time
+    public void DOTStart(Collider _target)
+    {
+        InvokeRepeating("DOT", maxDOTduration, DOT_interval);
+    }
+
+    
 }

@@ -91,6 +91,8 @@ namespace Kristal
 
             damage -= _damage;
         }
+
+       
         //runs when enemy's animation is half way through
         public override void Attack(BaseCharacter chara)
         {
