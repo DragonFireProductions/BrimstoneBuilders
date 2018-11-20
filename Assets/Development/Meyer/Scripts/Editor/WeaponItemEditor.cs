@@ -205,21 +205,18 @@ public class WeaponItemEditor : EditorWindow {
 
                 GUILayout.Label("Audio Clip:");
                 WeaponItemList.itemList[viewIndex - 1].clip = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].clip, typeof(AudioClip), true) as AudioClip;
-                
 
                 ///Sets weapon Type
                 GUILayout.Label("Weapon type", GUILayout.ExpandWidth(false));
-                weaponChoice = EditorGUILayout.Popup(weaponChoice, weaponsType);
-                WeaponItemList.itemList[ viewIndex - 1 ].weaponType = ( WeaponItem.WeaponType )weaponChoice;
+                WeaponItemList.itemList[viewIndex - 1].weaponType = (WeaponItem.WeaponType)EditorGUILayout.EnumPopup("Weapon Type", WeaponItemList.itemList[viewIndex - 1].weaponType);
 
-                if ( weaponChoice == (int)WeaponItem.WeaponType.Gun ){
+
+                if (WeaponItemList.itemList[viewIndex - 1].weaponType == WeaponItem.WeaponType.Gun)
+                {
                     ///Projectile gameObject
                     GUILayout.Label("Gun Projectile", GUILayout.ExpandWidth(false));
                     WeaponItemList.itemList[viewIndex - 1].Projectile = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].Projectile, typeof(GameObject), true) as GameObject;
-
-
                 }
-
             }
             else 
             {
