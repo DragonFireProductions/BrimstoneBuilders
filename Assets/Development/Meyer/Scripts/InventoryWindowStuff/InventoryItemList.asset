@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: InventoryItemList
   m_EditorClassIdentifier: 
   itemList:
-  - objectName: Wooden Sword
+  - objectName: Poison Gun
     weight: 2
     durability: 3
     value: 3
@@ -20,13 +20,15 @@ MonoBehaviour:
     attackSpeed: 3
     reach: 3
     equipType: 0
-    weaponType: 0
+    weaponType: 1
     icon: {fileID: 2800000, guid: 8d1ad5e8d53d2764fbabf3f0ff3c3a9c, type: 3}
     isIndestructible: 1
     isStackable: 1
     destroyOnUse: 0
     clip: {fileID: 0}
-    Projectile: {fileID: 0}
+    Projectile: {fileID: 1862073752885732, guid: 9df5252b5d1d00842801d06a6dc54c77,
+      type: 2}
+    weapon: {fileID: 114830661300340148, guid: 131f831024d15f04b8e9dd2ce8800b7e, type: 2}
   - objectName: Fire Gun
     weight: 3
     durability: 5
@@ -43,6 +45,7 @@ MonoBehaviour:
     clip: {fileID: 0}
     Projectile: {fileID: 1773482999356258, guid: 24313259926c69442af6427859fe00bb,
       type: 2}
+    weapon: {fileID: 0}
   - objectName: Base Sword
     weight: 2
     durability: 5
@@ -51,7 +54,7 @@ MonoBehaviour:
     attackSpeed: 15
     reach: 2
     equipType: 0
-    weaponType: 0
+    weaponType: 1
     icon: {fileID: 2800000, guid: 3aac3087967ea4fae858ec0494fd24d9, type: 3}
     isIndestructible: 0
     isStackable: 0
@@ -59,6 +62,7 @@ MonoBehaviour:
     clip: {fileID: 0}
     Projectile: {fileID: 1826912192672856, guid: a3858236751f90a47af5a715e9df30ae,
       type: 2}
+    weapon: {fileID: 0}
   - objectName: Advanced Sword
     weight: 20
     durability: 20
@@ -74,6 +78,7 @@ MonoBehaviour:
     destroyOnUse: 0
     clip: {fileID: 0}
     Projectile: {fileID: 0}
+    weapon: {fileID: 0}
   - objectName: Ice gun
     weight: 0
     durability: 0
@@ -90,6 +95,7 @@ MonoBehaviour:
     clip: {fileID: 0}
     Projectile: {fileID: 1862073752885732, guid: 9df5252b5d1d00842801d06a6dc54c77,
       type: 2}
+    weapon: {fileID: 0}
   - objectName: Shock Gun
     weight: 0
     durability: 0
@@ -106,6 +112,7 @@ MonoBehaviour:
     clip: {fileID: 0}
     Projectile: {fileID: 1180798319226812, guid: 3b9125306c142cf40897664760a8db02,
       type: 2}
+    weapon: {fileID: 114144555736880954, guid: b9572f013ccdd7647a13c85d0702b78f, type: 2}
   - objectName: Poison Gun
     weight: 0
     durability: 0
@@ -122,3 +129,4 @@ MonoBehaviour:
     clip: {fileID: 0}
     Projectile: {fileID: 1832290382276390, guid: b910606bada7af1429ae3f4a3ee352fb,
       type: 2}
+    weapon: {fileID: 114981123021183736, guid: 2271e442ab0a6894f9948bf413badae2, type: 2}

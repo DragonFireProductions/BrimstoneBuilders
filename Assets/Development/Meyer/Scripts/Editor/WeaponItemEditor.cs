@@ -206,17 +206,68 @@ public class WeaponItemEditor : EditorWindow {
                 GUILayout.Label("Audio Clip:");
                 WeaponItemList.itemList[viewIndex - 1].clip = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].clip, typeof(AudioClip), true) as AudioClip;
 
+                ///Sets weapon object
+                WeaponItemList.itemList[ viewIndex - 1 ].weapon = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex -1 ].weapon, typeof(WeaponObject), true) as WeaponObject;
+
+
                 ///Sets weapon Type
                 GUILayout.Label("Weapon type", GUILayout.ExpandWidth(false));
                 WeaponItemList.itemList[viewIndex - 1].weaponType =(WeaponItem.WeaponType) EditorGUILayout.EnumPopup("Weapon Type", WeaponItemList.itemList[viewIndex - 1].weaponType);
              
 
 
-                if (WeaponItemList.itemList[viewIndex - 1].weaponType == WeaponItem.WeaponType.Gun)
-                {
+                if (WeaponItemList.itemList[viewIndex - 1].weapon && WeaponItemList.itemList[viewIndex - 1].weaponType == WeaponItem.WeaponType.Gun){
+                    var weapon = (GunType)WeaponItemList.itemList[ viewIndex - 1 ].weapon;
+                    weapon.Ammo = EditorGUILayout.IntField( "Ammo amount: " , weapon.Ammo );
+
+                    weapon.Capacity = EditorGUILayout.IntField( "Ammo capacity:" , weapon.Capacity );
+
+                    weapon.FireRate = EditorGUILayout.FloatField( "Fire rate" , weapon.FireRate );
+
+                    weapon.Range = EditorGUILayout.FloatField( "Range:" , weapon.Range );
+
+                    weapon.ReloadTime = EditorGUILayout.FloatField( "Reload time" , weapon.ReloadTime );
+                    
                     ///Projectile gameObject
                     GUILayout.Label("Gun Projectile", GUILayout.ExpandWidth(false));
                     WeaponItemList.itemList[viewIndex - 1].Projectile = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].Projectile, typeof(GameObject), true) as GameObject;
+
+                    if ( WeaponItemList.itemList[viewIndex - 1].Projectile != null ){
+                        var projectile = WeaponItemList.itemList[ viewIndex - 1 ].Projectile.GetComponent<Projectile>();
+
+                        if (projectile is IceProjectile){
+                            var projectile1 = ( IceProjectile )projectile;
+
+                            projectile1.hits = EditorGUILayout.IntField( "Hits: " , projectile1.hits );
+
+                            projectile1.interval = EditorGUILayout.FloatField( "Interval" , projectile1.interval );
+                        }
+                        else if (projectile is FireProjectile)
+                        {
+                            var projectile1 = (FireProjectile)projectile;
+
+                            projectile1.hits = EditorGUILayout.IntField("Hits: ", projectile1.hits);
+
+                            projectile1.interval = EditorGUILayout.FloatField("Interval", projectile1.interval);
+                        }
+                        else if (projectile is ShockProjectile)
+                        {
+                            var projectile1 = (ShockProjectile)projectile;
+
+                            projectile1.hits = EditorGUILayout.IntField("Hits: ", projectile1.hits);
+
+                            projectile1.interval = EditorGUILayout.FloatField("Interval", projectile1.interval);
+                        }
+                        else if (projectile is PoisonProjectile)
+                        {
+                            var projectile1 = (PoisonProjectile)projectile;
+
+                            projectile1.hits = EditorGUILayout.IntField("Hits: ", projectile1.hits);
+
+                            projectile1.interval = EditorGUILayout.FloatField("Interval", projectile1.interval);
+                        }
+                    }
+
                 }
             }
             else 

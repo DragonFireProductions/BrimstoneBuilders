@@ -37,6 +37,8 @@ public class WeaponItem
     
     public GameObject Projectile;
 
+    public WeaponObject weapon;
+
     public object this[string propertyName]
     {
         get { return this.GetType().GetField(propertyName).GetValue(this); }
