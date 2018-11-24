@@ -26,13 +26,13 @@ public class GunType : WeaponObject {
     protected override void Start( ) {
         base.Start();
         if ( tag != "PickUp" ){
-            FillBullets(AttacheBaseCharacter.gameObject);
+            FillBullets(AttachedCharacter.gameObject);
         }
     }
     public void FillBullets(GameObject collider ) {
         bullets = new GameObject[30];
         for ( int i = 0 ; i < bullets.Length ; i++ ){
-            bullets[ i ] = Instantiate( weaponStats.Projectile );
+            bullets[ i ] = Instantiate( stats.Projectile );
             bullets[i].gameObject.SetActive(false);
             bullets[ i ].gameObject.layer = collider.gameObject.layer;
             bullets[i].transform.SetParent(GameObject.Find("Bullets").transform);
@@ -58,7 +58,7 @@ public class GunType : WeaponObject {
 
         canFire = false;
         var proj = GetPulledBullets( );
-        proj.gameObject.transform.position = AttacheBaseCharacter.transform.position + ( AttacheBaseCharacter.transform.forward * 2 );
+        proj.gameObject.transform.position = AttachedCharacter.transform.position + ( AttachedCharacter.transform.forward * 2 );
         proj.transform.rotation = transform.rotation;
         proj.gameObject.SetActive(true);
         StartCoroutine( destroyBullet( proj ) );

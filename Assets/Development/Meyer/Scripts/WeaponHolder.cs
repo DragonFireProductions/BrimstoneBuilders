@@ -10,13 +10,13 @@ public class WeaponHolder : MonoBehaviour {
 		character.attachedWeapon.transform.position = character.cube.transform.position;
 		character.attachedWeapon.transform.rotation = character.cube.transform.rotation;
 		character.attachedWeapon.transform.SetParent(character.cube.transform);
-		character.attachedWeapon.AttacheBaseCharacter = character;
+		character.attachedWeapon.AttachedCharacter = character;
 		character.attachedWeapon.gameObject.layer = character.gameObject.layer;
 		character.attachedWeapon.tag = "Weapon";
 		var l_gun = character.attachedWeapon as GunType;
 
 		if ( l_gun != null ){
-			l_gun.FillBullets(l_gun.WeaponStats.Projectile);
+			l_gun.FillBullets(l_gun.stats.Projectile);
 		}
 	}
 	// Use this for initialization

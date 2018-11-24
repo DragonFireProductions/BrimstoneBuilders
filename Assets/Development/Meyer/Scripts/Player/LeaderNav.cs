@@ -143,9 +143,9 @@ public class LeaderNav : CompanionNav {
 				if ( Physics.Raycast( l_ray , out hit1 ) ){
                     if ( hit1.collider.tag == "Companion" || hit1.collider.tag == "Player" ){
 						StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.PlayerStats );
-						StaticManager.UiInventory.UpdateStats( hit1.collider.GetComponent < BaseCharacter >( ).attachedWeapon.WeaponStats , StaticManager.UiInventory.ItemsInstance.AttachedWeapon );
+						StaticManager.UiInventory.UpdateStats( hit1.collider.GetComponent < BaseCharacter >( ).attachedWeapon.stats , StaticManager.UiInventory.ItemsInstance.AttachedWeapon );
 						StaticManager.UiInventory.UpdateStats( hit1.collider.GetComponent < BaseCharacter >( ).stats ,                      StaticManager.UiInventory.ItemsInstance.CharacterStats, false );
-						StaticManager.UiInventory.ItemsInstance.PlayerStats.transform.Find( "WeaponImage" ).GetComponent < RawImage >( ).texture = hit1.collider.GetComponent < BaseCharacter >( ).attachedWeapon.WeaponStats.icon;
+						StaticManager.UiInventory.ItemsInstance.PlayerStats.transform.Find( "WeaponImage" ).GetComponent < RawImage >( ).texture = hit1.collider.GetComponent < BaseCharacter >( ).attachedWeapon.stats.icon;
 					}
 				}
 			}
@@ -170,7 +170,7 @@ public class LeaderNav : CompanionNav {
 
         switch ( State ){
 			case state.ATTACKING:
-				switch ( character.attachedWeapon.WeaponStats.weaponType ){
+				switch ( character.attachedWeapon.stats.weaponType ){
                     case WeaponItem.WeaponType.Sword:
 	                    if (enemy == null)
 	                    {
@@ -196,7 +196,7 @@ public class LeaderNav : CompanionNav {
 				break;
 			case state.ENEMY_CLICKED:
 
-				switch ( character.attachedWeapon.WeaponStats.weaponType ){
+				switch ( character.attachedWeapon.stats.weaponType ){
                     case WeaponItem.WeaponType.Sword:
                         if (Vector3.Distance(enemy.transform.position, gameObject.transform.position) < 3)
                         {

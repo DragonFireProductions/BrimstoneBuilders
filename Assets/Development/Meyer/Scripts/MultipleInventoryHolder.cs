@@ -50,12 +50,12 @@ public class MultipleInventoryHolder : MonoBehaviour {
 			previousInventory.companion.transform.position = prevPos;
 		}
         
-		StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
+		StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.stats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
         StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false);
         tab.companion.inventory.parent.SetActive(true);
 		tab.GetComponent < Image >( ).color = Color.red;
 		inventory = tab.companion.inventory;
-		StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
+		StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.stats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
 		StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false );
 		previousInventory = tab;
 		prevPos = inventory.character.transform.position;
@@ -116,19 +116,18 @@ public class MultipleInventoryHolder : MonoBehaviour {
         inventory.selectedObject.name = "Sword";
          inventory.selectedObject.tag = "Weapon";
         inventory.character.attachedWeapon =  inventory.selectedObject;
-         inventory.selectedObject.AttacheBaseCharacter = inventory.character;
+         inventory.selectedObject.AttachedCharacter = inventory.character;
         if (inventory.AttachedWeapons.Count > 0)
         {
            inventory.AttachedWeapons.Add(inventory.selectedObject);
             var ob = inventory.AttachedWeapons[0];
             inventory.AttachedWeapons.RemoveAt(0);
             StaticManager.UiInventory.AddSlot(ob, inventory);
-            ob.attached = false;
 
             ob.transform.parent = GameObject.Find("Weapons").transform;
-            ob.gameObject.name = ob.WeaponStats.objectName;
+            ob.gameObject.name = ob.stats.objectName;
             ob.gameObject.SetActive(false);
-			inventory.character.stats.ResetStats(ob.WeaponStats);
+			inventory.character.stats.ResetStats(ob.stats);
         }
 
         inventory.selectedObject.GetComponent<BoxCollider>().enabled = false;
@@ -138,8 +137,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
         inventory.selectedObject.gameObject.transform.rotation = inventory.character.cube.transform.rotation;
         inventory.selectedObject.gameObject.transform.SetParent(inventory.character.cube.transform);
 
-        inventory.character.stats.IncreaseStats(inventory.selectedObject.WeaponStats);
-		StaticManager.UiInventory.UpdateStats(inventory.selectedObject.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
+        inventory.character.stats.IncreaseStats(inventory.selectedObject.stats);
+		StaticManager.UiInventory.UpdateStats(inventory.selectedObject.stats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
 	    StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false);
 
         inventory.selectedObject.gameObject.SetActive(true);

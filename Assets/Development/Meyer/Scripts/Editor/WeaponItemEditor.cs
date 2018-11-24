@@ -205,7 +205,7 @@ public class WeaponItemEditor : EditorWindow {
                 GUILayout.Label("Audio Clip:");
                 WeaponItemList.itemList[viewIndex - 1].clip = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].clip, typeof(AudioClip), true) as AudioClip;
 
-                ///Sets weapon Type
+                ///Sets item Type
                 GUILayout.Label("Weapon type", GUILayout.ExpandWidth(false));
                 WeaponItemList.itemList[viewIndex - 1].weaponType =(WeaponItem.WeaponType) EditorGUILayout.EnumPopup("Weapon Type", WeaponItemList.itemList[viewIndex - 1].weaponType);
 
@@ -213,13 +213,13 @@ public class WeaponItemEditor : EditorWindow {
                 if ( WeaponItemList.itemList[ viewIndex - 1 ].weaponType == WeaponItem.WeaponType.Gun ){
 
 
-                    ///Sets weapon object
-                    WeaponItemList.itemList[ viewIndex - 1 ].weapon = EditorGUILayout.ObjectField( WeaponItemList.itemList[ viewIndex - 1 ].weapon , typeof( WeaponObject ) , true ) as WeaponObject;
+                    ///Sets item object
+                    WeaponItemList.itemList[ viewIndex - 1 ].item = EditorGUILayout.ObjectField( WeaponItemList.itemList[ viewIndex - 1 ].item , typeof( WeaponObject ) , true ) as WeaponObject;
 
-                    if ( WeaponItemList.itemList[ viewIndex - 1 ].weapon ){
+                    if ( WeaponItemList.itemList[ viewIndex - 1 ].item ){
 
 
-                        var weapon = ( GunType )WeaponItemList.itemList[ viewIndex - 1 ].weapon;
+                        var weapon = ( GunType )WeaponItemList.itemList[ viewIndex - 1 ].item;
                         weapon.Ammo = EditorGUILayout.IntField( "Ammo amount: " , weapon.Ammo );
 
                         weapon.Capacity = EditorGUILayout.IntField( "Ammo capacity:" , weapon.Capacity );
@@ -273,17 +273,17 @@ public class WeaponItemEditor : EditorWindow {
                 /// if potion
                 else if ( WeaponItemList.itemList[ viewIndex - 1 ].weaponType == WeaponItem.WeaponType.Potion ){
 
-
+                    var item = WeaponItemList.itemList[ viewIndex - 1 ].item as Potions;
                     ///Sets potion object
-                    WeaponItemList.itemList[viewIndex - 1].potion = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].potion, typeof(Potions), true) as Potions;
+                    WeaponItemList.itemList[viewIndex - 1].item = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].item, typeof(Potions), true) as Potions;
 
                     ///cast effect
                     EditorGUILayout.LabelField("Cast effect");
-                    WeaponItemList.itemList[viewIndex - 1].potion.cast_effect = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].potion.cast_effect, typeof(ParticleSystem), true) as ParticleSystem;
+                    item.cast_effect = EditorGUILayout.ObjectField(item.cast_effect, typeof(ParticleSystem), true) as ParticleSystem;
 
                     ///hit effect
                     EditorGUILayout.LabelField("Hit effect");
-                    WeaponItemList.itemList[viewIndex - 1].potion.hit_effect = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].potion.hit_effect, typeof(ParticleSystem), true) as ParticleSystem;
+                    item.cast_effect = EditorGUILayout.ObjectField(item.hit_effect, typeof(ParticleSystem), true) as ParticleSystem;
 
 
                 }

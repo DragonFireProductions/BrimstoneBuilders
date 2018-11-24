@@ -51,8 +51,8 @@ public class ContainerScript : MonoBehaviour /*IPointerDownHandler*/ {
     public virtual void OnPointerEnter(PointerEventData data ) {
         labels = StaticManager.UiInventory.ItemsInstance.ComparedStats.Labels;
         name = gameObject.transform.Find("objectName").GetComponentInChildren<TextMeshProUGUI>().text;
-        var weapon = StaticManager.inventories.inventory.GetItemFromInventory( name ).WeaponStats;
-        var currentWeapon = StaticManager.inventories.inventory.character.attachedWeapon.WeaponStats;
+        var weapon = StaticManager.inventories.inventory.GetItemFromInventory( name ).stats;
+        var currentWeapon = StaticManager.inventories.inventory.character.attachedWeapon.stats;
         StaticManager.UiInventory.ItemsInstance.ComparedStats.obj.SetActive(true);
         StaticManager.UiInventory.ItemsInstance.ComparedCharacterStats.obj.SetActive(true);
 
@@ -71,12 +71,12 @@ public class ContainerScript : MonoBehaviour /*IPointerDownHandler*/ {
         }
 
         StaticManager.UiInventory.ItemsInstance.ComparedStats.Labels[ labels.Count - 1 ].labelText.text = weapon.objectName;
-        StaticManager.UiInventory.UpdateStats(StaticManager.inventories.inventory.character.attachedWeapon.WeaponStats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
+        StaticManager.UiInventory.UpdateStats(StaticManager.inventories.inventory.character.attachedWeapon.stats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
         StaticManager.UiInventory.UpdateStats(StaticManager.inventories.inventory.character.stats.difference(weapon, currentWeapon), StaticManager.UiInventory.ItemsInstance.ComparedCharacterStats, true);
     }
 
     public virtual void OnPointerExit( PointerEventData data ) {
-        StaticManager.UiInventory.UpdateStats( StaticManager.inventories.inventory.character.attachedWeapon.WeaponStats , StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats );
+        StaticManager.UiInventory.UpdateStats( StaticManager.inventories.inventory.character.attachedWeapon.stats , StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats );
         StaticManager.UiInventory.ItemsInstance.ComparedCharacterStats.obj.SetActive( false );
         StaticManager.UiInventory.ItemsInstance.ComparedStats.obj.SetActive( false );
     }

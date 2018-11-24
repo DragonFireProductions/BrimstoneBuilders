@@ -37,9 +37,7 @@ public class WeaponItem
     
     public GameObject Projectile;
 
-    public WeaponObject weapon;
-
-    public Potions potion;
+    public BaseItems item;
 
     public object this[string propertyName]
     {

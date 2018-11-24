@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Potions : MonoBehaviour {
+public abstract class Potions : BaseItems {
 
 	public ParticleSystem hit_effect;
 
@@ -10,12 +10,12 @@ public abstract class Potions : MonoBehaviour {
 
 	public string PotionName;
 
-	[HideInInspector] public WeaponItem item;
+	[HideInInspector] public WeaponItem _item;
 
 	public BaseCharacter AttachedBaseCharacter;
 
 	public void Start( ) {
-		item = StaticManager.inventories.GetItemFromAssetList( PotionName );
+		_item = StaticManager.inventories.GetItemFromAssetList( PotionName );
 	}
 	public abstract void Cast( Companion attacker );
 

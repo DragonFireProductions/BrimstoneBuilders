@@ -106,7 +106,7 @@ public class BaseNav : MonoBehaviour {
                     return;
                 }
 
-                switch ( character.attachedWeapon.WeaponStats.weaponType ){
+                switch ( character.attachedWeapon.stats.weaponType ){
                     case WeaponItem.WeaponType.Gun:
 
                         if ( StaticManager.Utility.NavDistanceCheck( Agent ) == DistanceCheck.HAS_REACHED_DESTINATION || StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_NO_PATH){

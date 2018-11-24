@@ -90,12 +90,12 @@ public class UIInventory : MonoBehaviour
         l_newContainer.transform.SetParent(inventory.parent.transform);
         l_newContainer.transform.position = StaticManager.UiInventory.ItemsInstance.InventoryContainer.obj.transform.position;
         l_newContainer.transform.localScale = new Vector3(1,1,1);
-        l_newContainer.name = _item.WeaponStats.objectName + "Slot";
+        l_newContainer.name = _item.stats.objectName + "Slot";
         UIItemsWithLabels newLabel = ItemsInstance.obj( l_newContainer );
         newLabel.obj.SetActive(true);
         inventory.Slots.Add(newLabel);
-        UpdateStats( _item.WeaponStats, newLabel );
-        l_newContainer.transform.Find( "ItemIconContainer/RawImage" ).GetComponent < RawImage >( ).texture = _item.WeaponStats.icon;
+        UpdateStats( _item.stats, newLabel );
+        l_newContainer.transform.Find( "ItemIconContainer/RawImage" ).GetComponent < RawImage >( ).texture = _item.stats.icon;
     }
 
     public void AddSlot( Potions _item , PlayerInventory inventory ) {
@@ -109,7 +109,7 @@ public class UIInventory : MonoBehaviour
         UIItemsWithLabels newLabel = ItemsInstance.obj(l_newContainer);
         newLabel.obj.SetActive(true);
         inventory.PotionSlots.Add(newLabel);
-        UpdateStats(_item.item, newLabel);
+        UpdateStats(_item._item, newLabel);
     }
 
 
@@ -146,7 +146,7 @@ public class UIInventory : MonoBehaviour
     {
         for (var l_i = 0; l_i < inventory.Slots.Count; l_i++)
         {
-            if ( inventory.Slots[l_i].obj.name  == _item.WeaponStats.objectName + "Slot")
+            if ( inventory.Slots[l_i].obj.name  == _item.stats.objectName + "Slot")
             {
                 var l_slot =  inventory.Slots[l_i].obj;
                  inventory.Slots.RemoveAt(l_i);
@@ -158,7 +158,7 @@ public class UIInventory : MonoBehaviour
     {
         for (var l_i = 0; l_i < inventory.PotionSlots.Count; l_i++)
         {
-            if (inventory.PotionSlots[l_i].obj.name == _item.item.objectName + "Slot")
+            if (inventory.PotionSlots[l_i].obj.name == _item._item.objectName + "Slot")
             {
                 var l_slot = inventory.PotionSlots[l_i].obj;
                 inventory.PotionSlots.RemoveAt(l_i);
@@ -272,7 +272,7 @@ public class UIInventory : MonoBehaviour
                 }
                 else if (l_hitInfo.transform.gameObject.tag == "Weapon")
                 {
-                   //UpdateStats(l_hitInfo.transform.gameObject.GetComponent<WeaponObject>().WeaponStats, ItemsInstance.WeaponStatsUI);
+                   //UpdateStats(l_hitInfo.transform.gameObject.GetComponent<WeaponObject>().Stats, ItemsInstance.WeaponStatsUI);
                     //UpdateGameWeaponStats(l_hitInfo.]transform.gameObject.GetComponent<GunType>());
                 }
             }

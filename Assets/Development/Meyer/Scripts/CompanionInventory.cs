@@ -16,7 +16,7 @@ public class CompanionInventory : PlayerInventory {
     //returns 
     public WeaponObject GetItemFromInventory(string name)
     {
-        return PickedUpWeapons.FirstOrDefault(_t => _t.WeaponStats.objectName == name);
+        return PickedUpWeapons.FirstOrDefault(_t => _t.stats.objectName == name);
     }
 
 	public void AddToInventory(WeaponObject obj)

@@ -25,7 +25,7 @@ namespace Assets.Meyer.TestScripts.Player {
         
         private void Start( ) {
             cube = transform.Find("Cube").gameObject;
-            cube.transform.Find( "Sword" ).GetComponent < WeaponObject >( ).AttacheBaseCharacter = this;
+            cube.transform.Find( "Sword" ).GetComponent < WeaponObject >( ).AttachedCharacter = this;
             inventory = GetComponent < PlayerInventory >( );
             StaticManager.RealTime.Companions.Add(this);
         }

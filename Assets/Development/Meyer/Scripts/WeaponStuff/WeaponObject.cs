@@ -10,33 +10,21 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-public class WeaponObject : MonoBehaviour
+public class WeaponObject : BaseItems
 {
     /// Variables should be protected NOT public or private
-    
-    protected GameObject weapon; // gameObject this is attached too
-    protected WeaponItem weaponStats; // contains inventory information
-
-    [SerializeField] protected string weaponName; // references InventoryManager items
-
-    public bool isMainInventory = true;
-
-    public bool attached = false;
-   
     public AnimationClass AnimationClass;
-
-    public BaseCharacter AttacheBaseCharacter;
 
     public virtual void Attack(BaseCharacter enemy = null ) {
        
-        AttacheBaseCharacter.AnimationClass.Play(AnimationClass.states.AttackTrigger);
-        AttacheBaseCharacter.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
+        AttachedCharacter.AnimationClass.Play(AnimationClass.states.AttackTrigger);
+        AttachedCharacter.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
     }
     protected virtual void Start() {
         AnimationClass = gameObject.GetComponent < AnimationClass >( );
-        weaponStats = StaticManager.inventories.GetItemFromAssetList( weaponName );
-        Assert.IsNotNull(weaponStats, "WeaponItem name not added in inspector " + weaponStats.objectName);
-        weapon = this.gameObject;
+        stats = StaticManager.inventories.GetItemFromAssetList( objectName );
+        Assert.IsNotNull(stats, "WeaponItem name not added in inspector " + stats.objectName);
+        item = this.gameObject;
     }
 
     public virtual object this[ string propertyName ] {
@@ -45,7 +33,7 @@ public class WeaponObject : MonoBehaviour
     }
 
     public virtual void PickUp( ) {
-        if ( AttacheBaseCharacter == null ){
+        if ( AttachedCharacter == null ){
         StaticManager.UiInventory.AddSlot(this, StaticManager.Character.inventory);
         gameObject.SetActive(false);
         }
@@ -53,32 +41,28 @@ public class WeaponObject : MonoBehaviour
     }
 
     public void MoveToBackPack( ) {
-        StaticManager.UiInventory.ItemsInstance.BackPackUI.GetComponentInChildren<RawImage>().texture = WeaponStats.icon;
-        StaticManager.UiInventory.ItemsInstance.BackPackUI.GetComponentInChildren<TextMeshProUGUI>().text = WeaponStats.objectName;
+        StaticManager.UiInventory.ItemsInstance.BackPackUI.GetComponentInChildren<RawImage>().texture = stats.icon;
+        StaticManager.UiInventory.ItemsInstance.BackPackUI.GetComponentInChildren<TextMeshProUGUI>().text = stats.objectName;
 
     }
     
     protected virtual void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag == "Player" && !StaticManager.UiInventory.Dragging && !attached && tag == "PickUp")
+        if (collider.tag == "Player" && !StaticManager.UiInventory.Dragging && tag == "PickUp")
         {
             StaticManager.Character.inventory.PickUp(this);
             this.GetComponent<BoxCollider>().enabled = false;
-            AttacheBaseCharacter = StaticManager.Character;
+            AttachedCharacter = StaticManager.Character;
         }
 
         if ((collider.tag == "Enemy"  || collider.tag == "Companion" || collider.tag == "Player") && tag == "Weapon"){
-            if ( collider.tag != AttacheBaseCharacter.tag){
-                if ( AttacheBaseCharacter.tag == "Companion" && collider.tag == "Player" ){
+            if ( collider.tag != AttachedCharacter.tag){
+                if ( AttachedCharacter.tag == "Companion" && collider.tag == "Player" ){
                     return;
                 }
-                collider.gameObject.GetComponent<BaseCharacter>().Attack(AttacheBaseCharacter);
+                collider.gameObject.GetComponent<BaseCharacter>().Attack(AttachedCharacter);
             }
         }
     }
-    
-    public WeaponItem WeaponStats
-    {
-        get { return weaponStats; }
-    }
+   
 }
