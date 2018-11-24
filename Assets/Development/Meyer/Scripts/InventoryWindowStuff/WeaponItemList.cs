@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
 
 [System.Serializable]
-public class WeaponItemList : ScriptableObject
-{
+public class WeaponItemList : ScriptableObject {
+    
     public List<WeaponItem> itemList;
 
     public WeaponItem get_item(string name)

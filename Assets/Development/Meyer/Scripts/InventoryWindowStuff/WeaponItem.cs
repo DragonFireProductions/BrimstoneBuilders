@@ -16,7 +16,7 @@ public class WeaponItem
     {
         Sword,
         Gun,
-        Type3,
+        Potion,
         Type4
     };
 
@@ -36,6 +36,10 @@ public class WeaponItem
         public AudioClip clip;
     
     public GameObject Projectile;
+
+    public WeaponObject weapon;
+
+    public Potions potion;
 
     public object this[string propertyName]
     {

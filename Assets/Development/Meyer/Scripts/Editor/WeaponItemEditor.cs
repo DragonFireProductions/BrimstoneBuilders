@@ -1,7 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 using UnityEditor;
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine;
 
 public class WeaponItemEditor : EditorWindow {
     
@@ -10,7 +9,7 @@ public class WeaponItemEditor : EditorWindow {
 
     private string[] weaponsType =
     {
-        WeaponItem.WeaponType.Sword.ToString(), WeaponItem.WeaponType.Gun.ToString(), WeaponItem.WeaponType.Type3.ToString(),
+        WeaponItem.WeaponType.Sword.ToString(), WeaponItem.WeaponType.Gun.ToString(), WeaponItem.WeaponType.Potion.ToString(),
         WeaponItem.WeaponType.Type4.ToString()
     };
 
@@ -181,7 +180,7 @@ public class WeaponItemEditor : EditorWindow {
 
                 ///Sets Equipment type
                 GUILayout.Label("Equipment type", GUILayout.ExpandWidth(false));
-                WeaponItemList.itemList[viewIndex - 1].equipType = (WeaponItem.EquipType)EditorGUILayout.Popup(equipChoice, equipType);
+                WeaponItemList.itemList[viewIndex - 1].equipType = (WeaponItem.EquipType)EditorGUILayout.EnumPopup("Weapon Type:", WeaponItemList.itemList[viewIndex - 1].equipType);
 
                 GUILayout.EndHorizontal();
                 GUILayout.Space(40);
@@ -205,21 +204,89 @@ public class WeaponItemEditor : EditorWindow {
 
                 GUILayout.Label("Audio Clip:");
                 WeaponItemList.itemList[viewIndex - 1].clip = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].clip, typeof(AudioClip), true) as AudioClip;
-                
 
                 ///Sets weapon Type
                 GUILayout.Label("Weapon type", GUILayout.ExpandWidth(false));
-                weaponChoice = EditorGUILayout.Popup(weaponChoice, weaponsType);
-                WeaponItemList.itemList[ viewIndex - 1 ].weaponType = ( WeaponItem.WeaponType )weaponChoice;
+                WeaponItemList.itemList[viewIndex - 1].weaponType =(WeaponItem.WeaponType) EditorGUILayout.EnumPopup("Weapon Type", WeaponItemList.itemList[viewIndex - 1].weaponType);
 
-                if ( weaponChoice == (int)WeaponItem.WeaponType.Gun ){
-                    ///Projectile gameObject
-                    GUILayout.Label("Gun Projectile", GUILayout.ExpandWidth(false));
-                    WeaponItemList.itemList[viewIndex - 1].Projectile = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].Projectile, typeof(GameObject), true) as GameObject;
+
+                if ( WeaponItemList.itemList[ viewIndex - 1 ].weaponType == WeaponItem.WeaponType.Gun ){
+
+
+                    ///Sets weapon object
+                    WeaponItemList.itemList[ viewIndex - 1 ].weapon = EditorGUILayout.ObjectField( WeaponItemList.itemList[ viewIndex - 1 ].weapon , typeof( WeaponObject ) , true ) as WeaponObject;
+
+                    if ( WeaponItemList.itemList[ viewIndex - 1 ].weapon ){
+
+
+                        var weapon = ( GunType )WeaponItemList.itemList[ viewIndex - 1 ].weapon;
+                        weapon.Ammo = EditorGUILayout.IntField( "Ammo amount: " , weapon.Ammo );
+
+                        weapon.Capacity = EditorGUILayout.IntField( "Ammo capacity:" , weapon.Capacity );
+
+                        weapon.FireRate = EditorGUILayout.FloatField( "Fire rate" , weapon.FireRate );
+
+                        weapon.Range = EditorGUILayout.FloatField( "Range:" , weapon.Range );
+
+                        weapon.ReloadTime = EditorGUILayout.FloatField( "Reload time" , weapon.ReloadTime );
+
+                        ///Projectile gameObject
+                        GUILayout.Label( "Gun Projectile" , GUILayout.ExpandWidth( false ) );
+                        WeaponItemList.itemList[ viewIndex - 1 ].Projectile = EditorGUILayout.ObjectField( WeaponItemList.itemList[ viewIndex - 1 ].Projectile , typeof( GameObject ) , true ) as GameObject;
+
+                        if ( WeaponItemList.itemList[ viewIndex - 1 ].Projectile != null ){
+                            var projectile = WeaponItemList.itemList[ viewIndex - 1 ].Projectile.GetComponent < Projectile >( );
+
+                            if ( projectile is IceProjectile ){
+                                var projectile1 = ( IceProjectile )projectile;
+
+                                projectile1.hits = EditorGUILayout.IntField( "Hits: " , projectile1.hits );
+
+                                projectile1.interval = EditorGUILayout.FloatField( "Interval" , projectile1.interval );
+                            }
+                            else if ( projectile is FireProjectile ){
+                                var projectile1 = ( FireProjectile )projectile;
+
+                                projectile1.hits = EditorGUILayout.IntField( "Hits: " , projectile1.hits );
+
+                                projectile1.interval = EditorGUILayout.FloatField( "Interval" , projectile1.interval );
+                            }
+                            else if ( projectile is ShockProjectile ){
+                                var projectile1 = ( ShockProjectile )projectile;
+
+                                projectile1.hits = EditorGUILayout.IntField( "Hits: " , projectile1.hits );
+
+                                projectile1.interval = EditorGUILayout.FloatField( "Interval" , projectile1.interval );
+                            }
+                            else if ( projectile is PoisonProjectile ){
+                                var projectile1 = ( PoisonProjectile )projectile;
+
+                                projectile1.hits = EditorGUILayout.IntField( "Hits: " , projectile1.hits );
+
+                                projectile1.interval = EditorGUILayout.FloatField( "Interval" , projectile1.interval );
+                            }
+                        }
+
+                    }
+                }
+
+                /// if potion
+                else if ( WeaponItemList.itemList[ viewIndex - 1 ].weaponType == WeaponItem.WeaponType.Potion ){
+
+
+                    ///Sets potion object
+                    WeaponItemList.itemList[viewIndex - 1].potion = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].potion, typeof(Potions), true) as Potions;
+
+                    ///cast effect
+                    EditorGUILayout.LabelField("Cast effect");
+                    WeaponItemList.itemList[viewIndex - 1].potion.cast_effect = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].potion.cast_effect, typeof(ParticleSystem), true) as ParticleSystem;
+
+                    ///hit effect
+                    EditorGUILayout.LabelField("Hit effect");
+                    WeaponItemList.itemList[viewIndex - 1].potion.hit_effect = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].potion.hit_effect, typeof(ParticleSystem), true) as ParticleSystem;
 
 
                 }
-
             }
             else 
             {

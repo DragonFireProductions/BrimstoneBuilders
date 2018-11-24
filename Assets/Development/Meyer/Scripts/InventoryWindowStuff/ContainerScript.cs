@@ -37,7 +37,7 @@ public class ContainerScript : MonoBehaviour /*IPointerDownHandler*/ {
        StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.Equip);
     }
 
-    public void OnPointerDownDelegate( PointerEventData data ) {
+    public virtual void OnPointerDownDelegate( PointerEventData data ) {
         if ( data.currentInputModule.input.GetMouseButton( 1 ) ){
             //Time.timeScale = 0;
             //var inventory = StaticManager.inventories.GetInventory( transform.parent.parent.name );
@@ -48,7 +48,7 @@ public class ContainerScript : MonoBehaviour /*IPointerDownHandler*/ {
         }
     }
 
-    public void OnPointerEnter(PointerEventData data ) {
+    public virtual void OnPointerEnter(PointerEventData data ) {
         labels = StaticManager.UiInventory.ItemsInstance.ComparedStats.Labels;
         name = gameObject.transform.Find("objectName").GetComponentInChildren<TextMeshProUGUI>().text;
         var weapon = StaticManager.inventories.inventory.GetItemFromInventory( name ).WeaponStats;
@@ -75,7 +75,7 @@ public class ContainerScript : MonoBehaviour /*IPointerDownHandler*/ {
         StaticManager.UiInventory.UpdateStats(StaticManager.inventories.inventory.character.stats.difference(weapon, currentWeapon), StaticManager.UiInventory.ItemsInstance.ComparedCharacterStats, true);
     }
 
-    public void OnPointerExit( PointerEventData data ) {
+    public virtual void OnPointerExit( PointerEventData data ) {
         StaticManager.UiInventory.UpdateStats( StaticManager.inventories.inventory.character.attachedWeapon.WeaponStats , StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats );
         StaticManager.UiInventory.ItemsInstance.ComparedCharacterStats.obj.SetActive( false );
         StaticManager.UiInventory.ItemsInstance.ComparedStats.obj.SetActive( false );

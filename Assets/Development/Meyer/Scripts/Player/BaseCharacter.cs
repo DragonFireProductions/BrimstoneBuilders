@@ -77,11 +77,27 @@ public abstract class BaseCharacter : MonoBehaviour {
 		canvas = transform.Find( "Canvas" ).gameObject;
 		projector = gameObject.transform.Find( "Projector" ).GetComponent < Projector >( );
 		projector.gameObject.SetActive(false);
+		cube = transform.Find( "Cube" ).gameObject;
 
-		
 	}
+    public IEnumerator EDOT(int damage, float interval, int _hits)
+    {
+        int hits = 0;
+        while (hits < _hits)
+        {
+            Damage(damage);
+            hits++;
 
-	public abstract void Attack( BaseCharacter attacker );
+
+            yield return new WaitForSeconds(interval);
+        }
+    }
+    public void DOT(int damage, float interval, int hits)
+    {
+        StartCoroutine(EDOT(damage, interval, hits));
+
+    }
+    public abstract void Attack( BaseCharacter attacker );
 
 	public abstract void Damage( int damage );
     // Update is called once per frame

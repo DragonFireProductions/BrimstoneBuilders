@@ -15,7 +15,7 @@ public class WeaponObject : MonoBehaviour
     /// Variables should be protected NOT public or private
     
     protected GameObject weapon; // gameObject this is attached too
-    [SerializeField] protected WeaponItem weaponStats; // contains inventory information
+    protected WeaponItem weaponStats; // contains inventory information
 
     [SerializeField] protected string weaponName; // references InventoryManager items
 
@@ -32,16 +32,10 @@ public class WeaponObject : MonoBehaviour
         AttacheBaseCharacter.AnimationClass.Play(AnimationClass.states.AttackTrigger);
         AttacheBaseCharacter.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
     }
-    protected virtual  void OnEnable( ) {
-        
-        if ( tag != "PickUp" ){
-        AttacheBaseCharacter = transform.parent.parent.GetComponent < BaseCharacter >( );
-        }
-    }
     protected virtual void Start() {
         AnimationClass = gameObject.GetComponent < AnimationClass >( );
         weaponStats = StaticManager.inventories.GetItemFromAssetList( weaponName );
-        Assert.IsNotNull(weaponStats, "WeaponItem name not added in inspector " + gameObject.name);
+        Assert.IsNotNull(weaponStats, "WeaponItem name not added in inspector " + weaponStats.objectName);
         weapon = this.gameObject;
     }
 
@@ -70,6 +64,7 @@ public class WeaponObject : MonoBehaviour
         {
             StaticManager.Character.inventory.PickUp(this);
             this.GetComponent<BoxCollider>().enabled = false;
+            AttacheBaseCharacter = StaticManager.Character;
         }
 
         if ((collider.tag == "Enemy"  || collider.tag == "Companion" || collider.tag == "Player") && tag == "Weapon"){

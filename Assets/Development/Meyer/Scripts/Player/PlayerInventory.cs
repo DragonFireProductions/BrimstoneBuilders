@@ -16,15 +16,21 @@ public class PlayerInventory : MonoBehaviour {
 
     [ HideInInspector ] public List < WeaponObject > BackPackInventoryList;
 
+    [ HideInInspector ] public List < Potions > potions;
+
     [ HideInInspector ] public bool isInventoryActive;
 
     [ HideInInspector ] public List < WeaponObject > PickedUpWeapons; //Current list of items the player has picked up
+
+    [ HideInInspector ] public List < Potions > PickedUpPotions;
 
     [ HideInInspector ] public WeaponObject selectedObject { get; set; }
 
     public GameObject parent;
 
     public List<UIItemsWithLabels> Slots;
+
+    public List < UIItemsWithLabels > PotionSlots;
 
     public BaseCharacter character;
 
@@ -63,6 +69,10 @@ public class PlayerInventory : MonoBehaviour {
         weapon.PickUp( );
     }
 
+    public void PickUp( Potions potions ) {
+        PickedUpPotions.Add(potions);
+        potions.PickUp(character);
+    }
     public void PickUpCoin(int _coinWorth)
     {
         StaticManager.currencyManager.AddCoins(_coinWorth);
@@ -74,6 +84,7 @@ public class PlayerInventory : MonoBehaviour {
 
             if ( isInventoryActive ){
                 StaticManager.inventories.prevPos = StaticManager.Character.transform.position;
+                StaticManager.inventories.SwitchToWeapons();
               StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PlayerUI);
                 StaticManager.inventories.SwitchInventory(StaticManager.tabManager.GetTab(StaticManager.Character));
                 StaticManager.inventories.inventory.character.projector.gameObject.SetActive(false);

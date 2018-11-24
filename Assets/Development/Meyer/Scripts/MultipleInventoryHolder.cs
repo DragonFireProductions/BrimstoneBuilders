@@ -32,6 +32,16 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	public void Start( ) {
 		inventory = StaticManager.Character.GetComponent < PlayerInventory >( );
 	}
+
+	public void SwitchToPotionsTab( ) {
+		StaticManager.UiInventory.ItemsInstance.InventoryPanel.SetActive(false);
+	    StaticManager.UiInventory.ItemsInstance.PotionsPanel.SetActive( true );
+	}
+
+	public void SwitchToWeapons( ) {
+		StaticManager.UiInventory.ItemsInstance.InventoryPanel.SetActive(true);
+		StaticManager.UiInventory.ItemsInstance.PotionsPanel.SetActive(false);
+	}
 	public void SwitchInventory(Tab tab ) {
 		if ( previousInventory ){
 

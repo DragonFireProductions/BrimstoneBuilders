@@ -55,7 +55,7 @@ public class companionSpawner : MonoBehaviour
     public IEnumerator CompSpawn()
     {
         // Debug.Log(index);
-        if (index >= numberofcompanions)
+        if (index >= numberofcompanions && !StaticManager.Instance.unlimitedSpawns)
         {
             Debug.Log("cant have anymore companions");
             index = numberofcompanions;

@@ -14,7 +14,13 @@ public class UIItems : MonoBehaviour {
 	// Use this for initialization
 	[SerializeField]
 	public UIItemsWithLabels InventoryContainer;
-	
+
+	public GameObject PotionInventoryContainer;
+
+	public GameObject PotionsInventory;
+
+	public GameObject PotionsPanel;
+
     public GameObject PauseUI;
 	
 	public GameObject Tab;
@@ -37,11 +43,14 @@ public class UIItems : MonoBehaviour {
 
 	public UIItemsWithLabels CharacterInventoryStats;
 
+	public GameObject InventoryPanel;
+
     public GameObject PlayerUI;
 	
 	public GameObject DialogueUI;
 
 	public GameObject GameOverUI;
+
 
     public GameObject BackPackUI;
 
@@ -62,6 +71,7 @@ public class UIItems : MonoBehaviour {
 	public GameObject DamageText;
 
     public UIItemsWithLabels ShopUI;
+
 
 
     public bool windowIsOpen;
@@ -88,7 +98,6 @@ public class UIItems : MonoBehaviour {
 		openedWindow = new List < GameObject >();
         var properties = this.GetType().GetFields();
         
-
 	    for (int i = 0; i < properties.Length; i ++ ){
 		    FieldInfo l_fieldInfo = properties[ i ];
 		    if ( l_fieldInfo.FieldType == typeof(GameObject) ){
@@ -125,7 +134,6 @@ public class UIItems : MonoBehaviour {
 
 		if ( obj.obj.name == "InventoryContainer" || obj.obj.name == "ShopUI"){
 		obj.obj.SetActive(false);
-
         }
         return obj;
 	}

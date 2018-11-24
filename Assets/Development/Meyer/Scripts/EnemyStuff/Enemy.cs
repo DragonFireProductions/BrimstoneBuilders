@@ -31,7 +31,7 @@ namespace Kristal
             Nav = gameObject.GetComponent<EnemyNav>();
 
             MaxCoinCount = UnityEngine.Random.Range(1, MaxCoinCount);
-
+            StaticManager.weaponManager.AttachWeapon(this);
         }
 
         public void Remove(BaseCharacter chara) { }
@@ -91,6 +91,8 @@ namespace Kristal
 
             damage -= _damage;
         }
+
+       
         //runs when enemy's animation is half way through
         public override void Attack(BaseCharacter chara)
         {

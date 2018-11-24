@@ -109,14 +109,14 @@ public class BaseNav : MonoBehaviour {
                 switch ( character.attachedWeapon.WeaponStats.weaponType ){
                     case WeaponItem.WeaponType.Gun:
 
-                        if ( StaticManager.Utility.NavDistanceCheck( Agent ) == DistanceCheck.HAS_REACHED_DESTINATION ){
+                        if ( StaticManager.Utility.NavDistanceCheck( Agent ) == DistanceCheck.HAS_REACHED_DESTINATION || StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_NO_PATH){
                             timer += Time.deltaTime;
 
                             if ( timer > waittime ){
                             newpos = StaticManager.Utility.randomInsideDonut( outerRadius , innerRadius , character.enemy.transform.position );
                                 timer = 0;
                             }
-                            }
+                         }
 
                         transform.LookAt( character.enemy.transform );
                         character.attachedWeapon.Attack( );

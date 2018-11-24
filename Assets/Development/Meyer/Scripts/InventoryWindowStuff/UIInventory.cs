@@ -97,7 +97,21 @@ public class UIInventory : MonoBehaviour
         UpdateStats( _item.WeaponStats, newLabel );
         l_newContainer.transform.Find( "ItemIconContainer/RawImage" ).GetComponent < RawImage >( ).texture = _item.WeaponStats.icon;
     }
-    
+
+    public void AddSlot( Potions _item , PlayerInventory inventory ) {
+        var l_newContainer = Instantiate(ItemsInstance.PotionInventoryContainer);
+        l_newContainer.SetActive(true);
+        l_newContainer.transform.SetParent(ItemsInstance.PotionsPanel.gameObject.transform);
+        l_newContainer.transform.position = StaticManager.UiInventory.ItemsInstance.PotionInventoryContainer.transform.position;
+        l_newContainer.transform.localScale = new Vector3(1, 1, 1);
+        l_newContainer.name = _item.PotionName + "Slot";
+        l_newContainer.GetComponent<PotionAssignment>().potion = _item;
+        UIItemsWithLabels newLabel = ItemsInstance.obj(l_newContainer);
+        newLabel.obj.SetActive(true);
+        inventory.PotionSlots.Add(newLabel);
+        UpdateStats(_item.item, newLabel);
+    }
+
 
     public void UpdateStats(Stat _stats, UIItemsWithLabels instanceToUpdate, bool comparative)
     {
@@ -136,6 +150,19 @@ public class UIInventory : MonoBehaviour
             {
                 var l_slot =  inventory.Slots[l_i].obj;
                  inventory.Slots.RemoveAt(l_i);
+                Destroy(l_slot);
+            }
+        }
+    }
+    public void RemoveMainInventory(Potions _item, PlayerInventory inventory)
+    {
+        for (var l_i = 0; l_i < inventory.PotionSlots.Count; l_i++)
+        {
+            if (inventory.PotionSlots[l_i].obj.name == _item.item.objectName + "Slot")
+            {
+                var l_slot = inventory.PotionSlots[l_i].obj;
+                inventory.PotionSlots.RemoveAt(l_i);
+                inventory.potions.Remove( _item );
                 Destroy(l_slot);
             }
         }
