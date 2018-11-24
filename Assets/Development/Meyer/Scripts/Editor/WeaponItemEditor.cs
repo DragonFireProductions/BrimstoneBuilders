@@ -272,20 +272,24 @@ public class WeaponItemEditor : EditorWindow {
 
                 /// if potion
                 else if ( WeaponItemList.itemList[ viewIndex - 1 ].weaponType == WeaponItem.WeaponType.Potion ){
-
-                    var item = WeaponItemList.itemList[ viewIndex - 1 ].item as Potions;
-                    ///Sets potion object
                     WeaponItemList.itemList[viewIndex - 1].item = EditorGUILayout.ObjectField(WeaponItemList.itemList[viewIndex - 1].item, typeof(Potions), true) as Potions;
 
-                    ///cast effect
-                    EditorGUILayout.LabelField("Cast effect");
-                    item.cast_effect = EditorGUILayout.ObjectField(item.cast_effect, typeof(ParticleSystem), true) as ParticleSystem;
+                    if ( WeaponItemList.itemList[ viewIndex - 1 ].item ){
 
-                    ///hit effect
-                    EditorGUILayout.LabelField("Hit effect");
-                    item.cast_effect = EditorGUILayout.ObjectField(item.hit_effect, typeof(ParticleSystem), true) as ParticleSystem;
+                        var item = WeaponItemList.itemList[ viewIndex - 1 ].item as Potions;
 
+                        ///Sets potion object
+                        WeaponItemList.itemList[ viewIndex - 1 ].item = EditorGUILayout.ObjectField( WeaponItemList.itemList[ viewIndex - 1 ].item , typeof( Potions ) , true ) as Potions;
 
+                        ///cast effect
+                        EditorGUILayout.LabelField( "Cast effect" );
+                        item.cast_effect = EditorGUILayout.ObjectField( item.cast_effect , typeof( ParticleSystem ) , true ) as ParticleSystem;
+
+                        ///hit effect
+                        EditorGUILayout.LabelField( "Hit effect" );
+                        item.hit_effect = EditorGUILayout.ObjectField( item.hit_effect , typeof( ParticleSystem ) , true ) as ParticleSystem;
+
+                    }
                 }
             }
             else 

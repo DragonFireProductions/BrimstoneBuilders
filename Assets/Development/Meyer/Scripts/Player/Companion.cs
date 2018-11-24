@@ -22,6 +22,9 @@ public class Companion : BaseCharacter {
         StaticManager.RealTime.Companions.Add(this);
         inventory = GetComponent < PlayerInventory >( );
         cube = transform.Find("Cube").gameObject;
+        attachedWeapon = cube.GetComponentInChildren < BaseItems >( ) as WeaponObject;
+        attachedWeapon.AttachedCharacter = this;
+
     }
 
     public void OnTriggerEnter(Collider collider ) {

@@ -20,10 +20,9 @@ public class WeaponObject : BaseItems
         AttachedCharacter.AnimationClass.Play(AnimationClass.states.AttackTrigger);
         AttachedCharacter.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
     }
-    protected virtual void Start() {
+    protected override void Start() {
+        base.Start();
         AnimationClass = gameObject.GetComponent < AnimationClass >( );
-        stats = StaticManager.inventories.GetItemFromAssetList( objectName );
-        Assert.IsNotNull(stats, "WeaponItem name not added in inspector " + stats.objectName);
         item = this.gameObject;
     }
 

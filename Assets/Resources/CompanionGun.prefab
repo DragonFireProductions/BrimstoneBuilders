@@ -248,7 +248,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1630914232803812}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -504.22766, y: 2.5325437, z: 127.894165}
+  m_LocalPosition: {x: -515.6329, y: 2.6092534, z: 51.642223}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4258532223836678}
@@ -517,10 +517,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Agent: {fileID: 0}
-  stoppingDistance: 4
-  State: 4
-  character: {fileID: 0}
   battleDistance: 3
+  character: {fileID: 0}
+  State: 4
+  stoppingDistance: 4
+  waittime: 2
   companion: {fileID: 0}
   aggState: 0
   behaviors: {fileID: 0}
@@ -626,7 +627,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e8d4da9398dbb44aa54e1563a57e760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponStats:
+  item: {fileID: 0}
+  stats:
     objectName: 
     weight: 0
     durability: 0
@@ -641,15 +643,14 @@ MonoBehaviour:
     isStackable: 0
     destroyOnUse: 0
     clip: {fileID: 0}
-  weaponName: Gun
-  isMainInventory: 1
-  attached: 0
+    Projectile: {fileID: 0}
+    item: {fileID: 0}
+  AttachedCharacter: {fileID: 0}
+  objectName: Ice Gun
   AnimationClass: {fileID: 0}
-  AttacheBaseCharacter: {fileID: 0}
   Ammo: 10
   Capacity: 10
   FireRate: 5
-  projectile: {fileID: 1826912192672856, guid: a3858236751f90a47af5a715e9df30ae, type: 2}
   Range: 15
   ReloadTime: 0
 --- !u!114 &114877038816522576
@@ -664,10 +665,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BackPackInventoryList: []
+  potions: []
   isInventoryActive: 0
   PickedUpWeapons: []
+  PickedUpPotions: []
   parent: {fileID: 0}
   Slots: []
+  PotionSlots: []
   character: {fileID: 0}
   AttachedWeapons: []
   coinCount: 0

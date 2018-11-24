@@ -124,10 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf52f66d04b54bd42837995a6da7d083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hit_effect: {fileID: 0}
-  cast_effect: {fileID: 0}
-  PotionName: Heal
-  item:
+  item: {fileID: 0}
+  stats:
     objectName: 
     weight: 0
     durability: 0
@@ -143,7 +141,28 @@ MonoBehaviour:
     destroyOnUse: 0
     clip: {fileID: 0}
     Projectile: {fileID: 0}
-    weapon: {fileID: 0}
-    potion: {fileID: 0}
+    item: {fileID: 0}
+  AttachedCharacter: {fileID: 0}
+  objectName: Heal
+  hit_effect: {fileID: 0}
+  cast_effect: {fileID: 0}
+  PotionName: Heal
+  _item:
+    objectName: Heal
+    weight: 0
+    durability: 0
+    value: 0
+    baseDamage: 0
+    attackSpeed: 0
+    reach: 0
+    equipType: 0
+    weaponType: 2
+    icon: {fileID: 0}
+    isIndestructible: 1
+    isStackable: 0
+    destroyOnUse: 0
+    clip: {fileID: 0}
+    Projectile: {fileID: 0}
+    item: {fileID: 114672889904112278}
   AttachedBaseCharacter: {fileID: 0}
   HealAmount: 100
