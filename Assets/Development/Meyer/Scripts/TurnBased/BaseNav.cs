@@ -119,7 +119,7 @@ public class BaseNav : MonoBehaviour {
                             }
 
                             transform.LookAt( character.enemy.transform );
-                            character.attachedWeapon.Attack( );
+                            character.attachedWeapon.Use( );
                             Agent.SetDestination( newpos );
                         }
                         if ( character.attachedWeapon is SwordType ){
@@ -131,7 +131,7 @@ public class BaseNav : MonoBehaviour {
                             var distance = Vector3.Distance( transform.position , character.enemy.transform.position );
 
                             if ( distance < battleDistance ){
-                                character.attachedWeapon.Attack( character.enemy );
+                                character.attachedWeapon.Use( character.enemy );
                             }
                         }
                 //if current attacker dies and someone is still attacking

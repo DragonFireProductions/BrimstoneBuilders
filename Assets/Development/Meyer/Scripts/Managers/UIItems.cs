@@ -90,7 +90,7 @@ public class UIItems : MonoBehaviour {
 		obj = new UIItemsWithLabels();
 		obj.obj = GameObject.Find(name).gameObject;
 		int count = obj.obj.transform.Find("Labels").childCount;
-		obj.Labels = new List<UIItemsWithLabels.Label>();
+		obj.Labels = new Boo.Lang.List < UIItemsWithLabels.Label >();
 
         UIItemsWithLabels.Label label;
 		for ( int i = 0 ; i < count ; i++ ){
@@ -114,7 +114,7 @@ public class UIItems : MonoBehaviour {
         UIItemsWithLabels obj = new UIItemsWithLabels();
 	    obj.obj = _obj;
         int count = obj.obj.transform.Find("Labels").childCount;
-        obj.Labels = new List<UIItemsWithLabels.Label>();
+        obj.Labels = new Boo.Lang.List < UIItemsWithLabels.Label >();
 
         UIItemsWithLabels.Label label;
         for (int i = 0; i < count; i++)
@@ -128,39 +128,4 @@ public class UIItems : MonoBehaviour {
         obj.obj.SetActive(false);
         return obj;
     }
-}
-[Serializable]
-public class UIItemsWithLabels : MonoBehaviour{
-
-	public void SetStuff( ) {
-		var ob = obj.transform.Find( "Labels" ).childCount;
-
-		for ( int i = 0 ; i < ob ; i++ ){
-			var child = obj.transform.GetChild( i );
-			Label l = new Label();
-			l.name = child.name;
-			l.labelText = child.GetComponent < TextMeshProUGUI >( );
-			l.labelObject = child.gameObject;
-		}
-	}
-	[Serializable]
-	public struct Label {
-
-		public TextMeshProUGUI labelText;
-
-		public GameObject labelObject;
-
-		public string name;
-
-	}
-
-	[SerializeField] public GameObject obj;
-	[SerializeField] public List < Label > Labels;
-
-	public void SetLabels( Stat stats ) {
-		for ( int i = 0 ; i < Labels.Count ; i++ ){
-			Labels[ i ].labelText.text = stats[ Labels[ i ].labelObject.name ].ToString( );
-		}
-	}
-	
 }

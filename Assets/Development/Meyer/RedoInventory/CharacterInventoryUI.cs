@@ -58,11 +58,14 @@ public class CharacterInventoryUI : MonoBehaviour {
 		CharacterInventory.SetActive(false);
     }
 
-	public void AddWeapon( ) {
+	public void AddWeapon(BaseItems item ) {
         GameObject newlabel = Instantiate(StaticManager.uiManager.Weapon.gameObject);
-        newlabel.AddComponent<UIItemsWithLabels>();
-        var l = newlabel.GetComponent<UIItemsWithLabels>();
-        l = StaticManager.UiInventory.ItemsInstance.obj(newlabel);
+		newlabel.GetComponent < Tab >( ).companion = companion;
+		newlabel.GetComponent < Tab >( ).item = item;
+
+		var l = newlabel.GetComponent < UIItemsWithLabels >( );
+
+		l.obj = newlabel;
 
         l.obj.transform.position = StaticManager.uiManager.Weapon.gameObject.transform.position;
 
@@ -70,16 +73,23 @@ public class CharacterInventoryUI : MonoBehaviour {
 
         l.obj.transform.localScale = new Vector3(1, 1, 1);
 
-		l.SetStuff();
+		l.item = item;
+
+		l.FindLabels();
+
         newlabel.SetActive(true);
         weapons.Add(l);
     }
 
-	public void AddPotion( ) {
+	public void AddPotion(BaseItems item ) {
         GameObject newlabel = Instantiate(StaticManager.uiManager.Potion.gameObject);
-        newlabel.AddComponent<UIItemsWithLabels>();
+		newlabel.GetComponent < Tab >( ).companion = companion;
+		newlabel.GetComponent < Tab >( ).item = item;
         var l = newlabel.GetComponent<UIItemsWithLabels>();
-        l = StaticManager.UiInventory.ItemsInstance.obj(newlabel);
+
+		l.obj = newlabel;
+
+		l.item = item;
 
         l.obj.transform.position = StaticManager.uiManager.Potion.gameObject.transform.position;
 
@@ -87,10 +97,36 @@ public class CharacterInventoryUI : MonoBehaviour {
 
         l.obj.transform.localScale = new Vector3(1, 1, 1);
 
-		l.SetStuff();
+		l.FindLabels();
 		
         newlabel.SetActive(true);
         potions.Add(l);
+    }
+
+	public void RemoveObject(BaseItems item ) {
+		if ( item is WeaponObject ){
+            for (int i = 0; i < weapons.Count; i++)
+            {
+                if (weapons[i] == item)
+                {
+	                Destroy(weapons[i].obj);
+
+                    weapons.RemoveAt(i);
+                }
+            }
+        }
+        else if (item is Potions)
+        {
+            for (int i = 0; i < potions.Count; i ++)
+            {
+                if (potions[i].item == item)
+                {
+					Destroy(potions[i].obj);
+                    potions.RemoveAt(i);
+                }
+            }
+        }
+
     }
 
 	public void ShowInventory( ) {

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,10 +12,20 @@ public abstract class Potions : BaseItems {
 	public string PotionName;
 
 	public BaseCharacter AttachedBaseCharacter;
-	
-	public abstract void Cast( Companion attacker );
 
-	public virtual void PickUp(BaseCharacter character ) {
+    public abstract void Cast(BaseCharacter companion = null );
+    public override void Attach( ) {
+
+        Use();
+
+        var c = AttachedBaseCharacter as Companion;
+        c.inventoryUI.RemoveObject(this);
+
+        Destroy(gameObject);
+
+    }
+
+    public virtual void PickUp(BaseCharacter character ) {
         if (AttachedBaseCharacter == null)
         {
 

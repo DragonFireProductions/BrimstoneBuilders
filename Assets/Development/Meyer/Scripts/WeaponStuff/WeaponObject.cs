@@ -15,11 +15,6 @@ public class WeaponObject : BaseItems
     /// Variables should be protected NOT public or private
     public AnimationClass AnimationClass;
 
-    public virtual void Attack(BaseCharacter enemy = null ) {
-       
-        AttachedCharacter.AnimationClass.Play(AnimationClass.states.AttackTrigger);
-        AttachedCharacter.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
-    }
     protected override void Start() {
         base.Start();
         AnimationClass = gameObject.GetComponent < AnimationClass >( );
@@ -29,6 +24,31 @@ public class WeaponObject : BaseItems
     public virtual object this[ string propertyName ] {
         get { return this.GetType().GetField(propertyName).GetValue(this); }
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
+    }
+
+    public override void Attach( ) {
+        item.SetActive(true);
+
+        item.transform.SetParent(AttachedCharacter.transform);
+
+        item.transform.position = AttachedCharacter.cube.transform.position;
+
+        item.transform.localScale = new Vector3(1, 1, 1);
+
+        var c = AttachedCharacter as Companion;
+
+        StaticManager.UiInventory.RemoveMainInventory(this as WeaponObject, c.inventory);
+
+        if (AttachedCharacter.attachedWeapon)
+        {
+            c.inventoryUI.AddWeapon(AttachedCharacter.attachedWeapon);
+            c.attachedWeapon.gameObject.SetActive(false);
+            c.inventoryUI.RemoveObject(this);
+        }
+        
+        AttachedCharacter.attachedWeapon = this as WeaponObject;
+
+        AttachedCharacter.attachedWeapon.transform.rotation = AttachedCharacter.cube.transform.rotation;
     }
 
     public virtual void PickUp( ) {

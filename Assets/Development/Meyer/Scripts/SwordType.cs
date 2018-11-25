@@ -6,9 +6,8 @@ using UnityEngine.Assertions;
 public class SwordType : WeaponObject {
    
 
-    public override void Attack(BaseCharacter enemy)
+    public override void Use(BaseCharacter enemy)
     {
-
         AttachedCharacter.AnimationClass.Play(AnimationClass.states.AttackTrigger);
         AttachedCharacter.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
     }

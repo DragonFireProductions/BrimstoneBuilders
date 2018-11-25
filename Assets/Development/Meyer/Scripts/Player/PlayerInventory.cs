@@ -61,13 +61,13 @@ public class PlayerInventory : MonoBehaviour {
 
     public void PickUp( WeaponObject weapon ) {
         PickedUpWeapons.Add( weapon );
-        character.inventoryUI.AddWeapon();
+        character.inventoryUI.AddWeapon(weapon);
         weapon.gameObject.SetActive(false);
     }
 
     public void PickUp( Potions potions ) {
         PickedUpPotions.Add(potions);
-        character.inventoryUI.AddPotion();
+        character.inventoryUI.AddPotion(potions);
         potions.gameObject.SetActive(false);
     }
     public void PickUpCoin(int _coinWorth)

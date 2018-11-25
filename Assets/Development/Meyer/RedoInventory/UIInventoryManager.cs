@@ -12,13 +12,13 @@ public class UIInventoryManager : MonoBehaviour {
 
     public GameObject CharacterInventory;
 
-    public GameObject Potion;
+    public Tab Potion;
 
     //public UIItemsWithLabels characterStats;
 
     public GameObject WeaponInventory;
 
-    public GameObject Weapon;
+    public Tab Weapon;
 
     public GameObject Tab;
 

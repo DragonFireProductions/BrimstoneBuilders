@@ -7,15 +7,16 @@ public class HealPotion : Potions {
 	private ParticleSystem _hit_effect;
 
 	[ SerializeField ] public int HealAmount;
-	public override void Cast( Companion attacker ) {
+	public override void Cast( BaseCharacter enemy = null  ) {
 		_hit_effect = Instantiate( this.hit_effect );
-		_hit_effect.gameObject.transform.position = attacker.transform.position;
-		_hit_effect.gameObject.transform.SetParent(attacker.transform);
+		_hit_effect.gameObject.transform.position = enemy.transform.position;
+		_hit_effect.gameObject.transform.SetParent(enemy.transform);
 		_hit_effect.gameObject.SetActive(true);
-		attacker.stats.Health += HealAmount;
+		enemy.stats.Health += HealAmount;
 
 		if ( !StaticManager.Instance.unlimitedPotions ){
-			StaticManager.UiInventory.RemoveMainInventory(this, attacker.inventory);
+			var e = enemy as Companion;
+			StaticManager.UiInventory.RemoveMainInventory(this, e.inventory);
 		}
 		
 	}
