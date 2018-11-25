@@ -11,6 +11,10 @@ using UnityEngine.UI;
 
 public class MultipleInventoryHolder : MonoBehaviour {
 
+	public List < BaseInventory > inventoryList;
+
+	public List < BaseItems > allItems;
+
 	public List < PlayerInventory > alllables;
     [SerializeField] private WeaponItemList itemList; //WeaponListAsset set in inspector
 
@@ -49,14 +53,11 @@ public class MultipleInventoryHolder : MonoBehaviour {
             previousInventory.GetComponent<Image>().color = Color.gray;
 			previousInventory.companion.transform.position = prevPos;
 		}
-        
 		StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.stats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
         StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false);
         tab.companion.inventory.parent.SetActive(true);
 		tab.GetComponent < Image >( ).color = Color.red;
 		inventory = tab.companion.inventory;
-		StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.stats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
-		StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false );
 		previousInventory = tab;
 		prevPos = inventory.character.transform.position;
 

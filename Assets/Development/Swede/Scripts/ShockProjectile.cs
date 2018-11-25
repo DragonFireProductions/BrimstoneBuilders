@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShockProjectile : Projectile {
-
-    public int hits = 3;
-
-     public float interval = 0.5f;
+    
     public void Start()
     {
         DOT_interval = 1; //Time between DOT damage.

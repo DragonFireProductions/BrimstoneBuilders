@@ -6,7 +6,7 @@ public class HealPotion : Potions {
 
 	private ParticleSystem _hit_effect;
 
-	[ SerializeField ] private int HealAmount;
+	[ SerializeField ] public int HealAmount;
 	public override void Cast( Companion attacker ) {
 		_hit_effect = Instantiate( this.hit_effect );
 		_hit_effect.gameObject.transform.position = attacker.transform.position;

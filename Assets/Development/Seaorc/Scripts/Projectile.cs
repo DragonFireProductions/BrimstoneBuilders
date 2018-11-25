@@ -12,7 +12,13 @@ public class Projectile : MonoBehaviour
     private float Timer = 0;
     private float IntervalTimer = 0;
 
+    public bool doesDOT;
+
     protected int DOT_interval; //Time between DOT damage.
+
+    public int hits = 3;
+
+    public float interval = 0.5f;
     /// <summary>
     /// Moves the projectile in its forwoard derection
     /// </summary>

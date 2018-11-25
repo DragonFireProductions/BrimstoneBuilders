@@ -19,6 +19,10 @@ public class GunType : WeaponObject {
 
     private bool reloading;
 
+
+
+    public Projectile projectile;
+
     private GameObject[] bullets;
 
     [ SerializeField ] public float ReloadTime;

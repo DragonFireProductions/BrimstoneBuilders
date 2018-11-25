@@ -36,6 +36,10 @@ public class PlayerInventory : MonoBehaviour {
 
     public List < WeaponObject > AttachedWeapons;
 
+    public GameObject potionsContainer;
+
+    public GameObject weaponsContainer;
+
 
     public int coinCount;
 

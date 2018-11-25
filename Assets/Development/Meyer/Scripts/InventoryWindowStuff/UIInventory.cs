@@ -100,14 +100,14 @@ public class UIInventory : MonoBehaviour
 
     public void AddSlot( Potions _item , PlayerInventory inventory ) {
         var l_newContainer = Instantiate(ItemsInstance.PotionInventoryContainer);
-        l_newContainer.SetActive(true);
-        l_newContainer.transform.SetParent(ItemsInstance.PotionsPanel.gameObject.transform);
+        l_newContainer.SetActive(false);
+        l_newContainer.transform.SetParent(inventory.parent.transform);
         l_newContainer.transform.position = StaticManager.UiInventory.ItemsInstance.PotionInventoryContainer.transform.position;
         l_newContainer.transform.localScale = new Vector3(1, 1, 1);
         l_newContainer.name = _item.PotionName + "Slot";
         l_newContainer.GetComponent<PotionAssignment>().potion = _item;
         UIItemsWithLabels newLabel = ItemsInstance.obj(l_newContainer);
-        newLabel.obj.SetActive(true);
+        newLabel.obj.SetActive(false);
         inventory.PotionSlots.Add(newLabel);
         UpdateStats(_item._item, newLabel);
     }

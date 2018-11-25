@@ -5,6 +5,8 @@ using System.Reflection;
 
 using TMPro;
 
+using UnityEditor;
+
 using UnityEngine;
 using UnityEngine.Experimental.UIElements;
 
@@ -12,7 +14,10 @@ public class UIItems : MonoBehaviour {
 
 	
 	// Use this for initialization
-	[SerializeField]
+	public GameObject PotionsContainer;
+
+	public GameObject WeaponsContainer;
+
 	public UIItemsWithLabels InventoryContainer;
 
 	public GameObject PotionInventoryContainer;

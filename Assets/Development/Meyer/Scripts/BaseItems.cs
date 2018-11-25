@@ -9,6 +9,8 @@ public class BaseItems : MonoBehaviour {
 
 	public WeaponItem stats;
 
+	public ItemStats itemStats;
+
 	public BaseCharacter AttachedCharacter;
 
 	public string objectName;
