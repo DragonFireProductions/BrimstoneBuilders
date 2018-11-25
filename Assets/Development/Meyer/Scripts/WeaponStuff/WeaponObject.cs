@@ -58,11 +58,6 @@ public class WeaponObject : BaseItems
         
     }
 
-    public void MoveToBackPack( ) {
-        StaticManager.UiInventory.ItemsInstance.BackPackUI.GetComponentInChildren<RawImage>().texture = stats.icon;
-        StaticManager.UiInventory.ItemsInstance.BackPackUI.GetComponentInChildren<TextMeshProUGUI>().text = stats.objectName;
-
-    }
     
     protected virtual void OnTriggerEnter(Collider collider)
     {

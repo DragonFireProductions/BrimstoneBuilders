@@ -28,14 +28,7 @@ public class ContainerScript : MonoBehaviour /*IPointerDownHandler*/ {
         l_trigger.triggers.Add(l_entry2);
     }
 
-    public void SelectObj( ) {
-       Time.timeScale = 0; 
-       var inventory = StaticManager.inventories.GetInventory( transform.parent.parent.name );
-       StaticManager.inventories.inventory = inventory;
-       name                                 = gameObject.transform.Find( "objectName" ).GetComponentInChildren < TextMeshProUGUI >( ).text;
-       inventory.selectedObject = inventory.GetItemFromInventory( name );
-       ///StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.Equip);
-    }
+   
 
     public virtual void OnPointerDownDelegate( PointerEventData data ) {
         if ( data.currentInputModule.input.GetMouseButton( 1 ) ){

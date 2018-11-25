@@ -23,7 +23,7 @@ public class Won : MonoBehaviour {
 
             if (objs.Length == 0)
             {
-                StaticManager.UiInventory.ItemsInstance.GameWon.SetActive(true);
+                //StaticManager.UiInventory.ItemsInstance.GameWon.SetActive(true);
             }
         }
 		

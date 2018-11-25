@@ -15,28 +15,15 @@ public class UIItems : MonoBehaviour {
 	
 	// Use this for initialization
 	
-		
+	public GameObject Equip;
 
-    public GameObject PauseUI;
+	public GameObject PauseUI;
 
     public GameObject PlayerUI;
 	
 	public GameObject DialogueUI;
 
 	public GameObject GameOverUI;
-
-
-    public GameObject BackPackUI;
-
-    public GameObject BackpackContainer;
-
-	public GameObject GameWon;
-	
-	public GameObject AttackConfirmation;
-
-	public GameObject BattleWon;
-
-	public GameObject DamageText;
 
     public UIItemsWithLabels ShopUI;
 
