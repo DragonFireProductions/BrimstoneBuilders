@@ -16,7 +16,7 @@ public class WeaponHolder : MonoBehaviour {
 		var l_gun = character.attachedWeapon as GunType;
 
 		if ( l_gun != null ){
-			l_gun.FillBullets(l_gun.stats.Projectile);
+			l_gun.FillBullets(l_gun.projectile.gameObject);
 		}
 	}
 	// Use this for initialization

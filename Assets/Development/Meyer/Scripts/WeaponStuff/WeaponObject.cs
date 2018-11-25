@@ -33,8 +33,7 @@ public class WeaponObject : BaseItems
 
     public virtual void PickUp( ) {
         if ( AttachedCharacter == null ){
-        StaticManager.UiInventory.AddSlot(this, StaticManager.Character.inventory);
-        gameObject.SetActive(false);
+
         }
         
     }

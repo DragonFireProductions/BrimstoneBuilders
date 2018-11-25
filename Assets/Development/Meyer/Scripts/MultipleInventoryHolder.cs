@@ -16,17 +16,17 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	public List < BaseItems > allItems;
 
 	public List < PlayerInventory > alllables;
-    [SerializeField] private WeaponItemList itemList; //WeaponListAsset set in inspector
+    [SerializeField] private BaseItemList itemList; //WeaponListAsset set in inspector
 
-    [HideInInspector] public static List<WeaponItem> WeaponAssetList; //public list of weapons from WeaponListAsset 
+    [HideInInspector] public static List<BaseItems> WeaponAssetList; //public list of weapons from WeaponListAsset 
 
 	public PlayerInventory inventory;
+
+	public CharacterInventoryUI prev_inventory;
 
 	public Camera playerCam;
 
 	public Vector3 prevPos;
-
-	public Tab previousInventory;
 	public void Awake( ) {
 		WeaponAssetList = itemList.itemList;
 		alllables       = new List < PlayerInventory >( );
@@ -38,29 +38,34 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	}
 
 	public void SwitchToPotionsTab( ) {
-		StaticManager.UiInventory.ItemsInstance.InventoryPanel.SetActive(false);
-	    StaticManager.UiInventory.ItemsInstance.PotionsPanel.SetActive( true );
+		inventory.character.inventoryUI.WeaponInventory.SetActive(false);
+		inventory.character.inventoryUI.PotionsInventory.SetActive(true);
+		inventory.character.inventoryUI.UpdatePotions();
 	}
 
 	public void SwitchToWeapons( ) {
-		StaticManager.UiInventory.ItemsInstance.InventoryPanel.SetActive(true);
-		StaticManager.UiInventory.ItemsInstance.PotionsPanel.SetActive(false);
-	}
+		inventory.character.inventoryUI.WeaponInventory.SetActive(true);
+		inventory.character.inventoryUI.PotionsInventory.SetActive( false );
+		inventory.character.inventoryUI.UpdateItem();
+    }
 	public void SwitchInventory(Tab tab ) {
-		if ( previousInventory ){
+		if ( prev_inventory ){
 
-            previousInventory.companion.inventory.parent.gameObject.SetActive(false);
-            previousInventory.GetComponent<Image>().color = Color.gray;
-			previousInventory.companion.transform.position = prevPos;
-		}
-		StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.stats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
-        StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false);
-        tab.companion.inventory.parent.SetActive(true);
+            prev_inventory.companion.inventoryUI.CharacterInventory.SetActive(false);
+            prev_inventory.tab.GetComponent<Image>().color = Color.gray;
+			prev_inventory.companion.transform.position = prevPos;
+        }
+
+		if ( StaticManager.inventories.inventory.Slots.Count > 1 ){
+          //  StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.stats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
+           // StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false);
+        }
+		tab.companion.inventoryUI.CharacterInventory.SetActive(true);
 		tab.GetComponent < Image >( ).color = Color.red;
-		inventory = tab.companion.inventory;
-		previousInventory = tab;
-		prevPos = inventory.character.transform.position;
 
+		inventory = tab.companion.inventory;
+		prevPos = inventory.character.transform.position;
+		prev_inventory = inventory.character.inventoryUI;
         Vector3 characterpos = new Vector3(inventory.character.transform.position.x, 30, inventory.character.transform.position.z);
         inventory.character.transform.position = characterpos;
         Vector3 pos = characterpos + (inventory.character.transform.forward * 4);
@@ -69,22 +74,11 @@ public class MultipleInventoryHolder : MonoBehaviour {
         playerCam.transform.LookAt(inventory.character.transform.position + (inventory.transform.up * 0.77f));
 
     }
-    public WeaponItem GetItemFromAssetList(string name)
+    public BaseItems GetItemFromAssetList(string name)
     {
         return WeaponAssetList.FirstOrDefault(_t => _t.objectName == name);
     }
-
-    public GameObject AddCompanionInventory(Companion companion ) {
-		var tab = Instantiate(StaticManager.UiInventory.ItemsInstance.Tab);
-	    tab.GetComponent < Tab >( ).companion = companion;
-		tab.transform.SetParent(StaticManager.UiInventory.ItemsInstance.Tabs.gameObject.transform);
-	    tab.transform.localScale = new Vector3(1,1,1);
-		tab.SetActive(true);
-	    tab.GetComponentInChildren < TextMeshProUGUI >( ).text = companion.name;
-		StaticManager.tabManager.tabs.Add(tab.GetComponent<Tab>());
-
-	    return tab;
-    }
+	
 
 	public PlayerInventory GetInventory(string parentName ) {
 		alllables.RemoveAll( item => item == null );
@@ -96,13 +90,6 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		Assert.IsNotNull(null, "Cannot Find inventory parent with name" + parentName + " Line number : 29 - MultipleInventoryHolder");
 		return null;
 	}
-	public void SendToCompanion(GameObject name) {
-		string _name = name.name.ToString( );
-		GetInventory(_name + "Inventory").PickedUpWeapons.Add(inventory.selectedObject);
-		StaticManager.UiInventory.AddSlot(inventory.selectedObject, GetInventory(_name + "Inventory"));
-		StaticManager.UiInventory.RemoveMainInventory(inventory.selectedObject, inventory);
-
-    }
 
 	public void Destroy(PlayerInventory inventory ) {
 		Destroy(StaticManager.tabManager.GetTab(inventory.character as Companion).gameObject);
@@ -123,7 +110,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
            inventory.AttachedWeapons.Add(inventory.selectedObject);
             var ob = inventory.AttachedWeapons[0];
             inventory.AttachedWeapons.RemoveAt(0);
-            StaticManager.UiInventory.AddSlot(ob, inventory);
+            //StaticManager.UiInventory.AddSlot(ob, inventory);
 
             ob.transform.parent = GameObject.Find("Weapons").transform;
             ob.gameObject.name = ob.stats.objectName;
@@ -139,34 +126,11 @@ public class MultipleInventoryHolder : MonoBehaviour {
         inventory.selectedObject.gameObject.transform.SetParent(inventory.character.cube.transform);
 
         inventory.character.stats.IncreaseStats(inventory.selectedObject.stats);
-		StaticManager.UiInventory.UpdateStats(inventory.selectedObject.stats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
-	    StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false);
+		//StaticManager.UiInventory.UpdateStats(inventory.selectedObject.stats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
+	    //StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false);
 
         inventory.selectedObject.gameObject.SetActive(true);
 
     }
-
-	public GameObject setParent(GameObject character ) {
-		var parent = Instantiate(StaticManager.UiInventory.ItemsInstance.Inventory);
-        parent.transform.SetParent(StaticManager.UiInventory.ItemsInstance.Inventory.gameObject.transform.parent);
-        parent.name = character.name + "Inventory";
-        parent.GetComponent<Image>().enabled = false;
-        parent.transform.position = StaticManager.UiInventory.ItemsInstance.Inventory.transform.position;
-        parent.transform.localScale = new Vector3(1, 1, 1);
-
-		return parent;
-	}
-
-	public GameObject setSendButton(Companion character ) {
-
-        var send = Instantiate(StaticManager.UiInventory.ItemsInstance.SendCompanionButton);
-        send.transform.position = StaticManager.UiInventory.ItemsInstance.SendCompanionButton.transform.position;
-        send.transform.SetParent(StaticManager.UiInventory.ItemsInstance.SendCompanionButton.transform.parent);
-        send.GetComponentInChildren<TextMeshProUGUI>().text = character.name;
-        send.name = character.name;
-        send.transform.localScale = new Vector3(1, 1, 1);
-        send.SetActive(true);
-
-		return send;
-	}
+	
 }

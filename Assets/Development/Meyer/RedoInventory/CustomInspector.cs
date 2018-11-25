@@ -6,19 +6,6 @@ public class CustomInspector : EditorWindow {
     
     public BaseItemList WeaponItemList;
     private int viewIndex = 1;
-
-    private string[] weaponsType =
-    {
-        WeaponItem.WeaponType.Sword.ToString(), WeaponItem.WeaponType.Gun.ToString(), WeaponItem.WeaponType.Potion.ToString(),
-        WeaponItem.WeaponType.Type4.ToString()
-    };
-
-    private string[] equipType =
-    {
-        WeaponItem.EquipType.H2.ToString(), WeaponItem.EquipType.H2.ToString(),
-        WeaponItem.EquipType.Shield.ToString(), WeaponItem.EquipType.Shoulder.ToString()
-    };
-
     private int weaponChoice = 0;
     private int equipChoice = 0;
 
@@ -38,12 +25,7 @@ public class CustomInspector : EditorWindow {
     }
     
     void  OnEnable () {
-        if(EditorPrefs.HasKey("ObjectPath")) 
-        {
-            string objectPath = EditorPrefs.GetString("ObjectPath");
-            WeaponItemList = AssetDatabase.LoadAssetAtPath (objectPath, typeof(BaseItemList)) as BaseItemList;
-        }
-        
+        WeaponItemList = Resources.Load < BaseItemList >( "BaseItemList" );
     }
     
     void  OnGUI () {
@@ -187,10 +169,6 @@ public class CustomInspector : EditorWindow {
                     GUILayout.Label( "Reach: " , GUILayout.ExpandWidth( false ) );
                     WeaponItemList.itemList[ viewIndex - 1 ].stats.reach = EditorGUILayout.IntField( WeaponItemList.itemList[ viewIndex - 1 ].stats.reach , GUILayout.ExpandWidth( false ) );
 
-                    ///Sets Equipment type
-                    GUILayout.Label( "Equipment type" , GUILayout.ExpandWidth( false ) );
-                    WeaponItemList.itemList[ viewIndex - 1 ].stats.equipType = ( WeaponItem.EquipType )EditorGUILayout.EnumPopup( "Weapon Type:" , WeaponItemList.itemList[ viewIndex - 1 ].stats.equipType );
-
                     GUILayout.EndHorizontal( );
                     GUILayout.Space( 40 );
 
@@ -227,16 +205,21 @@ public class CustomInspector : EditorWindow {
                         if ( WeaponItemList.itemList[ viewIndex - 1 ] is GunType ){
                             var ob = WeaponItemList.itemList[ viewIndex - 1 ] as GunType;
 
+                            GUILayout.EndHorizontal();
+
+                            GUILayout.BeginHorizontal();
                             ob.Ammo     = EditorGUILayout.IntField( "Ammo: " ,     ob.Ammo );
                             ob.Capacity = EditorGUILayout.IntField( "Capacity: " , ob.Capacity );
                             ob.FireRate = EditorGUILayout.FloatField( "Fire Rate" , ob.FireRate );
-
+                            GUILayout.EndHorizontal();
+                            GUILayout.BeginHorizontal();
                             ob.Range      = EditorGUILayout.FloatField( "Range" ,       ob.Range );
                             ob.ReloadTime = EditorGUILayout.FloatField( "Reload time" , ob.ReloadTime );
 
 
                             ob.projectile = EditorGUILayout.ObjectField( ob.projectile , typeof( Projectile ) , true ) as Projectile;
-
+                            GUILayout.EndHorizontal();
+                            GUILayout.BeginHorizontal();
                             if ( ob.projectile ){
                                 ob.projectile.doesDOT = GUILayout.Toggle( ob.projectile.doesDOT , "Does damage over time" );
 
@@ -246,6 +229,7 @@ public class CustomInspector : EditorWindow {
                                     ob.projectile.interval = EditorGUILayout.FloatField( "Interval" , ob.projectile.interval );
                                 }
                             }
+                            GUILayout.EndHorizontal();
 
                         }
                         else if ( WeaponItemList.itemList[ viewIndex - 1 ] is SwordType ){
@@ -257,6 +241,8 @@ public class CustomInspector : EditorWindow {
                     if ( WeaponItemList.itemList[ viewIndex - 1 ] is Potions ){
                         var ob1 = WeaponItemList.itemList[ viewIndex - 1 ] as Potions;
 
+                        GUILayout.EndHorizontal();
+                        GUILayout.BeginHorizontal();
                         GUILayout.Label( "Cast effect" );
                         ob1.cast_effect = EditorGUILayout.ObjectField( ob1.cast_effect , typeof( ParticleSystem ) , true ) as ParticleSystem;
                         GUILayout.Label( "Hit effect" );
@@ -267,6 +253,7 @@ public class CustomInspector : EditorWindow {
                             var ob = WeaponItemList.itemList[ viewIndex - 1 ] as HealPotion;
                             ob.HealAmount = EditorGUILayout.IntField( "Heal amount" , ob.HealAmount );
                         }
+                        GUILayout.EndHorizontal();
                     }
                 }
 

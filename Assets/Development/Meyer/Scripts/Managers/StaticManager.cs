@@ -34,6 +34,8 @@ public class StaticManager : MonoBehaviour
 
     public static WeaponHolder weaponManager;
 
+    public static UIInventoryManager uiManager;
+
     public bool unlimitedPotions = false;
 
     public bool unlimitedSpawns = false;
@@ -74,6 +76,8 @@ public class StaticManager : MonoBehaviour
 
         weaponManager = GameObject.Find( "ManagerHolder" ).GetComponent < WeaponHolder >( );
 
+        uiManager = GetComponent < UIInventoryManager >( );
+
     }
 
     public void LoadMainMenu()
@@ -98,7 +102,7 @@ public class StaticManager : MonoBehaviour
     }
     public void EnableSendTo()
     {
-        UiInventory.ItemsInstance.SendToCompanion.SetActive(true);
+        //UiInventory.ItemsInstance.SendToCompanion.SetActive(true);
     }
 
 }

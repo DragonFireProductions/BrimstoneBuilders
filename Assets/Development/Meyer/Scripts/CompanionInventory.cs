@@ -18,12 +18,7 @@ public class CompanionInventory : PlayerInventory {
     {
         return PickedUpWeapons.FirstOrDefault(_t => _t.stats.objectName == name);
     }
-
-	public void AddToInventory(WeaponObject obj)
-	{
-		StaticManager.UiInventory.AddSlot(obj, companion.inventory);
-		PickedUpWeapons.Add(obj);
-	}
+	
 	// Update is called once per frame
 	void Update () {
 		

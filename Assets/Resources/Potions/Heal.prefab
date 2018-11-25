@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 65750162440976406}
   - component: {fileID: 114672889904112278}
   - component: {fileID: 54625616402276366}
+  - component: {fileID: 114921826332680948}
   m_Layer: 9
   m_Name: Heal
   m_TagString: PickUp
@@ -125,44 +126,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
-  stats:
-    objectName: 
-    weight: 0
-    durability: 0
-    value: 0
-    baseDamage: 0
-    attackSpeed: 0
-    reach: 0
-    equipType: 0
-    weaponType: 0
-    icon: {fileID: 0}
-    isIndestructible: 0
-    isStackable: 0
-    destroyOnUse: 0
-    clip: {fileID: 0}
-    Projectile: {fileID: 0}
-    item: {fileID: 0}
+  stats: {fileID: 114921826332680948}
   AttachedCharacter: {fileID: 0}
   objectName: Heal
   hit_effect: {fileID: 0}
   cast_effect: {fileID: 0}
   PotionName: Heal
-  _item:
-    objectName: Heal
-    weight: 0
-    durability: 0
-    value: 0
-    baseDamage: 0
-    attackSpeed: 0
-    reach: 0
-    equipType: 0
-    weaponType: 2
-    icon: {fileID: 0}
-    isIndestructible: 1
-    isStackable: 0
-    destroyOnUse: 0
-    clip: {fileID: 0}
-    Projectile: {fileID: 0}
-    item: {fileID: 114672889904112278}
   AttachedBaseCharacter: {fileID: 0}
   HealAmount: 100
+--- !u!114 &114921826332680948
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1133561473806676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572ade2c8a8bbe946a61e83a73b50be3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Heal
+  weight: 0
+  durability: 0
+  value: 0
+  baseDamage: 0
+  attackSpeed: 0
+  reach: 0
+  equipType: 0
+  weaponType: 0
+  icon: {fileID: 0}
+  isIndestructible: 0
+  isStackable: 0
+  destroyOnUse: 0
+  clip: {fileID: 0}

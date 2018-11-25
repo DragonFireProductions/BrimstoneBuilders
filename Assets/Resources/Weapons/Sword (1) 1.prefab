@@ -117,11 +117,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4859165957042552}
-  - component: {fileID: 114399190808644700}
   - component: {fileID: 65289620651412128}
+  - component: {fileID: 114399190808644700}
   - component: {fileID: 114776521567533286}
   - component: {fileID: 95975005977584356}
   - component: {fileID: 54692826186977918}
+  - component: {fileID: 114818575286852836}
   m_Layer: 9
   m_Name: Sword (1) 1
   m_TagString: PickUp
@@ -325,24 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
-  stats:
-    objectName: 
-    weight: 0
-    durability: 0
-    value: 0
-    baseDamage: 0
-    attackSpeed: 0
-    reach: 0
-    equipType: 0
-    weaponType: 0
-    icon: {fileID: 0}
-    isIndestructible: 0
-    isStackable: 0
-    destroyOnUse: 0
-    clip: {fileID: 0}
-    Projectile: {fileID: 0}
-    weapon: {fileID: 0}
-    potion: {fileID: 0}
+  stats: {fileID: 114818575286852836}
   AttachedCharacter: {fileID: 0}
   objectName: Base Sword
   AnimationClass: {fileID: 0}
@@ -360,6 +344,31 @@ MonoBehaviour:
   damage: 0
   animation: {fileID: 0}
   name: 
+--- !u!114 &114818575286852836
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1908626739542796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572ade2c8a8bbe946a61e83a73b50be3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Base Sword
+  weight: 0
+  durability: 0
+  value: 0
+  baseDamage: 0
+  attackSpeed: 0
+  reach: 0
+  equipType: 0
+  weaponType: 0
+  icon: {fileID: 0}
+  isIndestructible: 0
+  isStackable: 0
+  destroyOnUse: 0
+  clip: {fileID: 0}
 --- !u!198 &198037973889151348
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -105,37 +105,35 @@ public class BaseNav : MonoBehaviour {
 
                     return;
                 }
+                
+                        if ( character.attachedWeapon is GunType ){
 
-                switch ( character.attachedWeapon.stats.weaponType ){
-                    case WeaponItem.WeaponType.Gun:
 
-                        if ( StaticManager.Utility.NavDistanceCheck( Agent ) == DistanceCheck.HAS_REACHED_DESTINATION || StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_NO_PATH){
-                            timer += Time.deltaTime;
+                            if ( StaticManager.Utility.NavDistanceCheck( Agent ) == DistanceCheck.HAS_REACHED_DESTINATION || StaticManager.Utility.NavDistanceCheck( Agent ) == DistanceCheck.HAS_NO_PATH ){
+                                timer += Time.deltaTime;
 
-                            if ( timer > waittime ){
-                            newpos = StaticManager.Utility.randomInsideDonut( outerRadius , innerRadius , character.enemy.transform.position );
-                                timer = 0;
+                                if ( timer > waittime ){
+                                    newpos = StaticManager.Utility.randomInsideDonut( outerRadius , innerRadius , character.enemy.transform.position );
+                                    timer  = 0;
+                                }
                             }
-                         }
 
-                        transform.LookAt( character.enemy.transform );
-                        character.attachedWeapon.Attack( );
-                        Agent.SetDestination( newpos );
-
-                        break;
-                    case WeaponItem.WeaponType.Sword:
-                        SetState = state.ATTACKING;
-                        Agent.SetDestination( character.enemy.transform.position );
-                        transform.LookAt( character.enemy.transform );
-                        var distance = Vector3.Distance( transform.position , character.enemy.transform.position );
-
-                        if ( distance < battleDistance ){
-                            character.attachedWeapon.Attack( character.enemy );
+                            transform.LookAt( character.enemy.transform );
+                            character.attachedWeapon.Attack( );
+                            Agent.SetDestination( newpos );
                         }
+                        if ( character.attachedWeapon is SwordType ){
 
-                        break;
-                }
 
+                            SetState = state.ATTACKING;
+                            Agent.SetDestination( character.enemy.transform.position );
+                            transform.LookAt( character.enemy.transform );
+                            var distance = Vector3.Distance( transform.position , character.enemy.transform.position );
+
+                            if ( distance < battleDistance ){
+                                character.attachedWeapon.Attack( character.enemy );
+                            }
+                        }
                 //if current attacker dies and someone is still attacking
             }
 

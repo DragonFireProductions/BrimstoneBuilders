@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114985248311078388}
   - component: {fileID: 95955972527839144}
   - component: {fileID: 54054671834653948}
+  - component: {fileID: 114677245931798092}
   m_Layer: 9
   m_Name: Sword (1)
   m_TagString: PickUp
@@ -325,27 +326,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
-  stats:
-    objectName: 
-    weight: 0
-    durability: 0
-    value: 0
-    baseDamage: 0
-    attackSpeed: 0
-    reach: 0
-    equipType: 0
-    weaponType: 0
-    icon: {fileID: 0}
-    isIndestructible: 0
-    isStackable: 0
-    destroyOnUse: 0
-    clip: {fileID: 0}
-    Projectile: {fileID: 0}
-    weapon: {fileID: 0}
-    potion: {fileID: 0}
+  stats: {fileID: 114677245931798092}
   AttachedCharacter: {fileID: 0}
   objectName: Advanced Sword
   AnimationClass: {fileID: 0}
+--- !u!114 &114677245931798092
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1033800711354960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572ade2c8a8bbe946a61e83a73b50be3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Advanced Sword
+  weight: 0
+  durability: 0
+  value: 0
+  baseDamage: 0
+  attackSpeed: 0
+  reach: 0
+  equipType: 0
+  weaponType: 0
+  icon: {fileID: 0}
+  isIndestructible: 0
+  isStackable: 0
+  destroyOnUse: 0
+  clip: {fileID: 0}
 --- !u!114 &114985248311078388
 MonoBehaviour:
   m_ObjectHideFlags: 1

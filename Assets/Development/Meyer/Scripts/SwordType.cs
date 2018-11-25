@@ -16,8 +16,6 @@ public class SwordType : WeaponObject {
     protected override void Start()
     {
         AnimationClass = gameObject.GetComponent<AnimationClass>();
-        stats = StaticManager.inventories.GetItemFromAssetList(objectName);
-        Assert.IsNotNull(stats, "WeaponItem name not added in inspector " + gameObject.name);
         item = this.gameObject;
     }
 }

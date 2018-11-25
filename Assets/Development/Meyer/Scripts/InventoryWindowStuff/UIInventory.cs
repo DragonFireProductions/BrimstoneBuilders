@@ -50,7 +50,7 @@ public class UIInventory : MonoBehaviour
     }
 
     public void StartScript() {
-        pos = ItemsInstance.InventoryContainer.obj.gameObject.transform.position;
+
        ItemsInstance.DialogueUI.SetActive(true);
     }
     public void ShowNotification(string _message, float _time ) {
@@ -83,36 +83,6 @@ public class UIInventory : MonoBehaviour
         }
         set { showWindow = value; }
     }
-    public void AddSlot(WeaponObject _item, PlayerInventory inventory)
-    {
-        var l_newContainer = Instantiate(ItemsInstance.InventoryContainer.obj);
-        l_newContainer.SetActive(true);
-        l_newContainer.transform.SetParent(inventory.parent.transform);
-        l_newContainer.transform.position = StaticManager.UiInventory.ItemsInstance.InventoryContainer.obj.transform.position;
-        l_newContainer.transform.localScale = new Vector3(1,1,1);
-        l_newContainer.name = _item.stats.objectName + "Slot";
-        UIItemsWithLabels newLabel = ItemsInstance.obj( l_newContainer );
-        newLabel.obj.SetActive(true);
-        inventory.Slots.Add(newLabel);
-        UpdateStats( _item.stats, newLabel );
-        l_newContainer.transform.Find( "ItemIconContainer/RawImage" ).GetComponent < RawImage >( ).texture = _item.stats.icon;
-    }
-
-    public void AddSlot( Potions _item , PlayerInventory inventory ) {
-        var l_newContainer = Instantiate(ItemsInstance.PotionInventoryContainer);
-        l_newContainer.SetActive(false);
-        l_newContainer.transform.SetParent(inventory.parent.transform);
-        l_newContainer.transform.position = StaticManager.UiInventory.ItemsInstance.PotionInventoryContainer.transform.position;
-        l_newContainer.transform.localScale = new Vector3(1, 1, 1);
-        l_newContainer.name = _item.PotionName + "Slot";
-        l_newContainer.GetComponent<PotionAssignment>().potion = _item;
-        UIItemsWithLabels newLabel = ItemsInstance.obj(l_newContainer);
-        newLabel.obj.SetActive(false);
-        inventory.PotionSlots.Add(newLabel);
-        UpdateStats(_item._item, newLabel);
-    }
-
-
     public void UpdateStats(Stat _stats, UIItemsWithLabels instanceToUpdate, bool comparative)
     {
        
@@ -136,7 +106,7 @@ public class UIInventory : MonoBehaviour
 
     }
 
-    public void UpdateStats( WeaponItem _object , UIItemsWithLabels instanceToUpdate ) {
+    public void UpdateStats( ItemStats _object , UIItemsWithLabels instanceToUpdate ) {
         for ( int i = 0 ; i < instanceToUpdate.Labels.Count ; i++ ){
             var a = _object[ instanceToUpdate.Labels[ i ].name ];
             instanceToUpdate.Labels[ i ].labelText.text = a.ToString( );
@@ -158,7 +128,7 @@ public class UIInventory : MonoBehaviour
     {
         for (var l_i = 0; l_i < inventory.PotionSlots.Count; l_i++)
         {
-            if (inventory.PotionSlots[l_i].obj.name == _item._item.objectName + "Slot")
+            if (inventory.PotionSlots[l_i].obj.name == _item.stats.objectName + "Slot")
             {
                 var l_slot = inventory.PotionSlots[l_i].obj;
                 inventory.PotionSlots.RemoveAt(l_i);

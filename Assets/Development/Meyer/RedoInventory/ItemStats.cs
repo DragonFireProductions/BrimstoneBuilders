@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class ItemStats : MonoBehaviour {
 
     public enum EquipType
@@ -34,4 +36,11 @@ public class ItemStats : MonoBehaviour {
     public bool isStackable;
     public bool destroyOnUse;
     public AudioClip clip;
+
+    public object this[string propertyName]
+    {
+        get { return this.GetType().GetField(propertyName).GetValue(this); }
+        set { this.GetType().GetField(propertyName).SetValue(this, value); }
+    }
+
 }

@@ -19,8 +19,6 @@ public class GunType : WeaponObject {
 
     private bool reloading;
 
-
-
     public Projectile projectile;
 
     private GameObject[] bullets;
@@ -36,7 +34,7 @@ public class GunType : WeaponObject {
     public void FillBullets(GameObject collider ) {
         bullets = new GameObject[30];
         for ( int i = 0 ; i < bullets.Length ; i++ ){
-            bullets[ i ] = Instantiate( stats.Projectile );
+            bullets[ i ] = Instantiate( projectile.gameObject );
             bullets[i].gameObject.SetActive(false);
             bullets[ i ].gameObject.layer = collider.gameObject.layer;
             bullets[i].transform.SetParent(GameObject.Find("Bullets").transform);

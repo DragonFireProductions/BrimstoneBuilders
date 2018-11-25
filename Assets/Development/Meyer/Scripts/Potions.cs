@@ -10,19 +10,14 @@ public abstract class Potions : BaseItems {
 
 	public string PotionName;
 
-	[HideInInspector] public WeaponItem _item;
-
 	public BaseCharacter AttachedBaseCharacter;
-
-	public void Start( ) {
-		_item = StaticManager.inventories.GetItemFromAssetList( PotionName );
-	}
+	
 	public abstract void Cast( Companion attacker );
 
 	public virtual void PickUp(BaseCharacter character ) {
         if (AttachedBaseCharacter == null)
         {
-            StaticManager.UiInventory.AddSlot(this, StaticManager.Character.inventory);
+
             gameObject.SetActive(false);
         }
     }
@@ -34,5 +29,10 @@ public abstract class Potions : BaseItems {
             this.GetComponent<BoxCollider>().enabled = false;
             AttachedBaseCharacter = StaticManager.Character;
         }
+    }
+    public virtual object this[string propertyName]
+    {
+        get { return this.GetType().GetField(propertyName).GetValue(this); }
+        set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
 }

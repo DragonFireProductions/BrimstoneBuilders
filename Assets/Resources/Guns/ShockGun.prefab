@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 65199220877634648}
   - component: {fileID: 114144555736880954}
   - component: {fileID: 54559497996406158}
+  - component: {fileID: 114031707345956802}
   m_Layer: 9
   m_Name: ShockGun
   m_TagString: PickUp
@@ -142,6 +143,31 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114031707345956802
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1271725120877278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572ade2c8a8bbe946a61e83a73b50be3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Shock Gun
+  weight: 0
+  durability: 0
+  value: 0
+  baseDamage: 0
+  attackSpeed: 0
+  reach: 0
+  equipType: 0
+  weaponType: 0
+  icon: {fileID: 0}
+  isIndestructible: 0
+  isStackable: 0
+  destroyOnUse: 0
+  clip: {fileID: 0}
 --- !u!114 &114144555736880954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -154,24 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
-  stats:
-    objectName: 
-    weight: 0
-    durability: 0
-    value: 0
-    baseDamage: 0
-    attackSpeed: 0
-    reach: 0
-    equipType: 0
-    weaponType: 0
-    icon: {fileID: 0}
-    isIndestructible: 0
-    isStackable: 0
-    destroyOnUse: 0
-    clip: {fileID: 0}
-    Projectile: {fileID: 0}
-    weapon: {fileID: 0}
-    potion: {fileID: 0}
+  stats: {fileID: 114031707345956802}
   AttachedCharacter: {fileID: 0}
   objectName: Shock Gun
   AnimationClass: {fileID: 0}
@@ -179,4 +188,6 @@ MonoBehaviour:
   Capacity: 1
   FireRate: 2
   Range: 45.34
+  projectile: {fileID: 114841558383495122, guid: 3b9125306c142cf40897664760a8db02,
+    type: 2}
   ReloadTime: 4

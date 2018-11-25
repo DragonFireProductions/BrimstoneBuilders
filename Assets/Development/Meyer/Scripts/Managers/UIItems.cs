@@ -14,41 +14,10 @@ public class UIItems : MonoBehaviour {
 
 	
 	// Use this for initialization
-	public GameObject PotionsContainer;
-
-	public GameObject WeaponsContainer;
-
-	public UIItemsWithLabels InventoryContainer;
-
-	public GameObject PotionInventoryContainer;
-
-	public GameObject PotionsInventory;
-
-	public GameObject PotionsPanel;
+	
+		
 
     public GameObject PauseUI;
-	
-	public GameObject Tab;
-
-    public GameObject Tabs;
-
-	public GameObject Inventory;
-
-	public GameObject Equip;
-
-    public GameObject SendCompanionButton;
-
-    public GameObject SendToCompanion;
-
-	public UIItemsWithLabels ComparedCharacterStats;
-
-	public UIItemsWithLabels ComparedStats;
-
-	public UIItemsWithLabels WeaponInventoryStats;
-
-	public UIItemsWithLabels CharacterInventoryStats;
-
-	public GameObject InventoryPanel;
 
     public GameObject PlayerUI;
 	
@@ -62,12 +31,6 @@ public class UIItems : MonoBehaviour {
     public GameObject BackpackContainer;
 
 	public GameObject GameWon;
-
-	public UIItemsWithLabels CharacterStats;
-
-	public UIItemsWithLabels AttachedWeapon;
-
-	public GameObject PlayerStats;
 	
 	public GameObject AttackConfirmation;
 
@@ -123,6 +86,7 @@ public class UIItems : MonoBehaviour {
 	}
 	
 	public UIItemsWithLabels obj(UIItemsWithLabels obj, string name ) {
+
 		obj = new UIItemsWithLabels();
 		obj.obj = GameObject.Find(name).gameObject;
 		int count = obj.obj.transform.Find("Labels").childCount;
@@ -166,8 +130,19 @@ public class UIItems : MonoBehaviour {
     }
 }
 [Serializable]
-public class UIItemsWithLabels {
+public class UIItemsWithLabels : MonoBehaviour{
 
+	public void SetStuff( ) {
+		var ob = obj.transform.Find( "Labels" ).childCount;
+
+		for ( int i = 0 ; i < ob ; i++ ){
+			var child = obj.transform.GetChild( i );
+			Label l = new Label();
+			l.name = child.name;
+			l.labelText = child.GetComponent < TextMeshProUGUI >( );
+			l.labelObject = child.gameObject;
+		}
+	}
 	[Serializable]
 	public struct Label {
 
