@@ -3496,10 +3496,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4807d16456bf68f4abeae6eb55fff696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPBar: {fileID: 748008373}
-  StaminaBar: {fileID: 1586789541}
-  HpText: {fileID: 1553269330}
-  StaminaText: {fileID: 109134817}
+  HPBar: {fileID: 204100196}
+  StaminaBar: {fileID: 1604142283}
+  HpText: {fileID: 1863493018}
+  StaminaText: {fileID: 1483121653}
   CoinText: {fileID: 1601176889}
 --- !u!1 &188772728
 GameObject:
@@ -3618,8 +3618,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ea2250d666ad1c4ba06eec65110d50e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  companionPrice: 15
-  resaleWorth: 5
+  companionPrice: 0
+  resaleWorth: 0
 --- !u!65 &201972043
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4075,13 +4075,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e479aa9880b30564f9f63bc67162a361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minRange: 11.1
-  maxRange: 91.01
-  spawnRadius: 5
-  Strength: 16
-  enemies:
-  - {fileID: 114676305716323730, guid: 244241a33b71dbc4f8de45492f60806a, type: 2}
-  numberofEnemies: 3
+  minRange: 15
+  maxRange: 25
+  spawnRadius: 10
+  Strength: 0
+  enemies: []
+  numberofEnemies: 0
 --- !u!4 &220370423
 Transform:
   m_ObjectHideFlags: 0
@@ -5893,6 +5892,8 @@ GameObject:
   - component: {fileID: 370192926}
   - component: {fileID: 370192928}
   - component: {fileID: 370192927}
+  - component: {fileID: 370192929}
+  - component: {fileID: 370192930}
   m_Layer: 5
   m_Name: Potion
   m_TagString: Untagged
@@ -5953,6 +5954,31 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 370192925}
   m_CullTransparentMesh: 0
+--- !u!114 &370192929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 370192925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49c42a984d4a3fb44a635aa60ad9a8fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
+--- !u!114 &370192930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 370192925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aecabe7bc47d25b4d838fd0b791c363a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obj: {fileID: 0}
+  item: {fileID: 0}
 --- !u!1 &371015027
 GameObject:
   m_ObjectHideFlags: 0
@@ -6790,6 +6816,8 @@ GameObject:
   m_Component:
   - component: {fileID: 449046709}
   - component: {fileID: 449046710}
+  - component: {fileID: 449046711}
+  - component: {fileID: 449046712}
   m_Layer: 5
   m_Name: InventoryContainer
   m_TagString: Untagged
@@ -6870,6 +6898,31 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &449046711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 449046708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49c42a984d4a3fb44a635aa60ad9a8fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
+--- !u!114 &449046712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 449046708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aecabe7bc47d25b4d838fd0b791c363a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obj: {fileID: 0}
+  item: {fileID: 0}
 --- !u!1 &449130020
 GameObject:
   m_ObjectHideFlags: 0
@@ -9346,6 +9399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c42a984d4a3fb44a635aa60ad9a8fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item: {fileID: 0}
 --- !u!1 &682548864
 GameObject:
   m_ObjectHideFlags: 0
@@ -11510,7 +11564,7 @@ MonoBehaviour:
   item: {fileID: 0}
   stats: {fileID: 0}
   AttachedCharacter: {fileID: 0}
-  objectName: Base Sword
+  objectName: 
   AnimationClass: {fileID: 0}
 --- !u!65 &839344392
 BoxCollider:
@@ -14991,7 +15045,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 0}
   unlimitedPotions: 0
-  unlimitedSpawns: 1
+  unlimitedSpawns: 0
 --- !u!114 &1033998846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15028,13 +15082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c5e4556a1d119b45b01175c75ca36de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Clips:
-  - Clip: {fileID: 0}
-    name: 
-    Type: 0
-    Looping: 0
-    Volume: 0
-    Pitch: 0
+  Clips: []
 --- !u!114 &1033998848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15127,9 +15175,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d0edab19f864d74e912144dc7d3c9fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  companionBuyCost: 15
-  companionSellCost: 5
-  _shop: {fileID: 201972042}
+  companionBuyCost: 0
+  companionSellCost: 0
+  _shop: {fileID: 0}
 --- !u!114 &1033998854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15141,12 +15189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c84b3071637784b83310def7485631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapons:
-  - {fileID: 1594058198696430, guid: 2271e442ab0a6894f9948bf413badae2, type: 2}
-  - {fileID: 1271725120877278, guid: b9572f013ccdd7647a13c85d0702b78f, type: 2}
-  - {fileID: 1125536656253364, guid: 131f831024d15f04b8e9dd2ce8800b7e, type: 2}
-  - {fileID: 1268311136359408, guid: 5567b379454e35f409be76c1ff7df098, type: 2}
-  - {fileID: 1033800711354960, guid: b696bac352c3a414381973705d3388ef, type: 2}
+  weapons: []
 --- !u!114 &1033998855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15160,9 +15203,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PotionsInventory: {fileID: 213049675}
   CharacterInventory: {fileID: 385035909}
-  Potion: {fileID: 370192925}
+  Potion: {fileID: 370192929}
   WeaponInventory: {fileID: 1168596045}
-  Weapon: {fileID: 449046708}
+  Weapon: {fileID: 449046711}
   Tab: {fileID: 655083307}
   tabParent: {fileID: 1233132755}
 --- !u!4 &1034329739 stripped
@@ -16445,13 +16488,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e479aa9880b30564f9f63bc67162a361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minRange: 13.76
-  maxRange: 85.79
-  spawnRadius: 5
-  Strength: 30
-  enemies:
-  - {fileID: 114676305716323730, guid: 244241a33b71dbc4f8de45492f60806a, type: 2}
-  numberofEnemies: 30
+  minRange: 15
+  maxRange: 25
+  spawnRadius: 10
+  Strength: 0
+  enemies: []
+  numberofEnemies: 0
 --- !u!4 &1134605047
 Transform:
   m_ObjectHideFlags: 0
@@ -16960,7 +17002,7 @@ MonoBehaviour:
   battleDistance: 3
   character: {fileID: 0}
   State: 0
-  stoppingDistance: 4
+  stoppingDistance: 0
   waittime: 2
   companion: {fileID: 0}
   aggState: 0
@@ -17014,9 +17056,7 @@ MonoBehaviour:
   BaseColor: {r: 0, g: 0, b: 0, a: 0}
   IsChosenByEnemy: {r: 0, g: 0, b: 0, a: 0}
   characters: []
-  characterObjs:
-  - {fileID: 0}
-  - {fileID: 0}
+  characterObjs: []
   agent: {fileID: 0}
   obj: {fileID: 0}
   stats: {fileID: 0}
@@ -17088,7 +17128,7 @@ MonoBehaviour:
   name: 
   perception: 0
   stamina: 0
-  strength: 10
+  strength: 0
   maxAttackpoints: 6
 --- !u!95 &1177615906
 Animator:
@@ -17176,7 +17216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd0e49802fd78e244a89f4b2ca89ec9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPbar: {fileID: 1438121785}
+  HPbar: {fileID: 0}
 --- !u!114 &1177615911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17188,16 +17228,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea38b17395682814eb7238d904e84d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DevTools: 1
+  DevTools: 0
   useBrackets: 1
   friends: {fileID: 0}
   index: 0
   comp: []
-  companionspawner: {fileID: 1177615898}
-  companion:
-  - {fileID: 114077439870164860, guid: d54431af170400243819207798eea250, type: 2}
-  - {fileID: 114675679547928608, guid: 61695461b2534db4f9f1f72475417bd8, type: 2}
-  numberofcompanions: 1
+  companionspawner: {fileID: 0}
+  companion: []
+  numberofcompanions: 0
 --- !u!114 &1177615912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20442,12 +20480,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1431876167}
   m_CullTransparentMesh: 0
---- !u!114 &1438121785 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114064820138443518, guid: 10aa3b9d4322bf243b167aa5299cb087,
-    type: 2}
-  m_PrefabInternal: {fileID: 1106810295}
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &1444608300
 Prefab:
   m_ObjectHideFlags: 0
@@ -23329,9 +23361,9 @@ MonoBehaviour:
   camRig: {fileID: 0}
   playercam: {fileID: 0}
   colonyCam: {fileID: 0}
-  camSpeed: 5
-  transitionSpeed: 2
-  mouseSensitivity: 60
+  camSpeed: 0
+  transitionSpeed: 0
+  mouseSensitivity: 0
   colonyWidth: 0
   colonyHight: 0
   maxZoom: 0
@@ -24190,13 +24222,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e479aa9880b30564f9f63bc67162a361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minRange: 11.1
-  maxRange: 24.16
-  spawnRadius: 5
+  minRange: 15
+  maxRange: 25
+  spawnRadius: 10
   Strength: 0
-  enemies:
-  - {fileID: 114676305716323730, guid: 244241a33b71dbc4f8de45492f60806a, type: 2}
-  numberofEnemies: 1
+  enemies: []
+  numberofEnemies: 0
 --- !u!4 &1665925322
 Transform:
   m_ObjectHideFlags: 0
