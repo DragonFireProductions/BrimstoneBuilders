@@ -148,6 +148,7 @@ public class LeaderNav : CompanionNav {
 //						StaticManager.UiInventory.ItemsInstance.PlayerStats.transform.Find( "WeaponImage" ).GetComponent < RawImage >( ).texture = hit1.collider.GetComponent < BaseCharacter >( ).attachedWeapon.stats.icon;
 					}
 				}
+					character.attachedWeapon.Use(character as BaseCharacter);
 			}
 		}
 

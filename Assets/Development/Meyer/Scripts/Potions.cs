@@ -28,7 +28,6 @@ public abstract class Potions : BaseItems {
     public virtual void PickUp(BaseCharacter character ) {
         if (AttachedBaseCharacter == null)
         {
-
             gameObject.SetActive(false);
         }
     }

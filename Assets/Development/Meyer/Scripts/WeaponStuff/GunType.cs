@@ -31,6 +31,11 @@ public class GunType : WeaponObject {
             FillBullets(AttachedCharacter.gameObject);
         }
     }
+
+    public override void Attach( ) {
+        base.Attach();
+        FillBullets(AttachedCharacter.gameObject);
+    }
     public void FillBullets(GameObject collider ) {
         bullets = new GameObject[30];
         for ( int i = 0 ; i < bullets.Length ; i++ ){
@@ -63,7 +68,6 @@ public class GunType : WeaponObject {
         proj.gameObject.transform.position = AttachedCharacter.transform.position + ( AttachedCharacter.transform.forward * 2 );
         proj.transform.rotation = transform.rotation;
         proj.gameObject.SetActive(true);
-        StartCoroutine( destroyBullet( proj ) );
 
         Ammo -= 1;
 
@@ -71,11 +75,7 @@ public class GunType : WeaponObject {
 
         canFire = true;
     }
-
-    IEnumerator destroyBullet(GameObject projectile ) {
-        yield return new WaitForSeconds( 0.5f );
-        projectile.gameObject.SetActive(false);
-    }
+    
     public override void PickUp( ) {
         base.PickUp();
         FillBullets(StaticManager.Character.gameObject);
