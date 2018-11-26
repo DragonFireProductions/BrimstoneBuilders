@@ -56,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
         {
             Vector3 position = Random.insideUnitSphere * spawnRadius + this.gameObject.transform.position;
 
-            var newEnemy = Instantiate(enemies[Random.Range(0, enemies.Length)]);
+            var newEnemy = Instantiate(enemies[Random.Range(0, enemies.Length)], position, Quaternion.identity);
 
             newEnemy.GetComponent < Enemy >( ).stats.Strength = Strength;
             newEnemy.GetComponent<Enemy>().stats.UpdateStrength();
@@ -66,11 +66,13 @@ public class EnemySpawner : MonoBehaviour
             position.y = StaticManager.Character.gameObject.transform.position.y;
             //Plays the spawn animation
             StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
+            newEnemy.GetComponent<EnemyNav>().location = this.gameObject;
+
             yield return new WaitForSeconds(1.0f);
 
+            
             //warps the enemy to the position ^
             newEnemy.GetComponent<Enemy>().Nav.Agent.Warp(position);
-            newEnemy.GetComponent<EnemyNav>().location = this.gameObject;
             //adds the enemy to the list of instantiated enemies.
             instantiated.Add(newEnemy.gameObject);
             StaticManager.RealTime.Enemies.Add(newEnemy.GetComponent<Enemy>());

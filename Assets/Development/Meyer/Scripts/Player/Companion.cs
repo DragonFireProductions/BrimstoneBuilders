@@ -32,7 +32,7 @@ public class Companion : BaseCharacter {
         attachedWeapon = cube.GetComponentInChildren < BaseItems >( ) as WeaponObject;
         attachedWeapon.AttachedCharacter = this;
         inventoryUI.AddWeapon(attachedWeapon);
-
+        attachedWeapon.tag = "Weapon";
     }
 
     public void OnTriggerEnter(Collider collider ) {

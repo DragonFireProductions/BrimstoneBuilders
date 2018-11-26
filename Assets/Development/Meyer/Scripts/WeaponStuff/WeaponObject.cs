@@ -64,12 +64,11 @@ public class WeaponObject : BaseItems
         }
 
         if ((collider.tag == "Enemy"  || collider.tag == "Companion" || collider.tag == "Player") && tag == "Weapon"){
-            if ( collider.tag != AttachedCharacter.tag){
+
                 if ( AttachedCharacter.tag == "Companion" && collider.tag == "Player" ){
                     return;
                 }
                 collider.gameObject.GetComponent<BaseCharacter>().Attack(AttachedCharacter);
-            }
         }
     }
    

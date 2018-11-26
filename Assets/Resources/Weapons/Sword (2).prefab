@@ -51,12 +51,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4485387671352790}
-  - component: {fileID: 114715959838717636}
   - component: {fileID: 65611544488486798}
   - component: {fileID: 114772088183597800}
   - component: {fileID: 95292749863508456}
   - component: {fileID: 54901065653273114}
   - component: {fileID: 114325048894106098}
+  - component: {fileID: 114842340626791426}
   m_Layer: 9
   m_Name: Sword (2)
   m_TagString: PickUp
@@ -339,22 +339,6 @@ MonoBehaviour:
   isStackable: 0
   destroyOnUse: 0
   clip: {fileID: 0}
---- !u!114 &114715959838717636
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1160769075549636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd7a23e586cb8c648ad15999a0b9cb6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  stats: {fileID: 114325048894106098}
-  AttachedCharacter: {fileID: 0}
-  objectName: Wooden Sword
-  AnimationClass: {fileID: 0}
 --- !u!114 &114772088183597800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -369,6 +353,22 @@ MonoBehaviour:
   damage: 0
   animation: {fileID: 0}
   name: 
+--- !u!114 &114842340626791426
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1160769075549636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b419715763bff4d479fc511631a7cb00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
+  stats: {fileID: 114325048894106098}
+  AttachedCharacter: {fileID: 0}
+  objectName: 
+  AnimationClass: {fileID: 0}
 --- !u!198 &198113084006491308
 ParticleSystem:
   m_ObjectHideFlags: 1
