@@ -80,6 +80,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
         playerCam.transform.LookAt(inventory.character.transform.position + (inventory.transform.up * 0.77f));
 		tab.companion.inventoryUI.UpdateItem();
 
+		SwitchToWeapons();
+
     }
     public BaseItems GetItemFromAssetList(string name)
     {
@@ -88,7 +90,6 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
 	public void SendToOther(Tab tab ) {
 		var obj = selectedObj;
-		inventory.character.inventoryUI.DeleteObject(selectedObj);
 		obj.AttachedCharacter = tab.companion;
 		var cha = obj.AttachedCharacter as Companion;
 
@@ -99,11 +100,14 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		if ( obj is Potions ){
 			cha.inventoryUI.AddPotion(obj);
 		}
+		inventory.character.inventoryUI.DeleteObject(selectedObj);
+		SwitchToWeapons();
+        SwitchInventory(tab);
+		SwitchToPotionsTab();
 
-		SwitchInventory(tab);
 
-	}
-	public void Use( ) {
+    }
+    public void Use( ) {
 		StaticManager.inventories.inventory.character.inventoryUI.UpdateItem(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), selectedObj.stats);
 		selectedObj.Attach();
 	}

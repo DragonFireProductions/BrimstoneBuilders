@@ -121,6 +121,8 @@ public class CharacterInventoryUI : MonoBehaviour {
         l.obj.transform.localScale = new Vector3(1, 1, 1);
 
 		l.FindLabels();
+
+		item.AttachedCharacter = companion;
 		
         newlabel.SetActive(true);
         potions.Add(l);
@@ -224,8 +226,13 @@ public class CharacterInventoryUI : MonoBehaviour {
         {
             for (int j = 0; j < potions[i].Labels.Count; j++)
             {
-                var a = companion.inventory.PickedUpPotions[i][potions[i].Labels[i].name];
-                potions[i].Labels[i].labelText.text = a.ToString();
+                var a = potions[i].item.stats[potions[i].Labels[j].name];
+                potions[i].Labels[j].labelText.text = a.ToString();
+
+                if (potions[i].GetComponent<Tab>().imageContainer && potions[i].item.stats.icon)
+                {
+                    potions[i].GetComponent<Tab>().imageContainer.texture = potions[i].item.stats.icon;
+                }
             }
         }
     }

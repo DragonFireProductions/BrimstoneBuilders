@@ -11,14 +11,12 @@ public abstract class Potions : BaseItems {
 
 	public string PotionName;
 
-	public BaseCharacter AttachedBaseCharacter;
-
     public abstract void Cast(BaseCharacter companion = null );
     public override void Attach( ) {
 
-        Cast(AttachedBaseCharacter);
+        Cast(AttachedCharacter);
 
-        var c = AttachedBaseCharacter as Companion;
+        var c = AttachedCharacter as Companion;
         c.inventoryUI.RemoveObject(this);
 
         Destroy(gameObject);
@@ -26,7 +24,7 @@ public abstract class Potions : BaseItems {
     }
 
     public virtual void PickUp(BaseCharacter character ) {
-        if (AttachedBaseCharacter == null)
+        if (AttachedCharacter == null)
         {
             gameObject.SetActive(false);
         }
@@ -37,7 +35,7 @@ public abstract class Potions : BaseItems {
         {
             StaticManager.Character.inventory.PickUp(this);
             this.GetComponent<BoxCollider>().enabled = false;
-            AttachedBaseCharacter = StaticManager.Character;
+            AttachedCharacter = StaticManager.Character;
         }
     }
     public virtual object this[string propertyName]
