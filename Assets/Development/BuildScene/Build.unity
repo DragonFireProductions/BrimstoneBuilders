@@ -14895,6 +14895,7 @@ MonoBehaviour:
   text: {fileID: 0}
   unlimitedPotions: 0
   unlimitedSpawns: 0
+  useBrackets: 1
 --- !u!114 &1033998846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14907,6 +14908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73fcbc006fd92944fb14e8bcf4aa8ded, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SendToCompanion: {fileID: 0}
   Equip: {fileID: 0}
   PauseUI: {fileID: 0}
   PlayerUI: {fileID: 0}
@@ -15055,6 +15057,8 @@ MonoBehaviour:
   Weapon: {fileID: 449046711}
   Tab: {fileID: 655083307}
   tabParent: {fileID: 1233132755}
+  SendToWindow: {fileID: 1879084644}
+  SendToButton: {fileID: 1705351311}
 --- !u!4 &1034329739 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4186851896544496, guid: 40edd49415ed25545b01ebee0b7766f4,
@@ -17016,13 +17020,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea38b17395682814eb7238d904e84d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DevTools: 0
-  useBrackets: 1
   friends: {fileID: 0}
   index: 0
   comp: []
   companionspawner: {fileID: 0}
-  companion: []
+  companion:
+  - {fileID: 114675679547928608, guid: 61695461b2534db4f9f1f72475417bd8, type: 2}
   numberofcompanions: 0
 --- !u!114 &1177615912
 MonoBehaviour:
@@ -17064,6 +17067,7 @@ MonoBehaviour:
   weapons: []
   potions: []
   companion: {fileID: 0}
+  sendToButton: {fileID: 0}
   tab: {fileID: 0}
 --- !u!1 &1180227500
 GameObject:
@@ -24577,13 +24581,14 @@ GameObject:
   - component: {fileID: 1705351315}
   - component: {fileID: 1705351314}
   - component: {fileID: 1705351313}
+  - component: {fileID: 1705351316}
   m_Layer: 5
   m_Name: SendCompanionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1705351312
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24644,17 +24649,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1033998852}
-        m_MethodName: SendToCompanion
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1705351311}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1033998849}
         m_MethodName: CloseWindow
         m_Mode: 2
@@ -24672,6 +24666,17 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 1879084644}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1033998852}
+        m_MethodName: SendToOther
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1705351316}
+          m_ObjectArgumentAssemblyTypeName: Tab, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -24715,6 +24720,18 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1705351311}
   m_CullTransparentMesh: 0
+--- !u!114 &1705351316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1705351311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49c42a984d4a3fb44a635aa60ad9a8fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
 --- !u!1 &1734958593
 GameObject:
   m_ObjectHideFlags: 0
@@ -26998,7 +27015,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1879084645
 RectTransform:
   m_ObjectHideFlags: 0

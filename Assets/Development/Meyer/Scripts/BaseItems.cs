@@ -12,8 +12,8 @@ public class BaseItems : MonoBehaviour {
 	public BaseCharacter AttachedCharacter;
 
 	public string objectName;
-
-	public virtual void Use(BaseCharacter enemy = null  ) {
+	
+    public virtual void Use(BaseCharacter enemy = null  ) {
 		
 	}
 

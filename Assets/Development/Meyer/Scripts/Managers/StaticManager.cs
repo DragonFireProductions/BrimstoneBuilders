@@ -35,10 +35,13 @@ public class StaticManager : MonoBehaviour
     public static WeaponHolder weaponManager;
 
     public static UIInventoryManager uiManager;
+    
 
     public bool unlimitedPotions = false;
 
     public bool unlimitedSpawns = false;
+
+    public bool useBrackets = false;
     // Use this for initialization
     public void Awake()
     {

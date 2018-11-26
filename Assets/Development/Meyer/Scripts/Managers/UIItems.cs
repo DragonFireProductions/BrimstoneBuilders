@@ -11,10 +11,10 @@ using UnityEngine;
 using UnityEngine.Experimental.UIElements;
 
 public class UIItems : MonoBehaviour {
-
 	
 	// Use this for initialization
-	
+	public GameObject SendToCompanion;
+
 	public GameObject Equip;
 
 	public GameObject PauseUI;

@@ -74,6 +74,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
         pos.y = 30.77f;
         playerCam.transform.position = pos;
         playerCam.transform.LookAt(inventory.character.transform.position + (inventory.transform.up * 0.77f));
+		tab.companion.inventoryUI.UpdateItem();
 
     }
     public BaseItems GetItemFromAssetList(string name)
@@ -81,6 +82,23 @@ public class MultipleInventoryHolder : MonoBehaviour {
         return WeaponAssetList.FirstOrDefault(_t => _t.objectName == name);
     }
 
+	public void SendToOther(Tab tab ) {
+		var obj = selectedObj;
+		inventory.character.inventoryUI.DeleteObject(selectedObj);
+		obj.AttachedCharacter = tab.companion;
+		var cha = obj.AttachedCharacter as Companion;
+
+		if ( obj is WeaponObject ){
+			cha.inventoryUI.AddWeapon( obj );
+		}
+
+		if ( obj is Potions ){
+			cha.inventoryUI.AddPotion(obj);
+		}
+
+		SwitchInventory(tab);
+
+	}
 	public void Use( ) {
 		selectedObj.Attach();
 	}

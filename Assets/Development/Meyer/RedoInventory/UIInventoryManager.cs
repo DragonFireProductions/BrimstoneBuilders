@@ -24,6 +24,10 @@ public class UIInventoryManager : MonoBehaviour {
 
     public GameObject tabParent;
 
+    public GameObject SendToWindow;
+
+    public GameObject SendToButton;
+
     public object this[string propertyName]
     {
         get { return this.GetType().GetField(propertyName).GetValue(this); }

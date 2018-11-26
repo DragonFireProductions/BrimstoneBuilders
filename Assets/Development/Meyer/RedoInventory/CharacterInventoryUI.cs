@@ -21,6 +21,8 @@ public class CharacterInventoryUI : MonoBehaviour {
 
 	public Companion companion;
 
+	public Tab sendToButton;
+
 	public Tab tab;
 
     public void Init(Companion _companion ) {
@@ -28,6 +30,14 @@ public class CharacterInventoryUI : MonoBehaviour {
 		weapons = new List < UIItemsWithLabels >();
 		potions = new List < UIItemsWithLabels >();
 	    CharacterInventory = Instantiate( StaticManager.uiManager.CharacterInventory );
+
+	    var a = Instantiate( StaticManager.uiManager.SendToButton, StaticManager.uiManager.SendToButton.transform.position, Quaternion.identity );
+
+	    sendToButton = a.GetComponent < Tab >( );
+
+	    sendToButton.companion = companion;
+
+	    sendToButton.transform.Find( "Name" ).GetComponent < TextMeshProUGUI >( ).text = name;
 
 	    CharacterInventory.transform.position = StaticManager.uiManager.CharacterInventory.transform.position;
 
@@ -57,7 +67,17 @@ public class CharacterInventoryUI : MonoBehaviour {
 
 	    tab.companion = companion;
 
-		CharacterInventory.SetActive(false);
+	    sendToButton.companion = companion;
+
+		sendToButton.gameObject.SetActive(true);
+
+	    sendToButton.gameObject.transform.Find("Name").GetComponent < TextMeshProUGUI >( ).text = gameObject.name;
+	
+		sendToButton.transform.SetParent(StaticManager.uiManager.SendToWindow.transform);
+
+	    sendToButton.transform.localScale = new Vector3(1, 1, 1);
+
+        CharacterInventory.SetActive(false);
     }
 
 	public void AddWeapon(BaseItems item ) {
@@ -79,6 +99,7 @@ public class CharacterInventoryUI : MonoBehaviour {
 
 		l.FindLabels();
 
+		companion.inventory.PickedUpWeapons.Add(l.item as WeaponObject);
         newlabel.SetActive(true);
         weapons.Add(l);
     }
@@ -129,6 +150,20 @@ public class CharacterInventoryUI : MonoBehaviour {
 
     }
 
+	public void DeleteObject(BaseItems item ) {
+        if (item is WeaponObject)
+        {
+            for (int i = 0; i < weapons.Count; i++)
+            {
+                if (weapons[i].item == item){
+	                var a = weapons[ i ].obj;
+					weapons.RemoveAt(i);
+                    Destroy(a);
+                }
+            }
+        }
+    }
+
 	public void EnableContainer(BaseItems item ) {
 		foreach ( var l_uiItemsWithLabelse in weapons ){
 			if ( l_uiItemsWithLabelse.item == item ){
@@ -157,13 +192,13 @@ public class CharacterInventoryUI : MonoBehaviour {
         for (int i = 0; i < weapons.Count; i++)
         {
 	        for ( int j = 0 ; j < weapons[ i ].Labels.Count ; j++ ){
-		        if ( companion.inventory.PickedUpWeapons[i].item == companion.attachedWeapon.item ){
+		        if ( weapons[i].item == companion.attachedWeapon ){
 			        weapons[ i ].obj.SetActive(false);
 		        }
 		        else{
 			        weapons[ i ].obj.SetActive(true);
 		        }
-		        var a = companion.inventory.PickedUpWeapons[i][ weapons[i].Labels[ j ].name ];
+		        var a = weapons[i].item.stats[ weapons[i].Labels[ j ].name ];
 		        weapons[i].Labels[ j ].labelText.text = a.ToString( );
 	        }
         }
