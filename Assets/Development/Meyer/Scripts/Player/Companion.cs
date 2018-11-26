@@ -18,12 +18,13 @@ public class Companion : BaseCharacter {
 
     protected override void Awake( ) {
         base.Awake();
-        inventoryUI = GetComponent<CharacterInventoryUI>();
-        inventoryUI.Init(this);
-        inventoryUI.companion = this;
+       
     }
 
     protected virtual void Start( ) {
+        inventoryUI = GetComponent<CharacterInventoryUI>();
+        inventoryUI.Init(this);
+        inventoryUI.companion = this;
         material.color = BaseColor;
         Nav            = gameObject.GetComponent < CompanionNav >( );
         StaticManager.RealTime.Companions.Add(this);
