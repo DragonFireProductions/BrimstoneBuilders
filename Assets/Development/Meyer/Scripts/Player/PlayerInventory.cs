@@ -52,12 +52,6 @@ public class PlayerInventory : MonoBehaviour {
         PickedUpWeapons.Add(gameObject.transform.Find("Cube").gameObject.GetComponentInChildren<WeaponObject>());
         coinCount = 0;
     }
-    //returns the first occurrence of an item from the WeaponAsset list 
-   
-    //returns 
-    public WeaponObject GetItemFromInventory( string name ) {
-        return PickedUpWeapons.FirstOrDefault( _t => _t.stats.objectName == name );
-    }
 
     public void PickUp( WeaponObject weapon ) {
         PickedUpWeapons.Add( weapon );

@@ -62,6 +62,7 @@ public class UIItemsWithLabels : MonoBehaviour
             la.labelObject = child.gameObject;
             la.labelText = child.GetComponent < TextMeshProUGUI >( );
             la.name = child.name;
+            Labels.Add( la );
         }
     }
 }

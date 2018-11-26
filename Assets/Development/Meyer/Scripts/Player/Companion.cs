@@ -19,11 +19,11 @@ public class Companion : BaseCharacter {
     protected override void Awake( ) {
         base.Awake();
         inventoryUI = GetComponent<CharacterInventoryUI>();
-
+        inventoryUI.Init(this);
         inventoryUI.companion = this;
     }
 
-    private void Start( ) {
+    protected virtual void Start( ) {
         material.color = BaseColor;
         Nav            = gameObject.GetComponent < CompanionNav >( );
         StaticManager.RealTime.Companions.Add(this);
@@ -31,6 +31,7 @@ public class Companion : BaseCharacter {
         cube = transform.Find("Cube").gameObject;
         attachedWeapon = cube.GetComponentInChildren < BaseItems >( ) as WeaponObject;
         attachedWeapon.AttachedCharacter = this;
+        inventoryUI.AddWeapon(attachedWeapon);
 
     }
 

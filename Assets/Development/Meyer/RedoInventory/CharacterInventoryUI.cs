@@ -22,7 +22,8 @@ public class CharacterInventoryUI : MonoBehaviour {
 
 	public Tab tab;
 
-    public void Start( ) {
+    public void Init(Companion _companion ) {
+	    companion = _companion;
 		weapons = new List < UIItemsWithLabels >();
 		potions = new List < UIItemsWithLabels >();
 	    CharacterInventory = Instantiate( StaticManager.uiManager.CharacterInventory );
@@ -150,8 +151,8 @@ public class CharacterInventoryUI : MonoBehaviour {
 	        for ( int j = 0 ; j < weapons[ i ].Labels.Count ; j++ ){
 
 
-		        var a = companion.inventory.PickedUpWeapons[i][ weapons[i].Labels[ i ].name ];
-		        weapons[i].Labels[ i ].labelText.text = a.ToString( );
+		        var a = companion.inventory.PickedUpWeapons[i][ weapons[i].Labels[ j ].name ];
+		        weapons[i].Labels[ j ].labelText.text = a.ToString( );
 	        }
         }
     }

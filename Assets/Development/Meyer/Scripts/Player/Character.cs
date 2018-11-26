@@ -21,14 +21,9 @@ namespace Assets.Meyer.TestScripts.Player {
             Player = GameObject.FindWithTag("Player");
             spawner = gameObject.GetComponent<companionSpawner>();
             Nav = gameObject.GetComponent<LeaderNav>();
+
         }
-        
-        private void Start( ) {
-            cube = transform.Find("Cube").gameObject;
-            cube.transform.Find( "Sword" ).GetComponent < WeaponObject >( ).AttachedCharacter = this;
-            inventory = GetComponent < PlayerInventory >( );
-            StaticManager.RealTime.Companions.Add(this);
-        }
+
     }
 
 }
