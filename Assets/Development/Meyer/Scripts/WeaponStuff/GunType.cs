@@ -31,11 +31,7 @@ public class GunType : WeaponObject {
             FillBullets(AttachedCharacter.gameObject);
         }
     }
-
-    public override void Attach( ) {
-        base.Attach();
-        FillBullets(AttachedCharacter.gameObject);
-    }
+    
     public void FillBullets(GameObject collider ) {
         bullets = new GameObject[30];
         for ( int i = 0 ; i < bullets.Length ; i++ ){

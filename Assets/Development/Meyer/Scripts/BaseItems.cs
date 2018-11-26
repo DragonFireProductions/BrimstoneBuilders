@@ -19,7 +19,6 @@ public class BaseItems : MonoBehaviour {
 
 	public virtual void Attach( ) {
 		var a = AttachedCharacter as Companion;
-
 	}
 	// Use this for initialization
 	protected virtual void Start () {

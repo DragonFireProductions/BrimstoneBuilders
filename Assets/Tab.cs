@@ -9,6 +9,7 @@ public class Tab : MonoBehaviour {
 	public BaseItems item;
 
 	public void Attach( ) {
-		item.Attach();
+		StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.Equip);
+		StaticManager.inventories.selectedObj = item;
 	}
 }

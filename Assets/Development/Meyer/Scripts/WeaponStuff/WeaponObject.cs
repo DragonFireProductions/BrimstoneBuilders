@@ -29,13 +29,12 @@ public class WeaponObject : BaseItems
     public override void Attach( ) {
         item.SetActive(true);
 
-        item.transform.SetParent(AttachedCharacter.transform);
-
         item.transform.position = AttachedCharacter.cube.transform.position;
 
         item.transform.localScale = new Vector3(1, 1, 1);
 
         var c = AttachedCharacter as Companion;
+        
 
         StaticManager.UiInventory.RemoveMainInventory(this as WeaponObject, c.inventory);
 
@@ -47,6 +46,9 @@ public class WeaponObject : BaseItems
         AttachedCharacter.attachedWeapon = this as WeaponObject;
 
         AttachedCharacter.attachedWeapon.transform.rotation = AttachedCharacter.cube.transform.rotation;
+
+        AttachedCharacter.attachedWeapon.transform.SetParent(AttachedCharacter.cube.transform, true);
+
     }
 
     public virtual void PickUp( ) {

@@ -16,7 +16,7 @@ public abstract class Potions : BaseItems {
     public abstract void Cast(BaseCharacter companion = null );
     public override void Attach( ) {
 
-        Use();
+        Cast(AttachedBaseCharacter);
 
         var c = AttachedBaseCharacter as Companion;
         c.inventoryUI.RemoveObject(this);

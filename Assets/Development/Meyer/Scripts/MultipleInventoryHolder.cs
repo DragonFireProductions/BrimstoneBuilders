@@ -27,6 +27,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	public Camera playerCam;
 
 	public Vector3 prevPos;
+
+	public BaseItems selectedObj;
 	public void Awake( ) {
 		WeaponAssetList = itemList.itemList;
 		alllables       = new List < PlayerInventory >( );
@@ -78,8 +80,10 @@ public class MultipleInventoryHolder : MonoBehaviour {
     {
         return WeaponAssetList.FirstOrDefault(_t => _t.objectName == name);
     }
-	
 
+	public void Use( ) {
+		selectedObj.Attach();
+	}
 	public PlayerInventory GetInventory(string parentName ) {
 		alllables.RemoveAll( item => item == null );
 		foreach ( var l_playerInventory in alllables ){
