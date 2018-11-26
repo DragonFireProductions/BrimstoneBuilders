@@ -51,10 +51,6 @@ public class WeaponObject : BaseItems
 
     }
 
-    public virtual void PickUp( ) {
-        
-    }
-
     
     protected virtual void OnTriggerEnter(Collider collider)
     {

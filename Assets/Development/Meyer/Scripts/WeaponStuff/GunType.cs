@@ -72,13 +72,12 @@ public class GunType : WeaponObject {
         canFire = true;
     }
     
-    public override void PickUp( ) {
-        base.PickUp();
-        FillBullets(StaticManager.Character.gameObject);
-    }
     protected override void OnTriggerEnter(Collider collider ) {
         base.OnTriggerEnter(collider);
-       // projectile.layer = collider.gameObject.layer;
+        if (collider.tag == "Player" && !StaticManager.UiInventory.Dragging && tag == "PickUp")
+        {
+           this.FillBullets(collider.gameObject);
+        }
     }
 
     private IEnumerator Reload( ) {

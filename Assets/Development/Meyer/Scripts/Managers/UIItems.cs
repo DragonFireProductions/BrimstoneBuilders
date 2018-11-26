@@ -15,6 +15,8 @@ public class UIItems : MonoBehaviour {
 	// Use this for initialization
 	public GameObject SendToCompanion;
 
+	public UIItemsWithLabels WeaponInventoryStats;
+
 	public GameObject Equip;
 
 	public GameObject PauseUI;

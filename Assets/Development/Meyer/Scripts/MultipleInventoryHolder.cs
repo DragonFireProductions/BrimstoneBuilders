@@ -51,6 +51,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		inventory.character.inventoryUI.UpdateItem();
     }
 	public void SwitchInventory(Tab tab ) {
+		tab.companion.inventoryUI.UpdateItem(StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats, tab.companion.attachedWeapon.stats);
 		if ( prev_inventory ){
 
             prev_inventory.companion.inventoryUI.CharacterInventory.SetActive(false);
@@ -100,6 +101,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
 	}
 	public void Use( ) {
+		StaticManager.inventories.inventory.character.inventoryUI.UpdateItem(StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats, selectedObj.stats);
 		selectedObj.Attach();
 	}
 	public PlayerInventory GetInventory(string parentName ) {

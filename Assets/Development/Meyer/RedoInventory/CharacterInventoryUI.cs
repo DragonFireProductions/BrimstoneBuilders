@@ -200,6 +200,10 @@ public class CharacterInventoryUI : MonoBehaviour {
 		        }
 		        var a = weapons[i].item.stats[ weapons[i].Labels[ j ].name ];
 		        weapons[i].Labels[ j ].labelText.text = a.ToString( );
+
+		        if (weapons[i].GetComponent<Tab>().imageContainer  && weapons[i].item.stats.icon ){
+			        weapons[i].GetComponent<Tab>().imageContainer.texture = weapons[ i ].item.stats.icon;
+		        }
 	        }
         }
     }
