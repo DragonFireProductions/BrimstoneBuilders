@@ -78,6 +78,8 @@ public class CharacterInventoryUI : MonoBehaviour {
 	    sendToButton.transform.localScale = new Vector3(1, 1, 1);
 
         CharacterInventory.SetActive(false);
+
+		CharacterInventory.transform.SetParent(StaticManager.uiManager.inventories.transform);
     }
 
 	public void AddWeapon(BaseItems item ) {

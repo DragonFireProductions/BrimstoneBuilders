@@ -32,6 +32,8 @@ public class UIInventoryManager : MonoBehaviour {
 
     public GameObject WeaponWindow;
 
+    public GameObject inventories;
+
     public void Start( ) {
         WeaponInventoryStats.GetComponent<UIItemsWithLabels>().FindLabels();
     }
