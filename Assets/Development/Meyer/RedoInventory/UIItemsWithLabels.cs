@@ -9,9 +9,9 @@ using UnityEngine;
 public class UIItemsWithLabels : MonoBehaviour
 {
 
-    public void SetStuff(BaseItems _item)
+    public void SetStuff(BaseItems _item = null)
     {
-        var ob = obj.transform.Find("Labels").childCount;
+        var ob = obj.transform.childCount;
 
         for (int i = 0; i < ob; i++)
         {
@@ -20,6 +20,7 @@ public class UIItemsWithLabels : MonoBehaviour
             l.name = child.name;
             l.labelText = child.GetComponent<TextMeshProUGUI>();
             l.labelObject = child.gameObject;
+            Labels.Add( l );
         }
 
         if (_item)
@@ -53,6 +54,7 @@ public class UIItemsWithLabels : MonoBehaviour
     }
 
     public void FindLabels( ) {
+        obj = gameObject;
         Labels = new List < Label >();
         var count = obj.transform.Find("Labels").transform.childCount;
         var label = obj.transform.Find( "Labels" );

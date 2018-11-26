@@ -43,15 +43,18 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		inventory.character.inventoryUI.WeaponInventory.SetActive(false);
 		inventory.character.inventoryUI.PotionsInventory.SetActive(true);
 		inventory.character.inventoryUI.UpdatePotions();
-	}
+		StaticManager.uiManager.WeaponWindow.SetActive(false);
 
-	public void SwitchToWeapons( ) {
+    }
+
+    public void SwitchToWeapons( ) {
 		inventory.character.inventoryUI.WeaponInventory.SetActive(true);
 		inventory.character.inventoryUI.PotionsInventory.SetActive( false );
 		inventory.character.inventoryUI.UpdateItem();
+		StaticManager.uiManager.WeaponWindow.SetActive(true);
     }
 	public void SwitchInventory(Tab tab ) {
-		tab.companion.inventoryUI.UpdateItem(StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats, tab.companion.attachedWeapon.stats);
+		tab.companion.inventoryUI.UpdateItem(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), tab.companion.attachedWeapon.stats);
 		if ( prev_inventory ){
 
             prev_inventory.companion.inventoryUI.CharacterInventory.SetActive(false);
@@ -101,7 +104,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
 	}
 	public void Use( ) {
-		StaticManager.inventories.inventory.character.inventoryUI.UpdateItem(StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats, selectedObj.stats);
+		StaticManager.inventories.inventory.character.inventoryUI.UpdateItem(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), selectedObj.stats);
 		selectedObj.Attach();
 	}
 	public PlayerInventory GetInventory(string parentName ) {

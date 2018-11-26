@@ -28,6 +28,14 @@ public class UIInventoryManager : MonoBehaviour {
 
     public GameObject SendToButton;
 
+    public GameObject WeaponInventoryStats;
+
+    public GameObject WeaponWindow;
+
+    public void Start( ) {
+        WeaponInventoryStats.GetComponent<UIItemsWithLabels>().FindLabels();
+    }
+
     public object this[string propertyName]
     {
         get { return this.GetType().GetField(propertyName).GetValue(this); }

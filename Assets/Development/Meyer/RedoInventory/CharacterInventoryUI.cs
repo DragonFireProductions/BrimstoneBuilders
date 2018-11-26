@@ -162,6 +162,17 @@ public class CharacterInventoryUI : MonoBehaviour {
                 }
             }
         }
+        else if (item is Potions)
+        {
+            for (int i = 0; i < potions.Count; i++)
+            {
+                if (potions[i].item == item)
+                {
+                    Destroy(potions[i].obj);
+                    potions.RemoveAt(i);
+                }
+            }
+        }
     }
 
 	public void EnableContainer(BaseItems item ) {
