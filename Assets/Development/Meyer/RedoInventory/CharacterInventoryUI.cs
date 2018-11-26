@@ -5,6 +5,7 @@ using System.Reflection;
 using TMPro;
 
 using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 
 public class CharacterInventoryUI : MonoBehaviour {
 
@@ -108,11 +109,9 @@ public class CharacterInventoryUI : MonoBehaviour {
 		if ( item is WeaponObject ){
             for (int i = 0; i < weapons.Count; i++)
             {
-                if (weapons[i] == item)
+                if (weapons[i].item == item)
                 {
-	                Destroy(weapons[i].obj);
-
-                    weapons.RemoveAt(i);
+	                weapons[i].obj.SetActive(false);
                 }
             }
         }
@@ -129,6 +128,15 @@ public class CharacterInventoryUI : MonoBehaviour {
         }
 
     }
+
+	public void EnableContainer(BaseItems item ) {
+		foreach ( var l_uiItemsWithLabelse in weapons ){
+			if ( l_uiItemsWithLabelse.item == item ){
+				l_uiItemsWithLabelse.obj.SetActive(true);
+				item.gameObject.SetActive(false);
+			}
+		}
+	}
 
 	public void ShowInventory( ) {
 		CharacterInventory.SetActive(true);
@@ -149,8 +157,12 @@ public class CharacterInventoryUI : MonoBehaviour {
         for (int i = 0; i < weapons.Count; i++)
         {
 	        for ( int j = 0 ; j < weapons[ i ].Labels.Count ; j++ ){
-
-
+		        if ( companion.inventory.PickedUpWeapons[i].item == companion.attachedWeapon.item ){
+			        weapons[ i ].obj.SetActive(false);
+		        }
+		        else{
+			        weapons[ i ].obj.SetActive(true);
+		        }
 		        var a = companion.inventory.PickedUpWeapons[i][ weapons[i].Labels[ j ].name ];
 		        weapons[i].Labels[ j ].labelText.text = a.ToString( );
 	        }

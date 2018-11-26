@@ -39,12 +39,10 @@ public class WeaponObject : BaseItems
 
         StaticManager.UiInventory.RemoveMainInventory(this as WeaponObject, c.inventory);
 
-        if (AttachedCharacter.attachedWeapon)
-        {
-            c.inventoryUI.AddWeapon(AttachedCharacter.attachedWeapon);
-            c.attachedWeapon.gameObject.SetActive(false);
-            c.inventoryUI.RemoveObject(this);
-        }
+        c.inventoryUI.EnableContainer(AttachedCharacter.attachedWeapon);
+        c.inventoryUI.RemoveObject(this);
+
+        gameObject.SetActive(true);
         
         AttachedCharacter.attachedWeapon = this as WeaponObject;
 
@@ -52,9 +50,6 @@ public class WeaponObject : BaseItems
     }
 
     public virtual void PickUp( ) {
-        if ( AttachedCharacter == null ){
-
-        }
         
     }
 
