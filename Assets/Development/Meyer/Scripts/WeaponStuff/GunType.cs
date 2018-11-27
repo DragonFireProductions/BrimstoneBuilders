@@ -38,7 +38,8 @@ public class GunType : WeaponObject {
             bullets[ i ] = Instantiate( projectile.gameObject );
             bullets[i].gameObject.SetActive(false);
             bullets[ i ].gameObject.layer = collider.gameObject.layer;
-            bullets[i].transform.SetParent(GameObject.Find("Bullets").transform);
+            bullets[i].transform.SetParent(GameObject.Find("BulletContainer").transform);
+            bullets[ i ].GetComponent < Projectile >( ).weapon = this;
         }
     }
     public override object this[ string _property_name ] {
@@ -64,7 +65,7 @@ public class GunType : WeaponObject {
         proj.gameObject.transform.position = AttachedCharacter.transform.position + ( AttachedCharacter.transform.forward * 2 );
         proj.transform.rotation = transform.rotation;
         proj.gameObject.SetActive(true);
-
+       
         Ammo -= 1;
 
         yield return new WaitForSeconds( 1 / FireRate );
@@ -72,13 +73,7 @@ public class GunType : WeaponObject {
         canFire = true;
     }
     
-    protected override void OnTriggerEnter(Collider collider ) {
-        base.OnTriggerEnter(collider);
-        if (collider.tag == "Player" && !StaticManager.UiInventory.Dragging && tag == "PickUp")
-        {
-           this.FillBullets(collider.gameObject);
-        }
-    }
+   
 
     private IEnumerator Reload( ) {
         reloading = true;
@@ -86,6 +81,15 @@ public class GunType : WeaponObject {
         yield return new WaitForSeconds( ReloadTime );
         Ammo      = Capacity;
         reloading = false;
+
+    }
+
+    public override void Attach( ) {
+        base.Attach();
+
+        if ( bullets == null ){
+        FillBullets(AttachedCharacter.gameObject);
+        }
     }
     [HideInInspector] protected int _lastBullet;
     public GameObject GetPulledBullets( ) {

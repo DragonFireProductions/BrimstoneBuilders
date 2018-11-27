@@ -20,6 +20,8 @@ public class Projectile : MonoBehaviour
 
     public float interval = 0.5f;
 
+    public GunType weapon;
+
     void OnEnable( ) {
         StartCoroutine(stopBullet(5));
 
@@ -27,7 +29,7 @@ public class Projectile : MonoBehaviour
     /// <summary>
     /// Moves the projectile in its forwoard derection
     /// </summary>
-    void Update()
+    public void Update()
     {
         transform.Translate(0, 0, Speed * Time.deltaTime);
     }
@@ -42,6 +44,7 @@ public class Projectile : MonoBehaviour
         {
             other.GetComponent<BaseCharacter>().Damage(Damage);
             StartCoroutine(stopBullet(1));
+            StaticManager.levelCalc.IncreaseLevel(weapon, 0.3f);
         }
 
     }

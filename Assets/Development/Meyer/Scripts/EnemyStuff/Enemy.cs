@@ -76,7 +76,6 @@ namespace Kristal
             }
             else
             {
-                //
                 for (int i = 0; i < MaxCoinCount; i++)
                 {
                     deadPos = UnityEngine.Random.insideUnitSphere * 2.5f + this.gameObject.transform.position;
@@ -84,7 +83,6 @@ namespace Kristal
                     var newCoin = Instantiate(Resources.Load<GameObject>("Coin"));
                     newCoin.gameObject.transform.position = deadPos;
                 }
-                //
                 StaticManager.RealTime.Enemies.Remove(this);
                 Destroy(gameObject);
             }

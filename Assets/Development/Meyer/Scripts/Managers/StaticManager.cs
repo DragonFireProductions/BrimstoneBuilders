@@ -35,6 +35,8 @@ public class StaticManager : MonoBehaviour
     public static WeaponHolder weaponManager;
 
     public static UIInventoryManager uiManager;
+
+    public static ItemLevelCalculation levelCalc;
     
 
     public bool unlimitedPotions = false;
@@ -80,6 +82,8 @@ public class StaticManager : MonoBehaviour
         weaponManager = GameObject.Find( "ManagerHolder" ).GetComponent < WeaponHolder >( );
 
         uiManager = GetComponent < UIInventoryManager >( );
+
+        levelCalc = GetComponent < ItemLevelCalculation >( );
 
     }
 
