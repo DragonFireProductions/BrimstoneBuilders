@@ -222,8 +222,8 @@ public class CharacterInventoryUI : MonoBehaviour {
 		    var a = companion.stats[instance.Labels[i].name] ?? companion[ instance.Labels[ i ].name ];
 		    float l_num;
 		    float.TryParse( a.ToString( ) , out l_num );
-		    int l_p = ( int )l_num;
-            instance.Labels[i].labelText.text = l_p.ToString();
+		    int p = ( int )l_num;
+            instance.Labels[i].labelText.text = p.ToString();
         }
     }
     public void UpdatePotions( ) {

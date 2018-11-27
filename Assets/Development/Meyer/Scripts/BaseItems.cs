@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 public class BaseItems : MonoBehaviour {
-    public object this[string propertyName]
+    public virtual object this[string propertyName]
     {
         get
         {

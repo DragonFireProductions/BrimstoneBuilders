@@ -22,9 +22,21 @@ public class WeaponObject : BaseItems
         item = this.gameObject;
         
     }
-
-    public virtual object this[ string propertyName ] {
-        get { return this.GetType().GetField(propertyName).GetValue(this); }
+    public override object this[string propertyName]
+    {
+        get
+        {
+            if (this.GetType().GetField(propertyName) != null)
+            {
+                return this.GetType().GetField(propertyName).GetValue(this);
+            }
+            else if (base[propertyName] != null){
+                return base[ propertyName ];
+            }
+            else{
+                return null;
+            }
+        }
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
 

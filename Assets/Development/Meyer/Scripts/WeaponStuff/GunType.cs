@@ -42,11 +42,26 @@ public class GunType : WeaponObject {
             bullets[ i ].GetComponent < Projectile >( ).weapon = this;
         }
     }
-    public override object this[ string _property_name ] {
-        get { return GetType( ).GetField( _property_name ).GetValue( this ); }
-        set { GetType( ).GetField( _property_name ).SetValue( this , value ); }
+    public override object this[string propertyName]
+    {
+        get
+        {
+            if (this.GetType().GetField(propertyName) != null)
+            {
+                return this.GetType().GetField(propertyName).GetValue(this);
+            }
+            else if (base[propertyName] != null)
+            {
+                return base[propertyName];
+            }
+            else
+            {
+                return null;
+            }
+        }
+        set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
-    
+
     public override void Use(BaseCharacter enemy ) {
         Debug.Log( "Attacking" );
 
