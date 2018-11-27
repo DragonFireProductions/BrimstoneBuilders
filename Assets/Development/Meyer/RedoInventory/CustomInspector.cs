@@ -200,6 +200,7 @@ public class CustomInspector : EditorWindow {
 
                     WeaponItemList.itemList[ viewIndex - 1 ].IncreaseAmount = EditorGUILayout.FloatField( "Stat increase amount:" , WeaponItemList.itemList[ viewIndex - 1 ].IncreaseAmount );
 
+                    WeaponItemList.itemList[ viewIndex - 1 ].Level = EditorGUILayout.FloatField( "Level: " , WeaponItemList.itemList[ viewIndex - 1 ].Level );
 
                     if ( WeaponItemList.itemList[ viewIndex - 1 ] is WeaponObject ){
                         var ob1 = WeaponItemList.itemList[ viewIndex - 1 ] as WeaponObject;
