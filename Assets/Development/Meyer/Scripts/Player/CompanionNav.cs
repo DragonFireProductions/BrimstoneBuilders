@@ -117,7 +117,7 @@ public class CompanionNav : BaseNav {
                         }
 
                         transform.LookAt(character.enemy.transform);
-                        character.attachedWeapon.Attack();
+                        character.attachedWeapon.Use();
                         Agent.SetDestination(newpos);
                         }
                     else{
@@ -172,7 +172,7 @@ public class CompanionNav : BaseNav {
                             }
 
                             transform.LookAt(character.enemy.transform);
-                            character.attachedWeapon.Attack();
+                            character.attachedWeapon.Use();
                             Agent.SetDestination(newpos);
                         }
                         else
@@ -219,7 +219,7 @@ public class CompanionNav : BaseNav {
                             }
 
                             transform.LookAt(character.enemy.transform);
-                            character.attachedWeapon.Attack();
+                            character.attachedWeapon.Use();
                             Agent.SetDestination(newpos);
                         }
                         else

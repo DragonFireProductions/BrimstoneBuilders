@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 195759805237046648}
   - component: {fileID: 114226407847606324}
   - component: {fileID: 114349617593921696}
+  - component: {fileID: 114099303348245972}
   m_Layer: 11
   m_Name: CompanionSword
   m_TagString: Companion
@@ -692,6 +693,25 @@ MonoBehaviour:
   cube: {fileID: 0}
   projector: {fileID: 0}
   inventory: {fileID: 0}
+  inventoryUI: {fileID: 0}
+--- !u!114 &114099303348245972
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1840455141851242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 454a4e3d36029ff4089d2efb0b48e89d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PotionsInventory: {fileID: 0}
+  CharacterInventory: {fileID: 0}
+  WeaponInventory: {fileID: 0}
+  weapons: []
+  potions: []
+  companion: {fileID: 0}
+  tab: {fileID: 0}
 --- !u!114 &114226407847606324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -771,10 +791,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Agent: {fileID: 0}
-  stoppingDistance: 4
-  State: 4
-  character: {fileID: 0}
   battleDistance: 3
+  character: {fileID: 0}
+  State: 4
+  stoppingDistance: 4
+  waittime: 2
   companion: {fileID: 0}
   aggState: 0
   behaviors: {fileID: 0}
@@ -791,12 +812,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BackPackInventoryList: []
+  potions: []
   isInventoryActive: 0
   PickedUpWeapons: []
+  PickedUpPotions: []
   parent: {fileID: 0}
   Slots: []
+  PotionSlots: []
   character: {fileID: 0}
   AttachedWeapons: []
+  potionsContainer: {fileID: 0}
   coinCount: 0
   companion: {fileID: 0}
 --- !u!114 &114567738575978562
@@ -888,26 +913,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd7a23e586cb8c648ad15999a0b9cb6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponStats:
-    objectName: 
-    weight: 0
-    durability: 0
-    value: 0
-    baseDamage: 0
-    attackSpeed: 0
-    reach: 0
-    equipType: 0
-    weaponType: 0
-    icon: {fileID: 0}
-    isIndestructible: 0
-    isStackable: 0
-    destroyOnUse: 0
-    clip: {fileID: 0}
-  weaponName: Wooden Sword
-  isMainInventory: 0
-  attached: 0
+  item: {fileID: 0}
+  stats: {fileID: 0}
+  AttachedCharacter: {fileID: 0}
+  objectName: 
   AnimationClass: {fileID: 0}
-  AttacheBaseCharacter: {fileID: 0}
 --- !u!119 &119129681335223230
 Projector:
   m_ObjectHideFlags: 1

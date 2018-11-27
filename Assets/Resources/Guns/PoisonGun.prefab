@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 65618239356091898}
   - component: {fileID: 114981123021183736}
   - component: {fileID: 54009411871460814}
+  - component: {fileID: 114908089128860616}
   m_Layer: 9
   m_Name: PoisonGun
   m_TagString: PickUp
@@ -142,6 +143,31 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114908089128860616
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1594058198696430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572ade2c8a8bbe946a61e83a73b50be3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Poison Gun
+  weight: 0
+  durability: 0
+  value: 0
+  baseDamage: 0
+  attackSpeed: 0
+  reach: 0
+  equipType: 0
+  weaponType: 0
+  icon: {fileID: 0}
+  isIndestructible: 0
+  isStackable: 0
+  destroyOnUse: 0
+  clip: {fileID: 0}
 --- !u!114 &114981123021183736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -153,29 +179,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e8d4da9398dbb44aa54e1563a57e760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponStats:
-    objectName: 
-    weight: 0
-    durability: 0
-    value: 0
-    baseDamage: 0
-    attackSpeed: 0
-    reach: 0
-    equipType: 0
-    weaponType: 0
-    icon: {fileID: 0}
-    isIndestructible: 0
-    isStackable: 0
-    destroyOnUse: 0
-    clip: {fileID: 0}
-    Projectile: {fileID: 0}
-  weaponName: Poison Gun
-  isMainInventory: 1
-  attached: 0
+  item: {fileID: 0}
+  stats: {fileID: 114908089128860616}
+  AttachedCharacter: {fileID: 0}
+  objectName: Poison Gun
   AnimationClass: {fileID: 0}
-  AttacheBaseCharacter: {fileID: 0}
   Ammo: 1
   Capacity: 1
   FireRate: 2
   Range: 45.34
+  projectile: {fileID: 0}
   ReloadTime: 4

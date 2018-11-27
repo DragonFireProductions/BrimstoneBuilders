@@ -19,6 +19,8 @@ public class GunType : WeaponObject {
 
     private bool reloading;
 
+    public Projectile projectile;
+
     private GameObject[] bullets;
 
     [ SerializeField ] public float ReloadTime;
@@ -26,13 +28,14 @@ public class GunType : WeaponObject {
     protected override void Start( ) {
         base.Start();
         if ( tag != "PickUp" ){
-            FillBullets(AttacheBaseCharacter.gameObject);
+            FillBullets(AttachedCharacter.gameObject);
         }
     }
+    
     public void FillBullets(GameObject collider ) {
         bullets = new GameObject[30];
         for ( int i = 0 ; i < bullets.Length ; i++ ){
-            bullets[ i ] = Instantiate( weaponStats.Projectile );
+            bullets[ i ] = Instantiate( projectile.gameObject );
             bullets[i].gameObject.SetActive(false);
             bullets[ i ].gameObject.layer = collider.gameObject.layer;
             bullets[i].transform.SetParent(GameObject.Find("Bullets").transform);
@@ -43,7 +46,7 @@ public class GunType : WeaponObject {
         set { GetType( ).GetField( _property_name ).SetValue( this , value ); }
     }
     
-    public override void Attack(BaseCharacter enemy ) {
+    public override void Use(BaseCharacter enemy ) {
         Debug.Log( "Attacking" );
 
         if ( canFire && Ammo > 0 ){
@@ -58,10 +61,9 @@ public class GunType : WeaponObject {
 
         canFire = false;
         var proj = GetPulledBullets( );
-        proj.gameObject.transform.position = AttacheBaseCharacter.transform.position + ( AttacheBaseCharacter.transform.forward * 2 );
+        proj.gameObject.transform.position = AttachedCharacter.transform.position + ( AttachedCharacter.transform.forward * 2 );
         proj.transform.rotation = transform.rotation;
         proj.gameObject.SetActive(true);
-        StartCoroutine( destroyBullet( proj ) );
 
         Ammo -= 1;
 
@@ -69,18 +71,13 @@ public class GunType : WeaponObject {
 
         canFire = true;
     }
-
-    IEnumerator destroyBullet(GameObject projectile ) {
-        yield return new WaitForSeconds( 0.5f );
-        projectile.gameObject.SetActive(false);
-    }
-    public override void PickUp( ) {
-        base.PickUp();
-        FillBullets(StaticManager.Character.gameObject);
-    }
+    
     protected override void OnTriggerEnter(Collider collider ) {
         base.OnTriggerEnter(collider);
-       // projectile.layer = collider.gameObject.layer;
+        if (collider.tag == "Player" && !StaticManager.UiInventory.Dragging && tag == "PickUp")
+        {
+           this.FillBullets(collider.gameObject);
+        }
     }
 
     private IEnumerator Reload( ) {

@@ -5,8 +5,6 @@ using UnityEngine;
 public class ShockProjectile : Projectile {
 
     public int initialDamage; //initial damage done to enemy on hit.
-    public int hits; //how many ticks of dot damage.
-    public float interval; //amount of time between dot hits.
     public void Start()
     {
         DOT_interval = 1; //Time between DOT damage.

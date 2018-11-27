@@ -16,9 +16,13 @@ public class PlayerInventory : MonoBehaviour {
 
     [ HideInInspector ] public List < WeaponObject > BackPackInventoryList;
 
+    [ HideInInspector ] public List < Potions > potions;
+
     [ HideInInspector ] public bool isInventoryActive;
 
     [ HideInInspector ] public List < WeaponObject > PickedUpWeapons; //Current list of items the player has picked up
+
+    [ HideInInspector ] public List < Potions > PickedUpPotions;
 
     [ HideInInspector ] public WeaponObject selectedObject { get; set; }
 
@@ -26,10 +30,13 @@ public class PlayerInventory : MonoBehaviour {
 
     public List<UIItemsWithLabels> Slots;
 
-    public BaseCharacter character;
+    public List < UIItemsWithLabels > PotionSlots;
+
+    public Companion character;
 
     public List < WeaponObject > AttachedWeapons;
 
+    public GameObject potionsContainer;
 
     public int coinCount;
 
@@ -37,32 +44,26 @@ public class PlayerInventory : MonoBehaviour {
     public void Awake( ) {
         AttachedWeapons = new List < WeaponObject >();
         AttachedWeapons.Add(gameObject.transform.Find("Cube").gameObject.GetComponentInChildren<WeaponObject>());
-        
-        character = GetComponent < BaseCharacter >( );
-        
+        character = GetComponent < Companion >( );
         Slots = new List < UIItemsWithLabels >();
     }
     
     public void Start( ) {
         PickedUpWeapons.Add(gameObject.transform.Find("Cube").gameObject.GetComponentInChildren<WeaponObject>());
-        parent = StaticManager.inventories.setParent( gameObject );
-        StaticManager.inventories.alllables.Add(this);
-        StaticManager.inventories.setSendButton( character as Companion );
-        StaticManager.inventories.AddCompanionInventory( character as Companion );
         coinCount = 0;
-    }
-    //returns the first occurrence of an item from the WeaponAsset list 
-   
-    //returns 
-    public WeaponObject GetItemFromInventory( string name ) {
-        return PickedUpWeapons.FirstOrDefault( _t => _t.WeaponStats.objectName == name );
     }
 
     public void PickUp( WeaponObject weapon ) {
         PickedUpWeapons.Add( weapon );
-        weapon.PickUp( );
+        character.inventoryUI.AddWeapon(weapon);
+        weapon.gameObject.SetActive(false);
     }
 
+    public void PickUp( Potions potions ) {
+        PickedUpPotions.Add(potions);
+        character.inventoryUI.AddPotion(potions);
+        potions.gameObject.SetActive(false);
+    }
     public void PickUpCoin(int _coinWorth)
     {
         StaticManager.currencyManager.AddCoins(_coinWorth);
@@ -74,14 +75,17 @@ public class PlayerInventory : MonoBehaviour {
 
             if ( isInventoryActive ){
                 StaticManager.inventories.prevPos = StaticManager.Character.transform.position;
-              StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PlayerUI);
-                StaticManager.inventories.SwitchInventory(StaticManager.tabManager.GetTab(StaticManager.Character));
+                StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PlayerUI);
+                character.inventoryUI.ShowInventory();
+                character.inventoryUI.UpdateItem();
+                StaticManager.inventories.SwitchInventory(StaticManager.Character.inventoryUI.tab);
                 StaticManager.inventories.inventory.character.projector.gameObject.SetActive(false);
+                StaticManager.inventories.SwitchToWeapons();
                 Time.timeScale = 0;
             }
             if ( isInventoryActive == false ){
                 StaticManager.inventories.inventory.character.transform.position = StaticManager.inventories.prevPos;
-                StaticManager.UiInventory.ItemsInstance.ComparedStats.obj.SetActive(false);
+               // StaticManager.UiInventory.ItemsInstance.ComparedStats.obj.SetActive(false);
                 Time.timeScale = 1;
                 StaticManager.Character.projector.gameObject.SetActive(true);
 
