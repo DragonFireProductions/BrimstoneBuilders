@@ -96,7 +96,7 @@ public class LeaderNav : CompanionNav {
 			SetState = state.FREEZE;
 			if (character.attachedWeapon is GunType && Physics.Raycast( l_ray , out hit ) ){
 				if ( hit.collider.tag != "Companion" && hit.collider.tag != "Player" ){
-					character.attachedWeapon.Attack(null);
+					character.attachedWeapon.Use(null);
 				}
 			}
 		}
@@ -142,17 +142,18 @@ public class LeaderNav : CompanionNav {
 
 				if ( Physics.Raycast( l_ray , out hit1 ) ){
                     if ( hit1.collider.tag == "Companion" || hit1.collider.tag == "Player" ){
-						StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.PlayerStats );
-						StaticManager.UiInventory.UpdateStats( hit1.collider.GetComponent < BaseCharacter >( ).attachedWeapon.WeaponStats , StaticManager.UiInventory.ItemsInstance.AttachedWeapon );
-						StaticManager.UiInventory.UpdateStats( hit1.collider.GetComponent < BaseCharacter >( ).stats ,                      StaticManager.UiInventory.ItemsInstance.CharacterStats, false );
-						StaticManager.UiInventory.ItemsInstance.PlayerStats.transform.Find( "WeaponImage" ).GetComponent < RawImage >( ).texture = hit1.collider.GetComponent < BaseCharacter >( ).attachedWeapon.WeaponStats.icon;
+			//	//		StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.PlayerStats );
+					//	StaticManager.UiInventory.UpdateStats( hit1.collider.GetComponent < BaseCharacter >( ).attachedWeapon.stats , StaticManager.UiInventory.ItemsInstance.AttachedWeapon );
+			//			StaticManager.UiInventory.UpdateStats( hit1.collider.GetComponent < BaseCharacter >( ).stats ,                      StaticManager.UiInventory.ItemsInstance.CharacterStats, false );
+//						StaticManager.UiInventory.ItemsInstance.PlayerStats.transform.Find( "WeaponImage" ).GetComponent < RawImage >( ).texture = hit1.collider.GetComponent < BaseCharacter >( ).attachedWeapon.stats.icon;
 					}
 				}
+					character.attachedWeapon.Use(character as BaseCharacter);
 			}
 		}
 
 		if ( Input.GetMouseButtonUp( 1 ) ){
-				StaticManager.UiInventory.CloseWindow(StaticManager.UiInventory.ItemsInstance.PlayerStats );
+	///			StaticManager.UiInventory.CloseWindow(StaticManager.UiInventory.ItemsInstance.PlayerStats );
 
         }
         if ( !StaticManager.RealTime.Attacking ){
@@ -170,8 +171,10 @@ public class LeaderNav : CompanionNav {
 
         switch ( State ){
 			case state.ATTACKING:
-				switch ( character.attachedWeapon.WeaponStats.weaponType ){
-                    case WeaponItem.WeaponType.Sword:
+                        if (character.attachedWeapon is SwordType)
+                        {
+
+                        }
 	                    if (enemy == null)
 	                    {
 		                   SetState = BaseNav.state.FREEZE;
@@ -184,9 +187,8 @@ public class LeaderNav : CompanionNav {
 	                    }
 
 	                    transform.LookAt(enemy.transform.position);
-                        character.attachedWeapon.Attack(character.enemy as Enemy);
+                        character.attachedWeapon.Use(character.enemy as Enemy);
 	                    break;
-                }
 				
 
                 break;
@@ -195,24 +197,19 @@ public class LeaderNav : CompanionNav {
 
 				break;
 			case state.ENEMY_CLICKED:
+				
+		            if ( Vector3.Distance( enemy.transform.position , gameObject.transform.position ) < 3 ){
+			            SetState = state.ATTACKING;
+		            }
+		            else{
+			            Agent.SetDestination( enemy.transform.position );
+		            }
+	                    if ( character.attachedWeapon is GunType ){
 
-				switch ( character.attachedWeapon.WeaponStats.weaponType ){
-                    case WeaponItem.WeaponType.Sword:
-                        if (Vector3.Distance(enemy.transform.position, gameObject.transform.position) < 3)
-                        {
-                            SetState = state.ATTACKING;
-                        }
-                        else
-                        {
-                            Agent.SetDestination(enemy.transform.position);
-                        }
-                        break;
-                    case WeaponItem.WeaponType.Gun:
-	                    character.attachedWeapon.Attack(enemy as Enemy);
-	                    SetState = state.IDLE;
-	                    break;
-						
-				}
+
+		                    character.attachedWeapon.Use( enemy as Enemy );
+		                    SetState = state.IDLE;
+	                    }
 				
 
 				break;

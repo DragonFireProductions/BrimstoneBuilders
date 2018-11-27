@@ -172,12 +172,12 @@ public class Stat : MonoBehaviour {
         //}
     }
 
-    public void ResetStats( WeaponItem oldWeapon ) {
+    public void ResetStats( ItemStats oldWeapon ) {
         Agility -= oldWeapon.attackSpeed;
         Strength -= oldWeapon.baseDamage + oldWeapon.durability;
         health -= oldWeapon.durability * 5;
     }
-    public void IncreaseStats(WeaponItem _item) {
+    public void IncreaseStats(ItemStats _item) {
        baseStats = new Stat();
 
         Strength = _item.durability + _item.baseDamage;
@@ -185,7 +185,7 @@ public class Stat : MonoBehaviour {
         health += _item.durability * 5;
     }
 
-    public Stat difference(WeaponItem _item, WeaponItem oldWeapon ) {
+    public Stat difference(ItemStats _item, ItemStats oldWeapon ) {
         Stat stat = new Stat();
 
         stat.strength = Strength - (oldWeapon.baseDamage + oldWeapon.durability);

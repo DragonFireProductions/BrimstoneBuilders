@@ -5,37 +5,20 @@ using System.Reflection;
 
 using TMPro;
 
+using UnityEditor;
+
 using UnityEngine;
 using UnityEngine.Experimental.UIElements;
 
 public class UIItems : MonoBehaviour {
-
 	
+
 	// Use this for initialization
-	[SerializeField]
-	public UIItemsWithLabels InventoryContainer;
-	
-    public GameObject PauseUI;
-	
-	public GameObject Tab;
+	public GameObject SendToCompanion;
 
-    public GameObject Tabs;
+    public GameObject Equip;
 
-	public GameObject Inventory;
-
-	public GameObject Equip;
-
-    public GameObject SendCompanionButton;
-
-    public GameObject SendToCompanion;
-
-	public UIItemsWithLabels ComparedCharacterStats;
-
-	public UIItemsWithLabels ComparedStats;
-
-	public UIItemsWithLabels WeaponInventoryStats;
-
-	public UIItemsWithLabels CharacterInventoryStats;
+	public GameObject PauseUI;
 
     public GameObject PlayerUI;
 	
@@ -43,25 +26,8 @@ public class UIItems : MonoBehaviour {
 
 	public GameObject GameOverUI;
 
-    public GameObject BackPackUI;
-
-    public GameObject BackpackContainer;
-
-	public GameObject GameWon;
-
-	public UIItemsWithLabels CharacterStats;
-
-	public UIItemsWithLabels AttachedWeapon;
-
-	public GameObject PlayerStats;
-	
-	public GameObject AttackConfirmation;
-
-	public GameObject BattleWon;
-
-	public GameObject DamageText;
-
     public UIItemsWithLabels ShopUI;
+
 
 
     public bool windowIsOpen;
@@ -88,7 +54,6 @@ public class UIItems : MonoBehaviour {
 		openedWindow = new List < GameObject >();
         var properties = this.GetType().GetFields();
         
-
 	    for (int i = 0; i < properties.Length; i ++ ){
 		    FieldInfo l_fieldInfo = properties[ i ];
 		    if ( l_fieldInfo.FieldType == typeof(GameObject) ){
@@ -109,10 +74,11 @@ public class UIItems : MonoBehaviour {
 	}
 	
 	public UIItemsWithLabels obj(UIItemsWithLabels obj, string name ) {
+
 		obj = new UIItemsWithLabels();
 		obj.obj = GameObject.Find(name).gameObject;
 		int count = obj.obj.transform.Find("Labels").childCount;
-		obj.Labels = new List<UIItemsWithLabels.Label>();
+		obj.Labels = new Boo.Lang.List < UIItemsWithLabels.Label >();
 
         UIItemsWithLabels.Label label;
 		for ( int i = 0 ; i < count ; i++ ){
@@ -125,7 +91,6 @@ public class UIItems : MonoBehaviour {
 
 		if ( obj.obj.name == "InventoryContainer" || obj.obj.name == "ShopUI"){
 		obj.obj.SetActive(false);
-
         }
         return obj;
 	}
@@ -137,7 +102,7 @@ public class UIItems : MonoBehaviour {
         UIItemsWithLabels obj = new UIItemsWithLabels();
 	    obj.obj = _obj;
         int count = obj.obj.transform.Find("Labels").childCount;
-        obj.Labels = new List<UIItemsWithLabels.Label>();
+        obj.Labels = new Boo.Lang.List < UIItemsWithLabels.Label >();
 
         UIItemsWithLabels.Label label;
         for (int i = 0; i < count; i++)
@@ -151,28 +116,4 @@ public class UIItems : MonoBehaviour {
         obj.obj.SetActive(false);
         return obj;
     }
-}
-[Serializable]
-public class UIItemsWithLabels {
-
-	[Serializable]
-	public struct Label {
-
-		public TextMeshProUGUI labelText;
-
-		public GameObject labelObject;
-
-		public string name;
-
-	}
-
-	[SerializeField] public GameObject obj;
-	[SerializeField] public List < Label > Labels;
-
-	public void SetLabels( Stat stats ) {
-		for ( int i = 0 ; i < Labels.Count ; i++ ){
-			Labels[ i ].labelText.text = stats[ Labels[ i ].labelObject.name ].ToString( );
-		}
-	}
-	
 }

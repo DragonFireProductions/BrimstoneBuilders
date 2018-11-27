@@ -14,14 +14,26 @@ public class Companion : BaseCharacter {
 
     public PlayerInventory inventory;
 
+    public CharacterInventoryUI inventoryUI;
 
-    private void Start( ) {
-        Awake( );
+    protected override void Awake( ) {
+        base.Awake();
+       
+    }
+
+    protected virtual void Start( ) {
+        inventoryUI = GetComponent<CharacterInventoryUI>();
+        inventoryUI.Init(this);
+        inventoryUI.companion = this;
         material.color = BaseColor;
         Nav            = gameObject.GetComponent < CompanionNav >( );
         StaticManager.RealTime.Companions.Add(this);
         inventory = GetComponent < PlayerInventory >( );
         cube = transform.Find("Cube").gameObject;
+        attachedWeapon = cube.GetComponentInChildren < BaseItems >( ) as WeaponObject;
+        attachedWeapon.AttachedCharacter = this;
+        inventoryUI.AddWeapon(attachedWeapon);
+        attachedWeapon.tag = "Weapon";
     }
 
     public void OnTriggerEnter(Collider collider ) {

@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class companionSpawner : MonoBehaviour
 {
-    public bool DevTools;
-    [SerializeField] bool useBrackets = true;
 
     [SerializeField] private Companion friends;
 
@@ -32,9 +30,7 @@ public class companionSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (DevTools)
-        {
-            if (useBrackets)
+            if (StaticManager.Instance.useBrackets)
             {
                 if (Input.GetKeyDown("]"))
                 {
@@ -49,13 +45,12 @@ public class companionSpawner : MonoBehaviour
             {
 
             }
-        }
     }
 
     public IEnumerator CompSpawn()
     {
         // Debug.Log(index);
-        if (index >= numberofcompanions)
+        if (index >= numberofcompanions && !StaticManager.Instance.unlimitedSpawns)
         {
             Debug.Log("cant have anymore companions");
             index = numberofcompanions;
@@ -67,7 +62,7 @@ public class companionSpawner : MonoBehaviour
         }
 
         StaticManager.RealTime.Companions.RemoveAll(nulls => nulls == null);
-        var newEnemy = Instantiate(companion[1]);
+        var newEnemy = Instantiate(companion[0]);
         newEnemy.name = newEnemy.name + index.ToString();
         Vector3 position = Random.insideUnitSphere * 5 + this.gameObject.transform.position;
         newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
