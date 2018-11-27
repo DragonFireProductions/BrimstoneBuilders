@@ -19,13 +19,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4374910189644938}
-  - component: {fileID: 114841558383495122}
+  - component: {fileID: 114309574330157626}
   - component: {fileID: 96378039497900700}
   - component: {fileID: 136015161434348312}
   - component: {fileID: 54599691236076986}
   m_Layer: 0
   m_Name: ShockProjectile
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,8 +36,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1180798319226812}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -237.39, y: 18.75, z: 193.7}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -150,7 +150,7 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 1
   m_Emitting: 1
---- !u!114 &114841558383495122
+--- !u!114 &114309574330157626
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,11 +158,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1180798319226812}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af54693e34805604f92b7751ffd41484, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d9e60362e854ba4b809597631bcfd66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 5
-  Speed: 20
+  Damage: 0
+  Speed: 0
+  initialDamage: 0
+  hits: 0
+  interval: 0
 --- !u!136 &136015161434348312
 CapsuleCollider:
   m_ObjectHideFlags: 1
