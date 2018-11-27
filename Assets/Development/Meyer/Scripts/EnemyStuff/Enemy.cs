@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Kristal
 {
@@ -15,6 +16,8 @@ namespace Kristal
 
         private int MaxCoinCount = 15;
         private Vector3 deadPos = new Vector3();
+
+        private int drop;
 
         protected void Awake()
         {
@@ -48,7 +51,6 @@ namespace Kristal
             }
             else
             {
-                //
                 for (int i = 0; i < MaxCoinCount; i++)
                 {
                     deadPos = UnityEngine.Random.insideUnitSphere * 2.5f + this.gameObject.transform.position;
@@ -56,7 +58,7 @@ namespace Kristal
                     var newCoin = Instantiate(Resources.Load<GameObject>("Coin"));
                     newCoin.gameObject.transform.position = deadPos;
                 }
-                //
+
                 StaticManager.RealTime.Enemies.Remove(this);
                 Destroy(gameObject);
             }
@@ -76,14 +78,34 @@ namespace Kristal
             }
             else
             {
-                //
-                for (int i = 0; i < MaxCoinCount; i++)
+                drop = Random.Range(1, 10);
+                if (false)
+                {
+                    for (int i = 0; i < MaxCoinCount; i++)
+                    {
+                        deadPos = UnityEngine.Random.insideUnitSphere * 2.5f + this.gameObject.transform.position;
+                        deadPos.y = StaticManager.Character.gameObject.transform.position.y;
+                        var newCoin = Instantiate(Resources.Load<GameObject>("Coin"));
+                        newCoin.gameObject.transform.position = deadPos;
+                    }
+                }
+                else
                 {
                     deadPos = UnityEngine.Random.insideUnitSphere * 2.5f + this.gameObject.transform.position;
                     deadPos.y = StaticManager.Character.gameObject.transform.position.y;
-                    var newCoin = Instantiate(Resources.Load<GameObject>("Coin"));
-                    newCoin.gameObject.transform.position = deadPos;
+                    var newsword = Instantiate(attachedWeapon);
+                    newsword.tag = "PickUp";
+                    newsword.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                    newsword.gameObject.transform.position = deadPos;
                 }
+                //
+                //for (int i = 0; i < MaxCoinCount; i++)
+                //{
+                //    deadPos = UnityEngine.Random.insideUnitSphere * 2.5f + this.gameObject.transform.position;
+                //    deadPos.y = StaticManager.Character.gameObject.transform.position.y;
+                //    var newCoin = Instantiate(Resources.Load<GameObject>("Coin"));
+                //    newCoin.gameObject.transform.position = deadPos;
+                //}
                 //
                 StaticManager.RealTime.Enemies.Remove(this);
                 Destroy(gameObject);
@@ -92,7 +114,7 @@ namespace Kristal
             damage -= _damage;
         }
 
-       
+
         //runs when enemy's animation is half way through
         public override void Attack(BaseCharacter chara)
         {

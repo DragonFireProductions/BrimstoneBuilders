@@ -34,7 +34,7 @@ public class WeaponObject : BaseItems
         item.transform.localScale = new Vector3(1, 1, 1);
 
         var c = AttachedCharacter as Companion;
-        
+
 
         StaticManager.UiInventory.RemoveMainInventory(this as WeaponObject, c.inventory);
 
@@ -42,16 +42,19 @@ public class WeaponObject : BaseItems
         c.inventoryUI.RemoveObject(this);
 
         gameObject.SetActive(true);
-        
+
         AttachedCharacter.attachedWeapon = this as WeaponObject;
 
         AttachedCharacter.attachedWeapon.transform.rotation = AttachedCharacter.cube.transform.rotation;
 
         AttachedCharacter.attachedWeapon.transform.SetParent(AttachedCharacter.cube.transform, true);
 
+        AttachedCharacter.attachedWeapon.gameObject.layer = AttachedCharacter.gameObject.layer;
+
+        AttachedCharacter.attachedWeapon.tag = "Weapon";
     }
 
-    
+
     protected virtual void OnTriggerEnter(Collider collider)
     {
         if (collider.tag == "Player" && !StaticManager.UiInventory.Dragging && tag == "PickUp")
@@ -69,5 +72,5 @@ public class WeaponObject : BaseItems
                 collider.gameObject.GetComponent<BaseCharacter>().Attack(AttachedCharacter);
         }
     }
-   
+
 }
