@@ -7,44 +7,55 @@ using UnityEngine.AI;
 
 public class Stat : MonoBehaviour {
 
-    [ SerializeField ] private float agility;
+    [ SerializeField ] public float agility;
 
     public int attackCost = 3;
 
-    [ SerializeField ] private int attackPoints;
+    [ SerializeField ] public int attackPoints;
 
-    [ SerializeField ] private float charisma;
+    [ SerializeField ] public float charisma;
 
-    [ SerializeField ] private float dexterity;
+    [ SerializeField ] public float dexterity;
 
-    [ SerializeField ] private float dialogText;
+    [ SerializeField ] public float dialogText;
 
-    [ SerializeField ] private float endurance;
+    [ SerializeField ] public float endurance;
 
-    [ SerializeField ] private float health;
+    [ SerializeField ] public float health;
 
-    [ SerializeField ] private float intelligence;
+    [ SerializeField ] public float intelligence;
 
-    [ SerializeField ] private float luck;
+    [ SerializeField ] public float luck;
 
-    [ SerializeField ] private float maxHealth;
+    [ SerializeField ] public float maxHealth;
 
-    [ SerializeField ] private float maxStamina;
+    [ SerializeField ] public float maxStamina;
 
-    [ SerializeField ] private string name;
+    [ SerializeField ] public string name;
 
-    [ SerializeField ] private float perception;
+    [ SerializeField ] public float perception;
 
-    [ SerializeField ] private float stamina;
+    [ SerializeField ] public float stamina;
 
-    [ SerializeField ] private float strength;
+    [ SerializeField ] public float strength;
 
     public int maxAttackpoints = 6;
 
 
-    public object this[ string _property_name ] {
-        get { return GetType( ).GetProperty( _property_name ).GetValue( this , null ); }
-        set { GetType( ).GetProperty( _property_name ).SetValue( this , value , null ); }
+    public object this[string propertyName]
+    {
+        get
+        {
+            if (this.GetType().GetField(propertyName) != null)
+            {
+                return this.GetType().GetField(propertyName).GetValue(this);
+            }
+            else
+            {
+                return null;
+            }
+        }
+        set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
 
     public float Charisma {
@@ -123,7 +134,7 @@ public class Stat : MonoBehaviour {
         gameObject.GetComponent<Enemy>().threat_signal.enabled = Strength > 10;
     }
     // Use this for initialization
-    private void Start( ) {
+    public void Start( ) {
         health = 20;
         name   = gameObject.name;
 
@@ -152,9 +163,9 @@ public class Stat : MonoBehaviour {
         AdjustScale( strength );
     }
 
-    private Stat baseStats;
+    public Stat baseStats;
     // Update is called once per frame
-    private void Update( ) { }
+    public void Update( ) { }
 
     //Handles the scaling of all characters based on Strength stat
     public void AdjustScale( float _strength ) {
@@ -196,11 +207,11 @@ public class Stat : MonoBehaviour {
         stat.agility =  ( stat.agility + ( _item.attackSpeed ) - Agility);
         return stat;
     }
-    private struct Info {
+    public struct Info {
 
-        private TextMeshProUGUI text;
+        public TextMeshProUGUI text;
 
-        private float value;
+        public float value;
 
     }
 

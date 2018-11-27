@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -193,37 +194,39 @@ public class CharacterInventoryUI : MonoBehaviour {
 	}
 
     // Use this for initialization
-    public void UpdateItem(UIItemsWithLabels instanceToUpdate, ItemStats item)
+    public void UpdateItem(UIItemsWithLabels instanceToUpdate, BaseItems _object)
     {
         for (int i = 0; i < instanceToUpdate.Labels.Count; i++)
         {
-            var a = item[instanceToUpdate.Labels[i].name];
+            var a = _object.stats[ instanceToUpdate.Labels[ i ].name ] ?? _object[ instanceToUpdate.Labels[ i ].name ];
             instanceToUpdate.Labels[i].labelText.text = a.ToString();
         }
     }
+    public void UpdateItem() {
+	    foreach ( var l_t in weapons ){
+		    for ( int j = 0 ; j < l_t.Labels.Count ; j++ ){
+			    l_t.obj.SetActive( l_t.item != companion.attachedWeapon );
+			    var a = l_t.item.stats[ l_t.Labels[ j ].name ];
+			    l_t.Labels[ j ].labelText.text = a.ToString( );
 
-    public void UpdateItem()
+			    if (l_t.GetComponent<Tab>().imageContainer && l_t.item.stats.icon ){
+				    l_t.GetComponent<Tab>().imageContainer.texture = l_t.item.stats.icon;
+			    }
+		    }
+	    }
+    }
+    public void UpdateCharacter(UIItemsWithLabels instance)
     {
-        for (int i = 0; i < weapons.Count; i++)
-        {
-	        for ( int j = 0 ; j < weapons[ i ].Labels.Count ; j++ ){
-		        if ( weapons[i].item == companion.attachedWeapon ){
-			        weapons[ i ].obj.SetActive(false);
-		        }
-		        else{
-			        weapons[ i ].obj.SetActive(true);
-		        }
-		        var a = weapons[i].item.stats[ weapons[i].Labels[ j ].name ];
-		        weapons[i].Labels[ j ].labelText.text = a.ToString( );
+	    for ( int i = 0 ; i < instance.Labels.Count ; i++ ){
 
-		        if (weapons[i].GetComponent<Tab>().imageContainer  && weapons[i].item.stats.icon ){
-			        weapons[i].GetComponent<Tab>().imageContainer.texture = weapons[ i ].item.stats.icon;
-		        }
-	        }
+		    var a = companion.stats[instance.Labels[i].name] ?? companion[ instance.Labels[ i ].name ];
+		    float l_num;
+		    float.TryParse( a.ToString( ) , out l_num );
+		    int l_p = ( int )l_num;
+            instance.Labels[i].labelText.text = l_p.ToString();
         }
     }
-
-	public void UpdatePotions( ) {
+    public void UpdatePotions( ) {
         for (int i = 0; i < potions.Count; i++)
         {
             for (int j = 0; j < potions[i].Labels.Count; j++)

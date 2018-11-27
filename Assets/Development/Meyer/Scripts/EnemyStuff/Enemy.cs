@@ -64,7 +64,7 @@ namespace Kristal
             damage -= _damage;
         }
 
-        public override void Damage(int _damage)
+        public override void Damage(int _damage, BaseItems item)
         {
 
             if (stats.Health > 0)
@@ -76,6 +76,7 @@ namespace Kristal
             }
             else
             {
+                item.IncreaseStats(item.IncreaseAmount);
                 for (int i = 0; i < MaxCoinCount; i++)
                 {
                     deadPos = UnityEngine.Random.insideUnitSphere * 2.5f + this.gameObject.transform.position;

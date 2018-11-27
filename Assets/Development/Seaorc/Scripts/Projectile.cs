@@ -6,7 +6,6 @@ using Kristal;
 public class Projectile : MonoBehaviour
 {
     /// <remarks> assign in inspector </remarks>
-    [SerializeField] protected int Damage;
     [SerializeField] float Speed;
     private int maxDOTduration = 5;
     private float Timer = 0;
@@ -42,13 +41,23 @@ public class Projectile : MonoBehaviour
     {
         if (other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player")
         {
-            other.GetComponent<BaseCharacter>().Damage(Damage);
-            StartCoroutine(stopBullet(1));
-            StaticManager.levelCalc.IncreaseLevel(weapon, 0.3f);
+            if (doesDOT)
+            {
+
+                
+                other.GetComponent<BaseCharacter>().Damage(weapon.Damage, weapon);
+                other.GetComponent<BaseCharacter>().DOT(weapon.Damage, interval, hits, weapon); //Apply the dot damage.
+            }
+
+            else{
+                other.GetComponent<BaseCharacter>().Damage(weapon.Damage, weapon);
+                StartCoroutine(stopBullet(1));
+            }
+            
         }
 
     }
-
+    
     IEnumerator stopBullet(int i)
     {
         yield return new WaitForSeconds(i);

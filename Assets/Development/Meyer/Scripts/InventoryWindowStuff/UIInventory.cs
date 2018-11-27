@@ -83,32 +83,11 @@ public class UIInventory : MonoBehaviour
         }
         set { showWindow = value; }
     }
-    public void UpdateStats(Stat _stats, UIItemsWithLabels instanceToUpdate, bool comparative)
-    {
-       
-        for (var l_i = 0; l_i < instanceToUpdate.Labels.Count; l_i++)
-        {
-            var l_a = _stats[instanceToUpdate.Labels[l_i].name.ToString()];
-            if (comparative)
-            {
-                if ( Convert.ToInt32(l_a.ToString()) > 0){
-                     instanceToUpdate.Labels[l_i].labelText.text = "+" + l_a.ToString();
-                }
-                else{
-                     instanceToUpdate.Labels[l_i].labelText.text = l_a.ToString();
-                }
-            }
-            else{
-            instanceToUpdate.Labels[l_i].labelText.text = l_a.ToString();
 
-            }
-        }
-
-    }
-
-    public void UpdateStats( ItemStats _object , UIItemsWithLabels instanceToUpdate ) {
+    public void UpdateStats( BaseItems _object , UIItemsWithLabels instanceToUpdate ) {
         for ( int i = 0 ; i < instanceToUpdate.Labels.Count ; i++ ){
-            var a = _object[ instanceToUpdate.Labels[ i ].name ];
+            var a = _object.stats[ instanceToUpdate.Labels[ i ].name ] ?? _object[ instanceToUpdate.Labels[ i ].name ];
+
             instanceToUpdate.Labels[ i ].labelText.text = a.ToString( );
         }
     }

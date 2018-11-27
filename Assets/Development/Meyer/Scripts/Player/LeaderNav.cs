@@ -77,7 +77,7 @@ public class LeaderNav : CompanionNav {
 	        if ( Physics.Raycast(l_ray, out hit) ){
 		        if ( hit.collider.name == "Terrain" ){
 					SetState = state.MOVE;
-
+					character.IncreaseLevel(0.00002f);
                     if ( enemy ){
                     enemy.projector.gameObject.SetActive(false);
 

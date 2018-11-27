@@ -15,10 +15,12 @@ public class WeaponObject : BaseItems
     /// Variables should be protected NOT public or private
     public AnimationClass AnimationClass;
 
+    public int Damage;
     protected override void Start() {
         base.Start();
         AnimationClass = gameObject.GetComponent < AnimationClass >( );
         item = this.gameObject;
+        
     }
 
     public virtual object this[ string propertyName ] {

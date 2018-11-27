@@ -18,11 +18,9 @@ public class IceProjectile : Projectile {
     {
         if (other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player")
         {
-            other.GetComponent<BaseCharacter>().Damage(initialDamage); //Deal the initial damage.
-            //other.GetComponent<BaseCharacter>().DOT(Damage, interval, hits); //Apply the dot damage.
-
+            base.OnTriggerEnter(other);
             StartCoroutine(Freeze(other, SecondsFrozen)); //Freezes whoever makes contact with the projectile.
-            
+
             //play particle.
         }
         //Play particle system for effects.

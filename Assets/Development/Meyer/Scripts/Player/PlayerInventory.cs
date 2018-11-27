@@ -84,6 +84,7 @@ public class PlayerInventory : MonoBehaviour {
                 Time.timeScale = 0;
             }
             if ( isInventoryActive == false ){
+                StaticManager.uiManager.inventoryCharacterStats.SetActive(false);
                 StaticManager.inventories.inventory.character.transform.position = StaticManager.inventories.prevPos;
                // StaticManager.UiInventory.ItemsInstance.ComparedStats.obj.SetActive(false);
                 Time.timeScale = 1;

@@ -64,6 +64,12 @@ public abstract class BaseCharacter : MonoBehaviour {
 	public GameObject cube;
 
 	public Projector projector;
+
+	public float Level = 1;
+
+	public virtual void IncreaseLevel(float amount_f ) {
+		Level += amount_f;
+	}
 	protected virtual void Awake( ) {
         stats = gameObject.GetComponent<Stat>();
 		Assert.IsNotNull(stats, "Stats not found on " + this.gameObject.name);
@@ -80,26 +86,42 @@ public abstract class BaseCharacter : MonoBehaviour {
 		cube = transform.Find( "Cube" ).gameObject;
 
 	}
-    public IEnumerator EDOT(int damage, float interval, int _hits)
+
+    public object this[string propertyName]
+    {
+        get
+        {
+            if (this.GetType().GetField(propertyName) != null)
+            {
+                return this.GetType().GetField(propertyName).GetValue(this);
+            }
+            else
+            {
+                return null;
+            }
+        }
+        set { this.GetType().GetField(propertyName).SetValue(this, value); }
+    }
+    public IEnumerator EDOT(int damage, float interval, int _hits, BaseItems item)
     {
         int hits = 0;
         while (hits < _hits)
         {
-            Damage(damage);
+            Damage(damage, item);
             hits++;
 
 
             yield return new WaitForSeconds(interval);
         }
     }
-    public void DOT(int damage, float interval, int hits)
+    public void DOT(int damage, float interval, int hits, BaseItems item)
     {
-        StartCoroutine(EDOT(damage, interval, hits));
+        StartCoroutine(EDOT(damage, interval, hits, item));
 
     }
     public abstract void Attack( BaseCharacter attacker );
 
-	public abstract void Damage( int damage );
+	public abstract void Damage( int damage, BaseItems item );
     // Update is called once per frame
     protected void Update () {
 

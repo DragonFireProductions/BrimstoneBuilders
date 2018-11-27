@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ContainerScript : MonoBehaviour /*IPointerDownHandler*/ {
+public class ContainerScript : MonoBehaviour  {
 
     private string name;
 
@@ -32,46 +32,20 @@ public class ContainerScript : MonoBehaviour /*IPointerDownHandler*/ {
 
     public virtual void OnPointerDownDelegate( PointerEventData data ) {
         if ( data.currentInputModule.input.GetMouseButton( 1 ) ){
-            //Time.timeScale = 0;
-            //var inventory = StaticManager.inventories.GetInventory( transform.parent.parent.name );
-            //StaticManager.inventories.inventory = inventory;
-            //name                                 = gameObject.transform.Find( "objectName" ).GetComponentInChildren < TextMeshProUGUI >( ).text;
-            //inventory.selectedObject = inventory.GetItemFromInventory( name );
-            //StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.Equip);
         }
     }
 
     public virtual void OnPointerEnter(PointerEventData data ) {
-       // labels = StaticManager.UiInventory.ItemsInstance.ComparedStats.Labels;
-//        name = gameObject.transform.Find("objectName").GetComponentInChildren<TextMeshProUGUI>().text;
-//        var weapon = StaticManager.inventories.inventory.GetItemFromInventory( name ).stats;
-//        var currentWeapon = StaticManager.inventories.inventory.character.attachedWeapon.stats;
-////StaticManager.UiInventory.ItemsInstance.ComparedStats.obj.SetActive(true);
-//      //  StaticManager.UiInventory.ItemsInstance.ComparedCharacterStats.obj.SetActive(true);
+        if ( gameObject.GetComponent < Tab >( )){
+            var item =  gameObject.GetComponent < Tab >( ).item;
+            StaticManager.uiManager.comparedInventoryWeapons.SetActive(true);
+            StaticManager.inventories.inventory.character.inventoryUI.UpdateItem(StaticManager.uiManager.comparedInventoryWeapons.GetComponentInChildren<UIItemsWithLabels>(), item);
 
-//        for ( int i = 0 ; i < labels.Count - 1 ; i++ ){
-//            var weaponInfo = weapon[ labels[ i ].name ];
-//            var currenInfo = currentWeapon[ labels[ i ].name ];
-//            int diff = Convert.ToInt32( weaponInfo.ToString( ) ) - Convert.ToInt32( currenInfo.ToString( ) );
-//            string difference = "";
-//            if ( diff > 0 ){
-//                difference = "+" + diff.ToString( );
-//            }
-//            else if ( diff <= 0 ){
-//                difference = diff.ToString( );
-//            }
-//        //    StaticManager.UiInventory.ItemsInstance.ComparedStats.Labels[ i ].labelText.text = difference;
-//        }
-
-       // StaticManager.UiInventory.ItemsInstance.ComparedStats.Labels[ labels.Count - 1 ].labelText.text = weapon.objectName;
-        //StaticManager.UiInventory.UpdateStats(StaticManager.inventories.inventory.character.attachedWeapon.stats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
-        //StaticManager.UiInventory.UpdateStats(StaticManager.inventories.inventory.character.stats.difference(weapon, currentWeapon), StaticManager.UiInventory.ItemsInstance.ComparedCharacterStats, true);
+        }
     }
 
     public virtual void OnPointerExit( PointerEventData data ) {
-        //StaticManager.UiInventory.UpdateStats( StaticManager.inventories.inventory.character.attachedWeapon.stats , StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats );
-       // StaticManager.UiInventory.ItemsInstance.ComparedCharacterStats.obj.SetActive( false );
-        //StaticManager.UiInventory.ItemsInstance.ComparedStats.obj.SetActive( false );
+        StaticManager.uiManager.comparedInventoryWeapons.SetActive(false);
     }
 
 }

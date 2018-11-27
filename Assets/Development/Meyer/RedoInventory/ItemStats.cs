@@ -39,7 +39,14 @@ public class ItemStats : MonoBehaviour {
 
     public object this[string propertyName]
     {
-        get { return this.GetType().GetField(propertyName).GetValue(this); }
+        get {
+            if ( this.GetType().GetField(propertyName) != null ){
+            return this.GetType().GetField(propertyName).GetValue(this);
+            }
+            else{
+                return null;
+            }
+        }
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
 

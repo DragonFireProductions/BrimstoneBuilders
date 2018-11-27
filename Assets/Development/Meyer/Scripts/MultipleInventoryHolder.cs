@@ -54,7 +54,11 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		StaticManager.uiManager.WeaponWindow.SetActive(true);
     }
 	public void SwitchInventory(Tab tab ) {
-		tab.companion.inventoryUI.UpdateItem(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), tab.companion.attachedWeapon.stats);
+		StaticManager.uiManager.inventoryCharacterStats.SetActive(true);
+
+		tab.companion.inventoryUI.UpdateCharacter( StaticManager.uiManager.inventoryCharacterStats.GetComponentInChildren < UIItemsWithLabels >( ) );
+		tab.companion.inventoryUI.UpdateItem(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), tab.companion.attachedWeapon);
+
 		if ( prev_inventory ){
 
             prev_inventory.companion.inventoryUI.CharacterInventory.SetActive(false);
@@ -62,13 +66,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
 			prev_inventory.companion.transform.position = prevPos;
         }
 
-		if ( StaticManager.inventories.inventory.Slots.Count > 1 ){
-          //  StaticManager.UiInventory.UpdateStats(inventory.character.attachedWeapon.stats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
-           // StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false);
-        }
 		tab.companion.inventoryUI.CharacterInventory.SetActive(true);
 		tab.GetComponent < Image >( ).color = Color.red;
-
 		inventory = tab.companion.inventory;
 		prevPos = inventory.character.transform.position;
 		prev_inventory = inventory.character.inventoryUI;
@@ -78,6 +77,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
         pos.y = 30.77f;
         playerCam.transform.position = pos;
         playerCam.transform.LookAt(inventory.character.transform.position + (inventory.transform.up * 0.77f));
+
 		tab.companion.inventoryUI.UpdateItem();
 
 		SwitchToWeapons();
@@ -108,7 +108,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
     }
     public void Use( ) {
-		StaticManager.inventories.inventory.character.inventoryUI.UpdateItem(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), selectedObj.stats);
+		StaticManager.inventories.inventory.character.inventoryUI.UpdateItem(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), selectedObj);
 		selectedObj.Attach();
 	}
 	public PlayerInventory GetInventory(string parentName ) {
@@ -130,38 +130,5 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		}
 		
 	}
-    public void Equip()
-    {
-        inventory.selectedObject.name = "Sword";
-         inventory.selectedObject.tag = "Weapon";
-        inventory.character.attachedWeapon =  inventory.selectedObject;
-         inventory.selectedObject.AttachedCharacter = inventory.character;
-        if (inventory.AttachedWeapons.Count > 0)
-        {
-           inventory.AttachedWeapons.Add(inventory.selectedObject);
-            var ob = inventory.AttachedWeapons[0];
-            inventory.AttachedWeapons.RemoveAt(0);
-            //StaticManager.UiInventory.AddSlot(ob, inventory);
-
-            ob.transform.parent = GameObject.Find("Weapons").transform;
-            ob.gameObject.name = ob.stats.objectName;
-            ob.gameObject.SetActive(false);
-			inventory.character.stats.ResetStats(ob.stats);
-        }
-
-        inventory.selectedObject.GetComponent<BoxCollider>().enabled = false;
-
-        StaticManager.UiInventory.RemoveMainInventory(inventory.selectedObject, inventory);
-        inventory.selectedObject.gameObject.transform.position = inventory.character.cube.transform.position;
-        inventory.selectedObject.gameObject.transform.rotation = inventory.character.cube.transform.rotation;
-        inventory.selectedObject.gameObject.transform.SetParent(inventory.character.cube.transform);
-
-        inventory.character.stats.IncreaseStats(inventory.selectedObject.stats);
-		//StaticManager.UiInventory.UpdateStats(inventory.selectedObject.stats, StaticManager.UiInventory.ItemsInstance.WeaponInventoryStats);
-	    //StaticManager.UiInventory.UpdateStats(inventory.character.stats, StaticManager.UiInventory.ItemsInstance.CharacterInventoryStats, false);
-
-        inventory.selectedObject.gameObject.SetActive(true);
-
-    }
 	
 }

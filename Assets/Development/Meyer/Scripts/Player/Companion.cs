@@ -39,7 +39,7 @@ public class Companion : BaseCharacter {
     public void OnTriggerEnter(Collider collider ) {
 
     }
-    public override void Damage(int _damage)
+    public override void Damage(int _damage, BaseItems item)
     {
         if (stats.Health > 0){
             InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.blue);
@@ -63,6 +63,8 @@ public class Companion : BaseCharacter {
     }
     //runs when enemys's attack animation is half way over
     public override  void Attack(BaseCharacter chara) {
+
+    IncreaseLevel(0.0002f);
      //gets the damage value
      float l_damage = StaticManager.DamageCalc.CalcAttack( stats , chara.stats );
 
@@ -72,7 +74,7 @@ public class Companion : BaseCharacter {
      //sets the text value to the damage done
      //damageText.text = damage.ToString( );
 
-     Damage( ( int )l_damage);
+     Damage( ( int )l_damage, chara.attachedWeapon);
 
     }
 
