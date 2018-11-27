@@ -161,11 +161,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b103fed692fb5d94c9f1ef68b1e282d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 1
   Speed: 20
-  initialDamage: 5
+  doesDOT: 1
   hits: 15
   interval: 0.25
+  weapon: {fileID: 0}
+  hitEffect: 12
+  y_pos: 0
+  initialDamage: 5
 --- !u!136 &136482609497583484
 CapsuleCollider:
   m_ObjectHideFlags: 1

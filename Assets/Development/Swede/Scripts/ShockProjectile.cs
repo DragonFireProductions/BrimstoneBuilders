@@ -5,6 +5,8 @@ using UnityEngine;
 public class ShockProjectile : Projectile {
 
     public int initialDamage; //initial damage done to enemy on hit.
+    private Vector3 aboveHead;
+    private int animationTime = 1;
     public void Start()
     {
         DOT_interval = 1; //Time between DOT damage.
@@ -16,6 +18,9 @@ public class ShockProjectile : Projectile {
         {
             base.OnTriggerEnter(other);
             //play particle.
+            aboveHead = other.transform.position;
+            aboveHead.y += 10;
+            StartCoroutine(StaticManager.particleManager.Play(ParticleManager.states.Shock, aboveHead, animationTime));
         }
 
 

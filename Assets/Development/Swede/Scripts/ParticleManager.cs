@@ -30,7 +30,8 @@ public class ParticleManager : MonoBehaviour
         Snow,
         Leaves,
         EnemySelected,
-        Blood
+        Blood,
+        Empty
     }
 
 

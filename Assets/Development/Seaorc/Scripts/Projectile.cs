@@ -21,6 +21,10 @@ public class Projectile : MonoBehaviour
 
     public GunType weapon;
 
+    public ParticleManager.states hitEffect;
+
+    public int y_pos;
+
     void OnEnable( ) {
         StartCoroutine(stopBullet(5));
 
@@ -41,6 +45,11 @@ public class Projectile : MonoBehaviour
     {
         if (other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player")
         {
+
+            var aboveHead = other.transform.position;
+            aboveHead.y += y_pos;
+            StartCoroutine(StaticManager.particleManager.Play(hitEffect, aboveHead, 1));
+
             if (doesDOT)
             {
 
