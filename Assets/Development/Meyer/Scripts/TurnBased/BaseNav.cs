@@ -41,7 +41,10 @@ public class BaseNav : MonoBehaviour {
 
     public state SetState {
         get { return State; }
-        set {
+        set
+        {
+            Agent.isStopped = false;
+
             if ( value == state.FOLLOW ){
                 Agent.stoppingDistance = stoppingDistance;
             }
@@ -49,7 +52,6 @@ public class BaseNav : MonoBehaviour {
             if ( value == state.ATTACKING ){
                 Agent.stoppingDistance = stoppingDistance;
                 newpos = StaticManager.Utility.randomInsideDonut(outerRadius, innerRadius, StaticManager.Character.transform.position);
-
             }
 
             if ( value == state.MOVE ){
@@ -63,6 +65,11 @@ public class BaseNav : MonoBehaviour {
 
             if ( value == state.IDLE ){
                 Agent.stoppingDistance = stoppingDistance;
+            }
+
+            if(value == state.FREEZE)
+            {
+                Agent.isStopped = true;
             }
 
             State = value;

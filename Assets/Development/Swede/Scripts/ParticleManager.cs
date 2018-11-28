@@ -31,6 +31,8 @@ public class ParticleManager : MonoBehaviour
         Leaves,
         EnemySelected,
         Blood,
+        SmallExplosion,
+        PoisonCloud,
         Empty
     }
 
@@ -88,9 +90,9 @@ public class ParticleManager : MonoBehaviour
     }
 
     //Instantiates the selected particle state at the selected position for the passed in amount of time.
-    public IEnumerator Play(ParticleManager.states state, Vector3 position, int time)
+    public IEnumerator Play(ParticleManager.states state, Vector3 position, int time, Transform transform = null)
     {
-        ParticleSystem system = StaticManager.particleManager.Play(state, position);
+        ParticleSystem system = StaticManager.particleManager.Play(state, position, transform);
         yield return new WaitForSeconds(time);
         StaticManager.particleManager.Stop(system);
     }

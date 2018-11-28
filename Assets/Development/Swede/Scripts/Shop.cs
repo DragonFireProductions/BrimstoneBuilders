@@ -21,6 +21,8 @@ public class Shop : MonoBehaviour
     {
         StaticManager.Character.spawner.comp.RemoveAll(item => item == null);
 
+        //Purely for setting the labels in the shop.
+
         //SELLING
         if (StaticManager.Character.spawner.comp.Count == 0) //Player doesn't have any companions. SELLING
         {

@@ -23,6 +23,8 @@ public class Projectile : MonoBehaviour
 
     public ParticleManager.states hitEffect;
 
+    public int TimeToPlay;
+
     public int y_pos;
 
     void OnEnable( ) {
@@ -30,7 +32,7 @@ public class Projectile : MonoBehaviour
 
     }
     /// <summary>
-    /// Moves the projectile in its forwoard derection
+    /// Moves the projectile in its forward direction
     /// </summary>
     public void Update()
     {
@@ -45,20 +47,23 @@ public class Projectile : MonoBehaviour
     {
         if (other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player")
         {
-
+            //Sets the y position and plays the particle effect, y gets set in the item editor.
             var aboveHead = other.transform.position;
             aboveHead.y += y_pos;
-            StartCoroutine(StaticManager.particleManager.Play(hitEffect, aboveHead, 1));
-
+            StartCoroutine(StaticManager.particleManager.Play(hitEffect, aboveHead, TimeToPlay, other.gameObject.transform));
+            StartCoroutine(StaticManager.particleManager.Play(ParticleManager.states.Blood, aboveHead, 2, other.gameObject.transform));
+            
             if (doesDOT)
             {
-
+                //Deals damage to the target and applies the DOT effect.
                 
                 other.GetComponent<BaseCharacter>().Damage(weapon.Damage, weapon);
                 other.GetComponent<BaseCharacter>().DOT(weapon.Damage, interval, hits, weapon); //Apply the dot damage.
             }
 
-            else{
+            else
+            {
+                //Deals the base damage only.
                 other.GetComponent<BaseCharacter>().Damage(weapon.Damage, weapon);
                 StartCoroutine(stopBullet(1));
             }

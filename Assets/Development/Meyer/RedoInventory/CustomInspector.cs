@@ -219,8 +219,13 @@ public class CustomInspector : EditorWindow {
                             ob.Range      = EditorGUILayout.FloatField( "Range" ,       ob.Range );
                             ob.ReloadTime = EditorGUILayout.FloatField( "Reload time" , ob.ReloadTime );
 
-
                             ob.projectile = EditorGUILayout.ObjectField( ob.projectile , typeof( Projectile ) , true ) as Projectile;
+                            GUILayout.EndHorizontal();
+                            GUILayout.BeginHorizontal();
+                            ob.projectile.hitEffect = (ParticleManager.states)EditorGUILayout.EnumPopup("Particle", ob.projectile.hitEffect) ;
+                            ob.projectile.y_pos = EditorGUILayout.IntField("Y Position", ob.projectile.y_pos);
+                            ob.projectile.TimeToPlay = EditorGUILayout.IntField("Time To Play", ob.projectile.TimeToPlay);
+
                             GUILayout.EndHorizontal();
                             GUILayout.BeginHorizontal();
                             if ( ob.projectile ){

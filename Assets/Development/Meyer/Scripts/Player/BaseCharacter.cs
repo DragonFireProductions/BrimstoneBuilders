@@ -87,6 +87,23 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	}
 
+    public void Freeze(float time)
+    {
+        float timer = time;
+        StartCoroutine(FreezeC(timer));
+
+    }
+    private IEnumerator FreezeC(float timer)
+    {
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            Nav.SetState = BaseNav.state.FREEZE;
+
+            yield return new WaitForEndOfFrame();
+        }
+        Nav.SetState = BaseNav.state.ATTACKING;
+    }
     public object this[string propertyName]
     {
         get
