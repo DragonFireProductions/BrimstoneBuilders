@@ -105,7 +105,7 @@ public class LeaderNav : CompanionNav {
 				if (hit.collider.tag == "ShopKeeper" && !StaticManager.UiInventory.ItemsInstance.windowIsOpen) //Left Click
 				{
 					StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.ShopUI.obj );
-					hit.collider.GetComponent<Shop>().Init();
+					hit.collider.GetComponent<Shop>().ShopContainer.SetActive(true);
 					StaticManager.Instance.Freeze( );
 				}
 			}

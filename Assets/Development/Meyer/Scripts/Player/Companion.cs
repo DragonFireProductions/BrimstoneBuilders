@@ -16,6 +16,8 @@ public class Companion : BaseCharacter {
 
     public CharacterInventoryUI inventoryUI;
 
+    public int ResaleWorth;
+
     public override object this[string propertyName]
     {
         get

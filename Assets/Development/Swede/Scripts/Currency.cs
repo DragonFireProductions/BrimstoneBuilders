@@ -10,6 +10,12 @@ public class Currency : MonoBehaviour
 
     public Shop _shop;
 
+    public GameObject buyContainer;
+
+    public GameObject sellContainer;
+
+    public List < GameObject > shops;
+
     public void AddCoins(Shop shop)
     {
         StaticManager.Character.inventory.coinCount += shop.resaleWorth;
@@ -19,6 +25,9 @@ public class Currency : MonoBehaviour
         StaticManager.Character.inventory.coinCount += _coins;
     }
 
+    public void SwitchToBuy( ) {
+        
+    }
     public void RemoveCoins(Shop shop)
     {
         if (StaticManager.Character.inventory.coinCount <= shop.companionPrice)
@@ -42,23 +51,23 @@ public class Currency : MonoBehaviour
             return true;
         }
     }
-
-    public void BuyCompanion(Shop shop) {
+    
+    public void BuyCompanion(Tab container) {
         StaticManager.Character.spawner.comp.RemoveAll( item => item == null );
         if (StaticManager.Character.spawner.comp.Count < 5)
         {
-            if(RemoveCoins(shop.companionPrice)) 
-                StartCoroutine(StaticManager.Character.spawner.CompSpawn());
+            if ( RemoveCoins( container.companion.ResaleWorth ) ){
+                StaticManager.Character.spawner.CompanionSpawn( container.companion );
+                container.companion.inventoryUI.SellButton.SetActive(true);
+                container.companion.inventoryUI.BuyButton.SetActive(false);
+            }
         }
     }
-    public void SellCompanion(Shop shop)
+    public void SellCompanion( Tab container)
     {
-        StaticManager.Character.spawner.comp.RemoveAll(item => item == null);
-
-        if (StaticManager.Character.spawner.comp.Count != 0)
-        {
-            AddCoins(shop.resaleWorth);
-            StaticManager.Character.spawner.Kill();
-        }
+        AddCoins(container.companion.ResaleWorth);
+        Destroy(container.companion);
+        _shop.shopCompanions.Remove( container );
+        Destroy(container.gameObject);
     }
 }

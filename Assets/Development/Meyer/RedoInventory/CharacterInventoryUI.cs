@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
+using Assets.Meyer.TestScripts.Player;
+
 using TMPro;
 
 using UnityEngine;
@@ -16,10 +18,20 @@ public class CharacterInventoryUI : MonoBehaviour {
 
 	public GameObject WeaponInventory;
 
+	public Tab CompanionSell;
+
+	public GameObject SellButton;
+
+	public GameObject BuyButton;
+
 	public List < UIItemsWithLabels > weapons;
 
 	public List < UIItemsWithLabels > potions;
 
+	public UIItemsWithLabels ShopWeaponsText;
+
+	public UIItemsWithLabels ShopCharacterText;
+     
 	public Companion companion;
 
 	public Tab sendToButton;
@@ -29,7 +41,7 @@ public class CharacterInventoryUI : MonoBehaviour {
     public void Init(Companion _companion ) {
 	    companion = _companion;
 		weapons = new List < UIItemsWithLabels >();
-		potions = new List < UIItemsWithLabels >();
+	    potions = new List < UIItemsWithLabels >();
 	    CharacterInventory = Instantiate( StaticManager.uiManager.CharacterInventory );
 
 	    var a = Instantiate( StaticManager.uiManager.SendToButton, StaticManager.uiManager.SendToButton.transform.position, Quaternion.identity );
@@ -81,8 +93,25 @@ public class CharacterInventoryUI : MonoBehaviour {
         CharacterInventory.SetActive(false);
 
 		CharacterInventory.transform.SetParent(StaticManager.uiManager.inventories.transform);
+
+	   
     }
 
+	public void AddToShop(Shop shop ) {
+       var b = Instantiate(StaticManager.uiManager.CompanionSellStats);
+       CompanionSell = b.GetComponent<Tab>();
+       CompanionSell.companion = companion;
+       CompanionSell.transform.position = StaticManager.uiManager.CompanionSellStats.transform.position;
+       BuyButton = CompanionSell.gameObject.transform.Find("BuyButton").gameObject;
+       SellButton = CompanionSell.gameObject.transform.Find("SellButton").gameObject;
+	   CompanionSell.transform.SetParent(shop.ShopContainer.transform);
+	ShopCharacterText = CompanionSell.transform.Find( "CharacterStats" ).GetComponent < UIItemsWithLabels >( );
+		ShopWeaponsText = CompanionSell.transform.Find( "WeaponStats" ).GetComponent < UIItemsWithLabels >( );
+		ShopCharacterText.FindLabels();
+		ShopWeaponsText.FindLabels();
+	   BuyButton.SetActive(true);
+	   SellButton.SetActive(false);
+    }
 	public void AddWeapon(BaseItems item ) {
         GameObject newlabel = Instantiate(StaticManager.uiManager.Weapon.gameObject);
 		newlabel.GetComponent < Tab >( ).companion = companion;

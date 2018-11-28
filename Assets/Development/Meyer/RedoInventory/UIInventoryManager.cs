@@ -38,11 +38,11 @@ public class UIInventoryManager : MonoBehaviour {
 
     public GameObject comparedInventoryWeapons;
 
+    public GameObject CompanionSellStats;
     public void Start( ) {
         WeaponInventoryStats.GetComponent<UIItemsWithLabels>().FindLabels();
-        inventoryCharacterStats.GetComponentInChildren<UIItemsWithLabels>().FindLabels();
-        comparedInventoryWeapons.GetComponentInChildren<UIItemsWithLabels>().FindLabels();
-      
+        CompanionSellStats.transform.Find("CharacterStats").GetComponent<UIItemsWithLabels>().FindLabels();
+        CompanionSellStats.transform.Find("WeaponStats").GetComponent<UIItemsWithLabels>().FindLabels();
     }
 
     public object this[string propertyName]
