@@ -116,7 +116,8 @@ public class CharacterInventoryUI : MonoBehaviour {
 	   BuyButton.SetActive(true);
 	   SellButton.SetActive(false);
 	   CompanionSell.gameObject.SetActive(true);
-    }
+	    StaticManager.RealTime.Companions.Remove(companion);
+	}
 
 	public void Enable( ) {
 		tab.gameObject.SetActive(true);
