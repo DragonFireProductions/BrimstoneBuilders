@@ -106,6 +106,9 @@ public class LeaderNav : CompanionNav {
 				{
 					StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.ShopUI.obj );
 					hit.collider.GetComponent<Shop>().ShopContainer.SetActive(true);
+					StaticManager.currencyManager._shop = hit.collider.GetComponent < Shop >( );
+					StaticManager.currencyManager.shops.Add(hit.collider.gameObject);
+					StaticManager.currencyManager.SwitchToBuy();
 					StaticManager.Instance.Freeze( );
 				}
 			}

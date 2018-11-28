@@ -29,13 +29,17 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	public Vector3 prevPos;
 
 	public BaseItems selectedObj;
-	public void Awake( ) {
+
+    public List<companionBehaviors> behaviors;
+
+    public void Awake( ) {
 		WeaponAssetList = itemList.itemList;
 		alllables       = new List < PlayerInventory >( );
 		playerCam       = GameObject.Find( "PlayerCamera" ).GetComponent<Camera>();
 	}
 
 	public void Start( ) {
+		behaviors = new List < companionBehaviors >();
 		inventory = StaticManager.Character.GetComponent < PlayerInventory >( );
 	}
 
@@ -121,14 +125,13 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		Assert.IsNotNull(null, "Cannot Find inventory parent with name" + parentName + " Line number : 29 - MultipleInventoryHolder");
 		return null;
 	}
-
 	public void Destroy(PlayerInventory inventory ) {
-		Destroy(StaticManager.tabManager.GetTab(inventory.character as Companion).gameObject);
+		inventory.character.inventoryUI.tab.gameObject.SetActive(false);
+		Destroy(inventory.character.inventoryUI.tab);
 		Destroy(inventory.parent.gameObject);
 		if ( inventory == this.inventory ){
 			SwitchInventory(StaticManager.tabManager.GetTab(StaticManager.Character));
 		}
-		
 	}
 	
 }

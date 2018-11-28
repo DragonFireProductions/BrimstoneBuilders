@@ -11,7 +11,11 @@ public class Tab : MonoBehaviour {
 
 	public RawImage imageContainer;
 
-	public void Attach( ) {
+	public UIItemsWithLabels CharacterStats;
+
+	public UIItemsWithLabels WeaponStats;
+
+    public void Attach( ) {
 		StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.Equip);
 		StaticManager.inventories.selectedObj = item;
 	}

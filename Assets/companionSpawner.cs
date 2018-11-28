@@ -84,7 +84,46 @@ public class companionSpawner : MonoBehaviour
         comp.Add(newEnemy.gameObject);
         StaticManager.RealTime.Companions.Add(newEnemy.GetComponent<Companion>());
         newButton.newFriend = newEnemy.GetComponent<Companion>();
+        StaticManager.inventories.alllables.Add(newEnemy.inventory);
 
+    }
+
+    public void CompanionSpawn(Companion companion ) {
+        // Debug.Log(index);
+        if (index >= numberofcompanions && !StaticManager.Instance.unlimitedSpawns)
+        {
+            Debug.Log("cant have anymore companions");
+            index = numberofcompanions;
+        }
+        else
+        {
+            index++;
+            StaticManager.RealTime.Companions.RemoveAll(nulls => nulls == null);
+        }
+
+        StaticManager.RealTime.Companions.RemoveAll(nulls => nulls == null);
+        var newEnemy = companion;
+        newEnemy.name = newEnemy.name + index.ToString();
+        Vector3 position = Random.insideUnitSphere * 5 + this.gameObject.transform.position;
+        newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
+        comp.Add(newEnemy.gameObject);
+        var location = GameObject.Find("panel_location");
+        var newButton = Instantiate(Resources.Load<companionBehaviors>("Panel"));
+        newEnemy.GetComponent<CompanionNav>().behaviors = newButton.GetComponent<companionBehaviors>();
+        newButton.GetComponent<companionBehaviors>().newFriend = newEnemy;
+
+        position.y = StaticManager.Character.gameObject.transform.position.y;
+        StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
+        newButton.transform.SetParent(location.transform, false);
+        newButton.transform.position = location.transform.position;
+        StaticManager.inventories.behaviors.Add(newButton);
+        //variable.gameObject.SetActive(true);
+        newEnemy.GetComponent<Companion>().Nav.Agent.Warp(position);
+        newEnemy.GetComponent<CompanionNav>().transform.position = this.gameObject.transform.position;
+        comp.Add(newEnemy.gameObject);
+        StaticManager.RealTime.Companions.Add(newEnemy.GetComponent<Companion>());
+        newButton.newFriend = newEnemy.GetComponent<Companion>();
+        StaticManager.inventories.alllables.Add(newEnemy.inventory);
     }
 
 

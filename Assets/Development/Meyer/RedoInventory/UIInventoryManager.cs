@@ -40,7 +40,10 @@ public class UIInventoryManager : MonoBehaviour {
 
     public GameObject CompanionSellStats;
     public void Start( ) {
+        
         WeaponInventoryStats.GetComponent<UIItemsWithLabels>().FindLabels();
+        inventoryCharacterStats.GetComponentInChildren < UIItemsWithLabels >( ).FindLabels( );
+        comparedInventoryWeapons.GetComponent < UIItemsWithLabels >( ).FindLabels( );
         CompanionSellStats.transform.Find("CharacterStats").GetComponent<UIItemsWithLabels>().FindLabels();
         CompanionSellStats.transform.Find("WeaponStats").GetComponent<UIItemsWithLabels>().FindLabels();
     }

@@ -24,6 +24,7 @@ public class CharacterInventoryUI : MonoBehaviour {
 
 	public GameObject BuyButton;
 
+
 	public List < UIItemsWithLabels > weapons;
 
 	public List < UIItemsWithLabels > potions;
@@ -39,6 +40,7 @@ public class CharacterInventoryUI : MonoBehaviour {
 	public Tab tab;
 
     public void Init(Companion _companion ) {
+
 	    companion = _companion;
 		weapons = new List < UIItemsWithLabels >();
 	    potions = new List < UIItemsWithLabels >();
@@ -69,6 +71,8 @@ public class CharacterInventoryUI : MonoBehaviour {
 		WeaponInventory.SetActive(true);
 
 	    tab = Instantiate( StaticManager.uiManager.Tab ).GetComponent < Tab >( );
+
+	    tab.gameObject.SetActive( false );
 
 		tab.transform.position = StaticManager.uiManager.Tab.transform.position;
 
@@ -105,13 +109,19 @@ public class CharacterInventoryUI : MonoBehaviour {
        BuyButton = CompanionSell.gameObject.transform.Find("BuyButton").gameObject;
        SellButton = CompanionSell.gameObject.transform.Find("SellButton").gameObject;
 	   CompanionSell.transform.SetParent(shop.ShopContainer.transform);
-	ShopCharacterText = CompanionSell.transform.Find( "CharacterStats" ).GetComponent < UIItemsWithLabels >( );
-		ShopWeaponsText = CompanionSell.transform.Find( "WeaponStats" ).GetComponent < UIItemsWithLabels >( );
-		ShopCharacterText.FindLabels();
-		ShopWeaponsText.FindLabels();
+	   ShopCharacterText = CompanionSell.transform.Find( "CharacterStats" ).GetComponent < UIItemsWithLabels >( );
+	   ShopWeaponsText = CompanionSell.transform.Find( "WeaponStats" ).GetComponent < UIItemsWithLabels >( );
+	   ShopCharacterText.FindLabels();
+	   ShopWeaponsText.FindLabels();
 	   BuyButton.SetActive(true);
 	   SellButton.SetActive(false);
+	   CompanionSell.gameObject.SetActive(true);
     }
+
+	public void Enable( ) {
+		tab.gameObject.SetActive(true);
+		StaticManager.tabManager.tabs.Add(tab);
+	}
 	public void AddWeapon(BaseItems item ) {
         GameObject newlabel = Instantiate(StaticManager.uiManager.Weapon.gameObject);
 		newlabel.GetComponent < Tab >( ).companion = companion;

@@ -511,8 +511,13 @@ MonoBehaviour:
   PotionsInventory: {fileID: 0}
   CharacterInventory: {fileID: 0}
   WeaponInventory: {fileID: 0}
+  CompanionSell: {fileID: 0}
+  SellButton: {fileID: 0}
+  BuyButton: {fileID: 0}
   weapons: []
   potions: []
+  ShopWeaponsText: {fileID: 0}
+  ShopCharacterText: {fileID: 0}
   companion: {fileID: 0}
   sendToButton: {fileID: 0}
   tab: {fileID: 0}
@@ -531,7 +536,10 @@ MonoBehaviour:
   stats: {fileID: 114945605140973340}
   AttachedCharacter: {fileID: 0}
   objectName: Fire Gun
+  objectLevel: 1
+  IncreaseAmount: 0
   AnimationClass: {fileID: 0}
+  Damage: 0
   Ammo: 5
   Capacity: 5
   FireRate: 2
@@ -662,8 +670,11 @@ MonoBehaviour:
   canvas: {fileID: 0}
   cube: {fileID: 0}
   projector: {fileID: 0}
+  Level: 1
+  characterName: 
   inventory: {fileID: 0}
   inventoryUI: {fileID: 0}
+  ResaleWorth: 10
 --- !u!114 &114719782891815874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -742,6 +753,7 @@ MonoBehaviour:
   stamina: 0
   strength: 15
   maxAttackpoints: 6
+  baseStats: {fileID: 0}
 --- !u!114 &114945605140973340
 MonoBehaviour:
   m_ObjectHideFlags: 1
