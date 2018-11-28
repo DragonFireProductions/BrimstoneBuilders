@@ -29,7 +29,7 @@ public class BaseItems : MonoBehaviour {
 
 	public string objectName;
 
-	public float Level = 1;
+	public float objectLevel = 1;
 
 	public float IncreaseAmount;
 
@@ -45,9 +45,9 @@ public class BaseItems : MonoBehaviour {
 	}
 
 	public virtual void IncreaseStats(float amount ) {
-		stats.baseDamage = (int)Level + (int)amount + stats.baseDamage;
-		stats.attackSpeed = ( int )Level + (int)amount + stats.attackSpeed;
-		stats.value = ( int )Level + ( int )amount + stats.value;
+		stats.baseDamage = (int)objectLevel + (int)amount + stats.baseDamage;
+		stats.attackSpeed = ( int )objectLevel + (int)amount + stats.attackSpeed;
+		stats.value = ( int )objectLevel + ( int )amount + stats.value;
 	}
 	
 	// Update is called once per frame

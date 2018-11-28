@@ -16,6 +16,24 @@ public class Companion : BaseCharacter {
 
     public CharacterInventoryUI inventoryUI;
 
+    public override object this[string propertyName]
+    {
+        get
+        {
+            if (this.GetType().GetField(propertyName) != null)
+            {
+                return this.GetType().GetField(propertyName).GetValue(this);
+            }
+            else if (base[propertyName] != null)
+            {
+                return base[propertyName];
+            }
+
+            return null;
+        }
+        set { this.GetType().GetField(propertyName).SetValue(this, value); }
+    }
+
     protected override void Awake( ) {
         base.Awake();
        

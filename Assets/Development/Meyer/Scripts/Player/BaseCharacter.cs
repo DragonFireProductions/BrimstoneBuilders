@@ -67,6 +67,8 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public float Level = 1;
 
+	public string characterName;
+
 	public virtual void IncreaseLevel(float amount_f ) {
 		Level += amount_f;
 	}
@@ -84,22 +86,12 @@ public abstract class BaseCharacter : MonoBehaviour {
 		projector = gameObject.transform.Find( "Projector" ).GetComponent < Projector >( );
 		projector.gameObject.SetActive(false);
 		cube = transform.Find( "Cube" ).gameObject;
-
+		characterName = gameObject.name;
 	}
 
-    public object this[string propertyName]
+    public virtual object this[string propertyName]
     {
-        get
-        {
-            if (this.GetType().GetField(propertyName) != null)
-            {
-                return this.GetType().GetField(propertyName).GetValue(this);
-            }
-            else
-            {
-                return null;
-            }
-        }
+        get { return this.GetType().GetField(propertyName) != null ? this.GetType().GetField(propertyName).GetValue(this) : null; }
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
     public IEnumerator EDOT(int damage, float interval, int _hits, BaseItems item)
