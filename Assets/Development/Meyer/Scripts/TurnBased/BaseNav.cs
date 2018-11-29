@@ -35,7 +35,7 @@ public class BaseNav : MonoBehaviour {
 
     [ SerializeField ] public float stoppingDistance;
 
-    [ SerializeField ] protected float waittime = 2;
+    [ SerializeField ] protected float waittime = 0.5f;
 
     protected float timer = 0;
 

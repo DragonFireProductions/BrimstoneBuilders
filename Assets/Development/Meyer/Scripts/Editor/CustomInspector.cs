@@ -198,18 +198,16 @@ public class CustomInspector : EditorWindow {
                     GUILayout.Space( 40 );
                     GUILayout.BeginHorizontal( );
 
-                    WeaponItemList.itemList[ viewIndex - 1 ].IncreaseAmount = EditorGUILayout.FloatField( "Stat increase amount:" , WeaponItemList.itemList[ viewIndex - 1 ].IncreaseAmount, GUILayout.ExpandWidth(false) );
-
                     GUILayout.Space(10);
                     EditorGUIUtility.labelWidth = 45;
-                    WeaponItemList.itemList[ viewIndex - 1 ].objectLevel = EditorGUILayout.FloatField( "Level: " , WeaponItemList.itemList[ viewIndex - 1 ].objectLevel, GUILayout.ExpandWidth(false) );
-
+                    WeaponItemList.itemList[ viewIndex - 1 ].subClassLevel = EditorGUILayout.FloatField( "Level: " , WeaponItemList.itemList[ viewIndex - 1 ].subClassLevel, GUILayout.ExpandWidth(false) );
+                    
                     if ( WeaponItemList.itemList[ viewIndex - 1 ] is WeaponObject ){
                         var ob1 = WeaponItemList.itemList[ viewIndex - 1 ] as WeaponObject;
 
-                        GUILayout.Space(10);
-                        EditorGUIUtility.labelWidth = 50;
-                        ob1.Damage = EditorGUILayout.IntField( "Damage:" , ob1.Damage, GUILayout.ExpandWidth(false) );
+                        ob1.Damage = ( int )WeaponItemList.itemList[ viewIndex - 1 ].subClassLevel;
+
+                        
                         if ( WeaponItemList.itemList[ viewIndex - 1 ] is GunType ){
                             var ob = WeaponItemList.itemList[ viewIndex - 1 ] as GunType;
 
@@ -272,11 +270,14 @@ public class CustomInspector : EditorWindow {
                             }
                             GUILayout.EndHorizontal();
 
+                            GUILayout.BeginHorizontal();
+
                         }
                         else if ( WeaponItemList.itemList[ viewIndex - 1 ] is SwordType ){
                             var ob = WeaponItemList.itemList[ viewIndex - 1 ] as SwordType;
 
                         }
+
                     }
 
                     if ( WeaponItemList.itemList[ viewIndex - 1 ] is Potions ){
@@ -324,7 +325,6 @@ public class CustomInspector : EditorWindow {
 
     void AddItem () 
     {
-
         BaseItems newItem = new BaseItems {objectName = "new item"};
         WeaponItemList.itemList.Add (newItem);
         viewIndex = WeaponItemList.itemList.Count;

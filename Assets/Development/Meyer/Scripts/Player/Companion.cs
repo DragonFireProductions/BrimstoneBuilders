@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 using Kristal;
 
@@ -17,6 +18,12 @@ public class Companion : BaseCharacter {
     public CharacterInventoryUI inventoryUI;
 
     public int ResaleWorth;
+
+    public Magic magic = new Magic();
+
+    public Range range = new Range();
+
+    public Mele mele = new Mele();
 
     public override object this[string propertyName]
     {
@@ -44,6 +51,10 @@ public class Companion : BaseCharacter {
     }
 
     protected virtual void Start( ) {
+        
+        magic.character = this;
+        range.character = this;
+        mele.character = this;
 
         inventoryUI = GetComponent<CharacterInventoryUI>();
         inventoryUI.Init(this);
@@ -57,7 +68,7 @@ public class Companion : BaseCharacter {
         attachedWeapon.AttachedCharacter = this;
         inventoryUI.AddWeapon(attachedWeapon);
         attachedWeapon.tag = "Weapon";
-
+        attachedWeapon.AssignDamage();
 
     }
 

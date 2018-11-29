@@ -57,14 +57,14 @@ public class Projectile : MonoBehaviour
             {
                 //Deals damage to the target and applies the DOT effect.
                 
-                other.GetComponent<BaseCharacter>().Damage(weapon.Damage, weapon);
-                other.GetComponent<BaseCharacter>().DOT(weapon.Damage / 2, interval, hits, weapon); //Apply the dot damage.
+                other.GetComponent<BaseCharacter>().Damage((int)weapon.Damage, weapon);
+                other.GetComponent<BaseCharacter>().DOT((int)weapon.Damage / 2, interval, hits, weapon); //Apply the dot damage.
             }
 
             else
             {
                 //Deals the base damage only.
-                other.GetComponent<BaseCharacter>().Damage(weapon.Damage, weapon);
+                other.GetComponent<BaseCharacter>().Damage((int)weapon.Damage, weapon);
                 StartCoroutine(stopBullet(1));
             }
             

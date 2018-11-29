@@ -20,4 +20,9 @@ public class HealPotion : Potions {
 		}
 		
 	}
+
+	public override void IncreaseSubClass( float amount ) {
+        var a = AttachedCharacter as Companion;
+        a.magic.IncreaseLevel(amount);
+    }
 }

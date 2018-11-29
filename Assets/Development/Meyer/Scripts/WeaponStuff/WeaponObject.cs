@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Assets.Meyer.TestScripts.Player;
 
@@ -10,12 +11,14 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
-public class WeaponObject : BaseItems
+public abstract class WeaponObject : BaseItems
 {
     /// Variables should be protected NOT public or private
     public AnimationClass AnimationClass;
 
-    public int Damage;
+    public float Damage;
+
+   
     protected override void Start() {
         base.Start();
         AnimationClass = gameObject.GetComponent < AnimationClass >( );
@@ -68,8 +71,19 @@ public class WeaponObject : BaseItems
         AttachedCharacter.attachedWeapon.gameObject.layer = AttachedCharacter.gameObject.layer;
 
         AttachedCharacter.attachedWeapon.tag = "Weapon";
+
+
     }
 
+    public override void IncreaseSubClass(float amount ) {
+        if ( Damage <= 10 ){
+        Damage += amount;
+        }
+    }
+
+    public override void AssignDamage( ) {
+        
+    }
 
     protected virtual void OnTriggerEnter(Collider collider)
     {
@@ -78,6 +92,7 @@ public class WeaponObject : BaseItems
             StaticManager.Character.inventory.PickUp(this);
             this.GetComponent<BoxCollider>().enabled = false;
             AttachedCharacter = StaticManager.Character;
+            
         }
 
         if ((collider.tag == "Enemy"  || collider.tag == "Companion" || collider.tag == "Player") && tag == "Weapon"){
@@ -85,7 +100,7 @@ public class WeaponObject : BaseItems
                 if ( AttachedCharacter.tag == "Companion" && collider.tag == "Player" ){
                     return;
                 }
-                collider.gameObject.GetComponent<BaseCharacter>().Attack(AttachedCharacter);
+                collider.gameObject.GetComponent<BaseCharacter>().Damage((int)Damage, this);
         }
     }
 

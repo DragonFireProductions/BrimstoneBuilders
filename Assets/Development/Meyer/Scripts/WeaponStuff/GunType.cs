@@ -61,7 +61,6 @@ public class GunType : WeaponObject {
         }
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
-
     public override void Use(BaseCharacter enemy ) {
         Debug.Log( "Attacking" );
 
@@ -72,7 +71,7 @@ public class GunType : WeaponObject {
             StartCoroutine( Reload( ) );
         }
     }
-
+    
     private IEnumerator Fire(BaseCharacter enemy ) {
 
         canFire = false;
@@ -83,13 +82,17 @@ public class GunType : WeaponObject {
        
         Ammo -= 1;
 
-        yield return new WaitForSeconds( 1 / FireRate );
+        yield return new WaitForSeconds( FireRate );
 
         canFire = true;
     }
-    
-   
 
+
+    public override void AssignDamage()
+    {
+        var a = AttachedCharacter as Companion;
+        Damage = a.range.CurrentLevel;
+    }
     private IEnumerator Reload( ) {
         reloading = true;
 
@@ -105,6 +108,13 @@ public class GunType : WeaponObject {
         if ( bullets == null ){
         FillBullets(AttachedCharacter.gameObject);
         }
+    }
+    
+
+    public override void IncreaseSubClass(float amount ) {
+        base.IncreaseSubClass(amount);
+        var character = AttachedCharacter as Companion;
+        character.range.IncreaseLevel(amount);
     }
     [HideInInspector] protected int _lastBullet;
     public GameObject GetPulledBullets( ) {

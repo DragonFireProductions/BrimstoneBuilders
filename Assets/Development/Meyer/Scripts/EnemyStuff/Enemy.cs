@@ -41,7 +41,7 @@ namespace Kristal
         
         public override void Damage(int _damage, BaseItems item)
         {
-
+            item.IncreaseSubClass(0.00053f);
             if (stats.Health > 0)
             {
                 InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.red);
@@ -51,7 +51,7 @@ namespace Kristal
             }
             else
             {   
-                item.IncreaseStats(item.IncreaseAmount);
+                item.IncreaseSubClass(0.03f);
                 drop = Random.Range(1, 10);
                 if (drop > 5)
                 {
@@ -72,14 +72,6 @@ namespace Kristal
                     newsword.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
                     newsword.gameObject.transform.position = deadPos;
                 }
-                //for (int i = 0; i < MaxCoinCount; i++)
-                //{
-                //    deadPos = UnityEngine.Random.insideUnitSphere * 2.5f + this.gameObject.transform.position;
-                //    deadPos.y = StaticManager.Character.gameObject.transform.position.y;
-                //    var newCoin = Instantiate(Resources.Load<GameObject>("Coin"));
-                //    newCoin.gameObject.transform.position = deadPos;
-                //}
-                //
                 StaticManager.RealTime.Enemies.Remove(this);
                 Destroy(gameObject);
             }

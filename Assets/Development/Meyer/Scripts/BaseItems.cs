@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using Assets.Meyer.TestScripts.Player;
+
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -20,7 +23,6 @@ public class BaseItems : MonoBehaviour {
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
 
-
     public GameObject item;
 
 	public ItemStats stats;
@@ -29,29 +31,24 @@ public class BaseItems : MonoBehaviour {
 
 	public string objectName;
 
-	public float objectLevel = 1;
-
-	public float IncreaseAmount;
+	public float subClassLevel;
 
 	protected virtual void Start( ) {
-		IncreaseStats(0);
+
 	}
     public virtual void Use(BaseCharacter enemy = null  ) {
 		
 	}
 
 	public virtual void Attach( ) {
-		var a = AttachedCharacter as Companion;
-	}
+        if (AttachedCharacter is Companion || AttachedCharacter is Character)
+        {
+			AssignSubClass();
+        }
+    }
 
-	public virtual void IncreaseStats(float amount ) {
-		stats.baseDamage = (int)objectLevel + (int)amount + stats.baseDamage;
-		stats.attackSpeed = ( int )objectLevel + (int)amount + stats.attackSpeed;
-		stats.value = ( int )objectLevel + ( int )amount + stats.value;
-	}
+	public virtual void AssignDamage( ) { }
+	public virtual void IncreaseSubClass( float amount ){}
+	public virtual void AssignSubClass( ){}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
