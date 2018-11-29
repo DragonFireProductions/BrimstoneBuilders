@@ -123,7 +123,7 @@ TrailRenderer:
       key5: {r: 1, g: 0.8469602, b: 0, a: 0}
       key6: {r: 1, g: 1, b: 1, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 5975
+      ctime0: 0
       ctime1: 32960
       ctime2: 65535
       ctime3: 65535
@@ -161,11 +161,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d9e60362e854ba4b809597631bcfd66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 0
-  Speed: 0
+  Speed: 20
+  doesDOT: 1
+  hits: 1
+  interval: 1
+  weapon: {fileID: 0}
+  hitEffect: 6
+  y_pos: 10
   initialDamage: 0
-  hits: 0
-  interval: 0
 --- !u!136 &136015161434348312
 CapsuleCollider:
   m_ObjectHideFlags: 1

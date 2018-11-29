@@ -50,10 +50,10 @@ namespace Kristal
                 blood.transform.SetParent(gameObject.transform);
             }
             else
-            {
+            {   
                 item.IncreaseStats(item.IncreaseAmount);
                 drop = Random.Range(1, 10);
-                if (false)
+                if (drop > 5)
                 {
                     for (int i = 0; i < MaxCoinCount; i++)
                     {

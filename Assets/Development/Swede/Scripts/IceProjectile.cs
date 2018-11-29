@@ -5,9 +5,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class IceProjectile : Projectile {
-
-    public int initialDamage; //initial damage done to enemy on hit.
-
+    
     public float SecondsFrozen; //Amount of time spent frozen.
     // Use this for initialization
     public void Start()
@@ -18,13 +16,9 @@ public class IceProjectile : Projectile {
     {
         if (other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player")
         {
-            base.OnTriggerEnter(other);
-            StartCoroutine(Freeze(other, SecondsFrozen)); //Freezes whoever makes contact with the projectile.
-
-            //play particle.
+            base.OnTriggerEnter(other); //Calls Projectile's OnTriggerEnter
+            other.GetComponent<BaseCharacter>().Freeze(6); //Freezes whoever makes contact with the projectile.
         }
-        //Play particle system for effects.
-        //Set the position to passed in 'other'.
     }
 
     public IEnumerator Freeze(Collider other, float seconds)

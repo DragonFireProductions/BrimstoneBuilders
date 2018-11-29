@@ -88,11 +88,35 @@ public abstract class BaseCharacter : MonoBehaviour {
 		cube = transform.Find( "Cube" ).gameObject;
 		characterName = gameObject.name;
 	}
-
     public virtual object this[string propertyName]
     {
-        get { return this.GetType().GetField(propertyName) != null ? this.GetType().GetField(propertyName).GetValue(this) : null; }
+        get
+        {
+            if (this.GetType().GetField(propertyName) != null)
+            {
+                return this.GetType().GetField(propertyName).GetValue(this);
+            }
+
+            return null;
+        }
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
+    }
+    public void Freeze(float time)
+    {
+        float timer = time;
+        StartCoroutine(FreezeC(timer));
+
+    }
+    private IEnumerator FreezeC(float timer)
+    {
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            Nav.SetState = BaseNav.state.FREEZE;
+
+            yield return new WaitForEndOfFrame();
+        }
+        Nav.SetState = BaseNav.state.ATTACKING;
     }
     public IEnumerator EDOT(int damage, float interval, int _hits, BaseItems item)
     {

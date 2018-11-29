@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class FireProjectile : Projectile
 {
-    public int initialDamage; //initial damage done to enemy on hit.
     public void Start()
     {
         DOT_interval = 1; //Time between DOT damage.
@@ -15,12 +14,7 @@ public class FireProjectile : Projectile
     {
         if(other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player")
         {
-            base.OnTriggerEnter(other);
-            //play particle.
+            base.OnTriggerEnter(other); //Calls Projectile's OnTriggerEnter
         }
-
-
-        //Play particle system for effects.
-        //Set the position to passed in 'other'.
     }
 }
