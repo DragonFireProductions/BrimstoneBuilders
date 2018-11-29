@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 114933235897853630}
   - component: {fileID: 114058077768897796}
   - component: {fileID: 114080140434697064}
+  - component: {fileID: 114085152413034214}
   m_Layer: 10
   m_Name: EnemyLeaderSword
   m_TagString: Enemy
@@ -403,6 +404,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HPbar: {fileID: 114059290026547468}
+--- !u!114 &114085152413034214
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1804723303208942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fec39a11410b16b4a98c30f16f89fc35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsChosenBySelf: {r: 0, g: 0, b: 0, a: 0}
+  LeaderColor: {r: 0, g: 0, b: 0, a: 0}
+  BaseColor: {r: 0, g: 0, b: 0, a: 0}
+  IsChosenByEnemy: {r: 0, g: 0, b: 0, a: 0}
+  characters: []
+  characterObjs: []
+  agent: {fileID: 0}
+  obj: {fileID: 0}
+  stats: {fileID: 0}
+  leader: {fileID: 0}
+  material: {fileID: 0}
+  animator: {fileID: 0}
+  AnimationClass: {fileID: 0}
+  Nav: {fileID: 0}
+  damage: 0
+  threat_signal: {fileID: 0}
+  attachedWeapon: {fileID: 0}
+  enemy: {fileID: 0}
+  attackers: []
+  damageNumbers: []
+  canvas: {fileID: 0}
+  cube: {fileID: 0}
+  projector: {fileID: 0}
+  ChosenCompanion: {fileID: 0}
 --- !u!114 &114393986886300406
 MonoBehaviour:
   m_ObjectHideFlags: 1

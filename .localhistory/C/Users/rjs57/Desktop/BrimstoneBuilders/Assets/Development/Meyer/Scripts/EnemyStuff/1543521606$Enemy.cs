@@ -98,7 +98,15 @@ namespace Kristal
                     newsword.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
                     newsword.gameObject.transform.position = deadPos;
                 }
-                
+                //
+                //for (int i = 0; i < MaxCoinCount; i++)
+                //{
+                //    deadPos = UnityEngine.Random.insideUnitSphere * 2.5f + this.gameObject.transform.position;
+                //    deadPos.y = StaticManager.Character.gameObject.transform.position.y;
+                //    var newCoin = Instantiate(Resources.Load<GameObject>("Coin"));
+                //    newCoin.gameObject.transform.position = deadPos;
+                //}
+                //
                 StaticManager.RealTime.Enemies.Remove(this);
                 Destroy(gameObject);
             }

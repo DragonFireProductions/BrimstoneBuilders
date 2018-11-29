@@ -91,8 +91,6 @@ public abstract class BaseCharacter : MonoBehaviour {
 
             yield return new WaitForSeconds(interval);
         }
-
-        Nav.SetState = BaseNav.state.ATTACKING;
     }
     public void DOT(int damage, float interval, int hits)
     {

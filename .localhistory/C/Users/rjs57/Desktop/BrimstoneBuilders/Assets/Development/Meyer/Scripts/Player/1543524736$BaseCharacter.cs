@@ -87,12 +87,10 @@ public abstract class BaseCharacter : MonoBehaviour {
         {
             Damage(damage);
             hits++;
-            Nav.SetState = BaseNav.state.IDLE;
+
 
             yield return new WaitForSeconds(interval);
         }
-
-        Nav.SetState = BaseNav.state.ATTACKING;
     }
     public void DOT(int damage, float interval, int hits)
     {
@@ -106,6 +104,6 @@ public abstract class BaseCharacter : MonoBehaviour {
     protected void Update () {
 
 	}
-
+	
 
 }
