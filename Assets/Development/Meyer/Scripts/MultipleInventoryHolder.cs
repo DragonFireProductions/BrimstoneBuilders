@@ -112,8 +112,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
     }
     public void Use( ) {
-		StaticManager.inventories.inventory.character.inventoryUI.UpdateItem(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), selectedObj);
-		selectedObj.Attach();
+        selectedObj.Attach();
 	}
 	public PlayerInventory GetInventory(string parentName ) {
 		alllables.RemoveAll( item => item == null );

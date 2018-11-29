@@ -13,7 +13,7 @@ public abstract class Potions : BaseItems {
 
     public abstract void Cast(BaseCharacter companion = null );
     public override void Attach( ) {
-
+       
         Cast(AttachedCharacter);
 
         var c = AttachedCharacter as Companion;

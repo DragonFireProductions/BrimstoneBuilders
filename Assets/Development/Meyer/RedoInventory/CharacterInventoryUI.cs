@@ -8,6 +8,7 @@ using Assets.Meyer.TestScripts.Player;
 using TMPro;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Experimental.UIElements;
 
 public class CharacterInventoryUI : MonoBehaviour {
@@ -102,7 +103,9 @@ public class CharacterInventoryUI : MonoBehaviour {
     }
 
 	public void AddToShop(Shop shop ) {
-       var b = Instantiate(StaticManager.uiManager.CompanionSellStats);
+
+		gameObject.SetActive(false);
+        var b = Instantiate(StaticManager.uiManager.CompanionSellStats);
        CompanionSell = b.GetComponent<Tab>();
        CompanionSell.companion = companion;
        CompanionSell.transform.position = StaticManager.uiManager.CompanionSellStats.transform.position;
@@ -238,8 +241,11 @@ public class CharacterInventoryUI : MonoBehaviour {
     {
         for (int i = 0; i < instanceToUpdate.Labels.Count; i++)
         {
+			Assert.IsNotNull(_object, _object.name + " is null ");
             var a = _object.stats[ instanceToUpdate.Labels[ i ].name ] ?? _object[ instanceToUpdate.Labels[ i ].name ];
+			Assert.IsNotNull(a, instanceToUpdate.Labels[i].name + " is null for " + _object.name);
             instanceToUpdate.Labels[i].labelText.text = a.ToString();
+			
         }
     }
     public void UpdateItem() {

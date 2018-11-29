@@ -36,12 +36,15 @@ public class Companion : BaseCharacter {
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
 
-    protected override void Awake( ) {
+    protected void Awake( ) {
         base.Awake();
-       
+
+
+
     }
 
     protected virtual void Start( ) {
+
         inventoryUI = GetComponent<CharacterInventoryUI>();
         inventoryUI.Init(this);
         inventoryUI.companion = this;
@@ -54,6 +57,8 @@ public class Companion : BaseCharacter {
         attachedWeapon.AttachedCharacter = this;
         inventoryUI.AddWeapon(attachedWeapon);
         attachedWeapon.tag = "Weapon";
+
+
     }
 
     public void OnTriggerEnter(Collider collider ) {

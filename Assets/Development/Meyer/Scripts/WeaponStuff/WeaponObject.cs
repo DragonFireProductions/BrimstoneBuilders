@@ -41,6 +41,8 @@ public class WeaponObject : BaseItems
     }
 
     public override void Attach( ) {
+        StaticManager.inventories.inventory.character.inventoryUI.UpdateItem(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), this);
+
         item.SetActive(true);
 
         item.transform.position = AttachedCharacter.cube.transform.position;

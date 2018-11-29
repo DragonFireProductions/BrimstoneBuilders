@@ -50,8 +50,8 @@ public class Projectile : MonoBehaviour
             //Sets the y position and plays the particle effect, y gets set in the item editor.
             var aboveHead = other.transform.position;
             aboveHead.y += y_pos;
-            StartCoroutine(StaticManager.particleManager.Play(hitEffect, aboveHead, TimeToPlay, other.gameObject.transform));
-            StartCoroutine(StaticManager.particleManager.Play(ParticleManager.states.Blood, aboveHead, 2, other.gameObject.transform));
+            StaticManager.particleManager.Play(hitEffect, aboveHead, other.gameObject.transform);
+            StaticManager.particleManager.Play(ParticleManager.states.Blood, aboveHead, other.gameObject.transform);
             
             if (doesDOT)
             {
