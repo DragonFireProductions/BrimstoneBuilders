@@ -106,16 +106,6 @@ public class GunType : WeaponObject {
         FillBullets(AttachedCharacter.gameObject);
         }
     }
-    public override void IncreaseStats(float amount)
-    {
-        base.IncreaseStats(amount);
-        Capacity  = (int)objectLevel + (int)amount + Capacity;
-        ReloadTime = -(int)objectLevel + -(int)amount + ReloadTime + ReloadTime;
-        Range = Range + ( int )objectLevel + ( int )amount + stats.reach;
-        FireRate = FireRate + ( int )objectLevel + ( int )amount + stats.attackSpeed;
-        Damage = Damage + ( int )objectLevel + ( int )amount + stats.baseDamage;
-
-    }
     [HideInInspector] protected int _lastBullet;
     public GameObject GetPulledBullets( ) {
             GameObject currentBullet;

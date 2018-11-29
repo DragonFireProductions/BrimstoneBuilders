@@ -198,43 +198,76 @@ public class CustomInspector : EditorWindow {
                     GUILayout.Space( 40 );
                     GUILayout.BeginHorizontal( );
 
-                    WeaponItemList.itemList[ viewIndex - 1 ].IncreaseAmount = EditorGUILayout.FloatField( "Stat increase amount:" , WeaponItemList.itemList[ viewIndex - 1 ].IncreaseAmount );
+                    WeaponItemList.itemList[ viewIndex - 1 ].IncreaseAmount = EditorGUILayout.FloatField( "Stat increase amount:" , WeaponItemList.itemList[ viewIndex - 1 ].IncreaseAmount, GUILayout.ExpandWidth(false) );
 
-                    WeaponItemList.itemList[ viewIndex - 1 ].objectLevel = EditorGUILayout.FloatField( "Level: " , WeaponItemList.itemList[ viewIndex - 1 ].objectLevel );
+                    GUILayout.Space(10);
+                    EditorGUIUtility.labelWidth = 45;
+                    WeaponItemList.itemList[ viewIndex - 1 ].objectLevel = EditorGUILayout.FloatField( "Level: " , WeaponItemList.itemList[ viewIndex - 1 ].objectLevel, GUILayout.ExpandWidth(false) );
 
                     if ( WeaponItemList.itemList[ viewIndex - 1 ] is WeaponObject ){
                         var ob1 = WeaponItemList.itemList[ viewIndex - 1 ] as WeaponObject;
 
+                        GUILayout.Space(10);
+                        EditorGUIUtility.labelWidth = 50;
+                        ob1.Damage = EditorGUILayout.IntField( "Damage:" , ob1.Damage, GUILayout.ExpandWidth(false) );
                         if ( WeaponItemList.itemList[ viewIndex - 1 ] is GunType ){
                             var ob = WeaponItemList.itemList[ viewIndex - 1 ] as GunType;
 
                             GUILayout.EndHorizontal();
 
                             GUILayout.BeginHorizontal();
-                            ob.Ammo     = EditorGUILayout.IntField( "Ammo: " ,     ob.Ammo );
-                            ob.Capacity = EditorGUILayout.IntField( "Capacity: " , ob.Capacity );
-                            ob.FireRate = EditorGUILayout.FloatField( "Fire Rate" , ob.FireRate );
-                            GUILayout.EndHorizontal();
-                            GUILayout.BeginHorizontal();
-                            ob.Range      = EditorGUILayout.FloatField( "Range" ,       ob.Range );
-                            ob.ReloadTime = EditorGUILayout.FloatField( "Reload time" , ob.ReloadTime );
+                            GUILayout.Space(10);
+                            EditorGUIUtility.labelWidth = 45;
+                            ob.Ammo     = EditorGUILayout.IntField( "Ammo: " ,     ob.Ammo, GUILayout.ExpandWidth(false) );
 
-                            ob.projectile = EditorGUILayout.ObjectField( ob.projectile , typeof( Projectile ) , true ) as Projectile;
+                            GUILayout.Space(10);
+                            EditorGUIUtility.labelWidth = 55;
+                            ob.Capacity = EditorGUILayout.IntField( "Capacity: " , ob.Capacity, GUILayout.ExpandWidth(false) );
+
+                            GUILayout.Space(10);
+                            EditorGUIUtility.labelWidth = 57;
+                            ob.FireRate = EditorGUILayout.FloatField( "Fire Rate:" , ob.FireRate, GUILayout.ExpandWidth(false) );
+
+                            GUILayout.Space(10);
+                            EditorGUIUtility.labelWidth = 45;
+                            ob.Range      = EditorGUILayout.FloatField( "Range:" ,       ob.Range, GUILayout.ExpandWidth(false) );
+
+                            GUILayout.Space(10);
+                            EditorGUIUtility.labelWidth = 80;
+
+                            GUILayout.Space(10);
+                            ob.ReloadTime = EditorGUILayout.FloatField( "Reload time:" , ob.ReloadTime, GUILayout.ExpandWidth(false) );
+
+                            GUILayout.EndHorizontal();
+                            GUILayout.Space(20);
+                            GUILayout.BeginHorizontal();
+
+                            ob.projectile = EditorGUILayout.ObjectField( ob.projectile , typeof( Projectile ), true, GUILayout.ExpandWidth(false) ) as Projectile;
+                           
+                            GUILayout.Space(10);
+                             EditorGUIUtility.labelWidth = 45;
+                            ob.projectile.hitEffect = (ParticleManager.states)EditorGUILayout.EnumPopup("Particle", ob.projectile.hitEffect, GUILayout.ExpandWidth(false)) ;
+
+                            GUILayout.Space(10);
+                            EditorGUIUtility.labelWidth = 65;
+                            ob.projectile.y_pos = EditorGUILayout.IntField("Y Position:", ob.projectile.y_pos, GUILayout.ExpandWidth(false));
+
                             GUILayout.EndHorizontal();
                             GUILayout.BeginHorizontal();
-                            ob.projectile.hitEffect = (ParticleManager.states)EditorGUILayout.EnumPopup("Particle", ob.projectile.hitEffect) ;
-                            ob.projectile.y_pos = EditorGUILayout.IntField("Y Position", ob.projectile.y_pos);
-                            ob.projectile.TimeToPlay = EditorGUILayout.IntField("Time To Play", ob.projectile.TimeToPlay);
+                            
 
                             GUILayout.EndHorizontal();
                             GUILayout.BeginHorizontal();
                             if ( ob.projectile ){
-                                ob.projectile.doesDOT = GUILayout.Toggle( ob.projectile.doesDOT , "Does damage over time" );
+                                ob.projectile.doesDOT = GUILayout.Toggle( ob.projectile.doesDOT , "Does damage over time", GUILayout.ExpandWidth(false) );
 
                                 if ( ob.projectile.doesDOT ){
-                                    ob.projectile.hits = EditorGUILayout.IntField( "Hit amount: " , ob.projectile.hits );
 
-                                    ob.projectile.interval = EditorGUILayout.FloatField( "Interval" , ob.projectile.interval );
+                                    EditorGUIUtility.labelWidth = 75;
+                                    ob.projectile.hits = EditorGUILayout.IntField( "Hit amount: " , ob.projectile.hits, GUILayout.ExpandWidth(false) );
+
+                                    EditorGUIUtility.labelWidth = 45;
+                                    ob.projectile.interval = EditorGUILayout.FloatField( "Interval:" , ob.projectile.interval, GUILayout.ExpandWidth(false) );
                                 }
                             }
                             GUILayout.EndHorizontal();
@@ -264,7 +297,8 @@ public class CustomInspector : EditorWindow {
                         GUILayout.EndHorizontal();
                     }
                 }
-
+                EditorUtility.SetDirty( WeaponItemList.itemList[viewIndex - 1]);
+                EditorUtility.SetDirty(WeaponItemList);
             }
             else 
             {
