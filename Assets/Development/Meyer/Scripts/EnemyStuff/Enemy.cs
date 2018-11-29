@@ -19,6 +19,8 @@ namespace Kristal
 
         private int drop;
 
+        public int damage;
+
         protected void Awake()
         {
             base.Awake();
@@ -29,12 +31,15 @@ namespace Kristal
 
         protected void Start()
         {
+            characters = new List<BaseCharacter>();
+
             StaticManager.RealTime.AllEnemies.Add(this);
             material.color = BaseColor;
             Nav = gameObject.GetComponent<EnemyNav>();
 
             MaxCoinCount = UnityEngine.Random.Range(1, MaxCoinCount);
             StaticManager.weaponManager.AttachWeapon(this);
+            attachedWeapon.Damage = damage;
         }
 
         public void Remove(BaseCharacter chara) { }
@@ -78,20 +83,7 @@ namespace Kristal
 
             damage -= _damage;
         }
-
-
-        //runs when enemy's animation is half way through
-        public override void Attack(BaseCharacter chara)
-        {
-            //gets the damage value
-            float l_damage = StaticManager.DamageCalc.CalcAttack(stats, chara.stats);
-            //adds the value to the total damage
-            damage += (int)l_damage;
-            //sets the text value to the damage done
-            //damageText.text = damage.ToString();
-
-            Damage((int)l_damage, chara.attachedWeapon);
-        }
+        
     }
 
 }

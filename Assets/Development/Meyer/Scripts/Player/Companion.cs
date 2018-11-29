@@ -17,7 +17,7 @@ public class Companion : BaseCharacter {
 
     public CharacterInventoryUI inventoryUI;
 
-    public int ResaleWorth;
+    public int cost;
 
     public Magic magic = new Magic();
 
@@ -95,23 +95,6 @@ public class Companion : BaseCharacter {
             StaticManager.inventories.Destroy(inventory);
             Destroy(gameObject);
         }
-        damage -= _damage;
-    }
-    //runs when enemys's attack animation is half way over
-    public override  void Attack(BaseCharacter chara) {
-
-    IncreaseLevel(0.0002f);
-     //gets the damage value
-     float l_damage = StaticManager.DamageCalc.CalcAttack( stats , chara.stats );
-
-     //adds the value to the total damage
-     damage += ( int )l_damage;
-
-     //sets the text value to the damage done
-     //damageText.text = damage.ToString( );
-
-     Damage( ( int )l_damage, chara.attachedWeapon);
-
     }
 
     public void Remove( BaseCharacter _chara ) { }

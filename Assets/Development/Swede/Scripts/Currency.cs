@@ -78,9 +78,14 @@ public class Currency : MonoBehaviour
         {
             StaticManager.UiInventory.ItemsInstance
                         .GetLabel("CompanionBuyError", StaticManager.UiInventory.ItemsInstance.ShopUI).text = "";
-            if ( RemoveCoins( container.companion.ResaleWorth ) ){
+
+            if ( RemoveCoins( container.companion.cost ) ){
+                StaticManager.Character.inventory.coinCount -= container.companion.cost;
+                container.companion.cost = container.companion.cost / 2;
                 StaticManager.UiInventory.ItemsInstance
                             .GetLabel("CompanionBuyError", StaticManager.UiInventory.ItemsInstance.ShopUI).text = "";
+
+
                 StaticManager.Character.spawner.CompanionSpawn( container.companion );
                 container.companion.inventoryUI.SellButton.SetActive(true);
                 container.companion.inventoryUI.BuyButton.SetActive(false);
@@ -103,7 +108,7 @@ public class Currency : MonoBehaviour
         var c = container.companion.Nav as CompanionNav;
         Destroy(c.behaviors.gameObject);
         StaticManager.inventories.Destroy(container.companion.inventory);
-        AddCoins(container.companion.ResaleWorth);
+        AddCoins(container.companion.cost);
         Destroy(container.companion.gameObject);
         _shop.shopCompanions.Remove( container );
         Destroy(container.gameObject);

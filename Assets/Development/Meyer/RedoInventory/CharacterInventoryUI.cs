@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
 
 using Assets.Meyer.TestScripts.Player;
@@ -237,13 +238,22 @@ public class CharacterInventoryUI : MonoBehaviour {
 	}
 
     // Use this for initialization
+
+
+    public void UpdateLevel(UIItemsWithLabels instanceToUpdate)
+    {
+        for (int i = 0; i < instanceToUpdate.Labels.Count; i++)
+        {
+	        
+        }
+    }
     public void UpdateItem(UIItemsWithLabels instanceToUpdate, BaseItems _object)
     {
         for (int i = 0; i < instanceToUpdate.Labels.Count; i++)
         {
 			Assert.IsNotNull(_object, _object.name + " is null ");
             var a = _object.stats[ instanceToUpdate.Labels[ i ].name ] ?? _object[ instanceToUpdate.Labels[ i ].name ];
-			Assert.IsNotNull(a, instanceToUpdate.Labels[i].name + " is null for " + _object.name);
+			Assert.IsNotNull(a, instanceToUpdate.Labels[i].name + " is null for " + _object.name + " in " + instanceToUpdate.name);
             instanceToUpdate.Labels[i].labelText.text = a.ToString();
 			
         }
@@ -264,12 +274,40 @@ public class CharacterInventoryUI : MonoBehaviour {
     public void UpdateCharacter(UIItemsWithLabels instance)
     {
 	    for ( int i = 0 ; i < instance.Labels.Count ; i++ ){
+		    float a = 0;
+		    string b;
+;            if (instance.Labels[i].name.ToLower() == "mele")
+            {
+                a = companion.mele.CurrentLevel;
+	            int c = (int)a;
+                b = c.ToString();
+            }
+            else if (instance.Labels[i].name.ToLower() == "range")
+            {
+                a = companion.range.CurrentLevel;
+	            int c = (int)a;
+                b = c.ToString();
+            }
+            else if ( instance.Labels[ i ].name.ToLower( ) == "magic" ){
+                a = companion.range.CurrentLevel;
+			    int c = (int)a;
+                b = c.ToString();
+            }
+			else if ( instance.Labels[ i ].name.ToLower( ) == "charactername" ){
+			    b = companion.characterName;
+		    }
+		    else{
+			    float p;
+                var d = companion.stats[instance.Labels[i].name] ?? companion[instance.Labels[i].name];
+                float.TryParse(d.ToString(), out p);
+                a = (int)p;
+                int c = (int)a;
+                b = c.ToString();
+            }
 
-		    var a = companion.stats[instance.Labels[i].name] ?? companion[ instance.Labels[ i ].name ];
-		    float l_num;
-		    float.TryParse( a.ToString( ) , out l_num );
-		    int p = ( int )l_num;
-            instance.Labels[i].labelText.text = p.ToString();
+		    
+		    instance.Labels[i].labelText.text = b.ToString();
+
         }
     }
     public void UpdatePotions( ) {

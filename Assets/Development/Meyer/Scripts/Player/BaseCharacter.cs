@@ -47,8 +47,6 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public BaseNav Nav;
 
-	public int damage = 0;
-
 	public SpriteRenderer threat_signal;
 
 	public WeaponObject attachedWeapon;
@@ -132,10 +130,12 @@ public abstract class BaseCharacter : MonoBehaviour {
     }
     public void DOT(int damage, float interval, int hits, BaseItems item)
     {
+	    if ( damage <= 1 ){
+		    damage = 1;
+	    }
         StartCoroutine(EDOT(damage, interval, hits, item));
 
     }
-    public abstract void Attack( BaseCharacter attacker );
 
 	public abstract void Damage( int damage, BaseItems item );
     // Update is called once per frame

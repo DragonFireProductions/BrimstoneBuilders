@@ -41,14 +41,9 @@ public class BaseItems : MonoBehaviour {
 	}
 
 	public virtual void Attach( ) {
-        if (AttachedCharacter is Companion || AttachedCharacter is Character)
-        {
-			AssignSubClass();
-        }
     }
 
 	public virtual void AssignDamage( ) { }
 	public virtual void IncreaseSubClass( float amount ){}
-	public virtual void AssignSubClass( ){}
 	
 }

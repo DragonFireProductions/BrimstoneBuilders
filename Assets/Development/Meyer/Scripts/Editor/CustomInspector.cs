@@ -200,12 +200,9 @@ public class CustomInspector : EditorWindow {
 
                     GUILayout.Space(10);
                     EditorGUIUtility.labelWidth = 45;
-                    WeaponItemList.itemList[ viewIndex - 1 ].subClassLevel = EditorGUILayout.FloatField( "Level: " , WeaponItemList.itemList[ viewIndex - 1 ].subClassLevel, GUILayout.ExpandWidth(false) );
-                    
+
                     if ( WeaponItemList.itemList[ viewIndex - 1 ] is WeaponObject ){
                         var ob1 = WeaponItemList.itemList[ viewIndex - 1 ] as WeaponObject;
-
-                        ob1.Damage = ( int )WeaponItemList.itemList[ viewIndex - 1 ].subClassLevel;
 
                         
                         if ( WeaponItemList.itemList[ viewIndex - 1 ] is GunType ){

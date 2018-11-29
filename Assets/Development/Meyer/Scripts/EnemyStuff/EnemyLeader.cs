@@ -21,7 +21,6 @@ public class EnemyLeader : Enemy {
     protected void Start () {
         base.Start( );
 
-        characters = new List < BaseCharacter >();
         Leader = this.gameObject.GetComponent < Enemy >( );
 
         gameObject.GetComponent < Enemy >( ).leader = this;
