@@ -43,17 +43,8 @@ public class Currency : MonoBehaviour
             StaticManager.Character.inventory.coinCount -= shop.companionPrice;
         }
     }
-    public bool RemoveCoins(int coins)
-    {
-        if (StaticManager.Character.inventory.coinCount < coins)
-        {
-            return false;
-        }
-        else
-        {
-            StaticManager.Character.inventory.coinCount -= coins;
-            return true;
-        }
+    public bool RemoveCoins(int coins) {
+        return StaticManager.Character.inventory.coinCount >= coins;
     }
 
     public void SwitchToBuy( ) {
@@ -90,6 +81,7 @@ public class Currency : MonoBehaviour
                 container.companion.inventoryUI.SellButton.SetActive(true);
                 container.companion.inventoryUI.BuyButton.SetActive(false);
                 container.companion.inventoryUI.tab.gameObject.SetActive(true);
+                container.companion.inventoryUI.UpdateCharacter(container.companion.inventoryUI.ShopCharacterText);
                 container.gameObject.transform.SetParent(_shop.Sell.transform);
             }
             else{
