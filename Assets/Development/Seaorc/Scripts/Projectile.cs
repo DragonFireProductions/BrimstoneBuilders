@@ -70,7 +70,6 @@ public class Projectile : MonoBehaviour
                 other.GetComponent<BaseCharacter>().Damage((int)weapon.Damage, weapon);
                 StartCoroutine(stopBullet(1));
             }
-            
         }
 
     }

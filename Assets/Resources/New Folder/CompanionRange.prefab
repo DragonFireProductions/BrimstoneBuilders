@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 114769894129107898}
   - component: {fileID: 114815214641196938}
   - component: {fileID: 114935220115371162}
+  - component: {fileID: 54603017747126370}
   m_Layer: 11
   m_Name: CompanionRange
   m_TagString: Companion
@@ -444,6 +445,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!54 &54603017747126370
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1827922970652190}
+  serializedVersion: 2
+  m_Mass: 0.64
+  m_Drag: 2.77
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &65264393952393198
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -572,6 +588,10 @@ MonoBehaviour:
   subClassLevel: 3
   AnimationClass: {fileID: 0}
   Damage: 3
+  RunAwayOnUse: 0
+  KnockBack: 0
+  type: 0
+  KnockBackAmount: 0
   Ammo: 20
   Capacity: 10
   FireRate: 1
@@ -675,6 +695,7 @@ MonoBehaviour:
   projector: {fileID: 0}
   Level: 1
   characterName: 
+  ridgidbody: {fileID: 0}
   inventory: {fileID: 0}
   inventoryUI: {fileID: 0}
   cost: 15

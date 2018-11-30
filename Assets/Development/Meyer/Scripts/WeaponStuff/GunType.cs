@@ -30,6 +30,8 @@ public class GunType : WeaponObject {
         if ( tag != "PickUp" ){
             FillBullets(AttachedCharacter.gameObject);
         }
+
+        type = SubClasses.Types.RANGE;
     }
     
     public void FillBullets(GameObject collider ) {
@@ -61,20 +63,26 @@ public class GunType : WeaponObject {
         }
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
-    public override void Use(BaseCharacter enemy ) {
+    public override void Use( ) {
+        base.Use();
         Debug.Log( "Attacking" );
 
         if ( canFire && Ammo > 0 ){
-            StartCoroutine( Fire(enemy ) );
+            StartCoroutine( Fire( ) );
         }
         else if ( !reloading && Ammo == 0 ){
             StartCoroutine( Reload( ) );
         }
     }
     
-    private IEnumerator Fire(BaseCharacter enemy ) {
+    private IEnumerator Fire( ) {
 
         canFire = false;
+        if (KnockBack)
+        {
+            AttachedCharacter.KnockBack(KnockBackAmount);
+
+        }
         var proj = GetPulledBullets( );
         proj.gameObject.transform.position = AttachedCharacter.transform.position + ( AttachedCharacter.transform.forward * 2 );
         proj.transform.rotation = transform.rotation;

@@ -97,7 +97,7 @@ public class LeaderNav : CompanionNav {
 			SetState = state.FREEZE;
 			if (character.attachedWeapon is GunType && Physics.Raycast( l_ray , out hit ) ){
 				if ( hit.collider.tag != "Companion" && hit.collider.tag != "Player" ){
-					character.attachedWeapon.Use(null);
+					character.attachedWeapon.Use();
 				}
 			}
 		}
@@ -153,7 +153,7 @@ public class LeaderNav : CompanionNav {
 //						StaticManager.UiInventory.ItemsInstance.PlayerStats.transform.Find( "WeaponImage" ).GetComponent < RawImage >( ).texture = hit1.collider.GetComponent < BaseCharacter >( ).attachedWeapon.stats.icon;
 					}
 				}
-					character.attachedWeapon.Use(character as BaseCharacter);
+					character.attachedWeapon.Use();
 			}
 		}
 
@@ -192,7 +192,7 @@ public class LeaderNav : CompanionNav {
 	                    }
 
 	                    transform.LookAt(enemy.transform.position);
-                        character.attachedWeapon.Use(character.enemy as Enemy);
+                        character.attachedWeapon.Use();
 	                    break;
 				
 
@@ -212,7 +212,7 @@ public class LeaderNav : CompanionNav {
 	                    if ( character.attachedWeapon is GunType ){
 
 
-		                    character.attachedWeapon.Use( enemy as Enemy );
+		                    character.attachedWeapon.Use();
 		                    SetState = state.IDLE;
 	                    }
 				

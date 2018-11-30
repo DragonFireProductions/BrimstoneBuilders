@@ -15,6 +15,12 @@ public class Tab : MonoBehaviour {
 
 	public UIItemsWithLabels WeaponStats;
 
+	public Image bar;
+
+	public Text Level;
+
+	public Text SubClass;
+
     public void Attach( ) {
 		StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.Equip);
 		StaticManager.inventories.selectedObj = item;

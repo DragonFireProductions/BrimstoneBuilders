@@ -18,7 +18,13 @@ public abstract class WeaponObject : BaseItems
 
     public float Damage;
 
-   
+    public bool RunAwayOnUse = false;
+
+    public bool KnockBack = false;
+
+    public SubClasses.Types type;
+
+    public float KnockBackAmount;
     protected override void Start() {
         base.Start();
         AnimationClass = gameObject.GetComponent < AnimationClass >( );
@@ -85,6 +91,9 @@ public abstract class WeaponObject : BaseItems
         
     }
 
+    public override void Use( ) {
+        
+    }
     protected virtual void OnTriggerEnter(Collider collider)
     {
         if (collider.tag == "Player" && !StaticManager.UiInventory.Dragging && tag == "PickUp")

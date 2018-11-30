@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Mail;
 
 using Assets.Meyer.TestScripts;
@@ -67,6 +68,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public string characterName;
 
+	public Rigidbody ridgidbody;
 	public virtual void IncreaseLevel(float amount_f ) {
 		Level += amount_f;
 	}
@@ -85,6 +87,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 		projector.gameObject.SetActive(false);
 		cube = transform.Find( "Cube" ).gameObject;
 		characterName = gameObject.name;
+		ridgidbody = GetComponent < Rigidbody >( );
 	}
     public virtual object this[string propertyName]
     {
@@ -116,21 +119,46 @@ public abstract class BaseCharacter : MonoBehaviour {
         }
         Nav.SetState = BaseNav.state.ATTACKING;
     }
-    public IEnumerator EDOT(int damage, float interval, int _hits, BaseItems item)
+    public IEnumerator EDOT(int damage, float interval, int _hits, WeaponObject item)
     {
         int hits = 0;
         while (hits < _hits)
         {
             Damage(damage, item);
             hits++;
-            Nav.SetState = BaseNav.state.IDLE;
+
+	        if ( item.RunAwayOnUse ){
+		        Nav.SetState = BaseNav.state.IDLE;
+            }
 
             yield return new WaitForSeconds(interval);
         }
 
         Nav.SetState = BaseNav.state.ATTACKING;
     }
-    public void DOT(int damage, float interval, int hits, BaseItems item)
+
+	public void KnockBack(float knockback ) {
+		StartCoroutine( KnockBackC(knockback ) );
+	}
+
+	public IEnumerator KnockBackC(float knockback ) {
+		Nav.Agent.enabled = false;
+		Nav.enabled = false;
+		ridgidbody.isKinematic = false;
+		ridgidbody.AddForce(-transform.forward * (knockback * 2), ForceMode.Impulse);
+
+		yield return new WaitForSeconds(0.4f);
+
+		while ( Vector3.Distance(ridgidbody.velocity, new Vector3(0,0,0)) > 2){
+			yield return new WaitForEndOfFrame( );
+		}
+
+		ridgidbody.isKinematic = true;
+		Nav.enabled = true;
+		Nav.Agent.enabled = true;
+
+	}
+    public void DOT(int damage, float interval, int hits, WeaponObject item)
     {
 	    if ( damage <= 1 ){
 		    damage = 1;

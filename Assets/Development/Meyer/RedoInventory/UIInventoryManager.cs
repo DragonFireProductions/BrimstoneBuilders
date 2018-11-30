@@ -41,6 +41,8 @@ public class UIInventoryManager : MonoBehaviour {
 
     public GameObject CompanionSellStats;
 
+    public Tab SubclassHub;
+
     public Image meleBar;
 
     public Image magicBar;
@@ -59,6 +61,12 @@ public class UIInventoryManager : MonoBehaviour {
     {
         get { return this.GetType().GetField(propertyName).GetValue(this); }
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
+    }
+
+    public void Update() {
+        SubclassHub.Level.text = ( ( int )StaticManager.Character.Level ).ToString( );
+        SubclassHub.SubClass.text = StaticManager.Character.attachedWeapon.type.ToString( );
+        SubclassHub.bar.fillAmount = StaticManager.Character.attachedWeapon.subClassLevel - ( int )StaticManager.Character.attachedWeapon.subClassLevel;
     }
     
 }

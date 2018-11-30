@@ -199,12 +199,23 @@ public class CustomInspector : EditorWindow {
                     GUILayout.BeginHorizontal( );
 
                     GUILayout.Space(10);
-                    EditorGUIUtility.labelWidth = 45;
-
+                    
                     if ( WeaponItemList.itemList[ viewIndex - 1 ] is WeaponObject ){
                         var ob1 = WeaponItemList.itemList[ viewIndex - 1 ] as WeaponObject;
 
-                        
+                        EditorGUIUtility.labelWidth = 45;
+                        EditorGUILayout.LabelField("Run Away On Hit");
+                        ob1.RunAwayOnUse = EditorGUILayout.Toggle(ob1.RunAwayOnUse);
+
+                        EditorGUIUtility.labelWidth = 45;
+                        EditorGUILayout.LabelField("Knock Back");
+                        ob1.KnockBack = EditorGUILayout.Toggle(ob1.KnockBack);
+
+                        EditorGUIUtility.labelWidth = 45;
+                        EditorGUILayout.LabelField("Knock Back Velocity");
+                        ob1.KnockBackAmount = EditorGUILayout.FloatField(ob1.KnockBackAmount);
+
+
                         if ( WeaponItemList.itemList[ viewIndex - 1 ] is GunType ){
                             var ob = WeaponItemList.itemList[ viewIndex - 1 ] as GunType;
 

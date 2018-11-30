@@ -138,7 +138,7 @@ public class BaseNav : MonoBehaviour {
                             var distance = Vector3.Distance( transform.position , character.enemy.transform.position );
 
                             if ( distance < battleDistance ){
-                                character.attachedWeapon.Use( character.enemy );
+                                character.attachedWeapon.Use(  );
                             }
                         }
                 //if current attacker dies and someone is still attacking

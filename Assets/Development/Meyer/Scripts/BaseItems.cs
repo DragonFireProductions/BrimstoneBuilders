@@ -31,12 +31,14 @@ public class BaseItems : MonoBehaviour {
 
 	public string objectName;
 
+	
+
 	public float subClassLevel;
 
 	protected virtual void Start( ) {
 
 	}
-    public virtual void Use(BaseCharacter enemy = null  ) {
+    public virtual void Use() {
 		
 	}
 
