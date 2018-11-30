@@ -25,6 +25,8 @@ public class Companion : BaseCharacter {
 
     public Mele mele = new Mele();
 
+    public SubClasses CurrentSubClass;
+
     public override object this[string propertyName]
     {
         get

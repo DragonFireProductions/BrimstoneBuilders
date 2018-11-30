@@ -20,8 +20,12 @@ public class SwordType : WeaponObject {
     public override void IncreaseSubClass( float amount ) {
         
         base.IncreaseSubClass(amount);
-        var a = AttachedCharacter as Companion;
-        a.mele.IncreaseLevel(amount);
+        var character = AttachedCharacter as Companion;
+        int level = (int)character.mele.CurrentLevel;
+        character.mele.IncreaseLevel(amount);
+        int currLevel = (int)character.mele.CurrentLevel;
+        if (currLevel - level == 1)
+            InstatiateFloatingText.InstantiateFloatingText("MELE++",character, Color.green);
     }
 
     public override void AssignDamage( ) {

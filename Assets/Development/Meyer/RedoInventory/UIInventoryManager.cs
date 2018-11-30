@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Reflection;
 
+using JetBrains.Annotations;
+
 using TMPro;
 
 using UnityEngine;
@@ -64,9 +66,19 @@ public class UIInventoryManager : MonoBehaviour {
     }
 
     public void Update() {
-        SubclassHub.Level.text = ( ( int )StaticManager.Character.Level ).ToString( );
         SubclassHub.SubClass.text = StaticManager.Character.attachedWeapon.type.ToString( );
-        SubclassHub.bar.fillAmount = StaticManager.Character.attachedWeapon.subClassLevel - ( int )StaticManager.Character.attachedWeapon.subClassLevel;
+
+        if ( StaticManager.Character.attachedWeapon is GunType ){
+            int cur = ( int )StaticManager.Character.range.CurrentLevel;
+            SubclassHub.bar.fillAmount = StaticManager.Character.range.CurrentLevel - cur;
+            SubclassHub.Level.text = cur.ToString( );
+        }
+
+        else if ( StaticManager.Character.attachedWeapon is SwordType ){
+            int cur = (int)StaticManager.Character.mele.CurrentLevel;
+            SubclassHub.bar.fillAmount = StaticManager.Character.mele.CurrentLevel - cur;
+            SubclassHub.Level.text = cur.ToString( );
+        }
     }
     
 }

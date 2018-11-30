@@ -122,7 +122,11 @@ public class GunType : WeaponObject {
     public override void IncreaseSubClass(float amount ) {
         base.IncreaseSubClass(amount);
         var character = AttachedCharacter as Companion;
+        int level = (int)character.range.CurrentLevel;
         character.range.IncreaseLevel(amount);
+        int currLevel = ( int )character.range.CurrentLevel;
+        if ( currLevel - level == 1 ) 
+            InstatiateFloatingText.InstantiateFloatingText("RANGE++",character,  Color.green);
     }
     [HideInInspector] protected int _lastBullet;
     public GameObject GetPulledBullets( ) {
@@ -140,5 +144,4 @@ public class GunType : WeaponObject {
             _lastBullet += 1;
             return currentBullet;
     }
-
 }

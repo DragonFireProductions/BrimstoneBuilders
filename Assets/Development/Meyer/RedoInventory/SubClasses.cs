@@ -15,6 +15,7 @@ public abstract class SubClasses {
     public virtual void IncreaseLevel(float amount)
     {
 	    if ( CurrentLevel < 10 ){
+			
 		    CurrentLevel += amount;
         }
     }

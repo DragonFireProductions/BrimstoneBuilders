@@ -46,7 +46,7 @@ namespace Kristal
         
         public override void Damage(int _damage, BaseItems item)
         {
-            item.IncreaseSubClass(0.00053f);
+            item.IncreaseSubClass(0.053f);
             if (stats.Health > 0)
             {
                 InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.red);
@@ -56,7 +56,7 @@ namespace Kristal
             }
             else
             {   
-                item.IncreaseSubClass(0.03f);
+                item.IncreaseSubClass(0.3f);
                 drop = Random.Range(1, 10);
                 if (drop > 5)
                 {
