@@ -241,7 +241,12 @@ public class CustomInspector : EditorWindow {
                            
                             GUILayout.Space(10);
                              EditorGUIUtility.labelWidth = 45;
-                            ob.projectile.hitEffect = (ParticleManager.states)EditorGUILayout.EnumPopup("Particle", ob.projectile.hitEffect, GUILayout.ExpandWidth(false)) ;
+                            ob.projectile.hiteffect = EditorGUILayout.ObjectField(ob.projectile.hiteffect, typeof(ParticleSystem), true) as ParticleSystem ;
+
+                            GUILayout.Space(10);
+                            EditorGUIUtility.labelWidth = 60;
+                            var main = ob.projectile.hiteffect.main;
+                            main.duration = EditorGUILayout.FloatField( "Duration" , ob.projectile.hiteffect.main.duration );
 
                             GUILayout.Space(10);
                             EditorGUIUtility.labelWidth = 65;

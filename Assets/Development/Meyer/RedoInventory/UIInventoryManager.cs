@@ -5,6 +5,7 @@ using System.Reflection;
 using TMPro;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIInventoryManager : MonoBehaviour {
 
@@ -39,6 +40,12 @@ public class UIInventoryManager : MonoBehaviour {
     public GameObject comparedInventoryWeapons;
 
     public GameObject CompanionSellStats;
+
+    public Image meleBar;
+
+    public Image magicBar;
+
+    public Image rangeBar;
     public void Start( ) {
         
         WeaponInventoryStats.GetComponent<UIItemsWithLabels>().FindLabels();

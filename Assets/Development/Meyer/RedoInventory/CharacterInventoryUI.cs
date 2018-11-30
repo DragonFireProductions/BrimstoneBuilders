@@ -120,6 +120,7 @@ public class CharacterInventoryUI : MonoBehaviour {
 	   BuyButton.SetActive(true);
 	   SellButton.SetActive(false);
 	   CompanionSell.gameObject.SetActive(true);
+		sendToButton.gameObject.SetActive(false);
 	    StaticManager.RealTime.Companions.Remove(companion);
 	}
 
@@ -271,6 +272,15 @@ public class CharacterInventoryUI : MonoBehaviour {
 		    }
 	    }
     }
+
+	public void UpdateSubClassBar( ) {
+		float a = companion.mele.CurrentLevel - ( int )companion.mele.CurrentLevel;
+		StaticManager.uiManager.meleBar.fillAmount = a;
+
+		StaticManager.uiManager.rangeBar.fillAmount = companion.range.CurrentLevel - ( int )companion.range.CurrentLevel;
+
+		StaticManager.uiManager.magicBar.fillAmount = companion.magic.CurrentLevel - ( int )companion.magic.CurrentLevel;
+	}
     public void UpdateCharacter(UIItemsWithLabels instance)
     {
 	    for ( int i = 0 ; i < instance.Labels.Count ; i++ ){

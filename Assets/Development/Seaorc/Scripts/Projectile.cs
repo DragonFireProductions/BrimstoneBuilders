@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour
 
     public GunType weapon;
 
-    public ParticleManager.states hitEffect;
+    public ParticleSystem hiteffect;
 
     public int TimeToPlay;
 
@@ -50,7 +50,10 @@ public class Projectile : MonoBehaviour
             //Sets the y position and plays the particle effect, y gets set in the item editor.
             var aboveHead = other.transform.position;
             aboveHead.y += y_pos;
-            StaticManager.particleManager.Play(hitEffect, aboveHead, other.gameObject.transform);
+            var effect = Instantiate( hiteffect );
+            effect.transform.position = aboveHead;
+            effect.transform.SetParent(other.transform);
+            effect.Play();
             StaticManager.particleManager.Play(ParticleManager.states.Blood, aboveHead, other.gameObject.transform);
             
             if (doesDOT)

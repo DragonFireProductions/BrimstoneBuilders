@@ -124,10 +124,13 @@ public class companionSpawner : MonoBehaviour
         StaticManager.RealTime.Companions.Add(newEnemy.GetComponent<Companion>());
         newButton.newFriend = newEnemy.GetComponent<Companion>();
         StaticManager.inventories.alllables.Add(newEnemy.inventory);
+        companion.gameObject.SetActive(true);
+        companion.inventoryUI.sendToButton.gameObject.SetActive(true);
+
     }
 
 
-public void Kill()
+    public void Kill()
     {
         if (comp.Count <= 0)
         {

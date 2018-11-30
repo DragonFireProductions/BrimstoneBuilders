@@ -61,6 +61,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		StaticManager.uiManager.inventoryCharacterStats.SetActive(true);
 
 		tab.companion.inventoryUI.UpdateCharacter( StaticManager.uiManager.inventoryCharacterStats.GetComponentInChildren < UIItemsWithLabels >( ) );
+		tab.companion.inventoryUI.UpdateSubClassBar();
 		tab.companion.inventoryUI.UpdateItem(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), tab.companion.attachedWeapon);
 
 		if ( prev_inventory ){
