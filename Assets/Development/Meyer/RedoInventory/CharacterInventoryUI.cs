@@ -105,8 +105,8 @@ public class CharacterInventoryUI : MonoBehaviour {
 
 	public void AddToShop(Shop shop ) {
 
-		gameObject.SetActive(false);
-        var b = Instantiate(StaticManager.uiManager.CompanionSellStats);
+	   gameObject.SetActive(false);
+       var b = Instantiate(StaticManager.uiManager.CompanionSellStats);
        CompanionSell = b.GetComponent<Tab>();
        CompanionSell.companion = companion;
        CompanionSell.transform.position = StaticManager.uiManager.CompanionSellStats.transform.position;
@@ -115,13 +115,14 @@ public class CharacterInventoryUI : MonoBehaviour {
 	   CompanionSell.transform.SetParent(shop.ShopContainer.transform);
 	   ShopCharacterText = CompanionSell.transform.Find( "CharacterStats" ).GetComponent < UIItemsWithLabels >( );
 	   ShopWeaponsText = CompanionSell.transform.Find( "WeaponStats" ).GetComponent < UIItemsWithLabels >( );
+
 	   ShopCharacterText.FindLabels();
 	   ShopWeaponsText.FindLabels();
 	   BuyButton.SetActive(true);
 	   SellButton.SetActive(false);
 	   CompanionSell.gameObject.SetActive(true);
-		sendToButton.gameObject.SetActive(false);
-	    StaticManager.RealTime.Companions.Remove(companion);
+	   sendToButton.gameObject.SetActive(false);
+	   StaticManager.RealTime.Companions.Remove(companion);
 	}
 
 	public void Enable( ) {

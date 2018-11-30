@@ -143,13 +143,7 @@ public class Stat : MonoBehaviour {
             agility  = Random.Range( 0 , 30 );
         }
 
-        if ( gameObject == StaticManager.Character.gameObject ){
-            health = 100;
-        }
-        else{
-        health = Random.Range( 5 , 100 );
-
-        }
+        health = 100;
         endurance    = Random.Range( 0 , 30 );
         charisma     = Random.Range( 0 , 30 );
         perception   = Random.Range( 0 , 30 );

@@ -9,6 +9,7 @@ using Kristal;
 using TMPro;
 
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -56,18 +57,18 @@ public class LeaderNav : CompanionNav {
 
     private bool timerEnabled = false;
 
-    public List < Companion > highlightedCompanions;
-
     private void Start( ) {
-		base.Start();
-        highlightedCompanions = new List < Companion >();
 		hit = new RaycastHit();
 		character = GetComponent < Character >( );
+
 		message = GameObject.Find( "GoForward" ).GetComponent < TextMeshProUGUI >( );
 		mask = LayerMask.GetMask("Enemy");
         character.projector.gameObject.SetActive(true);
 
-	}
+        battleDistance = 4;
+        companion = GetComponent<Character>();
+	    Agent = GetComponent < NavMeshAgent >( );
+    }
 
 	// Update is called once per frame
 	protected override void Update () {
@@ -244,7 +245,7 @@ public class LeaderNav : CompanionNav {
     private IEnumerator yield( ) {
 		yield return new WaitForSeconds(0.5f);
 
-		colliders = Physics.OverlapSphere(transform.position, 20, mask);
+		colliders = Physics.OverlapSphere(transform.position, 20,mask);
 
         foreach ( var l_collider in colliders ){
             StaticManager.RealTime.Attacking = true;

@@ -27,13 +27,11 @@ public class CompanionNav : BaseNav {
     public void Start( ) {
         base.Start( );
         enemiesToAttack = new List<Enemy>();
-        SetState          = state.IDLE;
         character         = GetComponent < Companion >( );
         randDistance = Random.Range( 1.5f, 1.5f + 2);
         battleDistance = 4;
         companion = GetComponent<Companion>();
-        SetAgreesionState = AggressionStates.PASSIVE;
-        
+        enabled = false;
     }
 
     //Handles assigning enemies for companion

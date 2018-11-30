@@ -124,6 +124,10 @@ public class companionSpawner : MonoBehaviour
         StaticManager.RealTime.Companions.Add(newEnemy.GetComponent<Companion>());
         newButton.newFriend = newEnemy.GetComponent<Companion>();
         StaticManager.inventories.alllables.Add(newEnemy.inventory);
+        companion.Nav.enabled = true;
+        companion.Nav.SetState = BaseNav.state.IDLE;
+        var nav = companion.Nav as CompanionNav;
+        nav.SetAgreesionState = CompanionNav.AggressionStates.PASSIVE;
         companion.gameObject.SetActive(true);
         companion.inventoryUI.sendToButton.gameObject.SetActive(true);
 

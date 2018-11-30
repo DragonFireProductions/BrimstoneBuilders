@@ -42,8 +42,6 @@ public class Shop : MonoBehaviour
                 o.inventoryUI.UpdateCharacter(o.inventoryUI.ShopCharacterText);
                 o.inventoryUI.UpdateItem(o.inventoryUI.ShopWeaponsText, o.attachedWeapon);
                 o.inventoryUI.tab.gameObject.SetActive(false);
-
-
             }
         }
     }
