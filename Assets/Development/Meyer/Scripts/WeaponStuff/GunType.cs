@@ -96,6 +96,7 @@ public class GunType : WeaponObject {
 
         canFire = true;
     }
+    
 
     public IEnumerator stopBullet(int i, GameObject proj ) {
         yield return new WaitForSeconds(i);

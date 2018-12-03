@@ -29,24 +29,10 @@ public class SwordType : WeaponObject {
     }
     protected override void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag == "Player" && !StaticManager.UiInventory.Dragging && tag == "PickUp")
-        {
-            StaticManager.Character.inventory.PickUp(this);
-            this.GetComponent<BoxCollider>().enabled = false;
-            AttachedCharacter = StaticManager.Character;
+        base.OnTriggerEnter(collider);
 
-        }
-
-        if ((collider.tag == "Enemy" || collider.tag == "Companion" || collider.tag == "Player") && tag == "Weapon")
-        {
-
-            if (AttachedCharacter.tag == "Companion" && collider.tag == "Player")
-            {
-                return;
-            }
-
+        if ( ( collider.tag == "Enemy" || collider.tag == "Companion" || collider.tag == "Player" ) && tag == "Weapon" ){
             hit = true;
-            collider.gameObject.GetComponent<BaseCharacter>().Damage((int)Damage, this);
         }
     }
     public override void IncreaseSubClass( float amount ) {

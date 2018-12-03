@@ -68,6 +68,9 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public string characterName;
 
+	public bool critical = false;
+
+
 	public Rigidbody ridgidbody;
 	public virtual void IncreaseLevel(float amount_f ) {
 		Level += amount_f;
