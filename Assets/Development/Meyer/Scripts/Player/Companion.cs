@@ -80,7 +80,7 @@ public class Companion : BaseCharacter {
     public override void Damage(int _damage, BaseItems item)
     {
         if (stats.Health > 0){
-            InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.blue);
+            InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.blue, new Vector3(1,1,1));
             stats.Health -= _damage;
 
 

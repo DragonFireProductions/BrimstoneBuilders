@@ -54,10 +54,10 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 126
+  m_CollisionDetection: 1
 --- !u!96 &96378039497900700
 TrailRenderer:
   serializedVersion: 2
@@ -148,7 +148,7 @@ TrailRenderer:
     textureMode: 0
     generateLightingData: 0
   m_MinVertexDistance: 0.1
-  m_Autodestruct: 1
+  m_Autodestruct: 0
   m_Emitting: 1
 --- !u!114 &114309574330157626
 MonoBehaviour:
@@ -166,9 +166,10 @@ MonoBehaviour:
   hits: 1
   interval: 1
   weapon: {fileID: 0}
-  hitEffect: 6
+  hiteffect: {fileID: 198033337091196746, guid: 0f7f6e8881f440a448e5c394642e338e,
+    type: 2}
+  TimeToPlay: 0
   y_pos: 10
-  initialDamage: 0
 --- !u!136 &136015161434348312
 CapsuleCollider:
   m_ObjectHideFlags: 1

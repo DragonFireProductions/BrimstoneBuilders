@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 public class SwordType : WeaponObject {
-    
+
+    private bool hit;
     public override void Use()
     {
         base.Use();
@@ -17,6 +18,37 @@ public class SwordType : WeaponObject {
         AttachedCharacter.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
     }
 
+    public void NotHit( ) {
+        hit = false;
+    }
+
+    public void CheckHit( ) {
+        if (  hit == false ){
+            InstatiateFloatingText.InstantiateFloatingText( "MISS" , AttachedCharacter , Color.grey, new Vector3(0.5f, 0.5f, 0.5f) );
+        }
+    }
+    protected override void OnTriggerEnter(Collider collider)
+    {
+        if (collider.tag == "Player" && !StaticManager.UiInventory.Dragging && tag == "PickUp")
+        {
+            StaticManager.Character.inventory.PickUp(this);
+            this.GetComponent<BoxCollider>().enabled = false;
+            AttachedCharacter = StaticManager.Character;
+
+        }
+
+        if ((collider.tag == "Enemy" || collider.tag == "Companion" || collider.tag == "Player") && tag == "Weapon")
+        {
+
+            if (AttachedCharacter.tag == "Companion" && collider.tag == "Player")
+            {
+                return;
+            }
+
+            hit = true;
+            collider.gameObject.GetComponent<BaseCharacter>().Damage((int)Damage, this);
+        }
+    }
     public override void IncreaseSubClass( float amount ) {
         
         base.IncreaseSubClass(amount);
@@ -25,7 +57,7 @@ public class SwordType : WeaponObject {
         character.mele.IncreaseLevel(amount);
         int currLevel = (int)character.mele.CurrentLevel;
         if (currLevel - level == 1)
-            InstatiateFloatingText.InstantiateFloatingText("MELE++",character, Color.green);
+            InstatiateFloatingText.InstantiateFloatingText("MELE++",character, Color.green, new Vector3(1,1,1));
     }
 
     public override void AssignDamage( ) {

@@ -66,11 +66,19 @@ public class Projectile : MonoBehaviour
                 other.GetComponent<BaseCharacter>().Damage((int)weapon.Damage, weapon);
             }
         }
+        else{
+            InstatiateFloatingText.InstantiateFloatingText( "MISS" , weapon.AttachedCharacter , Color.grey, new Vector3(0.5f, 0.5f, 0.5f) );
+        }
 
-       
         gameObject.SetActive(false);
 
 
+    }
+
+    public void OnCollisionEnter( Collision collision ) {
+
+         InstatiateFloatingText.InstantiateFloatingText( "MISS" , weapon.AttachedCharacter , Color.grey, new Vector3(0.5f, 0.5f, 0.5f) );
+        gameObject.SetActive(false);
     }
 
     IEnumerator stopBullet(int i)
