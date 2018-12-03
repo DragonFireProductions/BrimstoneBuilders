@@ -35,7 +35,7 @@ public class GunType : WeaponObject {
     }
     
     public void FillBullets(GameObject collider ) {
-        bullets = new GameObject[30];
+        bullets = new GameObject[10];
         for ( int i = 0 ; i < bullets.Length ; i++ ){
             bullets[ i ] = Instantiate( projectile.gameObject );
             bullets[i].gameObject.SetActive(false);
@@ -84,10 +84,12 @@ public class GunType : WeaponObject {
 
         }
         var proj = GetPulledBullets( );
+
         proj.gameObject.transform.position = AttachedCharacter.transform.position + ( AttachedCharacter.transform.forward * 2 );
         proj.transform.rotation = transform.rotation;
+
         proj.gameObject.SetActive(true);
-       
+        StartCoroutine( stopBullet( 2 , proj ) );
         Ammo -= 1;
 
         yield return new WaitForSeconds( FireRate );
@@ -95,6 +97,10 @@ public class GunType : WeaponObject {
         canFire = true;
     }
 
+    public IEnumerator stopBullet(int i, GameObject proj ) {
+        yield return new WaitForSeconds(i);
+        proj.SetActive(false);
+    }
 
     public override void AssignDamage()
     {

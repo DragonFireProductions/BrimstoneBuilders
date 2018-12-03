@@ -26,11 +26,7 @@ public class Projectile : MonoBehaviour
     public int TimeToPlay;
 
     public int y_pos;
-
-    void OnEnable( ) {
-        StartCoroutine(stopBullet(5));
-
-    }
+    
     /// <summary>
     /// Moves the projectile in its forward direction
     /// </summary>
@@ -38,7 +34,7 @@ public class Projectile : MonoBehaviour
     {
         transform.Translate(0, 0, Speed * Time.deltaTime);
     }
-
+    
     /// <summary>
     /// Detects when the projectile hits an _enemy
     /// </summary>
@@ -68,16 +64,19 @@ public class Projectile : MonoBehaviour
             {
                 //Deals the base damage only.
                 other.GetComponent<BaseCharacter>().Damage((int)weapon.Damage, weapon);
-                StartCoroutine(stopBullet(1));
             }
         }
 
+       
+        gameObject.SetActive(false);
+
+
     }
-    
+
     IEnumerator stopBullet(int i)
     {
         yield return new WaitForSeconds(i);
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     /// <summary>
