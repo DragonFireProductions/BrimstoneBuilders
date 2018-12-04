@@ -9,6 +9,7 @@ using UnityEditor;
 
 using UnityEngine;
 using UnityEngine.Experimental.UIElements;
+using UnityEngine.UI;
 
 public class UIItems : MonoBehaviour {
 	
@@ -33,7 +34,7 @@ public class UIItems : MonoBehaviour {
     public bool windowIsOpen;
     public List <GameObject> openedWindow { get; set; }
 
-    public TextMeshProUGUI GetLabel(string name, UIItemsWithLabels labels)
+    public Text GetLabel(string name, UIItemsWithLabels labels)
     {
         foreach (var VARIABLE in labels.Labels)
         {
@@ -84,7 +85,7 @@ public class UIItems : MonoBehaviour {
 		for ( int i = 0 ; i < count ; i++ ){
 			label = new UIItemsWithLabels.Label();
 			label.labelObject = obj.obj.transform.Find( "Labels" ).GetChild( i ).gameObject;
-			label.labelText = obj.obj.transform.Find( "Labels" ).GetChild( i ).gameObject.GetComponent < TextMeshProUGUI >( );
+			label.labelText = obj.obj.transform.Find( "Labels" ).GetChild( i ).gameObject.GetComponent < Text >( );
 			label.name = label.labelObject.name;
 			obj.Labels.Add(label);
 		}
@@ -109,7 +110,7 @@ public class UIItems : MonoBehaviour {
         {
             label = new UIItemsWithLabels.Label();
             label.labelObject = obj.obj.transform.Find("Labels").GetChild(i).gameObject;
-            label.labelText = obj.obj.transform.Find("Labels").GetChild(i).gameObject.GetComponent<TextMeshProUGUI>();
+            label.labelText = obj.obj.transform.Find("Labels").GetChild(i).gameObject.GetComponent<Text>();
             label.name = label.labelObject.name;
             obj.Labels.Add(label);
         }

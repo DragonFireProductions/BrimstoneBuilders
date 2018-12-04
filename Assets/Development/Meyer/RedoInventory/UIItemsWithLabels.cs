@@ -5,6 +5,7 @@ using Boo.Lang;
 using TMPro;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIItemsWithLabels : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class UIItemsWithLabels : MonoBehaviour
             var child = obj.transform.GetChild(i);
             Label l = new Label();
             l.name = child.name;
-            l.labelText = child.GetComponent<TextMeshProUGUI>();
+            l.labelText = child.GetComponent<Text>();
             l.labelObject = child.gameObject;
             Labels.Add( l );
         }
@@ -32,7 +33,7 @@ public class UIItemsWithLabels : MonoBehaviour
     public struct Label
     {
 
-        public TextMeshProUGUI labelText;
+        public Text labelText;
 
         public GameObject labelObject;
 
@@ -62,7 +63,7 @@ public class UIItemsWithLabels : MonoBehaviour
             Label la = new Label();
             var child = label.transform.GetChild( i );
             la.labelObject = child.gameObject;
-            la.labelText = child.GetComponent < TextMeshProUGUI >( );
+            la.labelText = child.GetComponent < Text >( );
             la.name = child.name;
             Labels.Add( la );
         }
