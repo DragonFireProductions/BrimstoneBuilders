@@ -68,24 +68,15 @@ public class GunType : WeaponObject {
     public override void Use( ) {
         base.Use();
         Debug.Log( "Attacking" );
-
-
-
         if ( canFire && Ammo > 0 ){
-            StartCoroutine( animation() );
+             AttachedCharacter.AnimationClass.Play(AnimationClass.states.Attack);
             
         }
         else if ( !reloading && Ammo == 0 ){
             StartCoroutine( Reload( ) );
         }
     }
-
-    private IEnumerator animation( ) {
-        canFire = false;
-         AttachedCharacter.AnimationClass.Play(AnimationClass.states.Attack);
-
-       yield return new WaitForSecondsRealtime(1.5f);
-
+    public override void Activate() {
         StartCoroutine( Fire( ) );
     }
     private IEnumerator Fire( ) {

@@ -111,6 +111,10 @@ public abstract class BaseCharacter : MonoBehaviour {
         }
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
+
+	public void ActivateWeapon( ) {
+		attachedWeapon.Activate();
+	}
     public void Freeze(float time)
     {
         float timer = time;

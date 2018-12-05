@@ -54,6 +54,10 @@ public abstract class WeaponObject : BaseItems
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
 
+    public virtual void Activate( ) {
+
+    }
+
     public override void Attach( ) {
         StaticManager.inventories.inventory.character.inventoryUI.UpdateItem(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), this);
         var hand = Instantiate( leftHand );
