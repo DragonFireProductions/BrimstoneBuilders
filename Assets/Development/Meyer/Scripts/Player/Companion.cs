@@ -96,7 +96,7 @@ public class Companion : BaseCharacter {
 
 
         if (stats.Health > 0){
-            InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.blue, scale);
+            InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.white, scale);
             stats.Health -= _damage;
 
 

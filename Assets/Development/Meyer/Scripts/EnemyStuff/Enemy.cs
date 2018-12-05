@@ -60,7 +60,7 @@ namespace Kristal
             item.IncreaseSubClass(0.053f);
             if (stats.Health > 0)
             {
-                InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.red, scale);
+                InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.white, scale);
                 stats.Health -= _damage;
                 var blood = StaticManager.particleManager.Play(ParticleManager.states.Blood, transform.position);
                 blood.transform.SetParent(gameObject.transform);

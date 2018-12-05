@@ -43,7 +43,7 @@ public class SwordType : WeaponObject {
         character.mele.IncreaseLevel(amount);
         int currLevel = (int)character.mele.CurrentLevel;
         if (currLevel - level == 1)
-            InstatiateFloatingText.InstantiateFloatingText("MELE++",character, Color.green, new Vector3(1,1,1));
+            InstatiateFloatingText.InstantiateFloatingText("MELEE++",character, Color.magenta, new Vector3(1,1,1));
     }
 
     public override void AssignDamage( ) {
