@@ -20,7 +20,7 @@ public class UIInventory : MonoBehaviour
 
     public struct Stats {
 
-       public TextMeshProUGUI Obj;
+       public Text Obj;
 
        public string Name;
 
@@ -51,16 +51,16 @@ public class UIInventory : MonoBehaviour
 
     public void StartScript() {
 
-       ItemsInstance.DialogueUI.SetActive(true);
+       //ItemsInstance.DialogueUI.SetActive(true);
     }
     public void ShowNotification(string _message, float _time ) {
-        ItemsInstance.DialogueUI.GetComponentInChildren<TextMeshProUGUI>().text = _message;
+        ItemsInstance.DialogueUI.GetComponentInChildren<Text>().text = _message;
         StartCoroutine( ShowNotification( _time ) );
     }
 
     private IEnumerator ShowNotification( float _time ) {
         yield return new WaitForSeconds(_time);
-        ItemsInstance.DialogueUI.GetComponentInChildren<TextMeshProUGUI>().text = "";
+        ItemsInstance.DialogueUI.GetComponentInChildren<Text>().text = "";
 
     }
 

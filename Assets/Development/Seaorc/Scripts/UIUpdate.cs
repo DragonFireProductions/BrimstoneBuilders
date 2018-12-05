@@ -10,10 +10,10 @@ public class UIUpdate : MonoBehaviour
     [Header("Status")]
     public Image HPBar;
     public Image StaminaBar;
-    public TextMeshProUGUI HpText;
-    public TextMeshProUGUI StaminaText;
+    public Text HpText;
+    public Text StaminaText;
 
-    public TextMeshProUGUI CoinText;
+    public Text CoinText;
 
     private Stat Selected;
     private int Coins;

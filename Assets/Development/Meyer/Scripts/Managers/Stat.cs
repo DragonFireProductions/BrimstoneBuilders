@@ -4,6 +4,7 @@ using TMPro;
 
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Stat : MonoBehaviour {
 
@@ -203,7 +204,7 @@ public class Stat : MonoBehaviour {
     }
     public struct Info {
 
-        public TextMeshProUGUI text;
+        public Text text;
 
         public float value;
 

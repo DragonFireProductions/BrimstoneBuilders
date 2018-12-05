@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
    // private int playerlvl = 1;
 
    // [SerializeField]
-   // TextMeshProUGUI playerlevel;
+   // Text playerlevel;
 
    // private int isVisible = 1;
 
@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
    //     Cam = GameObject.Find("CamHolder").transform;
    //     Assert.IsNotNull(Cam, "Camholder cannot be found!");
    //     stats = GetComponent<Stat>();
-   //     playerlevel = StaticManager.uiInventory.itemsInstance.Playerlevel.GetComponent < TextMeshProUGUI >( );
+   //     playerlevel = StaticManager.uiInventory.itemsInstance.Playerlevel.GetComponent < Text >( );
    //     SetText();
    // }
 

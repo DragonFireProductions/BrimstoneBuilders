@@ -15,7 +15,7 @@ public class DialogueSystem : MonoBehaviour
     public GameObject dialoguePanel;
 
     Button nextButton, backButton, endButton; //COME BACK AND ADD AN END CONVERSATOIN BUTTON
-    TextMeshProUGUI dialogueText, nameText;
+    Text dialogueText, nameText;
     int dialogueIndex;
 
     public float typeSpeed;
@@ -36,8 +36,8 @@ public class DialogueSystem : MonoBehaviour
         backButton.onClick.AddListener(delegate { PreviousDialogue(); } );
         endButton.onClick.AddListener(delegate { EndDialogue(); });
 
-        dialogueText = dialoguePanel.transform.Find("DialogueText").GetComponent<TextMeshProUGUI>();
-        nameText = dialoguePanel.transform.Find("NPCNamePanel").GetChild(0).GetComponent<TextMeshProUGUI>(); //is this good enough? There is probably a more efficient way of handeling this
+        dialogueText = dialoguePanel.transform.Find("DialogueText").GetComponent<Text>();
+        nameText = dialoguePanel.transform.Find("NPCNamePanel").GetChild(0).GetComponent<Text>(); //is this good enough? There is probably a more efficient way of handeling this
 
         //COME BACK TO THIS AND HOOK UP ANIMATION
         //WHEN YOUR FINISHED 

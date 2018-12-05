@@ -11,6 +11,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Experimental.UIElements;
+using UnityEngine.UI;
 
 public class CharacterInventoryUI : MonoBehaviour {
 
@@ -54,7 +55,7 @@ public class CharacterInventoryUI : MonoBehaviour {
 
 	    sendToButton.companion = companion;
 
-	    sendToButton.transform.Find( "Name" ).GetComponent < TextMeshProUGUI >( ).text = name;
+	    sendToButton.transform.Find( "Name" ).GetComponent < Text >( ).text = name;
 
 	    CharacterInventory.transform.position = StaticManager.uiManager.CharacterInventory.transform.position;
 
@@ -90,7 +91,7 @@ public class CharacterInventoryUI : MonoBehaviour {
 
 		sendToButton.gameObject.SetActive(true);
 
-	    sendToButton.gameObject.transform.Find("Name").GetComponent < TextMeshProUGUI >( ).text = gameObject.name;
+	    sendToButton.gameObject.transform.Find("Name").GetComponent < Text >( ).text = gameObject.name;
 	
 		sendToButton.transform.SetParent(StaticManager.uiManager.SendToWindow.transform);
 

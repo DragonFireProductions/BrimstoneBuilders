@@ -31,18 +31,18 @@ public class LeaderNav : CompanionNav {
 
     private LayerMask mask;
 
-    [SerializeField] private TextMeshProUGUI message;
+    [SerializeField] private Text message;
 
     private ParticleSystem rain;
 
     private Vector3 rainPosition;
 
-    //[SerializeField] private TextMeshProUGUI head;
-    //[SerializeField] private TextMeshProUGUI left_arm;
-    //[SerializeField] private TextMeshProUGUI right_arm;
-    //[SerializeField] private TextMeshProUGUI body;
-    //[SerializeField] private TextMeshProUGUI legs;
-    //[SerializeField] private TextMeshProUGUI feet;
+    //[SerializeField] private Text head;
+    //[SerializeField] private Text left_arm;
+    //[SerializeField] private Text right_arm;
+    //[SerializeField] private Text body;
+    //[SerializeField] private Text legs;
+    //[SerializeField] private Text feet;
 
     //[SerializeField] private RawImage image;
     //[SerializeField] private RawImage a_head;
@@ -61,7 +61,7 @@ public class LeaderNav : CompanionNav {
 		hit = new RaycastHit();
 		character = GetComponent < Character >( );
 
-		message = GameObject.Find( "GoForward" ).GetComponent < TextMeshProUGUI >( );
+		message = GameObject.Find( "GoForward" ).GetComponent < Text >( );
 		mask = LayerMask.GetMask("Enemy");
         character.projector.gameObject.SetActive(true);
 
