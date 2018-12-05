@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4878645026886568}
   - component: {fileID: 114200386730947550}
   - component: {fileID: 96878862149873370}
-  - component: {fileID: 136916262491041270}
   - component: {fileID: 54311479985641580}
+  - component: {fileID: 136943838254452666}
   m_Layer: 0
   m_Name: IceProjectile
   m_TagString: Projectile
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1862073752885732}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -500.09442, y: 0, z: 442.3883}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -171,7 +171,7 @@ MonoBehaviour:
   TimeToPlay: 0
   y_pos: 0
   SecondsFrozen: 5
---- !u!136 &136916262491041270
+--- !u!136 &136943838254452666
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -180,7 +180,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.08
+  m_Height: 0.13
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
