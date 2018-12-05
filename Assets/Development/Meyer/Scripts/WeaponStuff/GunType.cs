@@ -78,11 +78,6 @@ public class GunType : WeaponObject {
     private IEnumerator Fire( ) {
 
         canFire = false;
-        if (KnockBack)
-        {
-            AttachedCharacter.KnockBack(KnockBackAmount);
-
-        }
         var proj = GetPulledBullets( );
 
         proj.gameObject.transform.position = AttachedCharacter.transform.position + ( AttachedCharacter.transform.forward * 2 );

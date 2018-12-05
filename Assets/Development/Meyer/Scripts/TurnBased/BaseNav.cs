@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class BaseNav : MonoBehaviour {
@@ -39,6 +41,22 @@ public class BaseNav : MonoBehaviour {
 
     protected float timer = 0;
 
+    public IEnumerator runAway()
+    {
+        yield return new WaitForSeconds(5);
+
+        SetState = state.ATTACKING;
+    }
+    public void RunAway()
+    {
+        SetState = state.IDLE;
+
+        StartCoroutine(runAway());
+
+        
+
+    }
+    
     public state SetState {
         get { return State; }
         set

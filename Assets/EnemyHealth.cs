@@ -22,7 +22,7 @@ public class EnemyHealth : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-	    enemy = gameObject.GetComponent<BaseCharacter>().stats;
+	    enemy = gameObject.GetComponentInParent<BaseCharacter>().stats;
 
        // transform.LookAt(Camera.main.transform.position);
 

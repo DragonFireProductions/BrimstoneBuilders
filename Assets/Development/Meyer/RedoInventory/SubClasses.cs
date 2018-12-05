@@ -9,7 +9,7 @@ public abstract class SubClasses {
 
 	public enum Types {
 
-		MAGIC, MELE, RANGE
+		MAGIC, MELEE, RANGE
 
 	}
     public virtual void IncreaseLevel(float amount)

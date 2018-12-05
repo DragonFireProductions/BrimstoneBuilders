@@ -51,19 +51,25 @@ namespace Kristal
             var total = item.AttachedCharacter.stats.luck + stats.luck;
 
             var rand = Random.Range( 1 , total );
-
-            if (rand > total - (item.AttachedCharacter.stats.luck * 0.5)  ){
-                _damage += 5;
-                scale = new Vector3(2,2,2);
-            }
             
-            item.IncreaseSubClass(0.053f);
+            item.IncreaseSubClass(0.00053f);
             if (stats.Health > 0)
             {
-                InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.white, scale);
+                if (rand > total - (item.AttachedCharacter.stats.luck * 0.1))
+                {
+                    _damage += _damage;
+                    scale = new Vector3(2, 2, 2);
+                    InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.yellow, scale);
+                }
+                else
+                {
+                    InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.white, scale);
+                }
+
                 stats.Health -= _damage;
-                var blood = StaticManager.particleManager.Play(ParticleManager.states.Blood, transform.position);
-                blood.transform.SetParent(gameObject.transform);
+                    var blood = StaticManager.particleManager.Play(ParticleManager.states.Blood, transform.position);
+                    blood.transform.SetParent(gameObject.transform);
+                
             }
             else
             {   

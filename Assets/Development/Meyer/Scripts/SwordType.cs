@@ -9,11 +9,7 @@ public class SwordType : WeaponObject {
     public override void Use()
     {
         base.Use();
-        if (KnockBack)
-        {
-            AttachedCharacter.KnockBack(KnockBackAmount);
-
-        }
+        
         AttachedCharacter.AnimationClass.Play(AnimationClass.states.AttackTrigger);
         AttachedCharacter.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
     }
@@ -55,6 +51,6 @@ public class SwordType : WeaponObject {
     {
         AnimationClass = gameObject.GetComponent<AnimationClass>();
         item = this.gameObject;
-        type = SubClasses.Types.MELE;
+        type = SubClasses.Types.MELEE;
     }
 }

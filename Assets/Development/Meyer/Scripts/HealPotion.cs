@@ -12,9 +12,14 @@ public class HealPotion : Potions {
 		_hit_effect.gameObject.transform.position = enemy.transform.position;
 		_hit_effect.gameObject.transform.SetParent(enemy.transform);
 		_hit_effect.gameObject.SetActive(true);
-		enemy.stats.Health += HealAmount;
 
-		if ( !StaticManager.Instance.unlimitedPotions ){
+		enemy.stats.Health += HealAmount;
+	    if(enemy.stats.Health > 100)
+	    {
+	        enemy.stats.Health = 100;
+	    }
+	    InstatiateFloatingText.InstantiateFloatingText("MAX HEALTH", enemy, Color.green, new Vector3(2,2,2));
+        if ( !StaticManager.Instance.unlimitedPotions ){
 			var e = enemy as Companion;
 			StaticManager.UiInventory.RemoveMainInventory(this, e.inventory);
 		}

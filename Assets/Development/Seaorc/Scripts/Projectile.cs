@@ -43,6 +43,19 @@ public class Projectile : MonoBehaviour
     {
         if (other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player")
         {
+            if(weapon.KnockBack)
+            {
+                var coliders = Physics.OverlapSphere(this.transform.position, 5);
+                foreach (var VARIABLE in coliders)
+                {
+                    if(VARIABLE.tag == "Enemy" || VARIABLE.tag == "Companion" ) {
+                        VARIABLE.GetComponent<BaseCharacter>().KnockBack(weapon.KnockBackAmount);
+                    }
+                   
+                }
+            }
+
+
             //Sets the y position and plays the particle effect, y gets set in the item editor.
             var aboveHead = other.transform.position;
             aboveHead.y += y_pos;
@@ -50,7 +63,7 @@ public class Projectile : MonoBehaviour
             effect.transform.position = aboveHead;
             effect.transform.SetParent(other.transform);
             effect.Play();
-            StaticManager.particleManager.Play(ParticleManager.states.Blood, aboveHead, other.gameObject.transform);
+            StaticManager.particleManager.Play(ParticleManager.states.Blood, other.transform.position, other.gameObject.transform);
             
             if (doesDOT)
             {
@@ -65,6 +78,10 @@ public class Projectile : MonoBehaviour
                 //Deals the base damage only.
                 other.GetComponent<BaseCharacter>().Damage((int)weapon.Damage, weapon);
             }
+            if (weapon.RunAwayOnUse && other.tag != "Player")
+            {
+                other.GetComponent<BaseNav>().RunAway();
+            }
         }
         else{
             InstatiateFloatingText.InstantiateFloatingText( "MISS" , weapon.AttachedCharacter , Color.grey, new Vector3(0.5f, 0.5f, 0.5f) );
@@ -75,6 +92,7 @@ public class Projectile : MonoBehaviour
 
     }
 
+    
     public void OnCollisionEnter( Collision collision ) {
 
          InstatiateFloatingText.InstantiateFloatingText( "MISS" , weapon.AttachedCharacter , Color.grey, new Vector3(0.5f, 0.5f, 0.5f) );

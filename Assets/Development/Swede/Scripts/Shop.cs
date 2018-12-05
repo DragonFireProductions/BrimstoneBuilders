@@ -29,7 +29,7 @@ public class Shop : MonoBehaviour
     IEnumerator init( ) {
 
         foreach ( var l_companion in companions ){
-            var a = Instantiate( l_companion.gameObject );
+            var a = Instantiate( l_companion.gameObject, new Vector3(0,0,0), Quaternion.identity );
             var o = a.GetComponent < Companion >( );
            
             while ( !o|| !o.inventory || !o.inventoryUI ){

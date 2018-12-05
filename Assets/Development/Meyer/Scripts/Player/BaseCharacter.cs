@@ -130,14 +130,11 @@ public abstract class BaseCharacter : MonoBehaviour {
             Damage(damage, item);
             hits++;
 
-	        if ( item.RunAwayOnUse ){
-		        Nav.SetState = BaseNav.state.IDLE;
-            }
+	        
 
             yield return new WaitForSeconds(interval);
         }
-
-        Nav.SetState = BaseNav.state.ATTACKING;
+        
     }
 
 	public void KnockBack(float knockback ) {
@@ -145,12 +142,12 @@ public abstract class BaseCharacter : MonoBehaviour {
 	}
 
 	public IEnumerator KnockBackC(float knockback ) {
-		Nav.Agent.enabled = false;
+		//Nav.Agent.enabled = false;
 		Nav.enabled = false;
 		ridgidbody.isKinematic = false;
 		ridgidbody.AddForce(-transform.forward * (knockback * 2), ForceMode.Impulse);
 
-		yield return new WaitForSeconds(0.4f);
+		yield return new WaitForSeconds(0.05f);
 
 		while ( Vector3.Distance(ridgidbody.velocity, new Vector3(0,0,0)) > 2){
 			yield return new WaitForEndOfFrame( );
@@ -158,7 +155,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 		ridgidbody.isKinematic = true;
 		Nav.enabled = true;
-		Nav.Agent.enabled = true;
+		///Nav.Agent.enabled = true;
 
 	}
     public void DOT(int damage, float interval, int hits, WeaponObject item)
@@ -166,6 +163,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 	    if ( damage <= 1 ){
 		    damage = 1;
 	    }
+        
         StartCoroutine(EDOT(damage, interval, hits, item));
 
     }

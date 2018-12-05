@@ -88,18 +88,23 @@ public class Companion : BaseCharacter {
 
         var rand = Random.Range(1, total);
 
-        if (rand > total - (item.AttachedCharacter.stats.luck * 0.3))
-        {
-            _damage += 5;
-            scale = new Vector3(2, 2, 2);
-        }
+        
 
 
         if (stats.Health > 0){
-            InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.white, scale);
+
+            if (rand > total - (item.AttachedCharacter.stats.luck * 0.3))
+            {
+                _damage += _damage;
+                scale = new Vector3(2, 2, 2);
+                InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.yellow, scale);
+            }
+            else
+            {
+                InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.white, scale);
+            }
+
             stats.Health -= _damage;
-
-
         }
 
         if ( stats.Health <= 0 ){

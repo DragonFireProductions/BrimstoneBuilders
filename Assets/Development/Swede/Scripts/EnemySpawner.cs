@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -68,15 +69,21 @@ public class EnemySpawner : MonoBehaviour
             StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
             newEnemy.GetComponent<EnemyNav>().location = this.gameObject;
 
+            newEnemy.gameObject.SetActive(false);
+
             yield return new WaitForSeconds(1.0f);
 
-            
             //warps the enemy to the position ^
-            newEnemy.GetComponent<Enemy>().Nav.Agent.Warp(position);
+            newEnemy.GetComponent<NavMeshAgent>().Warp(position);
+
+            newEnemy.gameObject.SetActive(true);
             //adds the enemy to the list of instantiated enemies.
+
+            yield return new WaitForEndOfFrame();
             instantiated.Add(newEnemy.gameObject);
             StaticManager.RealTime.Enemies.Add(newEnemy.GetComponent<Enemy>());
             StaticManager.RealTime.SetAttackEnemies();
+
         }
 
     }

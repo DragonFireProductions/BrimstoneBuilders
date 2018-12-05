@@ -87,6 +87,8 @@ public class CharacterInventoryUI : MonoBehaviour {
 
 	    tab.companion = companion;
 
+        tab.GetComponentInChildren<Text>().text = companion.name;
+
 	    sendToButton.companion = companion;
 
 		sendToButton.gameObject.SetActive(true);
@@ -101,7 +103,12 @@ public class CharacterInventoryUI : MonoBehaviour {
 
 		CharacterInventory.transform.SetParent(StaticManager.uiManager.inventories.transform);
 
-	   
+
+        if(this.companion != StaticManager.Character)
+        {
+            sendToButton.gameObject.SetActive(false);
+            tab.gameObject.SetActive(false);
+        }
     }
 
 	public void AddToShop(Shop shop ) {
