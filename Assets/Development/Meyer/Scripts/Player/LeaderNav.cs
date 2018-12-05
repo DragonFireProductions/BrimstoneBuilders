@@ -60,8 +60,7 @@ public class LeaderNav : CompanionNav {
     private void Start( ) {
 		hit = new RaycastHit();
 		character = GetComponent < Character >( );
-
-		message = GameObject.Find( "GoForward" ).GetComponent < Text >( );
+        
 		mask = LayerMask.GetMask("Enemy");
         character.projector.gameObject.SetActive(true);
 
