@@ -19,9 +19,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4092098864941104}
+  - component: {fileID: 114147134626885798}
+  - component: {fileID: 114401411043116494}
+  - component: {fileID: 54112844618035712}
+  - component: {fileID: 65409257728824592}
   m_Layer: 0
   m_Name: Bow
-  m_TagString: Untagged
+  m_TagString: PickUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1336669093601210}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -509.07166, y: 0.8548739, z: 423.15466}
+  m_LocalPosition: {x: -508.37177, y: 0.435, z: 412.99237}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4098596514831400}
@@ -112,3 +116,85 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1685037716317432}
   m_Mesh: {fileID: 4300000, guid: 48b21425bbd0f934e934b49d069f81b9, type: 3}
+--- !u!54 &54112844618035712
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1336669093601210}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!65 &65409257728824592
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1336669093601210}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114147134626885798
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1336669093601210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e8d4da9398dbb44aa54e1563a57e760, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
+  stats: {fileID: 114401411043116494}
+  AttachedCharacter: {fileID: 0}
+  objectName: Bow
+  AnimationClass: {fileID: 0}
+  Damage: 0
+  RunAwayOnUse: 0
+  KnockBack: 0
+  type: 0
+  KnockBackAmount: 0
+  leftHand: {fileID: 1336669093601210}
+  rightHand: {fileID: 1302395292083728, guid: 2243e8b4aef8d934e9a3127b7037d26f, type: 2}
+  Ammo: 20
+  Capacity: 20
+  FireRate: 2
+  Range: 45
+  projectile: {fileID: 114796365521641234, guid: 24313259926c69442af6427859fe00bb,
+    type: 2}
+  ReloadTime: 0
+--- !u!114 &114401411043116494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1336669093601210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572ade2c8a8bbe946a61e83a73b50be3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: Bow
+  weight: 0
+  durability: 0
+  value: 0
+  baseDamage: 0
+  attackSpeed: 0
+  reach: 0
+  equipType: 0
+  weaponType: 0
+  icon: {fileID: 0}
+  isIndestructible: 0
+  isStackable: 0
+  destroyOnUse: 0
+  clip: {fileID: 0}

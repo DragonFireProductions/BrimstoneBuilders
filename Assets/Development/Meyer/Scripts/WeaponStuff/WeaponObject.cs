@@ -59,9 +59,18 @@ public abstract class WeaponObject : BaseItems
     }
 
     public override void Attach( ) {
+        if ( AttachedCharacter.attachedWeapon ){
+
+
+            AttachedCharacter.attachedWeapon.leftHand.SetActive( false );
+            AttachedCharacter.attachedWeapon.rightHand.SetActive( false );
+        }
+
         StaticManager.inventories.inventory.character.inventoryUI.UpdateItem(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), this);
-        var hand = Instantiate( leftHand );
-        var rhand = Instantiate( rightHand );
+        var hand = leftHand;
+        var rhand = rightHand;
+        rightHand = rhand;
+        rightHand.SetActive(true);
         item.SetActive(true);
 
         hand.transform.position = AttachedCharacter.leftHand.transform.position;
@@ -85,7 +94,7 @@ public abstract class WeaponObject : BaseItems
         hand.transform.rotation = AttachedCharacter.leftHand.transform.rotation;
         rhand.transform.rotation = AttachedCharacter.rightHand.transform.rotation;
 
-        hand.transform.SetParent(AttachedCharacter.leftHand.transform, true);
+        this.transform.SetParent(AttachedCharacter.leftHand.transform, true);
         rhand.transform.SetParent(AttachedCharacter.rightHand.transform, true);
 
         AttachedCharacter.attachedWeapon.gameObject.layer = AttachedCharacter.gameObject.layer;

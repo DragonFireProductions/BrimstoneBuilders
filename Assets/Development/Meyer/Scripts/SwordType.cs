@@ -14,14 +14,23 @@ public class SwordType : WeaponObject {
             AttachedCharacter.KnockBack(KnockBackAmount);
 
         }
-        AttachedCharacter.AnimationClass.Play(AnimationClass.states.AttackTrigger);
-        AttachedCharacter.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
+        AttachedCharacter.AnimationClass.Play(AnimationClass.states.Attack);
+
     }
 
     public void NotHit( ) {
         hit = false;
     }
 
+    public override void Activate( ) {
+        StartCoroutine( collider( ) );
+    }
+
+    public IEnumerator collider( ) {
+        AttachedCharacter.leftHand.GetComponentInChildren < BoxCollider >( ).enabled = true;
+        yield return new WaitForSeconds(1);
+        AttachedCharacter.leftHand.GetComponentInChildren < BoxCollider >( ).enabled = false;
+    }
     public void CheckHit( ) {
         if (  hit == false ){
             InstatiateFloatingText.InstantiateFloatingText( "MISS" , AttachedCharacter , Color.grey, new Vector3(0.5f, 0.5f, 0.5f) );

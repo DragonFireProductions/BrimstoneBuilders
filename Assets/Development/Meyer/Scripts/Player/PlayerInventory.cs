@@ -57,6 +57,7 @@ public class PlayerInventory : MonoBehaviour {
         PickedUpWeapons.Add( weapon );
         character.inventoryUI.AddWeapon(weapon);
         weapon.gameObject.SetActive(false);
+        weapon.rightHand = Instantiate( weapon.rightHand );
     }
 
     public void PickUp( Potions potions ) {
