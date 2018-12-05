@@ -63,16 +63,15 @@ public class Companion : BaseCharacter {
         inventoryUI = GetComponent<CharacterInventoryUI>();
         inventoryUI.Init(this);
         inventoryUI.companion = this;
-        material.color = BaseColor;
+        //material.color = BaseColor;
         Nav            = gameObject.GetComponent < CompanionNav >( );
         StaticManager.RealTime.Companions.Add(this);
         inventory = GetComponent < PlayerInventory >( );
-        cube = transform.Find("Cube").gameObject;
-        attachedWeapon = cube.GetComponentInChildren < BaseItems >( ) as WeaponObject;
-        attachedWeapon.AttachedCharacter = this;
-        inventoryUI.AddWeapon(attachedWeapon);
-        attachedWeapon.tag = "Weapon";
-        attachedWeapon.AssignDamage();
+        attachedWeapon = leftHand.GetComponent < BaseItems >( ) as WeaponObject;
+        //attachedWeapon.AttachedCharacter = this;
+        //inventoryUI.AddWeapon(attachedWeapon);
+        //attachedWeapon.tag = "Weapon";
+        //attachedWeapon.AssignDamage();
 
     }
 

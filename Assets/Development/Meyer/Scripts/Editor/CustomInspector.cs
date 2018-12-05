@@ -215,7 +215,14 @@ public class CustomInspector : EditorWindow {
                         EditorGUILayout.LabelField("Knock Back Velocity");
                         ob1.KnockBackAmount = EditorGUILayout.FloatField(ob1.KnockBackAmount);
 
+                        EditorGUIUtility.labelWidth = 45;
+                        EditorGUILayout.LabelField("Left Hand");
+                        ob1.leftHand = EditorGUILayout.ObjectField(ob1.leftHand, typeof(GameObject), true) as GameObject;
 
+                        EditorGUIUtility.labelWidth = 45;
+                        EditorGUILayout.LabelField("Right Hand");
+                        ob1.rightHand = EditorGUILayout.ObjectField(ob1.rightHand, typeof(GameObject), true) as GameObject;
+                        
                         if ( WeaponItemList.itemList[ viewIndex - 1 ] is GunType ){
                             var ob = WeaponItemList.itemList[ viewIndex - 1 ] as GunType;
 

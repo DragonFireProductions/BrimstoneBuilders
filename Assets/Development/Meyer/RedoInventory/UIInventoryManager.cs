@@ -66,18 +66,22 @@ public class UIInventoryManager : MonoBehaviour {
     }
 
     public void Update() {
-        SubclassHub.SubClass.text = StaticManager.Character.attachedWeapon.type.ToString( );
+        if ( StaticManager.Character.attachedWeapon != null ){
 
-        if ( StaticManager.Character.attachedWeapon is GunType ){
-            int cur = ( int )StaticManager.Character.range.CurrentLevel;
-            SubclassHub.bar.fillAmount = StaticManager.Character.range.CurrentLevel - cur;
-            SubclassHub.Level.text = cur.ToString( );
-        }
 
-        else if ( StaticManager.Character.attachedWeapon is SwordType ){
-            int cur = (int)StaticManager.Character.mele.CurrentLevel;
-            SubclassHub.bar.fillAmount = StaticManager.Character.mele.CurrentLevel - cur;
-            SubclassHub.Level.text = cur.ToString( );
+            SubclassHub.SubClass.text = StaticManager.Character.attachedWeapon.type.ToString( );
+
+            if ( StaticManager.Character.attachedWeapon is GunType ){
+                int cur = ( int )StaticManager.Character.range.CurrentLevel;
+                SubclassHub.bar.fillAmount = StaticManager.Character.range.CurrentLevel - cur;
+                SubclassHub.Level.text     = cur.ToString( );
+            }
+
+            else if ( StaticManager.Character.attachedWeapon is SwordType ){
+                int cur = ( int )StaticManager.Character.mele.CurrentLevel;
+                SubclassHub.bar.fillAmount = StaticManager.Character.mele.CurrentLevel - cur;
+                SubclassHub.Level.text     = cur.ToString( );
+            }
         }
     }
     

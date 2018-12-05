@@ -43,13 +43,13 @@ public class PlayerInventory : MonoBehaviour {
 
     public void Awake( ) {
         AttachedWeapons = new List < WeaponObject >();
-        AttachedWeapons.Add(gameObject.transform.Find("Cube").gameObject.GetComponentInChildren<WeaponObject>());
+       // AttachedWeapons.Add(gameObject.transform.Find("Cube").gameObject.GetComponentInChildren<WeaponObject>());
         character = GetComponent < Companion >( );
         Slots = new List < UIItemsWithLabels >();
     }
     
     public void Start( ) {
-        PickedUpWeapons.Add(gameObject.transform.Find("Cube").gameObject.GetComponentInChildren<WeaponObject>());
+       // PickedUpWeapons.Add(gameObject.transform.Find("Cube").gameObject.GetComponentInChildren<WeaponObject>());
         coinCount = 0;
     }
 

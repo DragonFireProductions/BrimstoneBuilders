@@ -60,7 +60,9 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public GameObject canvas;
 
-	public GameObject cube;
+	public GameObject leftHand;
+
+	public GameObject rightHand;
 
 	public Projector projector;
 
@@ -69,6 +71,8 @@ public abstract class BaseCharacter : MonoBehaviour {
 	public string characterName;
 
 	public bool critical = false;
+
+	public Transform bulletPosition;
 
 
 	public Rigidbody ridgidbody;
@@ -80,7 +84,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 		Assert.IsNotNull(stats, "Stats not found on " + this.gameObject.name);
         obj = gameObject;
         agent = gameObject.GetComponent<NavMeshAgent>();
-        material = gameObject.GetComponent<Renderer>().material;
+        //material = gameObject.GetComponent<Renderer>().material;
 		animator = gameObject.GetComponent < Animator >( );
 		AnimationClass = gameObject.GetComponent< AnimationClass >( );
 		attachedWeapon = transform.GetComponentInChildren < WeaponObject >( );
@@ -88,8 +92,10 @@ public abstract class BaseCharacter : MonoBehaviour {
 		canvas = transform.Find( "Canvas" ).gameObject;
 		projector = gameObject.transform.Find( "Projector" ).GetComponent < Projector >( );
 		projector.gameObject.SetActive(false);
-		cube = transform.Find( "Cube" ).gameObject;
+		leftHand = transform.Find( "root/weaponShield_l" ).gameObject;
+		rightHand = transform.Find( "root/weaponShield_r" ).gameObject;
 		characterName = gameObject.name;
+		bulletPosition = transform.Find( "BulletPosition" );
 		ridgidbody = GetComponent < Rigidbody >( );
 	}
     public virtual object this[string propertyName]

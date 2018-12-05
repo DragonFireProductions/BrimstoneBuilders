@@ -25,6 +25,8 @@ public class GunType : WeaponObject {
 
     [ SerializeField ] public float ReloadTime;
 
+    
+
     protected override void Start( ) {
         base.Start();
         if ( tag != "PickUp" ){
@@ -67,17 +69,27 @@ public class GunType : WeaponObject {
         base.Use();
         Debug.Log( "Attacking" );
 
+
+
         if ( canFire && Ammo > 0 ){
-            StartCoroutine( Fire( ) );
+            StartCoroutine( animation() );
+            
         }
         else if ( !reloading && Ammo == 0 ){
             StartCoroutine( Reload( ) );
         }
     }
-    
-    private IEnumerator Fire( ) {
 
+    private IEnumerator animation( ) {
         canFire = false;
+         AttachedCharacter.AnimationClass.Play(AnimationClass.states.Attack);
+
+       yield return new WaitForSecondsRealtime(1.5f);
+
+        StartCoroutine( Fire( ) );
+    }
+    private IEnumerator Fire( ) {
+        
         if (KnockBack)
         {
             AttachedCharacter.KnockBack(KnockBackAmount);
@@ -85,10 +97,11 @@ public class GunType : WeaponObject {
         }
         var proj = GetPulledBullets( );
 
-        proj.gameObject.transform.position = AttachedCharacter.transform.position + ( AttachedCharacter.transform.forward * 2 );
-        proj.transform.rotation = transform.rotation;
+        proj.gameObject.transform.position = AttachedCharacter.bulletPosition.position;
+        proj.transform.rotation = AttachedCharacter.bulletPosition.rotation;
 
         proj.gameObject.SetActive(true);
+        proj.GetComponent<Rigidbody>().AddForce(AttachedCharacter.transform.forward * proj.GetComponent<Projectile>().GetSpeed(),ForceMode.Impulse);
         StartCoroutine( stopBullet( 2 , proj ) );
         Ammo -= 1;
 

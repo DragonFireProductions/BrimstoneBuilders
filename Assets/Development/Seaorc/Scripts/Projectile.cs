@@ -28,14 +28,6 @@ public class Projectile : MonoBehaviour
     public int y_pos;
     
     /// <summary>
-    /// Moves the projectile in its forward direction
-    /// </summary>
-    public void Update()
-    {
-        transform.Translate(0, 0, Speed * Time.deltaTime);
-    }
-    
-    /// <summary>
     /// Detects when the projectile hits an _enemy
     /// </summary>
     /// <param name="other"></param>

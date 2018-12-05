@@ -25,6 +25,11 @@ public abstract class WeaponObject : BaseItems
     public SubClasses.Types type;
 
     public float KnockBackAmount;
+
+    public GameObject leftHand;
+
+    public GameObject rightHand;
+
     protected override void Start() {
         base.Start();
         AnimationClass = gameObject.GetComponent < AnimationClass >( );
@@ -51,12 +56,15 @@ public abstract class WeaponObject : BaseItems
 
     public override void Attach( ) {
         StaticManager.inventories.inventory.character.inventoryUI.UpdateItem(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), this);
-
+        var hand = Instantiate( leftHand );
+        var rhand = Instantiate( rightHand );
         item.SetActive(true);
 
-        item.transform.position = AttachedCharacter.cube.transform.position;
+        hand.transform.position = AttachedCharacter.leftHand.transform.position;
+        rhand.transform.position = AttachedCharacter.rightHand.transform.position;
 
-        item.transform.localScale = new Vector3(1, 1, 1);
+        hand.transform.localScale = new Vector3(1, 1, 1);
+        rhand.transform.localScale = new Vector3(1, 1, 1);
 
         var c = AttachedCharacter as Companion;
 
@@ -70,13 +78,17 @@ public abstract class WeaponObject : BaseItems
 
         AttachedCharacter.attachedWeapon = this as WeaponObject;
 
-        AttachedCharacter.attachedWeapon.transform.rotation = AttachedCharacter.cube.transform.rotation;
+        hand.transform.rotation = AttachedCharacter.leftHand.transform.rotation;
+        rhand.transform.rotation = AttachedCharacter.rightHand.transform.rotation;
 
-        AttachedCharacter.attachedWeapon.transform.SetParent(AttachedCharacter.cube.transform, true);
+        hand.transform.SetParent(AttachedCharacter.leftHand.transform, true);
+        rhand.transform.SetParent(AttachedCharacter.rightHand.transform, true);
 
         AttachedCharacter.attachedWeapon.gameObject.layer = AttachedCharacter.gameObject.layer;
 
         AttachedCharacter.attachedWeapon.tag = "Weapon";
+
+        AttachedCharacter.AnimationClass.SwitchWeapon(this);
 
 
     }
