@@ -57,12 +57,6 @@ public class EnemyNav : BaseNav {
                         timer             = 0;
                     }
                 }
-
-                    break;
-                case state.FOLLOW: {
-                    Agent.destination = character.leader.transform.position;
-                }
-
                     break;
             }
     }

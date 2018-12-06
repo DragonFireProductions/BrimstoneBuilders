@@ -19,11 +19,9 @@ public class LeaderNav : CompanionNav {
 
     private float count;
 
-    private float displaytimer;
+    [HideInInspector] public Enemy enemy;
 
-    public Enemy enemy;
-
-    public ParticleSystem enemySystem;
+    [HideInInspector] public ParticleSystem enemySystem;
 
 	private RaycastHit hit;
 
@@ -33,28 +31,6 @@ public class LeaderNav : CompanionNav {
 
     [SerializeField] private TextMeshProUGUI message;
 
-    private ParticleSystem rain;
-
-    private Vector3 rainPosition;
-
-    //[SerializeField] private TextMeshProUGUI head;
-    //[SerializeField] private TextMeshProUGUI left_arm;
-    //[SerializeField] private TextMeshProUGUI right_arm;
-    //[SerializeField] private TextMeshProUGUI body;
-    //[SerializeField] private TextMeshProUGUI legs;
-    //[SerializeField] private TextMeshProUGUI feet;
-
-    //[SerializeField] private RawImage image;
-    //[SerializeField] private RawImage a_head;
-    //[SerializeField] private RawImage a_left_arm;
-    //[SerializeField] private RawImage a_right_arm;
-    //[SerializeField] private RawImage a_body;
-    //[SerializeField] private RawImage a_legs;
-    //[SerializeField] private RawImage a_feet;
-    //private bool showArmor = false;
-
-	private ParticleSystem selected;
-
     private bool timerEnabled = false;
 
 	private float speed;
@@ -63,15 +39,8 @@ public class LeaderNav : CompanionNav {
 
     private void Start( ) {
 		hit = new RaycastHit();
-		character = GetComponent < Character >( );
-
-		message = GameObject.Find( "GoForward" ).GetComponent < TextMeshProUGUI >( );
-		mask = LayerMask.GetMask("Enemy");
-        character.projector.gameObject.SetActive(true);
-
+	    mask = LayerMask.GetMask( "Enemy" );
         battleDistance = 4;
-        companion = GetComponent<Character>();
-	    Agent = GetComponent < NavMeshAgent >( );
     }
     void FixedUpdate()
     {
@@ -88,7 +57,6 @@ public class LeaderNav : CompanionNav {
 	        if ( Physics.Raycast(l_ray, out hit) ){
 		        if ( hit.collider.name == "Terrain" ){
 					SetState = state.MOVE;
-					character.IncreaseLevel(0.00002f);
                     if ( enemy ){
                     enemy.projector.gameObject.SetActive(false);
 

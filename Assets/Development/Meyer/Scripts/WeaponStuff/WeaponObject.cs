@@ -102,7 +102,7 @@ public abstract class WeaponObject : BaseItems
     }
 
     public void PickUp(BaseCharacter character ) {
-        if (character.tag == "Player" && tag == "PickUp")
+        if (tag == "PickUp")
         {
             if ( mesh ){
                  mesh.SetActive(false);

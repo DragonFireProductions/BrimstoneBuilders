@@ -13,26 +13,23 @@ public class CompanionNav : BaseNav {
 
     private float randDistance;
     
-
     public Companion companion;
     private int currenemy;
     
     public enum AggressionStates { BERZERK, PASSIVE, DEFEND, PROVOKED }
 
-    public AggressionStates aggState;
-    public companionBehaviors behaviors;
-    //List of enemies to attack
-    public List<Enemy> enemiesToAttack;
+   [HideInInspector] public AggressionStates aggState;
+   [HideInInspector] public companionBehaviors behaviors;
+   //List of enemies to attack
+   [HideInInspector] public List<Enemy> enemiesToAttack;
 
    
     
     public void Start( ) {
         base.Start( );
         enemiesToAttack = new List<Enemy>();
-        character         = GetComponent < Companion >( );
         randDistance = Random.Range( 1.5f, 1.5f + 2);
         battleDistance = 4;
-        companion = GetComponent<Companion>();
         enabled = false;
     }
 
@@ -88,7 +85,7 @@ public class CompanionNav : BaseNav {
             case AggressionStates.PASSIVE:
             {
                 Debug.Log("now in the passive state");
-                Agent.destination = Character.Player.transform.position;
+                Agent.destination = StaticManager.Character.transform.position;
             }
                 break;
             case AggressionStates.BERZERK:

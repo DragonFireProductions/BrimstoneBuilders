@@ -31,10 +31,8 @@ namespace Kristal
 
         protected void Start()
         {
-            characters = new List<BaseCharacter>();
 
             StaticManager.RealTime.AllEnemies.Add(this);
-            material.color = BaseColor;
             Nav = gameObject.GetComponent<EnemyNav>();
 
             MaxCoinCount = UnityEngine.Random.Range(1, MaxCoinCount);

@@ -20,7 +20,7 @@ public class companionBehaviors : MonoBehaviour
     }
 
     public void onClick(int state) {
-        StaticManager.Character.buttonIsClicked = true;
+
         if (prev_button)
         {
             prev_button.GetComponent<Image>().color = Color.white;

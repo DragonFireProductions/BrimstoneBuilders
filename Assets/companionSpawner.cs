@@ -1,12 +1,31 @@
-﻿using Kristal;
+﻿using System;
+
+using Kristal;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Random = UnityEngine.Random;
+
 public class companionSpawner : MonoBehaviour
 {
+
+    [ Serializable]
+    public struct companions {
+
+        public Companion companion;
+
+        public int Melee;
+
+        public int Range;
+
+        public int Magic;
+
+        public GameObject weapon;
+    }
+
 
     [SerializeField] private Companion friends;
 
@@ -14,7 +33,7 @@ public class companionSpawner : MonoBehaviour
     public List<GameObject> comp;
     [SerializeField] private GameObject companionspawner;
 
-    [ SerializeField ] private Companion[] companion;
+    [ SerializeField ] public companions[] companion;
 
     public int numberofcompanions;
 
@@ -24,7 +43,7 @@ public class companionSpawner : MonoBehaviour
     void Start()
     {
         comp = new List<GameObject>();
-
+        //companion[0].companion.inventoryUI.Init(companion[0].companion);
     }
 
     // Update is called once per frame
@@ -49,45 +68,57 @@ public class companionSpawner : MonoBehaviour
 
     public IEnumerator CompSpawn()
     {
-        // Debug.Log(index);
-        if (index >= numberofcompanions && !StaticManager.Instance.unlimitedSpawns)
-        {
-            Debug.Log("cant have anymore companions");
-            index = numberofcompanions;
-        }
-        else
-        {
-            index++;
-            StaticManager.RealTime.Companions.RemoveAll(nulls => nulls == null);
-        }
+        //// Debug.Log(index);
+        //if (index >= numberofcompanions && !StaticManager.Instance.unlimitedSpawns)
+        //{
+        //    Debug.Log("cant have anymore companions");
+        //    index = numberofcompanions;
+        //}
+        //else
+        //{
+        //    index++;
+        //    StaticManager.RealTime.Companions.RemoveAll(nulls => nulls == null);
+        //}
 
-        StaticManager.RealTime.Companions.RemoveAll(nulls => nulls == null);
-        var newEnemy = Instantiate(companion[0]);
-        newEnemy.name = newEnemy.name + index.ToString();
-        Vector3 position = Random.insideUnitSphere * 5 + this.gameObject.transform.position;
-        newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
-        comp.Add(newEnemy.gameObject);
-        var location = GameObject.Find("panel_location");
-        var newButton = Instantiate(Resources.Load<companionBehaviors>("Panel"));
-        newEnemy.GetComponent<CompanionNav>().behaviors = newButton.GetComponent<companionBehaviors>();
-        newButton.GetComponent<companionBehaviors>().newFriend = newEnemy;
+        //StaticManager.RealTime.Companions.RemoveAll(nulls => nulls == null);
+        //var newEnemy = Instantiate(companion[0]);
+        //newEnemy.name = newEnemy.name + index.ToString();
+        //Vector3 position = Random.insideUnitSphere * 5 + this.gameObject.transform.position;
+        //newEnemy.GetComponent<CompanionNav>().transform.position = gameObject.transform.position;
+        //comp.Add(newEnemy.gameObject);
+        //var location = GameObject.Find("panel_location");
+        //var newButton = Instantiate(Resources.Load<companionBehaviors>("Panel"));
+        //newEnemy.GetComponent<CompanionNav>().behaviors = newButton.GetComponent<companionBehaviors>();
+        //newButton.GetComponent<companionBehaviors>().newFriend = newEnemy;
 
-        position.y = StaticManager.Character.gameObject.transform.position.y;
-        StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
-        newButton.transform.SetParent(location.transform, false);
+        //position.y = StaticManager.Character.gameObject.transform.position.y;
+        //StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
+        //newButton.transform.SetParent(location.transform, false);
 
-        newButton.transform.position = location.transform.position;
-        yield return new WaitForSeconds(1.0f);
-        //variable.gameObject.SetActive(true);
-        newEnemy.GetComponent<Companion>().Nav.Agent.Warp(position);
-        newEnemy.GetComponent<CompanionNav>().transform.position = this.gameObject.transform.position;
-        comp.Add(newEnemy.gameObject);
-        StaticManager.RealTime.Companions.Add(newEnemy.GetComponent<Companion>());
-        newButton.newFriend = newEnemy.GetComponent<Companion>();
-        StaticManager.inventories.alllables.Add(newEnemy.inventory);
-
+        //newButton.transform.position = location.transform.position;
+        //yield return new WaitForSeconds(1.0f);
+        ////variable.gameObject.SetActive(true);
+        //newEnemy.GetComponent<Companion>().Nav.Agent.Warp(position);
+        //newEnemy.GetComponent<CompanionNav>().transform.position = this.gameObject.transform.position;
+        //comp.Add(newEnemy.gameObject);
+        //StaticManager.RealTime.Companions.Add(newEnemy.GetComponent<Companion>());
+        //newButton.newFriend = newEnemy.GetComponent<Companion>();
+        //StaticManager.inventories.alllables.Add(newEnemy.inventory);
+        yield return new WaitForEndOfFrame();
     }
 
+    public void SpawnCompanion( Companion companion ) {
+        if ( index >= numberofcompanions && !StaticManager.Instance.unlimitedSpawns ){
+            index = numberofcompanions;
+        }
+        else{
+            index++;
+           
+        }
+         StaticManager.RealTime.Companions.RemoveAll( nulls => nulls == null );
+         var newCompanion = companion;
+         
+    }
     public void CompanionSpawn(Companion companion ) {
         // Debug.Log(index);
         if (index >= numberofcompanions && !StaticManager.Instance.unlimitedSpawns)

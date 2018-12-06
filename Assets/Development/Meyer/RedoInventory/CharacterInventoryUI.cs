@@ -99,8 +99,6 @@ public class CharacterInventoryUI : MonoBehaviour {
         CharacterInventory.SetActive(false);
 
 		CharacterInventory.transform.SetParent(StaticManager.uiManager.inventories.transform);
-
-	   
     }
 
 	public void AddToShop(Shop shop ) {

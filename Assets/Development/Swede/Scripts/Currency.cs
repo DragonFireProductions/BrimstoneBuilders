@@ -64,37 +64,56 @@ public class Currency : MonoBehaviour
     }
     
     public void BuyCompanion(Tab container) {
-        StaticManager.Character.spawner.comp.RemoveAll( item => item == null );
-        if (StaticManager.Character.spawner.comp.Count < 5)
-        {
-            StaticManager.UiInventory.ItemsInstance
-                        .GetLabel("CompanionBuyError", StaticManager.UiInventory.ItemsInstance.ShopUI).text = "";
-
-            if ( RemoveCoins( container.companion.cost ) ){
-                StaticManager.Character.inventory.coinCount -= container.companion.cost;
+        
+            if (RemoveCoins(container.companion.cost))
+            {
+            Vector3 position = Random.insideUnitSphere * 5 + StaticManager.Character.transform.position;
+            position.y = 0;
+            StaticManager.Character.inventory.coinCount -= container.companion.cost;
                 container.companion.cost = container.companion.cost / 2;
                 StaticManager.UiInventory.ItemsInstance
                             .GetLabel("CompanionBuyError", StaticManager.UiInventory.ItemsInstance.ShopUI).text = "";
 
 
-                StaticManager.Character.spawner.CompanionSpawn( container.companion );
+                var newCompanion = Instantiate( container.companion.gameObject );
+                var companion = newCompanion.GetComponent < Companion >( );
+                companion.startWeapon = Instantiate( companion.startWeapon );
+                companion.startWeapon.GetComponent<WeaponObject>().PickUp(companion);
+                companion.startWeapon.GetComponent<WeaponObject>().Attach();
                 container.companion.inventoryUI.SellButton.SetActive(true);
                 container.companion.inventoryUI.BuyButton.SetActive(false);
                 container.companion.inventoryUI.tab.gameObject.SetActive(true);
                 container.companion.inventoryUI.UpdateCharacter(container.companion.inventoryUI.ShopCharacterText);
                 container.gameObject.transform.SetParent(_shop.Sell.transform);
+                
+                StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
+
+                var location = GameObject.Find( "panel_location" );
+                var newButton = Instantiate( Resources.Load < companionBehaviors >( "Panel" ) );
+                companion.GetComponent < CompanionNav >( ).behaviors = newButton.GetComponent < companionBehaviors >( );
+                newButton.GetComponent < companionBehaviors >( ).newFriend = companion;
+                newButton.transform.SetParent(location.transform, false);
+                newButton.transform.position = location.transform.position;
+                 StaticManager.inventories.behaviors.Add(newButton);
+                companion.gameObject.transform.position = position;
+                //companion.Nav.Agent.Warp( position );
+
+                StaticManager.RealTime.Companions.Add(companion);
+            StaticManager.inventories.alllables.Add(companion.inventory);
+                companion.Nav.enabled = true;
+                companion.Nav.SetState = BaseNav.state.IDLE;
+                companion.GetComponent < CompanionNav >( ).SetAgreesionState = CompanionNav.AggressionStates.PASSIVE;
+                companion.gameObject.SetActive(true);
+                companion.inventoryUI.sendToButton.gameObject.SetActive(true);
             }
-            else{
-               
-                    StaticManager.UiInventory.ItemsInstance
-                            .GetLabel("CompanionBuyError", StaticManager.UiInventory.ItemsInstance.ShopUI).text = "Not Enough Coins.";
-            }
-        }
-        else{
-            
+            else
+            {
+
                 StaticManager.UiInventory.ItemsInstance
-                        .GetLabel("CompanionBuyError", StaticManager.UiInventory.ItemsInstance.ShopUI).text = "Max Companions.";
-        }
+                        .GetLabel("CompanionBuyError", StaticManager.UiInventory.ItemsInstance.ShopUI).text = "Not Enough Coins.";
+            }
+            StaticManager.UiInventory.ItemsInstance
+                    .GetLabel("CompanionBuyError", StaticManager.UiInventory.ItemsInstance.ShopUI).text = "Max Companions.";
     }
     public void SellCompanion( Tab container) {
         var c = container.companion.Nav as CompanionNav;

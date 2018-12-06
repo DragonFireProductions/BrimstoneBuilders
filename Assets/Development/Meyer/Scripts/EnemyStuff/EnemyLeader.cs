@@ -17,21 +17,6 @@ public class EnemyLeader : Enemy {
     //public List<Enemy> EnemyGroup;
 
     public Enemy Leader;
-    // Use this for initialization
-    protected void Start () {
-        base.Start( );
-
-        Leader = this.gameObject.GetComponent < Enemy >( );
-
-        gameObject.GetComponent < Enemy >( ).leader = this;
-
-        if ( characterObjs.Count != 0 ){
-            foreach (var l_gameObject in characterObjs)
-            {
-                //characters.Add(l_gameObject.GetComponent<Enemy>());
-                //l_gameObject.GetComponent<Enemy>().leader = this;
-            }
-        }
-    }
+    
     
 }

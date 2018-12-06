@@ -31,7 +31,7 @@ public class BaseNav : MonoBehaviour {
 
     protected float outerRadius = 10f;
 
-    [ SerializeField ] protected state State;
+    [ HideInInspector ] protected state State;
 
     [ SerializeField ] public float stoppingDistance;
 
@@ -78,10 +78,7 @@ public class BaseNav : MonoBehaviour {
 
     // Use this for initialization
     protected void Start( ) {
-        Agent                  = gameObject.GetComponent < NavMeshAgent >( );
-        stoppingDistance       = 3;
         Agent.stoppingDistance = stoppingDistance;
-        character              = gameObject.GetComponent < BaseCharacter >( );
     }
 
     // Update is called once per frame

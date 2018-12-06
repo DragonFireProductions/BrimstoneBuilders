@@ -19,28 +19,12 @@ using Random = System.Random;
 
 [Serializable]
 public abstract class BaseCharacter : MonoBehaviour {
-
-	public Color IsChosenBySelf;
-
-	public Color LeaderColor;
-
-	public Color BaseColor;
-
-	public Color IsChosenByEnemy;
-
-	public List < BaseCharacter > characters;
-
-	public List < GameObject > characterObjs;
-
+	
 	public NavMeshAgent agent;
 
 	public GameObject obj;
 
 	public Stat stats;
-
-	public BaseCharacter leader;
-
-	public Material material;
 
 	public Animator animator;
 
@@ -50,13 +34,11 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public SpriteRenderer threat_signal;
 
-	public WeaponObject attachedWeapon;
+	[HideInInspector] public WeaponObject attachedWeapon;
 
-	public BaseCharacter enemy;
+	[HideInInspector] public BaseCharacter enemy;
 
-	public List < BaseCharacter > attackers;
-
-	public List < GameObject > damageNumbers;
+	[HideInInspector] public List < BaseCharacter > attackers;
 
 	public GameObject canvas;
 
@@ -66,11 +48,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public Projector projector;
 
-	public float Level = 1;
-
 	public string characterName;
-
-	public bool critical = false;
 
 	public Transform bulletPosition;
 
@@ -78,27 +56,9 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public GameObject startWeapon;
 	
-    public virtual void IncreaseLevel(float amount_f ) {
-		Level += amount_f;
-	}
 	protected virtual void Awake( ) {
-        stats = gameObject.GetComponent<Stat>();
-		Assert.IsNotNull(stats, "Stats not found on " + this.gameObject.name);
         obj = gameObject;
-        agent = gameObject.GetComponent<NavMeshAgent>();
-        //material = gameObject.GetComponent<Renderer>().material;
-		animator = gameObject.GetComponent < Animator >( );
-		AnimationClass = gameObject.GetComponent< AnimationClass >( );
-		attachedWeapon = transform.GetComponentInChildren < WeaponObject >( );
 		attackers = new List < BaseCharacter >();
-		canvas = transform.Find( "Canvas" ).gameObject;
-		projector = gameObject.transform.Find( "Projector" ).GetComponent < Projector >( );
-		projector.gameObject.SetActive(false);
-		leftHand = transform.Find( "root/weaponShield_l" ).gameObject;
-		rightHand = transform.Find( "root/weaponShield_r" ).gameObject;
-		characterName = gameObject.name;
-		bulletPosition = transform.Find( "BulletPosition" );
-		ridgidbody = GetComponent < Rigidbody >( );
 	}
     public virtual object this[string propertyName]
     {

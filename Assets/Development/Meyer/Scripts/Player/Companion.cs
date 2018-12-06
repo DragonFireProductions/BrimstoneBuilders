@@ -18,16 +18,16 @@ public class Companion : BaseCharacter {
     public PlayerInventory inventory;
 
     public CharacterInventoryUI inventoryUI;
-
-    public int cost;
-
-    public Magic magic = new Magic();
-
-    public Range range = new Range();
-
-    public Mele mele = new Mele();
-
-    public SubClasses CurrentSubClass;
+  
+    [HideInInspector]public int cost;
+  
+    [HideInInspector]public Magic magic = new Magic();
+    
+    [HideInInspector]public Range range = new Range();
+   
+    [HideInInspector]public Mele mele = new Mele();
+   
+    [HideInInspector]public SubClasses CurrentSubClass;
 
     public override object this[string propertyName]
     {
@@ -60,18 +60,10 @@ public class Companion : BaseCharacter {
         range.character = this;
         mele.character = this;
 
-        inventoryUI = GetComponent<CharacterInventoryUI>();
         inventoryUI.Init(this);
-        inventoryUI.companion = this;
-        //material.color = BaseColor;
-        Nav            = gameObject.GetComponent < CompanionNav >( );
+
         StaticManager.RealTime.Companions.Add(this);
-        inventory = GetComponent < PlayerInventory >( );
-        attachedWeapon = leftHand.GetComponent < BaseItems >( ) as WeaponObject;
-        //attachedWeapon.AttachedCharacter = this;
-        //inventoryUI.AddWeapon(attachedWeapon);
-        //attachedWeapon.tag = "Weapon";
-        //attachedWeapon.AssignDamage();
+        
         if (startWeapon && tag != "Player")
         {
             startWeapon = Instantiate(startWeapon);
