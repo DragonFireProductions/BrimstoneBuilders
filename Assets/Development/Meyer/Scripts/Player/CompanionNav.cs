@@ -131,8 +131,7 @@ public class CompanionNav : BaseNav {
                         float dist = Vector3.Distance( transform.position , character.enemy.transform.position );
 
                         if ( dist < battleDistance ){
-                            character.AnimationClass.Play( AnimationClass.states.AttackTrigger );
-                            character.attachedWeapon.AnimationClass.Play( AnimationClass.weaponstates.EnabledTrigger );
+                            character.AnimationClass.Play( AnimationClass.states.Attack );
                             transform.LookAt( character.enemy.transform.position );
 
                         }
