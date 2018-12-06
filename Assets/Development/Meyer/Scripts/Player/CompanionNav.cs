@@ -23,6 +23,8 @@ public class CompanionNav : BaseNav {
     public companionBehaviors behaviors;
     //List of enemies to attack
     public List<Enemy> enemiesToAttack;
+
+   
     
     public void Start( ) {
         base.Start( );
@@ -74,7 +76,6 @@ public class CompanionNav : BaseNav {
         }
 
     }
-
     // What happens to enemies when it attacks
     protected override void Update( ) {
         character.attackers.RemoveAll( item => item == null );

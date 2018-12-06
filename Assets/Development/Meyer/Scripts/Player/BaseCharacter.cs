@@ -74,9 +74,11 @@ public abstract class BaseCharacter : MonoBehaviour {
 
 	public Transform bulletPosition;
 
-
 	public Rigidbody ridgidbody;
-	public virtual void IncreaseLevel(float amount_f ) {
+
+	public GameObject startWeapon;
+	
+    public virtual void IncreaseLevel(float amount_f ) {
 		Level += amount_f;
 	}
 	protected virtual void Awake( ) {

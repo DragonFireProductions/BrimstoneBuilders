@@ -22,9 +22,8 @@ GameObject:
   - component: {fileID: 33878623230072810}
   - component: {fileID: 23784970693578572}
   - component: {fileID: 65451590109292840}
-  - component: {fileID: 114641269653162884}
-  - component: {fileID: 114124961345216316}
   - component: {fileID: 54494861404792656}
+  - component: {fileID: 114881503076782454}
   m_Layer: 0
   m_Name: Sword031
   m_TagString: PickUp
@@ -110,11 +109,11 @@ BoxCollider:
   m_GameObject: {fileID: 1832507824500688}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.52937376, y: 1.7804699, z: 0.09042422}
   m_Center: {x: -0.000000029802322, y: -0.6932239, z: 0.00000001303852}
---- !u!114 &114124961345216316
+--- !u!114 &114881503076782454
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,43 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1832507824500688}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 572ade2c8a8bbe946a61e83a73b50be3, type: 3}
+  m_Script: {fileID: 11500000, guid: 405da55319d430a41ac053ea990278a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: test1
-  weight: 0
-  durability: 0
-  value: 0
-  baseDamage: 0
-  attackSpeed: 0
-  reach: 0
-  equipType: 0
-  weaponType: 0
-  icon: {fileID: 0}
-  isIndestructible: 0
-  isStackable: 0
-  destroyOnUse: 0
-  clip: {fileID: 0}
---- !u!114 &114641269653162884
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1832507824500688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b419715763bff4d479fc511631a7cb00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  stats: {fileID: 114124961345216316}
-  AttachedCharacter: {fileID: 0}
-  objectName: test1
-  AnimationClass: {fileID: 0}
-  Damage: 0
-  RunAwayOnUse: 0
-  KnockBack: 0
-  type: 0
-  KnockBackAmount: 0
-  leftHand: {fileID: 1832507824500688}
-  rightHand: {fileID: 1156042303773384, guid: d1c7cb8f81953f64da983c75665390c1, type: 2}
+  obj: {fileID: 0}

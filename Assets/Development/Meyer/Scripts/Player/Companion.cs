@@ -72,7 +72,12 @@ public class Companion : BaseCharacter {
         //inventoryUI.AddWeapon(attachedWeapon);
         //attachedWeapon.tag = "Weapon";
         //attachedWeapon.AssignDamage();
-
+        if (startWeapon && tag != "Player")
+        {
+            startWeapon = Instantiate(startWeapon);
+            startWeapon.GetComponent<WeaponObject>().PickUp(this);
+            startWeapon.GetComponent<WeaponObject>().Attach();
+        }
     }
 
     public void OnTriggerEnter(Collider collider ) {

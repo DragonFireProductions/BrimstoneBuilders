@@ -102,8 +102,6 @@ public class CustomInspector : EditorWindow {
                 Debug.Log("List is null");
             if (WeaponItemList.itemList != null && WeaponItemList.itemList.Count > 0) 
             {
-
-
                 GUILayout.BeginHorizontal ();
                 viewIndex = Mathf.Clamp (EditorGUILayout.IntField ("Current Item", viewIndex, GUILayout.ExpandWidth(false)), 1, WeaponItemList.itemList.Count);
                 //Mathf.Clamp (viewIndex, 1, inventoryItemList.itemList.Count);
