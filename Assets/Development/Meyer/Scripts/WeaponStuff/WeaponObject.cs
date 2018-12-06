@@ -159,7 +159,10 @@ public abstract class WeaponObject : BaseItems
     }
     protected virtual void OnTriggerEnter(Collider collider)
     {
-        PickUp(collider.GetComponent<BaseCharacter>());
+        if ( collider.tag == "Player" ){
+             PickUp(collider.GetComponent<BaseCharacter>());
+        }
+       
     }
 
 }
