@@ -118,8 +118,8 @@ public abstract class WeaponObject : BaseItems
             leftHand.transform.position = AttachedCharacter.leftHand.transform.position;
             rightHand.transform.position = AttachedCharacter.rightHand.transform.position;
 
-            leftHand.transform.localScale = new Vector3(1, 1, 1);
-            rightHand.transform.localScale = new Vector3(1, 1, 1);
+            leftHand.transform.localScale = AttachedCharacter.transform.localScale;
+            rightHand.transform.localScale = AttachedCharacter.transform.localScale;
 
             leftHand.transform.rotation = AttachedCharacter.leftHand.transform.rotation;
             rightHand.transform.rotation = AttachedCharacter.rightHand.transform.rotation;
