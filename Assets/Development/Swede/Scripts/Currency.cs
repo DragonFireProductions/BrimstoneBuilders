@@ -80,10 +80,10 @@ public class Currency : MonoBehaviour
                 companion.startWeapon = Instantiate( companion.startWeapon );
                 companion.startWeapon.GetComponent<WeaponObject>().PickUp(companion);
                 companion.startWeapon.GetComponent<WeaponObject>().Attach();
-                container.companion.inventoryUI.SellButton.SetActive(true);
-                container.companion.inventoryUI.BuyButton.SetActive(false);
-                container.companion.inventoryUI.tab.gameObject.SetActive(true);
-                container.companion.inventoryUI.UpdateCharacter(container.companion.inventoryUI.ShopCharacterText);
+                companion.inventoryUI.SellButton.SetActive(true);
+                companion.inventoryUI.BuyButton.SetActive(false);
+                companion.inventoryUI.tab.gameObject.SetActive(true);
+                companion.inventoryUI.UpdateCharacter(container.companion.inventoryUI.ShopCharacterText);
                 container.gameObject.transform.SetParent(_shop.Sell.transform);
                 
                 StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
@@ -100,12 +100,18 @@ public class Currency : MonoBehaviour
 
                 StaticManager.RealTime.Companions.Add(companion);
             StaticManager.inventories.alllables.Add(companion.inventory);
-                companion.Nav.enabled = true;
-                companion.Nav.SetState = BaseNav.state.IDLE;
-                companion.GetComponent < CompanionNav >( ).SetAgreesionState = CompanionNav.AggressionStates.PASSIVE;
                 companion.gameObject.SetActive(true);
                 companion.inventoryUI.sendToButton.gameObject.SetActive(true);
+            companion.Nav.enabled = true;
+            Debug.Log("Enabled");
+            companion.Nav.SetState = BaseNav.state.IDLE;
+            companion.GetComponent<CompanionNav>().SetAgreesionState = CompanionNav.AggressionStates.PASSIVE;
+                StartCoroutine( Wait( companion ) );
+;            if (companion.Nav.isActiveAndEnabled)
+            {
+                Debug.Log("Enabled");
             }
+        }
             else
             {
 
@@ -114,6 +120,13 @@ public class Currency : MonoBehaviour
             }
             StaticManager.UiInventory.ItemsInstance
                     .GetLabel("CompanionBuyError", StaticManager.UiInventory.ItemsInstance.ShopUI).text = "Max Companions.";
+    }
+
+    private IEnumerator Wait(Companion companion ) {
+        yield return new WaitForSeconds( 1 );
+
+        companion.Nav.enabled = true;
+
     }
     public void SellCompanion( Tab container) {
         var c = container.companion.Nav as CompanionNav;

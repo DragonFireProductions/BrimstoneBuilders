@@ -50,10 +50,6 @@ public class CameraController : MonoBehaviour
         else if (Controller != this){
             Destroy(gameObject);
         }
-
-        DontDestroyOnLoad(gameObject);
-       
-
         camRig = transform.parent.parent.transform;
 
         playercam = transform.parent.transform;

@@ -75,6 +75,7 @@ public class CompanionNav : BaseNav {
     }
     // What happens to enemies when it attacks
     protected override void Update( ) {
+        Debug.Log("Enabled");
         character.attackers.RemoveAll( item => item == null );
         enemiesToAttack.RemoveAll( item => item == null );
      
@@ -177,8 +178,7 @@ public class CompanionNav : BaseNav {
                             float distance = Vector3.Distance(transform.position, character.enemy.transform.position);
                             if (distance < 3)
                             {
-                                character.AnimationClass.Play(AnimationClass.states.AttackTrigger);
-                                character.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
+                                character.AnimationClass.Play(AnimationClass.states.Attack);
                             }
                         }
                   
@@ -221,8 +221,7 @@ public class CompanionNav : BaseNav {
                         {
                             Agent.SetDestination( character.enemy.transform.position );
                             transform.LookAt( character.enemy.transform.position );
-                            character.AnimationClass.Play( AnimationClass.states.AttackTrigger );
-                            character.attachedWeapon.AnimationClass.Play( AnimationClass.weaponstates.EnabledTrigger );
+                            character.AnimationClass.Play(AnimationClass.states.Attack);
                         }
                     }
                     else
