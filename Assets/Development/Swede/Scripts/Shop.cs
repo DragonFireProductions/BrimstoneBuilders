@@ -48,7 +48,7 @@ public class Shop : MonoBehaviour
 
         foreach (var l_companion in companions)
         {
-            l_companion.companion.inventoryUI.Init(l_companion.companion);
+            //l_companion.companion.inventoryUI.Init(l_companion.companion);
             l_companion.companion.inventoryUI.AddToShop(this);
             shopCompanions.Add(l_companion.companion.inventoryUI.CompanionSell);
             l_companion.companion.inventoryUI.CompanionSell.transform.SetParent(Buy.transform);
@@ -56,7 +56,7 @@ public class Shop : MonoBehaviour
             l_companion.companion.inventoryUI.UpdateCharacter(l_companion.companion.inventoryUI.ShopCharacterText);
             l_companion.companion.startWeapon = l_companion.weapon;
             l_companion.companion.inventoryUI.UpdateItem(l_companion.companion.inventoryUI.ShopWeaponsText, l_companion.weapon.GetComponent<WeaponObject>());
-            l_companion.companion.inventoryUI.tab.gameObject.SetActive(false);
+            
         }
             yield return new WaitForEndOfFrame();
     }

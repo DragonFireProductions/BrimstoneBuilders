@@ -77,6 +77,7 @@ public class Currency : MonoBehaviour
 
                 var newCompanion = Instantiate( container.companion.gameObject );
                 var companion = newCompanion.GetComponent < Companion >( );
+                companion.inventoryUI.Init(companion);
                 companion.startWeapon = Instantiate( companion.startWeapon );
                 companion.startWeapon.GetComponent<WeaponObject>().PickUp(companion);
                 companion.startWeapon.GetComponent<WeaponObject>().Attach();
