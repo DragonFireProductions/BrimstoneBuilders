@@ -73,11 +73,18 @@ public class CompanionNav : BaseNav {
         }
 
     }
+    void FixedUpdate()
+    {
+        speed = Mathf.Lerp(speed, (transform.position - lastPosition).magnitude / Time.deltaTime, 0.75f);
+        lastPosition = transform.position;
+        character.AnimationClass.animation.SetFloat( "Walk" , speed );
+    }
     // What happens to enemies when it attacks
     protected override void Update( ) {
         Debug.Log("Enabled");
         character.attackers.RemoveAll( item => item == null );
         enemiesToAttack.RemoveAll( item => item == null );
+        
      
         switch ( aggState ){
 

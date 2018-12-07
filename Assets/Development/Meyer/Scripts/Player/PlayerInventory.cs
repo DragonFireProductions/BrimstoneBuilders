@@ -57,7 +57,6 @@ public class PlayerInventory : MonoBehaviour {
         PickedUpWeapons.Add( weapon );
         character.inventoryUI.AddWeapon(weapon);
         weapon.gameObject.SetActive(false);
-        weapon.rightHand = Instantiate( weapon.rightHand );
     }
 
     public void PickUp( Potions potions ) {
@@ -76,8 +75,7 @@ public class PlayerInventory : MonoBehaviour {
 
             if ( isInventoryActive ){
                 StaticManager.inventories.prevPos = StaticManager.Character.transform.position;
-                StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PlayerUI);
-                character.inventoryUI.ShowInventory();
+                StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.PlayerUI );
                 character.inventoryUI.UpdateItem();
                 StaticManager.inventories.SwitchInventory(StaticManager.Character.inventoryUI.tab);
                 StaticManager.inventories.inventory.character.projector.gameObject.SetActive(false);

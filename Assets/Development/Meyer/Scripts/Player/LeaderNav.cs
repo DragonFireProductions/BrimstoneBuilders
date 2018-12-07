@@ -33,10 +33,6 @@ public class LeaderNav : CompanionNav {
 
     private bool timerEnabled = false;
 
-	private float speed;
-
-	private Vector3 lastPosition;
-
     private void Start( ) {
 		hit = new RaycastHit();
 	    mask = LayerMask.GetMask( "Enemy" );
@@ -46,11 +42,11 @@ public class LeaderNav : CompanionNav {
     {
         speed = Mathf.Lerp(speed, (transform.position - lastPosition).magnitude / Time.deltaTime, 0.75f);
         lastPosition = transform.position;
-		
+		character.AnimationClass.animation.SetFloat("Walk", speed);
     }
     // Update is called once per frame
     protected override void Update () {
-		character.AnimationClass.animation.SetFloat("Blend", speed);
+		
         if ( Input.GetMouseButton( 0 ) && !StaticManager.UiInventory.ItemsInstance.windowIsOpen && !EventSystem.current.IsPointerOverGameObject()){
             l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );
 

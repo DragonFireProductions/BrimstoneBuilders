@@ -11,6 +11,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Experimental.UIElements;
+using UnityEngine.UI;
 
 public class CharacterInventoryUI : MonoBehaviour {
 
@@ -85,6 +86,8 @@ public class CharacterInventoryUI : MonoBehaviour {
 		tab.gameObject.SetActive(true);
 
 	    tab.companion = companion;
+
+	    tab.GetComponentInChildren < Text >( ).text = name;
 
 	    sendToButton.companion = companion;
 
@@ -231,11 +234,7 @@ public class CharacterInventoryUI : MonoBehaviour {
 			}
 		}
 	}
-
-	public void ShowInventory( ) {
-		CharacterInventory.SetActive(true);
-	}
-
+	
     // Use this for initialization
 
 

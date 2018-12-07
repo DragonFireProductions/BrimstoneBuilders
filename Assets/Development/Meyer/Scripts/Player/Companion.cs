@@ -60,16 +60,16 @@ public class Companion : BaseCharacter {
         range.character = this;
         mele.character = this;
 
-        inventoryUI.Init(this);
+        if ( tag == "Player" ){
+             inventoryUI.Init(this);
+        }
+        else{
+            inventoryUI.CharacterInventory.SetActive(false);
+        }
 
         StaticManager.RealTime.Companions.Add(this);
         
-        if (startWeapon && tag != "Player")
-        {
-            startWeapon = Instantiate(startWeapon);
-            startWeapon.GetComponent<WeaponObject>().PickUp(this);
-            startWeapon.GetComponent<WeaponObject>().Attach();
-        }
+       
     }
 
     public void OnTriggerEnter(Collider collider ) {

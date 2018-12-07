@@ -39,6 +39,9 @@ public class BaseNav : MonoBehaviour {
 
     protected float timer = 0;
 
+    protected float speed;
+
+    protected Vector3 lastPosition;
     public state SetState {
         get { return State; }
         set
@@ -80,7 +83,12 @@ public class BaseNav : MonoBehaviour {
     protected void Start( ) {
         Agent.stoppingDistance = stoppingDistance;
     }
-
+    void FixedUpdate()
+    {
+        speed = Mathf.Lerp(speed, (transform.position - lastPosition).magnitude / Time.deltaTime, 0.75f);
+        lastPosition = transform.position;
+        character.AnimationClass.animation.SetFloat("Walk", speed);
+    }
     // Update is called once per frame
     protected virtual void Update( ) {
         switch ( State ){

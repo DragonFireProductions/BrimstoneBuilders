@@ -103,7 +103,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		var cha = obj.AttachedCharacter as Companion;
 
 		if ( obj is WeaponObject ){
-			cha.inventoryUI.AddWeapon( obj );
+			var a = obj as WeaponObject;
+			a.PickUp(cha);
 		}
 
 		if ( obj is Potions ){

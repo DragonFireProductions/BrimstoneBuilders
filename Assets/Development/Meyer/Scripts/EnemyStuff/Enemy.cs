@@ -12,7 +12,6 @@ namespace Kristal
 
     public class Enemy : BaseCharacter
     {
-        public Companion ChosenCompanion;
 
         private int MaxCoinCount = 15;
         private Vector3 deadPos = new Vector3();
@@ -24,7 +23,7 @@ namespace Kristal
         protected void Awake()
         {
             base.Awake();
-            threat_signal = gameObject.transform.Find("Canvas/ThreatSignal").GetComponent<SpriteRenderer>();
+          
 
         }
 
@@ -36,7 +35,6 @@ namespace Kristal
             Nav = gameObject.GetComponent<EnemyNav>();
 
             MaxCoinCount = UnityEngine.Random.Range(1, MaxCoinCount);
-            StaticManager.weaponManager.AttachWeapon(this);
             attachedWeapon.Damage = damage;
         }
 
@@ -83,14 +81,13 @@ namespace Kristal
                     deadPos.y = StaticManager.Character.gameObject.transform.position.y;
                     var newsword = Instantiate(attachedWeapon);
                     newsword.tag = "PickUp";
+
                     newsword.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
                     newsword.gameObject.transform.position = deadPos;
                 }
                 StaticManager.RealTime.Enemies.Remove(this);
                 Destroy(gameObject);
             }
-
-            damage -= _damage;
         }
         
     }

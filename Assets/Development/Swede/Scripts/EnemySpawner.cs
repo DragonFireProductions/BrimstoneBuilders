@@ -1,7 +1,11 @@
-﻿using Kristal;
+﻿using System;
+
+using Kristal;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+
+using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -13,9 +17,24 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float maxRange = 25;
     [SerializeField] private float spawnRadius = 10;
 
-    public float Strength;
+    
+   [Serializable] public struct EnemyStruct
+    {
 
-    [SerializeField] private Enemy[] enemies;
+        public Enemy enemy;
+
+        public int Damage;
+
+        public float luck;
+
+        public GameObject weapon;
+
+
+    }
+    [SerializeField]
+    public EnemyStruct[] enemies;
+
+
 
     private List<GameObject> instantiated;
     private float playerDistance;
@@ -37,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
         //If the player is within the minRange of the spawner, spawns enemies.
         if (playerDistance <= minRange && isActive == false)
         {
-            StartCoroutine(Spawn());
+            Spawn();
             isActive = true;
         }
         //If the player goes outside the maxRange, the instantiated enemies will despawn.
@@ -48,34 +67,39 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private IEnumerator Spawn()
+    private void Spawn()
     {
         StaticManager.RealTime.Enemies.RemoveAll(nulls => nulls == null);
 
         for (int i = 0; i < numberofEnemies; i++)
         {
             Vector3 position = Random.insideUnitSphere * spawnRadius + this.gameObject.transform.position;
-
-            var newEnemy = Instantiate(enemies[Random.Range(0, enemies.Length)], position, Quaternion.identity);
-
-            newEnemy.GetComponent < Enemy >( ).stats.Strength = Strength;
-            newEnemy.GetComponent<Enemy>().stats.UpdateStrength();
+            var random = Random.Range( 0 , enemies.Length );
+            var newEnemy = Instantiate(enemies[random].enemy.gameObject, position, Quaternion.identity);
+            
             //Randomizes the spawn position (within the set range) of the current enemy.
             newEnemy.GetComponent<EnemyNav>().location = gameObject;
+
             //Adjust for y to properly place on nav mesh.
             position.y = StaticManager.Character.gameObject.transform.position.y;
             //Plays the spawn animation
+
             StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
             newEnemy.GetComponent<EnemyNav>().location = this.gameObject;
-
-            yield return new WaitForSeconds(1.0f);
-
             
             //warps the enemy to the position ^
             newEnemy.GetComponent<Enemy>().Nav.Agent.Warp(position);
             //adds the enemy to the list of instantiated enemies.
             instantiated.Add(newEnemy.gameObject);
+           
+
+            newEnemy.GetComponent < Enemy >( ).startWeapon = Instantiate(enemies[ random ].weapon);
+
+            newEnemy.GetComponent<Enemy>().startWeapon.GetComponent<WeaponObject>().PickUp(newEnemy.GetComponent<Enemy>());
+            newEnemy.GetComponent<Enemy>().startWeapon.GetComponent<WeaponObject>().Attach(newEnemy.GetComponent<Enemy>());
             StaticManager.RealTime.Enemies.Add(newEnemy.GetComponent<Enemy>());
+            newEnemy.GetComponent < Enemy >( ).damage = enemies[ random ].Damage;
+            newEnemy.GetComponent < Stat >( ).luck = enemies[ random ].luck;
             StaticManager.RealTime.SetAttackEnemies();
         }
 

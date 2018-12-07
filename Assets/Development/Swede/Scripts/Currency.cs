@@ -108,6 +108,7 @@ public class Currency : MonoBehaviour
             companion.Nav.SetState = BaseNav.state.IDLE;
             companion.GetComponent<CompanionNav>().SetAgreesionState = CompanionNav.AggressionStates.PASSIVE;
                 StartCoroutine( Wait( companion ) );
+                companion.inventoryUI.CharacterInventory.SetActive( false );
 ;            if (companion.Nav.isActiveAndEnabled)
             {
                 Debug.Log("Enabled");

@@ -86,7 +86,27 @@ public abstract class WeaponObject : BaseItems
 
         AttachedCharacter.AnimationClass.SwitchWeapon(this);
     }
+    public void Attach(Enemy enemy)
+    {
+        if (AttachedCharacter.attachedWeapon)
+        {
 
+            AttachedCharacter.attachedWeapon.leftHand.SetActive(false);
+            AttachedCharacter.attachedWeapon.rightHand.SetActive(false);
+        }
+        leftHand.SetActive(true);
+        rightHand.SetActive(true);
+
+        gameObject.SetActive(true);
+
+        AttachedCharacter.attachedWeapon = this as WeaponObject;
+
+        AttachedCharacter.attachedWeapon.gameObject.layer = AttachedCharacter.gameObject.layer;
+
+        AttachedCharacter.attachedWeapon.tag = "Weapon";
+
+        AttachedCharacter.AnimationClass.SwitchWeapon(this);
+    }
     public override void IncreaseSubClass(float amount ) {
         if ( Damage <= 10 ){
         Damage += amount;
@@ -142,9 +162,65 @@ public abstract class WeaponObject : BaseItems
             rightHand.layer = character.gameObject.layer;
 
             gameObject.layer = character.gameObject.layer;
+
+            if ( type == SubClasses.Types.MELE ){
+                Damage = a.mele.CurrentLevel;
+            }
+
+            else if ( type == SubClasses.Types.RANGE ){
+                Damage = a.range.CurrentLevel;
+            }
+
+           else if ( type == SubClasses.Types.MAGIC ){
+                Damage = a.range.CurrentLevel;
+            }
         }
     }
+    public void PickUp(Enemy character)
+    {
+        if (tag == "PickUp")
+        {
+            if (mesh)
+            {
+                mesh.SetActive(false);
+            }
+            
+            this.GetComponent<BoxCollider>().enabled = false;
+            AttachedCharacter = character;
+            leftHand = Instantiate(leftHand);
+            rightHand = Instantiate(rightHand);
 
+            leftHand.transform.position = AttachedCharacter.leftHand.transform.position;
+            rightHand.transform.position = AttachedCharacter.rightHand.transform.position;
+
+            leftHand.transform.localScale = AttachedCharacter.transform.localScale;
+            rightHand.transform.localScale = AttachedCharacter.transform.localScale;
+
+            leftHand.transform.rotation = AttachedCharacter.leftHand.transform.rotation;
+            rightHand.transform.rotation = AttachedCharacter.rightHand.transform.rotation;
+
+            leftHand.transform.SetParent(AttachedCharacter.leftHand.transform, true);
+            rightHand.transform.SetParent(AttachedCharacter.rightHand.transform, true);
+
+            if (leftHand.GetComponent<WeaponCollision>())
+            {
+                leftHand.GetComponent<WeaponCollision>().obj = this;
+            }
+
+            if (rightHand.GetComponent<WeaponCollision>())
+            {
+                rightHand.GetComponent<WeaponCollision>().obj = this;
+            }
+
+            leftHand.SetActive(false);
+            rightHand.SetActive(false);
+
+            leftHand.layer = character.gameObject.layer;
+            rightHand.layer = character.gameObject.layer;
+
+            gameObject.layer = character.gameObject.layer;
+        }
+    }
     public void DamageCollider(Collider collider)
     {
         if ((collider.tag == "Enemy" || collider.tag == "Companion" || collider.tag == "Player") && tag == "Weapon")

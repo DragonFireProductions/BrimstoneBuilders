@@ -2487,24 +2487,8 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1754740325599666, guid: 10aa3b9d4322bf243b167aa5299cb087, type: 2}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 1874460978104436, guid: 10aa3b9d4322bf243b167aa5299cb087, type: 2}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 1868381757152454, guid: 10aa3b9d4322bf243b167aa5299cb087, type: 2}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 1201498709915482, guid: 10aa3b9d4322bf243b167aa5299cb087, type: 2}
-      propertyPath: m_Layer
-      value: 11
-      objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 114661661603076030, guid: 10aa3b9d4322bf243b167aa5299cb087, type: 2}
+    - {fileID: 114869681891799788, guid: 10aa3b9d4322bf243b167aa5299cb087, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 10aa3b9d4322bf243b167aa5299cb087, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &195444115
@@ -17388,6 +17372,34 @@ MonoBehaviour:
   HpText: {fileID: 1525982338}
   StaminaText: {fileID: 630047318}
   CoinText: {fileID: 1778969439}
+--- !u!1 &1000168044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1000168045}
+  m_Layer: 11
+  m_Name: BulletPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1000168045
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1000168044}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.73, z: 0.71}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1049567428}
+  m_RootOrder: 61
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1000572386
 GameObject:
   m_ObjectHideFlags: 0
@@ -18110,7 +18122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd0e49802fd78e244a89f4b2ca89ec9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPbar: {fileID: 0}
+  HPbar: {fileID: 2123193335}
 --- !u!54 &1049567417
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18259,7 +18271,7 @@ MonoBehaviour:
   rightHand: {fileID: 771487099}
   projector: {fileID: 708785156}
   characterName: 
-  bulletPosition: {fileID: 0}
+  bulletPosition: {fileID: 659754513}
   ridgidbody: {fileID: 1049567417}
   startWeapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28,
     type: 2}
@@ -18334,7 +18346,7 @@ Animator:
   m_GameObject: {fileID: 1049567415}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 47388b002c80e8b49827d81977725b78, type: 3}
-  m_Controller: {fileID: 9100000, guid: b36ba21651eda3a4583232bcb9f5207f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7aae967a00029b24fb07026f2e9a0ed6, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -18415,6 +18427,7 @@ Transform:
   - {fileID: 536046229}
   - {fileID: 124878817}
   - {fileID: 659754513}
+  - {fileID: 1000168045}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -25204,7 +25217,7 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1417878129}
-  m_LocalRotation: {x: -0.07201925, y: -0.111562036, z: -0.030711723, w: 0.9906684}
+  m_LocalRotation: {x: -0.07201928, y: -0.111562036, z: -0.030711731, w: 0.9906684}
   m_LocalPosition: {x: -0.18737051, y: 0.026234904, z: 0.110360876}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -25329,13 +25342,12 @@ RectTransform:
 --- !u!114 &1435506191
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114056170154970172, guid: 970963a144414604983a89bb2442be10,
-    type: 2}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1435506189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -25346,100 +25358,20 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Companion1
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_outlineColor:
-    serializedVersion: 2
-    rgba: 4278190080
-  m_fontSize: 15.2
-  m_fontSizeBase: 15.2
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_textAlignment: 514
-  m_isAlignmentEnumConverted: 1
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
-  m_linkedTextComponent: {fileID: 0}
-  m_isLinkedTextComponent: 0
-  m_isTextTruncated: 0
-  m_enableKerning: 1
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_ignoreRectMaskCulling: 0
-  m_ignoreCulling: 1
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_firstVisibleCharacter: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 50.719242, y: 0, z: 50.53611, w: 0}
-  m_textInfo:
-    textComponent: {fileID: 1435506191}
-    characterCount: 10
-    spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
-    linkCount: 0
-    lineCount: 1
-    pageCount: 1
-    materialCount: 1
-  m_havePropertiesChanged: 1
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
-  m_inputSource: 0
-  m_hasFontAssetChanged: 0
-  m_subTextObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
 --- !u!222 &1435506192
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -35669,9 +35601,11 @@ MonoBehaviour:
   minRange: 11.1
   maxRange: 24.16
   spawnRadius: 5
-  Strength: 0
   enemies:
-  - {fileID: 0}
+  - enemy: {fileID: 0}
+    Damage: 0
+    luck: 0
+    weapon: {fileID: 0}
   numberofEnemies: 20
 --- !u!4 &2032984260
 Transform:
@@ -38159,9 +38093,11 @@ MonoBehaviour:
   minRange: 11.1
   maxRange: 24.16
   spawnRadius: 5
-  Strength: 0
   enemies:
-  - {fileID: 0}
+  - enemy: {fileID: 0}
+    Damage: 0
+    luck: 0
+    weapon: {fileID: 0}
   numberofEnemies: 3
 --- !u!4 &2106539245
 Transform:
@@ -38457,6 +38393,12 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2122088364}
   m_CullTransparentMesh: 0
+--- !u!114 &2123193335 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114064820138443518, guid: 10aa3b9d4322bf243b167aa5299cb087,
+    type: 2}
+  m_PrefabInternal: {fileID: 194064852}
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &2133741986
 GameObject:
   m_ObjectHideFlags: 0
@@ -38629,10 +38571,11 @@ MonoBehaviour:
   minRange: 11.1
   maxRange: 24.16
   spawnRadius: 5
-  Strength: 0
   enemies:
-  - {fileID: 114784928368312376, guid: 862f192daae2405439fa2903408c8738, type: 2}
-  - {fileID: 114784928368312376, guid: 862f192daae2405439fa2903408c8738, type: 2}
+  - enemy: {fileID: 114932892065668812, guid: 8b3689f0546616c419c405018796038a, type: 2}
+    Damage: 2
+    luck: 5
+    weapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28, type: 2}
   numberofEnemies: 1
 --- !u!4 &2133991367
 Transform:

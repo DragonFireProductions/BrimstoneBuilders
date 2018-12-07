@@ -1809,6 +1809,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &1903812551175718
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4646169580588690}
+  m_Layer: 13
+  m_Name: BulletPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1904258711117518
 GameObject:
   m_ObjectHideFlags: 1
@@ -3118,6 +3133,19 @@ Transform:
   m_Father: {fileID: 4224354417216440}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4646169580588690
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1903812551175718}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.91, z: 0.79}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4734035315682174}
+  m_RootOrder: 61
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4650440993281814
 Transform:
   m_ObjectHideFlags: 1
@@ -3219,7 +3247,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1047446260753508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.9586682, y: 30, z: 5.9935565}
+  m_LocalPosition: {x: 1187.7142, y: 989.5346, z: -161.06981}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4874220167212308}
@@ -3283,6 +3311,7 @@ Transform:
   - {fileID: 4083538317432448}
   - {fileID: 224191457762432562}
   - {fileID: 4917674785484220}
+  - {fileID: 4646169580588690}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3948,7 +3977,7 @@ MonoBehaviour:
   rightHand: {fileID: 1106846695327630}
   projector: {fileID: 119193492469580312}
   characterName: 
-  bulletPosition: {fileID: 0}
+  bulletPosition: {fileID: 4646169580588690}
   ridgidbody: {fileID: 54859080138030056}
   startWeapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28,
     type: 2}
@@ -4040,7 +4069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd0e49802fd78e244a89f4b2ca89ec9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPbar: {fileID: 0}
+  HPbar: {fileID: 114839800907966434}
 --- !u!114 &114915734989775878
 MonoBehaviour:
   m_ObjectHideFlags: 1

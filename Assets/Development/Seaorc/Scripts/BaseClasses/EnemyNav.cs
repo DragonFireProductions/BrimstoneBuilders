@@ -31,7 +31,6 @@ public class EnemyNav : BaseNav {
         character      = GetComponent < Enemy >( );
         stats          = GetComponent < Stat >( );
         battleDistance = 3;
-        SetState = state.IDLE;
     }
 
     public IEnumerator Nav( ) {
