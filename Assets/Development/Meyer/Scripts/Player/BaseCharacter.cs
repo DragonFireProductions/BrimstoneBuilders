@@ -15,7 +15,7 @@ using UnityEngine.AI;
 using UnityEngine.Assertions;
 using UnityEngine.Playables;
 
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
 [Serializable]
 public abstract class BaseCharacter : MonoBehaviour {
@@ -142,7 +142,28 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     }
 
-	public abstract void Damage( int damage, BaseItems item );
+    public virtual void Damage(int _damage, BaseItems item)
+    {
+        var total = item.AttachedCharacter.stats.luck + stats.luck;
+
+        var rand = Random.Range(1, total);
+
+        if (rand > total - (item.AttachedCharacter.stats.luck * 0.5)){
+	        var damage = _damage * 2;
+			stats.Health -= damage;
+            InstatiateFloatingText.InstantiateFloatingText(damage.ToString(), this, Color.red, new Vector3(2,2,2), 0.5f);
+        }
+        if ( rand > total * 0.5 ){
+           
+            InstatiateFloatingText.InstantiateFloatingText("MISS", this, Color.gray, new Vector3(0.5f,0.5f,0.5f), 1.5f);
+        }
+        if (rand > total * 0.5 && (rand < total - (rand * 0.5))){
+            var damage = _damage;
+            stats.Health -= damage;
+            InstatiateFloatingText.InstantiateFloatingText(damage.ToString(), this, Color.blue, new Vector3(1,1,1), 1.5f);
+        }
+        
+    }
     // Update is called once per frame
     protected void Update () {
 

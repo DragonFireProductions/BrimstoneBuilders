@@ -9,7 +9,7 @@ public class InstatiateFloatingText : MonoBehaviour
     {
         popupText = Resources.Load < FloatingText >( "Parent" );
     }
-    public static void InstantiateFloatingText(string text, BaseCharacter location, Color color, Vector3 scale)
+    public static void InstantiateFloatingText(string text, BaseCharacter location, Color color, Vector3 scale, float speed)
     {
         FloatingText instance = Instantiate(popupText);
         
@@ -17,6 +17,7 @@ public class InstatiateFloatingText : MonoBehaviour
         instance.transform.localScale = scale;
         instance.transform.position = new Vector3(Random.Range(location.transform.position.x - 0.5f, location.transform.position.x + 0.5f), location.transform.position.y, Random.Range(location.transform.position.z - 0.5f, location.transform.position.z + 0.5f));
         instance.SetDamage(text, color);
+        instance.animator.speed = speed;
     }
     public static void InstantiateFloatingText(string text, float y, Color color, BaseCharacter character)
     {

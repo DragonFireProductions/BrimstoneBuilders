@@ -137,7 +137,7 @@ public class GunType : WeaponObject {
         character.range.IncreaseLevel(amount);
         int currLevel = ( int )character.range.CurrentLevel;
         if ( currLevel - level == 1 ) 
-            InstatiateFloatingText.InstantiateFloatingText("RANGE++",character,  Color.green, new Vector3(1,1,1));
+            InstatiateFloatingText.InstantiateFloatingText("RANGE++",character,  Color.green, new Vector3(1,1,1), 0.2f);
     }
     [HideInInspector] protected int _lastBullet;
     public GameObject GetPulledBullets( ) {

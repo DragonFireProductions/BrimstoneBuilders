@@ -77,25 +77,12 @@ public class Companion : BaseCharacter {
     }
     public override void Damage(int _damage, BaseItems item)
     {
-
-        Vector3 scale = new Vector3(1, 1, 1);
-
-        var total = item.AttachedCharacter.stats.luck + stats.luck;
-
-        var rand = Random.Range(1, total);
-
-        if (rand > total - (item.AttachedCharacter.stats.luck * 0.3))
-        {
-            _damage += 5;
-            scale = new Vector3(2, 2, 2);
-        }
+        
+        
 
 
         if (stats.Health > 0){
-            InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.blue, scale);
-            stats.Health -= _damage;
-
-
+            base.Damage(_damage, item);
         }
 
         if ( stats.Health <= 0 ){

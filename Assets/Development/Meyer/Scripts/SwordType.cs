@@ -33,7 +33,7 @@ public class SwordType : WeaponObject {
     }
     public void CheckHit( ) {
         if (  hit == false ){
-            InstatiateFloatingText.InstantiateFloatingText( "MISS" , AttachedCharacter , Color.grey, new Vector3(0.5f, 0.5f, 0.5f) );
+            InstatiateFloatingText.InstantiateFloatingText( "MISS" , AttachedCharacter , Color.grey, new Vector3(0.5f, 0.5f, 0.5f), 0.2f );
         }
     }
     protected override void OnTriggerEnter(Collider collider)
@@ -52,7 +52,7 @@ public class SwordType : WeaponObject {
         character.mele.IncreaseLevel(amount);
         int currLevel = (int)character.mele.CurrentLevel;
         if (currLevel - level == 1)
-            InstatiateFloatingText.InstantiateFloatingText("MELE++",character, Color.green, new Vector3(1,1,1));
+            InstatiateFloatingText.InstantiateFloatingText("MELE++",character, Color.green, new Vector3(1,1,1), 0.2f);
     }
 
     public override void AssignDamage( ) {

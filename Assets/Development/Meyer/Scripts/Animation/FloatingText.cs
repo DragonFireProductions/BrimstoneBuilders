@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class FloatingText : MonoBehaviour {
 
-	[SerializeField] Animator animator;
+	[SerializeField] public Animator animator;
 
 	private TextMeshProUGUI damageText;
 
