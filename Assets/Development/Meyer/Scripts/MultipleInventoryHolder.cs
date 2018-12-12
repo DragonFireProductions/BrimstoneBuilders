@@ -122,6 +122,10 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		if ( obj is Potions ){
 			cha.inventoryUI.AddPotion(obj);
 		}
+
+		if ( obj is ArmorItem){
+			cha.inventoryUI.AddArmor(obj);
+		}
 		inventory.character.inventoryUI.DeleteObject(selectedObj);
 		SwitchToWeapons();
         SwitchInventory(tab);

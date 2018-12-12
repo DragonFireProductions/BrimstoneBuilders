@@ -53,6 +53,8 @@ public class UIInventoryManager : MonoBehaviour {
 
     public Image rangeBar;
 
+    public GameObject pauseWindow;
+
     //add a new window
 
 

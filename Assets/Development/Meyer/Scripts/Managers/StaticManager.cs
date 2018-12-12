@@ -39,6 +39,8 @@ public class StaticManager : MonoBehaviour
     public static ItemLevelCalculation levelCalc;
 
     public static ArmorManager armor;
+
+    
     
 
     public bool unlimitedPotions = false;

@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 114406641560423168}
   - component: {fileID: 54859080138030056}
   - component: {fileID: 114206196702207148}
+  - component: {fileID: 114575091359770150}
   m_Layer: 13
   m_Name: Companion 1
   m_TagString: Companion
@@ -3247,7 +3248,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1047446260753508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1187.7142, y: 989.5346, z: -161.06981}
+  m_LocalPosition: {x: -515.0696, y: 3.01, z: 13.944352}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4874220167212308}
@@ -3861,6 +3862,7 @@ MonoBehaviour:
   isInventoryActive: 0
   PickedUpWeapons: []
   PickedUpPotions: []
+  pickedupArmor: []
   parent: {fileID: 0}
   Slots: []
   PotionSlots: []
@@ -3914,11 +3916,13 @@ MonoBehaviour:
   PotionsInventory: {fileID: 0}
   CharacterInventory: {fileID: 0}
   WeaponInventory: {fileID: 0}
+  ArmorInventory: {fileID: 0}
   CompanionSell: {fileID: 0}
   SellButton: {fileID: 0}
   BuyButton: {fileID: 0}
   weapons: []
   potions: []
+  armor: []
   ShopWeaponsText: {fileID: 0}
   ShopCharacterText: {fileID: 0}
   companion: {fileID: 114406641560423168}
@@ -3993,6 +3997,30 @@ MonoBehaviour:
   mele:
     character: {fileID: 0}
     CurrentLevel: 0
+  armor: {fileID: 114575091359770150}
+--- !u!114 &114575091359770150
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1047446260753508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f0c966c4ce11d34e97b9ecd7c41c905, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHead: {fileID: 0}
+  currentBody: {fileID: 0}
+  currentShoe: {fileID: 0}
+  currentBelt: {fileID: 0}
+  currentGlove: {fileID: 0}
+  currentShoulder: {fileID: 0}
+  startHead: {fileID: 1323154856843956}
+  startBody: {fileID: 1943574351099974}
+  startShoe: {fileID: 1868820591216176}
+  startBelt: {fileID: 1981615595399936}
+  startGlove: {fileID: 1198251619410438}
+  startShoulder: {fileID: 0}
 --- !u!114 &114598818362544930
 MonoBehaviour:
   m_ObjectHideFlags: 1

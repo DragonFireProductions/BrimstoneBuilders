@@ -172,9 +172,16 @@ public class UIInventory : MonoBehaviour
             Dragging = false;
             SelectedItem.gameObject.SetActive(false);
         }
-        if ( Input.GetKeyDown(KeyCode.Escape) ){
-            ShowWindow(ItemsInstance.PauseUI);
-            Time.timeScale = 0;
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (StaticManager.UiInventory.ItemsInstance.openedWindow.Count > 0)
+            {
+                StaticManager.UiInventory.CloseWindow();
+            }
+            else
+            {
+                StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PauseUI);
+            }
         }
         StaticManager.UiInventory.ViewEnemyStats();
 
@@ -184,23 +191,45 @@ public class UIInventory : MonoBehaviour
     {
         if ( item == null ){
             var window = ItemsInstance.openedWindow[ItemsInstance.openedWindow.Count - 1];
+
+            if (window == StaticManager.UiInventory.ItemsInstance.PlayerUI)
+            {
+                StaticManager.uiManager.inventoryCharacterStats.SetActive(false);
+                StaticManager.inventories.inventory.character.transform.position = StaticManager.inventories.prevPos;
+                Time.timeScale = 1;
+                StaticManager.Character.projector.gameObject.SetActive(true);
+            }
             window.SetActive(false);
             ItemsInstance.openedWindow.RemoveAt(ItemsInstance.openedWindow.Count - 1);
+
+           
         }
         else{
+            if (item == StaticManager.UiInventory.ItemsInstance.PlayerUI)
+            {
+                StaticManager.uiManager.inventoryCharacterStats.SetActive(false);
+                StaticManager.inventories.inventory.character.transform.position = StaticManager.inventories.prevPos;
+                Time.timeScale = 1;
+                StaticManager.Character.projector.gameObject.SetActive(true);
+            }
             item.SetActive(false);
             ItemsInstance.openedWindow.Remove( item );
         }
         if ( ItemsInstance.openedWindow.Count == 0 ){
             ItemsInstance.windowIsOpen = false;
+            Time.timeScale = 1;
         }
         
     }
     public void ShowWindow(GameObject item)
     {
-        item.SetActive(true);
-        ItemsInstance.windowIsOpen = item;
-        ItemsInstance.openedWindow.Add(item);
+        if ( !item.activeSelf ){
+            item.SetActive(true);
+            ItemsInstance.windowIsOpen = item;
+            ItemsInstance.openedWindow.Add(item);
+            Time.timeScale = 0.0f;
+        }
+        
 
     }
     public void ViewEnemyStats()

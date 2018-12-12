@@ -79,9 +79,7 @@ public class PlayerInventory : MonoBehaviour {
     
     private void Update( ) {
         if ( Input.GetButtonDown( "Inventory" ) ){
-            isInventoryActive = !isInventoryActive;
-
-            if ( isInventoryActive ){
+            
                 StaticManager.inventories.prevPos = StaticManager.Character.transform.position;
                 StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.PlayerUI );
                 character.inventoryUI.UpdateItem();
@@ -89,16 +87,6 @@ public class PlayerInventory : MonoBehaviour {
                 StaticManager.inventories.inventory.character.projector.gameObject.SetActive(false);
                 StaticManager.inventories.SwitchToWeapons();
                 Time.timeScale = 0;
-            }
-            if ( isInventoryActive == false ){
-                StaticManager.uiManager.inventoryCharacterStats.SetActive(false);
-                StaticManager.inventories.inventory.character.transform.position = StaticManager.inventories.prevPos;
-               // StaticManager.UiInventory.ItemsInstance.ComparedStats.obj.SetActive(false);
-                Time.timeScale = 1;
-                StaticManager.Character.projector.gameObject.SetActive(true);
-
-                StaticManager.UiInventory.CloseWindow();
-            }
         }
     }
 

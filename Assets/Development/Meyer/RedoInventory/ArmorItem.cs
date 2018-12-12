@@ -20,6 +20,8 @@ public class ArmorItem : BaseItems {
 
 	public override void Attach() {
 			var companion = AttachedCharacter as Companion;
+		armor.transform.SetParent(AttachedCharacter.transform);
+		armor.GetComponent < SkinnedMeshRenderer >( ).rootBone = AttachedCharacter.transform.Find( "root" );
 			switch ( type ){
                 case Type.belt:
 
