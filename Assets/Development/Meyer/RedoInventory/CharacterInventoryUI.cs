@@ -21,6 +21,8 @@ public class CharacterInventoryUI : MonoBehaviour {
 
 	public GameObject WeaponInventory;
 
+	public GameObject ArmorInventory;
+
 	public Tab CompanionSell;
 
 	public GameObject SellButton;
@@ -31,6 +33,8 @@ public class CharacterInventoryUI : MonoBehaviour {
 	public List < UIItemsWithLabels > weapons;
 
 	public List < UIItemsWithLabels > potions;
+
+	public List < UIItemsWithLabels > armor;
 
 	public UIItemsWithLabels ShopWeaponsText;
 
@@ -47,6 +51,7 @@ public class CharacterInventoryUI : MonoBehaviour {
 	    companion = _companion;
 		weapons = new List < UIItemsWithLabels >();
 	    potions = new List < UIItemsWithLabels >();
+		armor = new List < UIItemsWithLabels >();
 	    CharacterInventory = Instantiate( StaticManager.uiManager.CharacterInventory );
 
 	    var a = Instantiate( StaticManager.uiManager.SendToButton, StaticManager.uiManager.SendToButton.transform.position, Quaternion.identity );
@@ -72,6 +77,10 @@ public class CharacterInventoryUI : MonoBehaviour {
 	    WeaponInventory = CharacterInventory.transform.Find( "WeaponsInventory" ).gameObject;
 
 		WeaponInventory.SetActive(true);
+
+	    ArmorInventory = CharacterInventory.transform.Find( "ArmorInventory" ).gameObject;
+
+		ArmorInventory.SetActive(false);
 
 	    tab = Instantiate( StaticManager.uiManager.Tab ).GetComponent < Tab >( );
 
@@ -176,8 +185,36 @@ public class CharacterInventoryUI : MonoBehaviour {
         newlabel.SetActive(true);
         potions.Add(l);
     }
+    public void AddArmor(BaseItems item)
+    {
+        GameObject newlabel = Instantiate(StaticManager.uiManager.Armor.gameObject);
+        newlabel.GetComponent<Tab>().companion = companion;
+        newlabel.GetComponent<Tab>().item = item;
 
-	public void RemoveObject(BaseItems item ) {
+	    var i = item as ArmorItem;
+	    i.tab = newlabel.GetComponent < Tab >( );
+
+        var l = newlabel.GetComponent<UIItemsWithLabels>();
+
+        l.obj = newlabel;
+
+        l.item = item;
+
+        l.obj.transform.position = StaticManager.uiManager.Armor.gameObject.transform.position;
+
+        l.obj.transform.SetParent(ArmorInventory.transform);
+
+        l.obj.transform.localScale = new Vector3(1, 1, 1);
+
+        l.FindLabels();
+
+        item.AttachedCharacter = companion;
+
+        newlabel.SetActive(true);
+
+        armor.Add(l);
+    }
+    public void RemoveObject(BaseItems item ) {
 		if ( item is WeaponObject ){
             for (int i = 0; i < weapons.Count; i++)
             {
@@ -269,8 +306,7 @@ public class CharacterInventoryUI : MonoBehaviour {
 		    }
 	    }
     }
-
-	public void UpdateSubClassBar( ) {
+    public void UpdateSubClassBar( ) {
 		float a = companion.mele.CurrentLevel - ( int )companion.mele.CurrentLevel;
 		StaticManager.uiManager.meleBar.fillAmount = a;
 
@@ -332,4 +368,13 @@ public class CharacterInventoryUI : MonoBehaviour {
             }
         }
     }
+
+	public void UpdateArmor( ) {
+		for ( int i = 0 ; i < armor.Count ; i++ ){
+			for ( int j = 0 ; j < armor[i].Labels.Count ; j++ ){
+				var a = armor[ i ].item.stats[ armor[ i ].Labels[ j ].name ];
+				armor[ i ].Labels[ j ].labelText.text = a.ToString( );
+			}
+		}
+	}
 }

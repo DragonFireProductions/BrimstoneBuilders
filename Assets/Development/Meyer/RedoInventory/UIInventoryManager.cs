@@ -17,11 +17,13 @@ public class UIInventoryManager : MonoBehaviour {
 
     public Tab Potion;
 
+    public Tab Armor;
+
+    public Tab Weapon;
+
     //public UIItemsWithLabels characterStats;
 
     public GameObject WeaponInventory;
-
-    public Tab Weapon;
 
     public GameObject Tab;
 
@@ -50,6 +52,10 @@ public class UIInventoryManager : MonoBehaviour {
     public Image magicBar;
 
     public Image rangeBar;
+
+    //add a new window
+
+
     public void Start( ) {
         
         WeaponInventoryStats.GetComponent<UIItemsWithLabels>().FindLabels();

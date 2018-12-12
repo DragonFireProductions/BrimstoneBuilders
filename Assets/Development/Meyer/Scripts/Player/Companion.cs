@@ -29,6 +29,10 @@ public class Companion : BaseCharacter {
    
     [HideInInspector]public SubClasses CurrentSubClass;
 
+    public Armor armor;
+
+
+
     public override object this[string propertyName]
     {
         get
@@ -68,7 +72,43 @@ public class Companion : BaseCharacter {
         }
 
         StaticManager.RealTime.Companions.Add(this);
-        
+
+
+        if ( armor.currentShoulder ){
+            armor.currentShoulder = Instantiate( armor.currentShoulder );
+            armor.currentShoulder.OnTriggerEnter(GetComponent<Collider>());
+            armor.currentShoulder.Attach();
+        }
+
+        if ( armor.currentBody ){
+            armor.currentBody = Instantiate( armor.currentBody );
+            armor.currentBody.OnTriggerEnter(GetComponent<Collider>());
+            armor.currentBody.Attach();
+        }
+
+        if ( armor.currentGlove ){
+            armor.currentGlove = Instantiate( armor.currentGlove );
+            armor.currentGlove.OnTriggerEnter(GetComponent<Collider>());
+            armor.currentGlove.Attach();
+        }
+
+        if ( armor.currentHead ){
+            armor.currentHead = Instantiate( armor.currentHead );
+            armor.currentHead.OnTriggerEnter(GetComponent<Collider>());
+            armor.currentHead.Attach();
+        }
+
+        if ( armor.currentShoe ){
+            armor.currentShoe = Instantiate( armor.currentShoe );
+            armor.currentShoe.OnTriggerEnter(GetComponent<Collider>());
+            armor.currentShoe.Attach();
+        }
+
+        if ( armor.currentBelt ){
+            armor.currentBelt = Instantiate( armor.currentBelt );
+            armor.currentBelt.OnTriggerEnter(GetComponent<Collider>());
+            armor.currentBelt.Attach();
+        }
        
     }
 

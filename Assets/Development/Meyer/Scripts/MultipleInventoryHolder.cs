@@ -46,6 +46,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	public void SwitchToPotionsTab( ) {
 		inventory.character.inventoryUI.WeaponInventory.SetActive(false);
 		inventory.character.inventoryUI.PotionsInventory.SetActive(true);
+		inventory.character.inventoryUI.ArmorInventory.SetActive(false);
 		inventory.character.inventoryUI.UpdatePotions();
 		StaticManager.uiManager.WeaponWindow.SetActive(false);
 
@@ -54,10 +55,21 @@ public class MultipleInventoryHolder : MonoBehaviour {
     public void SwitchToWeapons( ) {
 		inventory.character.inventoryUI.WeaponInventory.SetActive(true);
 		inventory.character.inventoryUI.PotionsInventory.SetActive( false );
-		inventory.character.inventoryUI.UpdateItem();
+	    inventory.character.inventoryUI.ArmorInventory.SetActive(false);
+
+        inventory.character.inventoryUI.UpdateItem();
 		StaticManager.uiManager.WeaponWindow.SetActive(true);
     }
-	public void SwitchInventory(Tab tab ) {
+
+	public void SwitchToArmor( ) {
+		inventory.character.inventoryUI.ArmorInventory.SetActive(true);
+		inventory.character.inventoryUI.WeaponInventory.SetActive(false);
+		inventory.character.inventoryUI.PotionsInventory.SetActive( false );
+		inventory.character.inventoryUI.UpdateArmor();
+		StaticManager.uiManager.WeaponWindow.SetActive(true);
+		
+    }
+    public void SwitchInventory(Tab tab ) {
 		StaticManager.uiManager.inventoryCharacterStats.SetActive(true);
 
 		tab.companion.inventoryUI.UpdateCharacter( StaticManager.uiManager.inventoryCharacterStats.GetComponentInChildren < UIItemsWithLabels >( ) );

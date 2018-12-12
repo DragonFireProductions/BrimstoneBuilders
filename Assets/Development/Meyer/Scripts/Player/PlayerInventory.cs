@@ -24,6 +24,8 @@ public class PlayerInventory : MonoBehaviour {
 
     [ HideInInspector ] public List < Potions > PickedUpPotions;
 
+    [ HideInInspector ] public List < ArmorItem > pickedupArmor;
+
     [ HideInInspector ] public WeaponObject selectedObject { get; set; }
 
     public GameObject parent;
@@ -63,6 +65,12 @@ public class PlayerInventory : MonoBehaviour {
         PickedUpPotions.Add(potions);
         character.inventoryUI.AddPotion(potions);
         potions.gameObject.SetActive(false);
+    }
+
+    public void PickUp( ArmorItem item ) {
+        pickedupArmor.Add(item);
+        character.inventoryUI.AddArmor(item);
+        item.gameObject.SetActive(false);
     }
     public void PickUpCoin(int _coinWorth)
     {

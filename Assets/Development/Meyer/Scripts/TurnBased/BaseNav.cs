@@ -87,10 +87,11 @@ public class BaseNav : MonoBehaviour {
     {
         speed = Mathf.Lerp(speed, (transform.position - lastPosition).magnitude / Time.deltaTime, 0.75f);
         lastPosition = transform.position;
-        character.AnimationClass.animation.SetFloat("Walk", speed);
+       
     }
     // Update is called once per frame
     protected virtual void Update( ) {
+         character.AnimationClass.animation.SetFloat("Walk", 3);
         switch ( State ){
             case state.ATTACKING: {
                 character.attackers.RemoveAll( item => item               == null );
