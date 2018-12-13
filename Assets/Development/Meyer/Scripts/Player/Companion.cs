@@ -82,9 +82,6 @@ public class Companion : BaseCharacter {
     }
     public override void Damage(int _damage, BaseItems item)
     {
-        
-        
-
 
         if (stats.Health > 0){
             base.Damage(_damage, item);
