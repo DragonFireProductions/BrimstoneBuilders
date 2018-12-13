@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Tab : MonoBehaviour {
 
-	public Companion companion { get; set; }
+	public Companion companion;
 
 	public BaseItems item;
 
@@ -20,6 +20,10 @@ public class Tab : MonoBehaviour {
 	public Text Level;
 
 	public Text SubClass;
+
+	public Shop shop;
+
+	public int index;
 
     public void Attach( ) {
 		StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.Equip);

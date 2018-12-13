@@ -29,6 +29,7 @@ public class Shop : MonoBehaviour
 
         public GameObject weapon;
 
+        public int cost;
 
     }
     [SerializeField]
@@ -53,6 +54,10 @@ public class Shop : MonoBehaviour
             shopCompanions.Add(l_companion.companion.inventoryUI.CompanionSell);
             l_companion.companion.inventoryUI.CompanionSell.transform.SetParent(Buy.transform);
             l_companion.companion.inventoryUI.CompanionSell.transform.localScale = new Vector3(1, 1, 1);
+            l_companion.companion.mele.CurrentLevel = l_companion.Melee;
+            l_companion.companion.magic.CurrentLevel = l_companion.Magic;
+            l_companion.companion.range.CurrentLevel = l_companion.Range;
+            l_companion.companion.cost = l_companion.cost;
             l_companion.companion.inventoryUI.UpdateCharacter(l_companion.companion.inventoryUI.ShopCharacterText);
             l_companion.companion.startWeapon = l_companion.weapon;
             l_companion.companion.inventoryUI.UpdateItem(l_companion.companion.inventoryUI.ShopWeaponsText, l_companion.weapon.GetComponent<WeaponObject>());

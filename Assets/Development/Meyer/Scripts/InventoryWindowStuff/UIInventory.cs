@@ -45,14 +45,9 @@ public class UIInventory : MonoBehaviour
         
         ItemsInstance = gameObject.GetComponent<UIItems>();
         ItemsInstance.Initalize();
-        StartScript();
 
     }
-
-    public void StartScript() {
-
-       ItemsInstance.DialogueUI.SetActive(true);
-    }
+    
     public void ShowNotification(string _message, float _time ) {
         ItemsInstance.DialogueUI.GetComponentInChildren<TextMeshProUGUI>().text = _message;
         StartCoroutine( ShowNotification( _time ) );

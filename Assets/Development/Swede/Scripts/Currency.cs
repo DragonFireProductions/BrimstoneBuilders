@@ -67,16 +67,19 @@ public class Currency : MonoBehaviour
         
             if (RemoveCoins(container.companion.cost))
             {
-            Vector3 position = Random.insideUnitSphere * 5 + StaticManager.Character.transform.position;
-            position.y = 0;
-            StaticManager.Character.inventory.coinCount -= container.companion.cost;
+                Vector3 position = Random.insideUnitSphere * 5 + StaticManager.Character.transform.position;
+                position.y = 0;
+                StaticManager.Character.inventory.coinCount -= container.companion.cost;
                 container.companion.cost = container.companion.cost / 2;
                 StaticManager.UiInventory.ItemsInstance
                             .GetLabel("CompanionBuyError", StaticManager.UiInventory.ItemsInstance.ShopUI).text = "";
 
 
                 var newCompanion = Instantiate( container.companion.gameObject );
+                Destroy(container.gameObject);
                 var companion = newCompanion.GetComponent < Companion >( );
+                companion.inventoryUI.AddToShop(_shop);
+                container.companion = companion;
                 companion.inventoryUI.Init(companion);
                 companion.startWeapon = Instantiate( companion.startWeapon );
                 companion.startWeapon.GetComponent<WeaponObject>().PickUp(companion);
@@ -85,7 +88,7 @@ public class Currency : MonoBehaviour
                 companion.inventoryUI.BuyButton.SetActive(false);
                 companion.inventoryUI.tab.gameObject.SetActive(true);
                 companion.inventoryUI.UpdateCharacter(container.companion.inventoryUI.ShopCharacterText);
-                container.gameObject.transform.SetParent(_shop.Sell.transform);
+               companion.inventoryUI.CompanionSell.gameObject.transform.SetParent(sellContainer.transform);
                 
                 StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
 
@@ -100,18 +103,28 @@ public class Currency : MonoBehaviour
                 //companion.Nav.Agent.Warp( position );
 
                 StaticManager.RealTime.Companions.Add(companion);
-            StaticManager.inventories.alllables.Add(companion.inventory);
+               StaticManager.inventories.alllables.Add(companion.inventory);
                 companion.gameObject.SetActive(true);
                 companion.inventoryUI.sendToButton.gameObject.SetActive(true);
-            companion.Nav.enabled = true;
-            Debug.Log("Enabled");
-            companion.Nav.SetState = BaseNav.state.IDLE;
-            companion.GetComponent<CompanionNav>().SetAgreesionState = CompanionNav.AggressionStates.PASSIVE;
+               companion.Nav.enabled = true;
+               Debug.Log("Enabled");
+               companion.Nav.SetState = BaseNav.state.IDLE;
+               companion.GetComponent<CompanionNav>().SetAgreesionState = CompanionNav.AggressionStates.PASSIVE;
                 StartCoroutine( Wait( companion ) );
                 companion.inventoryUI.CharacterInventory.SetActive( false );
-;            if (companion.Nav.isActiveAndEnabled)
+
+            for (int i = 0; i < _shop.shopCompanions.Count; i++)
             {
-                Debug.Log("Enabled");
+                if (container.companion == _shop.companions[i].companion)
+                {
+                    companion.mele.CurrentLevel = _shop.companions[i].Melee;
+                    companion.magic.CurrentLevel = _shop.companions[i].Magic;
+                    companion.range.CurrentLevel = _shop.companions[i].Range;
+                    
+                    companion.attachedWeapon.AssignDamage();
+
+                    break;
+                }
             }
         }
             else
