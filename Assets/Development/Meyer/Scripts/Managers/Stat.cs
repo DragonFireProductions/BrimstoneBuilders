@@ -143,7 +143,7 @@ public class Stat : MonoBehaviour {
         charisma     = Random.Range( 0 , 30 );
         perception   = Random.Range( 0 , 30 );
         intelligence = Random.Range( 0 , 30 );
-        luck = Random.Range( 1 , 100 );
+        luck = Random.Range( 1 , 45);
         stamina      = Random.Range( 0 , 30 );
         XP           = 0;
         maxHealth    = 100;

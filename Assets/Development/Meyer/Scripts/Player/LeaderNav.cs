@@ -46,7 +46,7 @@ public class LeaderNav : CompanionNav {
     }
     // Update is called once per frame
     protected override void Update () {
-		character.AnimationClass.animation.SetFloat("Walk", 3);
+		 character.AnimationClass.animation.SetFloat( "Walk" , Agent.velocity.magnitude/Agent.speed );
 		
         if ( Input.GetMouseButton( 0 ) && !StaticManager.UiInventory.ItemsInstance.windowIsOpen && !EventSystem.current.IsPointerOverGameObject()){
             l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );

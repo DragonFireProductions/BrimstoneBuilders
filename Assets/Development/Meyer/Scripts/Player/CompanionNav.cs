@@ -81,7 +81,8 @@ public class CompanionNav : BaseNav {
     }
     // What happens to enemies when it attacks
     protected override void Update( ) {
-        character.AnimationClass.animation.SetFloat( "Walk" , 3 );
+       
+        character.AnimationClass.animation.SetFloat( "Walk" , Agent.velocity.magnitude/Agent.speed );
         Debug.Log("Enabled");
         character.attackers.RemoveAll( item => item == null );
         enemiesToAttack.RemoveAll( item => item == null );

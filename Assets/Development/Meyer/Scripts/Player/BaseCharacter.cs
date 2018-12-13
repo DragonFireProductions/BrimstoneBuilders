@@ -77,6 +77,10 @@ public abstract class BaseCharacter : MonoBehaviour {
 	public void ActivateWeapon( ) {
 		attachedWeapon.Activate();
 	}
+
+	public void DeactivateWeapon( ) {
+		attachedWeapon.Deactivate( );
+	}
     public void Freeze(float time)
     {
         float timer = time;
@@ -97,9 +101,12 @@ public abstract class BaseCharacter : MonoBehaviour {
     public IEnumerator EDOT(int damage, float interval, int _hits, WeaponObject item)
     {
         int hits = 0;
-        while (hits < _hits)
-        {
-            Damage(damage, item);
+        while (hits < _hits){
+	        item.AttachedCharacter.stats.health -= damage;
+
+	        if ( item.AttachedCharacter.stats.health <= 0 ){
+		        Destroy(item.AttachedCharacter.gameObject);
+	        }
             hits++;
 
 	        if ( item.RunAwayOnUse ){
@@ -141,28 +148,37 @@ public abstract class BaseCharacter : MonoBehaviour {
         StartCoroutine(EDOT(damage, interval, hits, item));
 
     }
+    void IncreaseCritChance(float critInc)
+    {
+        stats.luck += critInc;
 
+        //Never let the crit chance go out of range
+        if (stats.luck > 100.0f){
+	        stats.luck = 60;
+        }
+    }
     public virtual void Damage(int _damage, BaseItems item)
     {
-        var total = item.AttachedCharacter.stats.luck + stats.luck;
-
-        var rand = Random.Range(1, total);
-
-        if (rand > total - (item.AttachedCharacter.stats.luck * 0.5)){
-	        var damage = _damage * 2;
-			stats.Health -= damage;
-            InstatiateFloatingText.InstantiateFloatingText(damage.ToString(), this, Color.red, new Vector3(2,2,2), 0.5f);
+       float randValue = Random.Range(1, 100 );
+       if (randValue > (100 - item.AttachedCharacter.stats.luck) )
+       {
+            var damage = _damage * 2;
+            stats.Health -= damage;
+            InstatiateFloatingText.InstantiateFloatingCriticalText(damage.ToString(), Color.yellow, this );
+		   IncreaseCritChance(1);
         }
-        if ( rand > total * 0.5 ){
-           
-            InstatiateFloatingText.InstantiateFloatingText("MISS", this, Color.gray, new Vector3(0.5f,0.5f,0.5f), 1.5f);
+       else if (randValue < (100 - item.AttachedCharacter.stats.luck)* 0.25){
+	       InstatiateFloatingText.InstantiateFloatingMissText("MISS", Color.gray, this);
         }
-        if (rand > total * 0.5 && (rand < total - (rand * 0.5))){
+		else {
             var damage = _damage;
             stats.Health -= damage;
-            InstatiateFloatingText.InstantiateFloatingText(damage.ToString(), this, Color.blue, new Vector3(1,1,1), 1.5f);
+            InstatiateFloatingText.InstantiateFloatingText(damage.ToString(), Color.white, this);   
         }
-        
+        if (item.AttachedCharacter.stats.health <= 0)
+        {
+            Destroy(item.AttachedCharacter.gameObject);
+        }
     }
     // Update is called once per frame
     protected void Update () {

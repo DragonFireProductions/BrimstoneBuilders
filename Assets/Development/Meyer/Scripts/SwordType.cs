@@ -17,33 +17,15 @@ public class SwordType : WeaponObject {
         AttachedCharacter.AnimationClass.Play(AnimationClass.states.Attack);
 
     }
-
-    public void NotHit( ) {
-        hit = false;
-    }
-
+    
     public override void Activate( ) {
-        StartCoroutine( collider( ) );
+         AttachedCharacter.leftHand.GetComponentInChildren < BoxCollider >( ).enabled = true;
     }
 
-    public IEnumerator collider( ) {
-        AttachedCharacter.leftHand.GetComponentInChildren < BoxCollider >( ).enabled = true;
-        yield return new WaitForSeconds(1);
+    public override void Deactivate( ) {
         AttachedCharacter.leftHand.GetComponentInChildren < BoxCollider >( ).enabled = false;
     }
-    public void CheckHit( ) {
-        if (  hit == false ){
-            InstatiateFloatingText.InstantiateFloatingText( "MISS" , AttachedCharacter , Color.grey, new Vector3(0.5f, 0.5f, 0.5f), 0.2f );
-        }
-    }
-    protected override void OnTriggerEnter(Collider collider)
-    {
-        base.OnTriggerEnter(collider);
-
-        if ( ( collider.tag == "Enemy" || collider.tag == "Companion" || collider.tag == "Player" ) && tag == "Weapon" ){
-            hit = true;
-        }
-    }
+    
     public override void IncreaseSubClass( float amount ) {
         
         base.IncreaseSubClass(amount);

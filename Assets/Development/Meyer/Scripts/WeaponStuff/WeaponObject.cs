@@ -59,7 +59,10 @@ public abstract class WeaponObject : BaseItems
     public virtual void Activate( ) {
 
     }
+    public virtual void Deactivate()
+    {
 
+    }
     public override void Attach( ) {
         if ( AttachedCharacter.attachedWeapon ){
 
