@@ -44,7 +44,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	}
 
 	public void SwitchToPotionsTab( ) {
-		inventory.character.inventoryUI.WeaponInventory.SetActive(false);
+		inventory.character.inventory.WeaponInventory.inventoryObj.SetActive(false);
 		inventory.character.inventoryUI.PotionsInventory.SetActive(true);
 		inventory.armorInventory.ArmorInventory.SetActive(false);
 		inventory.character.inventoryUI.UpdatePotions();
@@ -53,7 +53,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
     }
 
     public void SwitchToWeapons( ) {
-		inventory.character.inventoryUI.WeaponInventory.SetActive(true);
+		inventory.character.inventory.WeaponInventory.inventoryObj.SetActive(true);
 		inventory.character.inventoryUI.PotionsInventory.SetActive( false );
 	    inventory.armorInventory.ArmorInventory.SetActive(false);
 
@@ -135,7 +135,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
     }
     public void SwitchToArmor( ) {
 		inventory.armorInventory.ArmorInventory.SetActive(true);
-		inventory.character.inventoryUI.WeaponInventory.SetActive(false);
+		inventory.character.inventory.WeaponInventory.inventoryObj.SetActive(false);
 		inventory.character.inventoryUI.PotionsInventory.SetActive( false );
 		inventory.armorInventory.UpdateArmor();
 		StaticManager.uiManager.WeaponWindow.SetActive(true);
@@ -198,7 +198,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		}
 
 		if ( obj is ArmorItem){
-			inventory.armorInventory.AddArmor(obj);
+			inventory.armorInventory.PickUp(obj);
 		}
 		inventory.character.inventoryUI.DeleteObject(selectedObj);
 		SwitchToWeapons();

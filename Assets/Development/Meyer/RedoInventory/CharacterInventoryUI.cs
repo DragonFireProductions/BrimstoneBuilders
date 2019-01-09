@@ -10,15 +10,12 @@ public class CharacterInventoryUI : MonoBehaviour {
 
     public GameObject CharacterInventory;
 
-    public GameObject WeaponInventory;
-
     public Tab CompanionSell;
 
     public GameObject SellButton;
 
     public GameObject BuyButton;
-
-    public List < UIItemsWithLabels > weapons;
+  
 
     public List < UIItemsWithLabels > potions;
 
@@ -36,7 +33,7 @@ public class CharacterInventoryUI : MonoBehaviour {
 
     public void Init( Companion _companion ) {
         companion          = _companion;
-        weapons            = new List < UIItemsWithLabels >( );
+
         potions            = new List < UIItemsWithLabels >( );
        
         CharacterInventory = Instantiate( StaticManager.uiManager.CharacterInventory );
@@ -61,9 +58,9 @@ public class CharacterInventoryUI : MonoBehaviour {
 
         PotionsInventory.SetActive( false );
 
-        WeaponInventory = CharacterInventory.transform.Find( "WeaponsInventory" ).gameObject;
+        companion.inventory.WeaponInventory.character = companion;
 
-        WeaponInventory.SetActive( true );
+        companion.inventory.WeaponInventory.Init();
         
         tab = Instantiate( StaticManager.uiManager.Tab ).GetComponent < Tab >( );
 
@@ -129,28 +126,7 @@ public class CharacterInventoryUI : MonoBehaviour {
     }
 
     public void AddWeapon( BaseItems item ) {
-        var newlabel = Instantiate( StaticManager.uiManager.Weapon.gameObject );
-        newlabel.GetComponent < Tab >( ).companion = companion;
-        newlabel.GetComponent < Tab >( ).item      = item;
-
-        var l = newlabel.GetComponent < UIItemsWithLabels >( );
-
-        l.obj = newlabel;
-
-          l.item = item;
-
-         companion.inventory.PickedUpWeapons.Add( l.item as WeaponObject );
-
-        l.obj.transform.SetParent( WeaponInventory.transform );
-
-         l.obj.transform.position = StaticManager.uiManager.Grid[companion.inventory.PickedUpWeapons.Count - 1].transform.position;
-
-        l.obj.transform.localScale = new Vector3( 1 , 1 , 1 );
-
-        l.FindLabels( );
-        
-        newlabel.SetActive( true );
-        weapons.Add( l );
+        companion.inventory.WeaponInventory.PickUp(item);
     }
 
    
@@ -181,15 +157,11 @@ public class CharacterInventoryUI : MonoBehaviour {
 
     
 
-    public void RemoveObject( BaseItems item ) {
+    public virtual void RemoveObject( BaseItems item ) {
         if ( item is WeaponObject ){
-            for ( var i = 0 ; i < weapons.Count ; i++ ){
-                if ( weapons[ i ].item == item ){
-                    weapons[ i ].obj.SetActive( false );
-                }
-            }
+            companion.inventory.WeaponInventory.RemoveObject(item as WeaponObject);
         }
-        else if ( item is Potions ){
+        if ( item is Potions ){
             for ( var i = 0 ; i < potions.Count ; i++ ){
                 if ( potions[ i ].item == item ){
                     Destroy( potions[ i ].obj );
@@ -201,13 +173,7 @@ public class CharacterInventoryUI : MonoBehaviour {
 
     public void DeleteObject( BaseItems item ) {
         if ( item is WeaponObject ){
-            for ( var i = 0 ; i < weapons.Count ; i++ ){
-                if ( weapons[ i ].item == item ){
-                    var a = weapons[ i ].obj;
-                    weapons.RemoveAt( i );
-                    Destroy( a );
-                }
-            }
+            companion.inventory.WeaponInventory.DeleteObject(item as WeaponObject);
         }
         else if ( item is Potions ){
             for ( var i = 0 ; i < potions.Count ; i++ ){
@@ -220,11 +186,8 @@ public class CharacterInventoryUI : MonoBehaviour {
     }
 
     public void EnableContainer( BaseItems item ) {
-        foreach ( var l_uiItemsWithLabelse in weapons ){
-            if ( l_uiItemsWithLabelse.item == item ){
-                l_uiItemsWithLabelse.obj.SetActive( true );
-                item.gameObject.SetActive( false );
-            }
+        if ( item is WeaponObject ){
+           companion.inventory.WeaponInventory.EnableContainer(item as WeaponObject);
         }
     }
 
@@ -235,18 +198,7 @@ public class CharacterInventoryUI : MonoBehaviour {
     }
 
     public void UpdateItem( ) {
-        foreach ( var l_t in weapons ){
-            for ( var j = 0 ; j < l_t.Labels.Count ; j++ ){
-                l_t.obj.SetActive( l_t.item != companion.attachedWeapon );
-                var a = l_t.item.stats[ l_t.Labels[ j ].name ];
-                l_t.Labels[ j ].labelText.text = a.ToString( );
-               
-            }
-            if (l_t.GetComponent<Tab>().imageContainer && l_t.item.stats.icon)
-            {
-                l_t.GetComponent<Tab>().imageContainer.texture = l_t.item.stats.icon;
-            }
-        }
+        companion.inventory.WeaponInventory.UpdateItem();
     }
 
     public void UpdateSubClassBar( ) {
@@ -296,9 +248,7 @@ public class CharacterInventoryUI : MonoBehaviour {
     }
 
     public void UpdateWeapon( UIItemsWithLabels item , WeaponObject weapon ) {
-        for ( int i = 0 ; i < item.Labels.Count ; i++ ){
-            item.Labels[ i ].labelText.text = weapon[ item.Labels[ i ].name ].ToString( );
-        }
+        companion.inventory.WeaponInventory.UpdateWeapon(item, weapon);
     }
     public void UpdatePotions( ) {
         for ( var i = 0 ; i < potions.Count ; i++ ){

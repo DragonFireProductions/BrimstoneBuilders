@@ -32,6 +32,7 @@ public abstract class WeaponObject : BaseItems
 
     public GameObject mesh;
 
+    public GameObject label;
     protected override void Start() {
         base.Start();
         AnimationClass = gameObject.GetComponent < AnimationClass >( );
@@ -132,7 +133,7 @@ public abstract class WeaponObject : BaseItems
             }
 
             var a = character as Companion;
-            a.inventory.PickUp(this);
+            a.inventory.WeaponInventory.PickUp(this);
             this.GetComponent<BoxCollider>().enabled = false;
             AttachedCharacter = a;
             leftHand = Instantiate( leftHand );

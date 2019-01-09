@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterArmorInventory : MonoBehaviour
+public class CharacterArmorInventory : PlayerInventory
     {
 
         public List<UIItemsWithLabels> armor;
@@ -36,6 +36,8 @@ public class CharacterArmorInventory : MonoBehaviour
         public Text beltCount;
 
         public Text clothesCount;
+
+          [ HideInInspector ] public List < ArmorItem > pickedupArmor;
         // Use this for initialization
         public void Init()
         {
@@ -51,9 +53,12 @@ public class CharacterArmorInventory : MonoBehaviour
             Shoes = new ArmorStuff("Shoes", "ShoeCount", ArmorInventory);
 
     }
-    public void AddArmor(BaseItems item) {
+    public override void PickUp(BaseItems item) {
+
+        pickedupArmor.Add(item as ArmorItem);
         var i = item as ArmorItem;
         i.PickUp(companion);
+          item.gameObject.SetActive(false);
 
 
     }

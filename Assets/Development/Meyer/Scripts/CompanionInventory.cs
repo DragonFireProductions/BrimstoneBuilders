@@ -16,7 +16,7 @@ public class CompanionInventory : PlayerInventory {
     //returns 
     public WeaponObject GetItemFromInventory(string name)
     {
-        return PickedUpWeapons.FirstOrDefault(_t => _t.stats.objectName == name);
+        return companion.inventory.WeaponInventory.PickedUpWeapons.FirstOrDefault(_t => _t.stats.objectName == name);
     }
 	
 	// Update is called once per frame

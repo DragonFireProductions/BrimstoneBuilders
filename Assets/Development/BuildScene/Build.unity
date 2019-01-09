@@ -134,9 +134,10 @@ MonoBehaviour:
   stats: {fileID: 8790418}
   AttachedCharacter: {fileID: 0}
   objectName: 
-  type: 0
-  armor: {fileID: 1365381277}
+  type: 2
+  model: {fileID: 1365381277}
   tab: {fileID: 0}
+  label: {fileID: 0}
 --- !u!114 &8790418 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114353317658024442, guid: eb54975f4c4b9b34bafff3aec827e4f0,
@@ -1605,9 +1606,10 @@ MonoBehaviour:
   stats: {fileID: 68936341}
   AttachedCharacter: {fileID: 0}
   objectName: 
-  type: 0
-  armor: {fileID: 590859185}
+  type: 4
+  model: {fileID: 590859185}
   tab: {fileID: 0}
+  label: {fileID: 0}
 --- !u!114 &68936341 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114447035913071252, guid: 4dda48d1ab45de34bb24a40afaa84d1c,
@@ -9080,9 +9082,10 @@ MonoBehaviour:
   stats: {fileID: 493976592}
   AttachedCharacter: {fileID: 0}
   objectName: 
-  type: 0
-  armor: {fileID: 1616071791}
+  type: 2
+  model: {fileID: 1616071791}
   tab: {fileID: 0}
+  label: {fileID: 0}
 --- !u!114 &493976592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13655,9 +13658,10 @@ MonoBehaviour:
   stats: {fileID: 710232302}
   AttachedCharacter: {fileID: 0}
   objectName: 
-  type: 0
-  armor: {fileID: 1200463525}
+  type: 4
+  model: {fileID: 1200463525}
   tab: {fileID: 0}
+  label: {fileID: 0}
 --- !u!114 &710232302 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114059534451751480, guid: d08fbe29927df2447994888c97ca1daa,
@@ -19286,6 +19290,7 @@ GameObject:
   - component: {fileID: 1049567417}
   - component: {fileID: 1049567429}
   - component: {fileID: 1049567423}
+  - component: {fileID: 1049567430}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -19336,11 +19341,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PotionsInventory: {fileID: 0}
   CharacterInventory: {fileID: 0}
-  WeaponInventory: {fileID: 0}
   CompanionSell: {fileID: 0}
   SellButton: {fileID: 0}
   BuyButton: {fileID: 0}
-  weapons: []
   potions: []
   ShopWeaponsText: {fileID: 0}
   ShopCharacterText: {fileID: 0}
@@ -19360,17 +19363,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armorInventory: {fileID: 1049567423}
-  BackPackInventoryList: []
+  WeaponInventory: {fileID: 1049567430}
   potions: []
-  isInventoryActive: 0
-  PickedUpWeapons: []
   PickedUpPotions: []
-  pickedupArmor: []
   parent: {fileID: 0}
   Slots: []
   PotionSlots: []
   character: {fileID: 1049567424}
-  AttachedWeapons: []
   potionsContainer: {fileID: 0}
   coinCount: 0
 --- !u!114 &1049567420
@@ -19434,6 +19433,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86f453cf3acdf684d852d1b4a1baf500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  armorInventory: {fileID: 0}
+  WeaponInventory: {fileID: 0}
+  potions: []
+  PickedUpPotions: []
+  parent: {fileID: 0}
+  Slots: []
+  PotionSlots: []
+  character: {fileID: 0}
+  potionsContainer: {fileID: 0}
+  coinCount: 0
   armor: []
   ArmorInventory: {fileID: 0}
   companion: {fileID: 0}
@@ -19443,6 +19452,7 @@ MonoBehaviour:
   ShoeCount: {fileID: 0}
   beltCount: {fileID: 0}
   clothesCount: {fileID: 0}
+  pickedupArmor: []
 --- !u!114 &1049567424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19646,6 +19656,31 @@ MonoBehaviour:
   startBelt: {fileID: 0}
   startGlove: {fileID: 1729332796}
   startShoulder: {fileID: 0}
+--- !u!114 &1049567430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1049567415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f332985de0a38284a87b8323dd7048b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armorInventory: {fileID: 0}
+  WeaponInventory: {fileID: 0}
+  potions: []
+  PickedUpPotions: []
+  parent: {fileID: 0}
+  Slots: []
+  PotionSlots: []
+  character: {fileID: 0}
+  potionsContainer: {fileID: 0}
+  coinCount: 0
+  PickedUpWeapons: []
+  AttachedWeapons: []
+  weapons: []
+  inventoryObj: {fileID: 0}
 --- !u!1 &1053640933
 GameObject:
   m_ObjectHideFlags: 0

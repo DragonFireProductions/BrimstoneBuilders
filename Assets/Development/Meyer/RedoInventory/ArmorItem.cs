@@ -49,7 +49,8 @@ public class ArmorItem : BaseItems {
         companion.inventory.armorInventory.armor.Add(l);
 
 		parent.Add(l.obj, this);
-        
+
+		gameObject.SetActive(false);
 	}
 	public override void Attach() { 
 		model.transform.SetParent(AttachedCharacter.transform);
@@ -65,6 +66,7 @@ public class ArmorItem : BaseItems {
 			AttachedCharacter = collider.GetComponent < Companion >( );
 			model = Instantiate( model );
 			model.SetActive(false);
+			PickUp(collider.GetComponent<Companion>());
 			model.transform.SetParent(AttachedCharacter.transform);
 		}
 	}
