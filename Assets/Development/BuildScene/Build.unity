@@ -114,6 +114,35 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 3efe5a1e4f484554b98134be8a21020f, type: 2}
+--- !u!1 &8790416 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1270698697500732, guid: eb54975f4c4b9b34bafff3aec827e4f0,
+    type: 2}
+  m_PrefabInternal: {fileID: 44889495}
+--- !u!114 &8790417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 8790416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e8ef99c0ff6c2c4aae738b1618365a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
+  stats: {fileID: 8790418}
+  AttachedCharacter: {fileID: 0}
+  objectName: 
+  type: 0
+  armor: {fileID: 8790416}
+  tab: {fileID: 0}
+--- !u!114 &8790418 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114353317658024442, guid: eb54975f4c4b9b34bafff3aec827e4f0,
+    type: 2}
+  m_PrefabInternal: {fileID: 44889495}
+  m_Script: {fileID: 11500000, guid: 572ade2c8a8bbe946a61e83a73b50be3, type: 3}
 --- !u!1 &9986269
 GameObject:
   m_ObjectHideFlags: 0
@@ -892,7 +921,8 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114404370761002550, guid: eb54975f4c4b9b34bafff3aec827e4f0, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: eb54975f4c4b9b34bafff3aec827e4f0, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &46299267
@@ -1555,6 +1585,35 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: -0.10136949, z: 1.7650731}
     m_Extent: {x: 0.24874035, y: 0.15643132, z: 0.12262213}
   m_DirtyAABB: 0
+--- !u!1 &68936339 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1628053744742030, guid: 4dda48d1ab45de34bb24a40afaa84d1c,
+    type: 2}
+  m_PrefabInternal: {fileID: 749666453}
+--- !u!114 &68936340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 68936339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7349befba2bc6644ba90ec4a0050a128, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
+  stats: {fileID: 68936341}
+  AttachedCharacter: {fileID: 0}
+  objectName: 
+  type: 0
+  armor: {fileID: 68936339}
+  tab: {fileID: 0}
+--- !u!114 &68936341 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114447035913071252, guid: 4dda48d1ab45de34bb24a40afaa84d1c,
+    type: 2}
+  m_PrefabInternal: {fileID: 749666453}
+  m_Script: {fileID: 11500000, guid: 572ade2c8a8bbe946a61e83a73b50be3, type: 3}
 --- !u!1 &80829460
 GameObject:
   m_ObjectHideFlags: 0
@@ -9009,21 +9068,20 @@ GameObject:
 --- !u!114 &493976591
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114417789552662190, guid: 21acbef275807304388be954f544ee2e,
-    type: 2}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 493976590}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46d45fc26bcf1954a906482e6c545768, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e8ef99c0ff6c2c4aae738b1618365a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
   stats: {fileID: 493976592}
   AttachedCharacter: {fileID: 0}
-  objectName: belt 1
-  type: 2
-  armor: {fileID: 1616071791}
+  objectName: 
+  type: 0
+  armor: {fileID: 493976590}
   tab: {fileID: 0}
 --- !u!114 &493976592
 MonoBehaviour:
@@ -13572,6 +13630,35 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &710232300 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1166369551494498, guid: d08fbe29927df2447994888c97ca1daa,
+    type: 2}
+  m_PrefabInternal: {fileID: 1572856065}
+--- !u!114 &710232301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 710232300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7349befba2bc6644ba90ec4a0050a128, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
+  stats: {fileID: 710232302}
+  AttachedCharacter: {fileID: 0}
+  objectName: 
+  type: 0
+  armor: {fileID: 710232300}
+  tab: {fileID: 0}
+--- !u!114 &710232302 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114059534451751480, guid: d08fbe29927df2447994888c97ca1daa,
+    type: 2}
+  m_PrefabInternal: {fileID: 1572856065}
+  m_Script: {fileID: 11500000, guid: 572ade2c8a8bbe946a61e83a73b50be3, type: 3}
 --- !u!1 &726314416
 GameObject:
   m_ObjectHideFlags: 0
@@ -14533,7 +14620,8 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114322205853855454, guid: 4dda48d1ab45de34bb24a40afaa84d1c, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: 4dda48d1ab45de34bb24a40afaa84d1c, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &756085384
@@ -22284,7 +22372,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -254.60538, y: -92}
+  m_AnchoredPosition: {x: -374, y: -92}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1252414551
@@ -28370,7 +28458,8 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114273818276284906, guid: d08fbe29927df2447994888c97ca1daa, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: d08fbe29927df2447994888c97ca1daa, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &1574607249

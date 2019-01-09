@@ -25,7 +25,7 @@ public class CharacterArmorInventory : MonoBehaviour
 
         public ArmorStuff Clothes;
 
-         public GameObject currentArmorTab;
+        public GameObject currentArmorTab;
 
         public Text Headcount;
 
@@ -51,57 +51,12 @@ public class CharacterArmorInventory : MonoBehaviour
             Shoes = new ArmorStuff("Shoes", "ShoeCount", ArmorInventory);
 
     }
-    public void AddArmor(BaseItems item)
-        {
-            var newlabel = Instantiate(StaticManager.uiManager.Armor.gameObject);
-            newlabel.GetComponent<Tab>().companion = companion;
-            newlabel.GetComponent<Tab>().item = item;
+    public void AddArmor(BaseItems item) {
+        var i = item as ArmorItem;
+        i.PickUp(companion);
 
-            var i = item as ArmorItem;
-            i.tab = newlabel.GetComponent<Tab>();
 
-            var l = newlabel.GetComponent<UIItemsWithLabels>();
-
-            l.obj = newlabel;
-
-            l.item = item;
-
-            l.obj.transform.position = StaticManager.uiManager.Armor.gameObject.transform.position;
-
-            l.obj.transform.SetParent(ArmorInventory.transform);
-
-            l.obj.transform.localScale = new Vector3(1, 1, 1);
-
-            l.FindLabels();
-
-            item.AttachedCharacter = companion;
-
-            newlabel.SetActive(true);
-
-            armor.Add(l);
-
-            switch (i.type)
-            {
-                case ArmorItem.Type.Belt:
-                    Belt.Add(l.obj, item);
-                    break;
-                case ArmorItem.Type.Clothes:
-                    Clothes.Add(l.obj, item);
-                    break;
-                case ArmorItem.Type.Head:
-                  Head.Add(l.obj, item);
-                    break;
-                case ArmorItem.Type.Shoe:
-                    Shoes.Add(l.obj, item);
-                    break;
-                case ArmorItem.Type.Shoulder:
-                    Shoulder.Add(l.obj, item);
-                    break;
-            }
-
-           
-
-        }
+    }
 
         public void UpdateArmor()
         {
@@ -142,6 +97,7 @@ public class ArmorStuff {
         items.Add(item);
         obj.transform.position = StaticManager.uiManager.ArmorGrid[items.Count - 1].transform.position;
         text.text = items.Count.ToString();
+        obj.transform.localScale = new Vector3(1,1,1);
         labels.Add(obj);
     }
 
