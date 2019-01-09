@@ -18,7 +18,7 @@ public class HealPotion : Potions {
 	    {
 	        enemy.stats.Health = 100;
 	    }
-	    InstatiateFloatingText.InstantiateFloatingText("MAX HEALTH", enemy, Color.green, new Vector3(2,2,2));
+	    InstatiateFloatingText.InstantiateFloatingText("MAX HEALTH", Color.green, enemy);
         if ( !StaticManager.Instance.unlimitedPotions ){
 			var e = enemy as Companion;
 			StaticManager.UiInventory.RemoveMainInventory(this, e.inventory);
