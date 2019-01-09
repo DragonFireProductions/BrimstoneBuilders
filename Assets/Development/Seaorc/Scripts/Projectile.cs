@@ -28,14 +28,6 @@ public class Projectile : MonoBehaviour
     public int y_pos;
     
     /// <summary>
-    /// Moves the projectile in its forward direction
-    /// </summary>
-    public void Update()
-    {
-        transform.Translate(0, 0, Speed * Time.deltaTime);
-    }
-    
-    /// <summary>
     /// Detects when the projectile hits an _enemy
     /// </summary>
     /// <param name="other"></param>
@@ -84,7 +76,7 @@ public class Projectile : MonoBehaviour
             }
         }
         else{
-            InstatiateFloatingText.InstantiateFloatingText( "MISS" , weapon.AttachedCharacter , Color.grey, new Vector3(0.5f, 0.5f, 0.5f) );
+            InstatiateFloatingText.InstantiateFloatingText( "MISS" , weapon.AttachedCharacter , Color.grey, new Vector3(0.5f, 0.5f, 0.5f) , 0.2f);
         }
 
         gameObject.SetActive(false);
@@ -95,7 +87,7 @@ public class Projectile : MonoBehaviour
     
     public void OnCollisionEnter( Collision collision ) {
 
-         InstatiateFloatingText.InstantiateFloatingText( "MISS" , weapon.AttachedCharacter , Color.grey, new Vector3(0.5f, 0.5f, 0.5f) );
+         InstatiateFloatingText.InstantiateFloatingText( "MISS" , weapon.AttachedCharacter , Color.grey, new Vector3(0.5f, 0.5f, 0.5f), 1.5f);
         gameObject.SetActive(false);
     }
 

@@ -25,6 +25,13 @@ public abstract class WeaponObject : BaseItems
     public SubClasses.Types type;
 
     public float KnockBackAmount;
+
+    public GameObject leftHand;
+
+    public GameObject rightHand;
+
+    public GameObject mesh;
+
     protected override void Start() {
         base.Start();
         AnimationClass = gameObject.GetComponent < AnimationClass >( );
@@ -49,17 +56,23 @@ public abstract class WeaponObject : BaseItems
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
 
+    public virtual void Activate( ) {
+
+    }
+    public virtual void Deactivate()
+    {
+
+    }
     public override void Attach( ) {
-        StaticManager.inventories.inventory.character.inventoryUI.UpdateItem(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), this);
+        if ( AttachedCharacter.attachedWeapon ){
 
-        item.SetActive(true);
-
-        item.transform.position = AttachedCharacter.cube.transform.position;
-
-        item.transform.localScale = new Vector3(1, 1, 1);
-
+            AttachedCharacter.attachedWeapon.leftHand.SetActive( false );
+            AttachedCharacter.attachedWeapon.rightHand.SetActive( false );
+        }
+        leftHand.SetActive(true);
+        rightHand.SetActive(true);
+        StaticManager.inventories.inventory.character.inventoryUI.UpdateWeapon(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), this);
         var c = AttachedCharacter as Companion;
-
 
         StaticManager.UiInventory.RemoveMainInventory(this as WeaponObject, c.inventory);
 
@@ -70,17 +83,33 @@ public abstract class WeaponObject : BaseItems
 
         AttachedCharacter.attachedWeapon = this as WeaponObject;
 
-        AttachedCharacter.attachedWeapon.transform.rotation = AttachedCharacter.cube.transform.rotation;
+        AttachedCharacter.attachedWeapon.gameObject.layer = AttachedCharacter.gameObject.layer;
 
-        AttachedCharacter.attachedWeapon.transform.SetParent(AttachedCharacter.cube.transform, true);
+        AttachedCharacter.attachedWeapon.tag = "Weapon";
+
+        AttachedCharacter.AnimationClass.SwitchWeapon(this);
+    }
+    public void Attach(Enemy enemy)
+    {
+        if (AttachedCharacter.attachedWeapon)
+        {
+
+            AttachedCharacter.attachedWeapon.leftHand.SetActive(false);
+            AttachedCharacter.attachedWeapon.rightHand.SetActive(false);
+        }
+        leftHand.SetActive(true);
+        rightHand.SetActive(true);
+
+        gameObject.SetActive(true);
+
+        AttachedCharacter.attachedWeapon = this as WeaponObject;
 
         AttachedCharacter.attachedWeapon.gameObject.layer = AttachedCharacter.gameObject.layer;
 
         AttachedCharacter.attachedWeapon.tag = "Weapon";
 
-
+        AttachedCharacter.AnimationClass.SwitchWeapon(this);
     }
-
     public override void IncreaseSubClass(float amount ) {
         if ( Damage <= 10 ){
         Damage += amount;
@@ -94,23 +123,125 @@ public abstract class WeaponObject : BaseItems
     public override void Use( ) {
         
     }
+
+    public void PickUp(BaseCharacter character ) {
+        if (tag == "PickUp")
+        {
+            if ( mesh ){
+                 mesh.SetActive(false);
+            }
+
+            var a = character as Companion;
+            a.inventory.PickUp(this);
+            this.GetComponent<BoxCollider>().enabled = false;
+            AttachedCharacter = a;
+            leftHand = Instantiate( leftHand );
+            rightHand = Instantiate( rightHand );
+
+            leftHand.transform.position = AttachedCharacter.leftHand.transform.position;
+            rightHand.transform.position = AttachedCharacter.rightHand.transform.position;
+
+            leftHand.transform.localScale = AttachedCharacter.transform.localScale;
+            rightHand.transform.localScale = AttachedCharacter.transform.localScale;
+
+            leftHand.transform.rotation = AttachedCharacter.leftHand.transform.rotation;
+            rightHand.transform.rotation = AttachedCharacter.rightHand.transform.rotation;
+
+            leftHand.transform.SetParent(AttachedCharacter.leftHand.transform, true);
+            rightHand.transform.SetParent(AttachedCharacter.rightHand.transform, true);
+
+            if ( leftHand.GetComponent<WeaponCollision>() ){
+                leftHand.GetComponent < WeaponCollision >( ).obj = this;
+            }
+
+            if ( rightHand.GetComponent<WeaponCollision>() ){
+                rightHand.GetComponent < WeaponCollision >( ).obj = this;
+            }
+
+            leftHand.SetActive(false);
+            rightHand.SetActive(false);
+
+            leftHand.layer = character.gameObject.layer;
+            rightHand.layer = character.gameObject.layer;
+
+            gameObject.layer = character.gameObject.layer;
+
+            if ( type == SubClasses.Types.MELEE ){
+                Damage = a.mele.CurrentLevel;
+            }
+
+            else if ( type == SubClasses.Types.RANGE ){
+                Damage = a.range.CurrentLevel;
+            }
+
+           else if ( type == SubClasses.Types.MAGIC ){
+                Damage = a.range.CurrentLevel;
+            }
+        }
+    }
+    public void PickUp(Enemy character)
+    {
+        if (tag == "PickUp")
+        {
+            if (mesh)
+            {
+                mesh.SetActive(false);
+            }
+            
+            this.GetComponent<BoxCollider>().enabled = false;
+            AttachedCharacter = character;
+            leftHand = Instantiate(leftHand);
+            rightHand = Instantiate(rightHand);
+
+            leftHand.transform.position = AttachedCharacter.leftHand.transform.position;
+            rightHand.transform.position = AttachedCharacter.rightHand.transform.position;
+
+            leftHand.transform.localScale = AttachedCharacter.transform.localScale;
+            rightHand.transform.localScale = AttachedCharacter.transform.localScale;
+
+            leftHand.transform.rotation = AttachedCharacter.leftHand.transform.rotation;
+            rightHand.transform.rotation = AttachedCharacter.rightHand.transform.rotation;
+
+            leftHand.transform.SetParent(AttachedCharacter.leftHand.transform, true);
+            rightHand.transform.SetParent(AttachedCharacter.rightHand.transform, true);
+
+            if (leftHand.GetComponent<WeaponCollision>())
+            {
+                leftHand.GetComponent<WeaponCollision>().obj = this;
+            }
+
+            if (rightHand.GetComponent<WeaponCollision>())
+            {
+                rightHand.GetComponent<WeaponCollision>().obj = this;
+            }
+
+            leftHand.SetActive(false);
+            rightHand.SetActive(false);
+
+            leftHand.layer = character.gameObject.layer;
+            rightHand.layer = character.gameObject.layer;
+
+            gameObject.layer = character.gameObject.layer;
+        }
+    }
+    public void DamageCollider(Collider collider)
+    {
+        if ((collider.tag == "Enemy" || collider.tag == "Companion" || collider.tag == "Player") && tag == "Weapon")
+        {
+
+            if (AttachedCharacter.tag == "Companion" && collider.tag == "Player")
+            {
+                return;
+            }
+            collider.gameObject.GetComponent<BaseCharacter>().Damage((int)Damage, this);
+        }
+    }
     protected virtual void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag == "Player" && !StaticManager.UiInventory.Dragging && tag == "PickUp")
-        {
-            StaticManager.Character.inventory.PickUp(this);
-            this.GetComponent<BoxCollider>().enabled = false;
-            AttachedCharacter = StaticManager.Character;
-            
+        if ( collider.tag == "Player" ){
+             PickUp(collider.GetComponent<BaseCharacter>());
         }
-
-        if ((collider.tag == "Enemy"  || collider.tag == "Companion" || collider.tag == "Player") && tag == "Weapon"){
-
-                if ( AttachedCharacter.tag == "Companion" && collider.tag == "Player" ){
-                    return;
-                }
-                collider.gameObject.GetComponent<BaseCharacter>().Damage((int)Damage, this);
-        }
+       
     }
 
 }

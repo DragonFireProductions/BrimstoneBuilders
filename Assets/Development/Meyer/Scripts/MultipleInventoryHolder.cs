@@ -46,25 +46,114 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	public void SwitchToPotionsTab( ) {
 		inventory.character.inventoryUI.WeaponInventory.SetActive(false);
 		inventory.character.inventoryUI.PotionsInventory.SetActive(true);
+		inventory.armorInventory.ArmorInventory.SetActive(false);
 		inventory.character.inventoryUI.UpdatePotions();
 		StaticManager.uiManager.WeaponWindow.SetActive(false);
-
+		StaticManager.uiManager.PlayerImage.SetActive(false);
     }
 
     public void SwitchToWeapons( ) {
 		inventory.character.inventoryUI.WeaponInventory.SetActive(true);
 		inventory.character.inventoryUI.PotionsInventory.SetActive( false );
-		inventory.character.inventoryUI.UpdateItem();
+	    inventory.armorInventory.ArmorInventory.SetActive(false);
+
+        inventory.character.inventoryUI.UpdateItem();
 		StaticManager.uiManager.WeaponWindow.SetActive(true);
+		StaticManager.uiManager.PlayerImage.SetActive(false);
     }
-	public void SwitchInventory(Tab tab ) {
+    public void SwitchArmorTab(Tab obj)
+    {
+		StaticManager.uiManager.PlayerImage.SetActive(true);
+		 StaticManager.uiManager.WeaponWindow.SetActive(false);
+        if (inventory.armorInventory.currentArmorTab)
+        {
+            inventory.armorInventory.currentArmorTab.SetActive(false);
+        }
+
+        switch (obj.type)
+        {
+
+            case ArmorItem.Type.Head:
+
+                inventory.armorInventory.Head.Switch(ref inventory.armorInventory.currentArmorTab);
+
+                break;
+            case ArmorItem.Type.Shoulder:
+                inventory.armorInventory.Shoulder.Switch(ref inventory.armorInventory.currentArmorTab);
+
+                break;
+            case ArmorItem.Type.Clothes:
+                inventory.armorInventory.Clothes.Switch(ref inventory.armorInventory.currentArmorTab);
+
+                break;
+            case ArmorItem.Type.Shoe:
+                inventory.armorInventory.Shoes.Switch(ref inventory.armorInventory.currentArmorTab);
+
+                break;
+            case ArmorItem.Type.Belt:
+                inventory.armorInventory.Belt.Switch(ref inventory.armorInventory.currentArmorTab);
+
+                break;
+        }
+
+    }
+    public void SwitchArmorTab(ArmorItem.Type obj)
+    {
+		StaticManager.uiManager.PlayerImage.SetActive(true);
+	    StaticManager.uiManager.WeaponWindow.SetActive(false);
+        if (inventory.armorInventory.currentArmorTab)
+        {
+           inventory.armorInventory.currentArmorTab.SetActive(false);
+        }
+
+        switch (obj)
+        {
+
+            case ArmorItem.Type.Head:
+
+                inventory.armorInventory.Head.Switch(ref inventory.armorInventory.currentArmorTab);
+
+                break;
+            case ArmorItem.Type.Shoulder:
+                inventory.armorInventory.Shoulder.Switch(ref inventory.armorInventory.currentArmorTab);
+
+                break;
+            case ArmorItem.Type.Clothes:
+               inventory.armorInventory.Clothes.Switch(ref inventory.armorInventory.currentArmorTab);
+
+                break;
+            case ArmorItem.Type.Shoe:
+               inventory.armorInventory.Shoes.Switch(ref inventory.armorInventory.currentArmorTab);
+
+                break;
+            case ArmorItem.Type.Belt:
+                inventory.armorInventory.Belt.Switch(ref inventory.armorInventory.currentArmorTab);
+
+                break;
+        }
+
+    }
+    public void SwitchToArmor( ) {
+		inventory.armorInventory.ArmorInventory.SetActive(true);
+		inventory.character.inventoryUI.WeaponInventory.SetActive(false);
+		inventory.character.inventoryUI.PotionsInventory.SetActive( false );
+		inventory.armorInventory.UpdateArmor();
+		StaticManager.uiManager.WeaponWindow.SetActive(true);
+		SwitchArmorTab(ArmorItem.Type.Head);
+		
+    }
+    public void SwitchInventory(Tab tab ) {
 		StaticManager.uiManager.inventoryCharacterStats.SetActive(true);
 
 		tab.companion.inventoryUI.UpdateCharacter( StaticManager.uiManager.inventoryCharacterStats.GetComponentInChildren < UIItemsWithLabels >( ) );
 		tab.companion.inventoryUI.UpdateSubClassBar();
-		tab.companion.inventoryUI.UpdateItem(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), tab.companion.attachedWeapon);
 
-		if ( prev_inventory ){
+		if ( tab.companion.attachedWeapon ){
+		tab.companion.inventoryUI.UpdateWeapon(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), tab.companion.attachedWeapon);
+
+        }
+
+        if ( prev_inventory ){
 
             prev_inventory.companion.inventoryUI.CharacterInventory.SetActive(false);
             prev_inventory.tab.GetComponent<Image>().color = Color.gray;
@@ -88,6 +177,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		SwitchToWeapons();
 
     }
+
     public BaseItems GetItemFromAssetList(string name)
     {
         return WeaponAssetList.FirstOrDefault(_t => _t.objectName == name);
@@ -99,11 +189,16 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		var cha = obj.AttachedCharacter as Companion;
 
 		if ( obj is WeaponObject ){
-			cha.inventoryUI.AddWeapon( obj );
+			var a = obj as WeaponObject;
+			a.PickUp(cha);
 		}
 
 		if ( obj is Potions ){
 			cha.inventoryUI.AddPotion(obj);
+		}
+
+		if ( obj is ArmorItem){
+			inventory.armorInventory.AddArmor(obj);
 		}
 		inventory.character.inventoryUI.DeleteObject(selectedObj);
 		SwitchToWeapons();

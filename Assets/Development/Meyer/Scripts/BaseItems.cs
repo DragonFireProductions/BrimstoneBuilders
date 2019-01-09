@@ -1,47 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-using Assets.Meyer.TestScripts.Player;
-
-using UnityEngine;
-using UnityEngine.Assertions;
+﻿using UnityEngine;
 
 public class BaseItems : MonoBehaviour {
-    public virtual object this[string propertyName]
-    {
-        get
-        {
-            if (this.GetType().GetField(propertyName) != null)
-            {
-                return this.GetType().GetField(propertyName).GetValue(this);
+
+    public virtual object this[ string propertyName ] {
+        get {
+            if ( GetType( ).GetField( propertyName ) != null ){
+                return GetType( ).GetField( propertyName ).GetValue( this );
             }
-            else
-            {
-                return null;
+            else if ( stats[ propertyName ] != null ){
+                return stats[ propertyName ];
             }
+            return null;
         }
-        set { this.GetType().GetField(propertyName).SetValue(this, value); }
+        set { GetType( ).GetField( propertyName ).SetValue( this , value ); }
     }
 
     public GameObject item;
 
-	public ItemStats stats;
+    public ItemStats stats;
 
-	public BaseCharacter AttachedCharacter;
+    public BaseCharacter AttachedCharacter;
 
-	public string objectName;
+    public string objectName;
 
-	protected virtual void Start( ) {
+    protected virtual void Start( ) { }
 
-	}
-    public virtual void Use() {
-		
-	}
+    public virtual void Use( ) { }
 
-	public virtual void Attach( ) {
-    }
+    public virtual void Attach( ) { }
 
-	public virtual void AssignDamage( ) { }
-	public virtual void IncreaseSubClass( float amount ){}
-	
+    public virtual void AssignDamage( ) { }
+
+    public virtual void IncreaseSubClass( float amount ) { }
+
 }

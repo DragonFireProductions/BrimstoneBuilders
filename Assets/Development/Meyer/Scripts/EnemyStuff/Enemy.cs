@@ -1,106 +1,66 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine;
 
-using TMPro;
+namespace Kristal {
 
-using UnityEngine;
-using Random = UnityEngine.Random;
-
-namespace Kristal
-{
-
-    public class Enemy : BaseCharacter
-    {
-        public Companion ChosenCompanion;
+    public class Enemy : BaseCharacter {
 
         private int MaxCoinCount = 15;
-        private Vector3 deadPos = new Vector3();
+
+        private Vector3 deadPos;
 
         private int drop;
 
         public int damage;
 
-        protected void Awake()
-        {
-            base.Awake();
-            threat_signal = gameObject.transform.Find("Canvas/ThreatSignal").GetComponent<SpriteRenderer>();
-
+        protected void Awake( ) {
+            base.Awake( );
         }
 
+        protected void Start( ) {
+            StaticManager.RealTime.AllEnemies.Add( this );
+            Nav = gameObject.GetComponent < EnemyNav >( );
 
-        protected void Start()
-        {
-            characters = new List<BaseCharacter>();
-
-            StaticManager.RealTime.AllEnemies.Add(this);
-            material.color = BaseColor;
-            Nav = gameObject.GetComponent<EnemyNav>();
-
-            MaxCoinCount = UnityEngine.Random.Range(1, MaxCoinCount);
-            StaticManager.weaponManager.AttachWeapon(this);
+            MaxCoinCount          = Random.Range( 1 , MaxCoinCount );
             attachedWeapon.Damage = damage;
         }
 
-        public void Remove(BaseCharacter chara) { }
-        
-        public override void Damage(int _damage, BaseItems item) {
+        public void Remove( BaseCharacter chara ) { }
 
-            Vector3 scale = new Vector3(1,1,1);
+        public override void Damage( int _damage , BaseItems item ) {
+            item.IncreaseSubClass( 0.053f );
 
-            var total = item.AttachedCharacter.stats.luck + stats.luck;
-
-            var rand = Random.Range( 1 , total );
-            
-            item.IncreaseSubClass(0.00053f);
-            if (stats.Health > 0)
-            {
-                if (rand > total - (item.AttachedCharacter.stats.luck * 0.1))
-                {
-                    _damage += _damage;
-                    scale = new Vector3(2, 2, 2);
-                    InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.yellow, scale);
-                }
-                else
-                {
-                    InstatiateFloatingText.InstantiateFloatingText(_damage.ToString(), this, Color.white, scale);
-                }
-
-                stats.Health -= _damage;
-                    var blood = StaticManager.particleManager.Play(ParticleManager.states.Blood, transform.position);
-                    blood.transform.SetParent(gameObject.transform);
-                
+            if ( stats.Health > 0 ){
+                base.Damage( _damage , item );
+                var blood = StaticManager.particleManager.Play( ParticleManager.states.Blood , transform.position );
+                blood.transform.SetParent( gameObject.transform );
             }
-            else
-            {   
-                item.IncreaseSubClass(0.3f);
-                drop = Random.Range(1, 10);
-                if (drop > 5)
-                {
-                    for (int i = 0; i < MaxCoinCount; i++)
-                    {
-                        deadPos = UnityEngine.Random.insideUnitSphere * 2.5f + this.gameObject.transform.position;
+            else{
+                item.IncreaseSubClass( 0.3f );
+                drop = Random.Range( 1 , 10 );
+
+                if ( drop > 5 ){
+                    for ( var i = 0 ; i < MaxCoinCount ; i++ ){
+                        deadPos   = Random.insideUnitSphere * 2.5f + gameObject.transform.position;
                         deadPos.y = StaticManager.Character.gameObject.transform.position.y;
-                        var newCoin = Instantiate(Resources.Load<GameObject>("Coin"));
+                        var newCoin = Instantiate( Resources.Load < GameObject >( "Coin" ) );
                         newCoin.gameObject.transform.position = deadPos;
                     }
                 }
-                else
-                {
-                    deadPos = UnityEngine.Random.insideUnitSphere * 2.5f + this.gameObject.transform.position;
+                else{
+                    deadPos   = Random.insideUnitSphere * 2.5f + gameObject.transform.position;
                     deadPos.y = StaticManager.Character.gameObject.transform.position.y;
-                    var newsword = Instantiate(attachedWeapon);
+                    var newsword = Instantiate( attachedWeapon );
                     newsword.tag = "PickUp";
-                    newsword.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+
+                    newsword.transform.localScale          = new Vector3( 1.0f , 1.0f , 1.0f );
                     newsword.gameObject.transform.position = deadPos;
                 }
-                StaticManager.RealTime.Enemies.Remove(this);
-                Destroy(gameObject);
-            }
 
-            damage -= _damage;
+                StaticManager.RealTime.Enemies.Remove( this );
+                Destroy( gameObject );
+            }
         }
-        
+
     }
 
 }

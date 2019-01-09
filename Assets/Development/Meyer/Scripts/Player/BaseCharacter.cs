@@ -1,178 +1,176 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Net.Mail;
-
-using Assets.Meyer.TestScripts;
-
-using Kristal;
-
-using TMPro;
 
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Assertions;
-using UnityEngine.Playables;
 
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
-[Serializable]
+[ Serializable ]
 public abstract class BaseCharacter : MonoBehaviour {
 
-	public Color IsChosenBySelf;
+    public NavMeshAgent agent;
 
-	public Color LeaderColor;
+    public GameObject obj;
 
-	public Color BaseColor;
+    public Stat stats;
 
-	public Color IsChosenByEnemy;
+    public Animator animator;
 
-	public List < BaseCharacter > characters;
+    public AnimationClass AnimationClass;
 
-	public List < GameObject > characterObjs;
+    public BaseNav Nav;
 
-	public NavMeshAgent agent;
+    public SpriteRenderer threat_signal;
 
-	public GameObject obj;
+    [ HideInInspector ] public WeaponObject attachedWeapon;
 
-	public Stat stats;
+    [ HideInInspector ] public BaseCharacter enemy;
 
-	public BaseCharacter leader;
+    [ HideInInspector ] public List < BaseCharacter > attackers;
 
-	public Material material;
+    public GameObject canvas;
 
-	public Animator animator;
+    public GameObject leftHand;
 
-	public AnimationClass AnimationClass;
+    public GameObject rightHand;
 
-	public BaseNav Nav;
+    public Projector projector;
 
-	public SpriteRenderer threat_signal;
+    public string characterName;
 
-	public WeaponObject attachedWeapon;
+    public Transform bulletPosition;
 
-	public BaseCharacter enemy;
+    public Rigidbody ridgidbody;
 
-	public List < BaseCharacter > attackers;
+    public GameObject startWeapon;
 
-	public List < GameObject > damageNumbers;
+    protected virtual void Awake( ) {
+        obj       = gameObject;
+        attackers = new List < BaseCharacter >( );
+    }
 
-	public GameObject canvas;
-
-	public GameObject cube;
-
-	public Projector projector;
-
-	public float Level = 1;
-
-	public string characterName;
-
-	public bool critical = false;
-
-
-	public Rigidbody ridgidbody;
-	public virtual void IncreaseLevel(float amount_f ) {
-		Level += amount_f;
-	}
-	protected virtual void Awake( ) {
-        stats = gameObject.GetComponent<Stat>();
-		Assert.IsNotNull(stats, "Stats not found on " + this.gameObject.name);
-        obj = gameObject;
-        agent = gameObject.GetComponent<NavMeshAgent>();
-        material = gameObject.GetComponent<Renderer>().material;
-		animator = gameObject.GetComponent < Animator >( );
-		AnimationClass = gameObject.GetComponent< AnimationClass >( );
-		attachedWeapon = transform.GetComponentInChildren < WeaponObject >( );
-		attackers = new List < BaseCharacter >();
-		canvas = transform.Find( "Canvas" ).gameObject;
-		projector = gameObject.transform.Find( "Projector" ).GetComponent < Projector >( );
-		projector.gameObject.SetActive(false);
-		cube = transform.Find( "Cube" ).gameObject;
-		characterName = gameObject.name;
-		ridgidbody = GetComponent < Rigidbody >( );
-	}
-    public virtual object this[string propertyName]
-    {
-        get
-        {
-            if (this.GetType().GetField(propertyName) != null)
-            {
-                return this.GetType().GetField(propertyName).GetValue(this);
+    public virtual object this[ string propertyName ] {
+        get {
+            if ( GetType( ).GetField( propertyName ) != null ){
+                return GetType( ).GetField( propertyName ).GetValue( this );
             }
 
             return null;
         }
-        set { this.GetType().GetField(propertyName).SetValue(this, value); }
+        set { GetType( ).GetField( propertyName ).SetValue( this , value ); }
     }
-    public void Freeze(float time)
-    {
-        float timer = time;
-        StartCoroutine(FreezeC(timer));
 
+    public void ActivateWeapon( ) {
+        attachedWeapon.Activate( );
     }
-    private IEnumerator FreezeC(float timer)
-    {
-        while (timer > 0)
-        {
-            timer -= Time.deltaTime;
-            Nav.SetState = BaseNav.state.FREEZE;
 
-            yield return new WaitForEndOfFrame();
+    public void DeactivateWeapon( ) {
+        attachedWeapon.Deactivate( );
+    }
+
+    public void Freeze( float time ) {
+        var timer = time;
+        StartCoroutine( FreezeC( timer ) );
+    }
+
+    private IEnumerator FreezeC( float timer ) {
+        while ( timer > 0 ){
+            timer        -= Time.deltaTime;
+            Nav.SetState =  BaseNav.state.FREEZE;
+
+            yield return new WaitForEndOfFrame( );
         }
+
         Nav.SetState = BaseNav.state.ATTACKING;
     }
-    public IEnumerator EDOT(int damage, float interval, int _hits, WeaponObject item)
-    {
-        int hits = 0;
-        while (hits < _hits)
-        {
-            Damage(damage, item);
+
+    public IEnumerator EDOT( int damage , float interval , int _hits , WeaponObject item ) {
+        var hits = 0;
+
+        while ( hits < _hits ){
+            item.AttachedCharacter.stats.health -= damage;
+
+            if ( item.AttachedCharacter.stats.health <= 0 ){
+                Destroy( item.AttachedCharacter.gameObject );
+            }
+
             hits++;
 
-	        
+            if ( item.RunAwayOnUse ){
+                Nav.SetState = BaseNav.state.IDLE;
+            }
 
-            yield return new WaitForSeconds(interval);
+            yield return new WaitForSeconds( interval );
         }
-        
+
+        Nav.SetState = BaseNav.state.ATTACKING;
     }
 
-	public void KnockBack(float knockback ) {
-		StartCoroutine( KnockBackC(knockback ) );
-	}
-
-	public IEnumerator KnockBackC(float knockback ) {
-		//Nav.Agent.enabled = false;
-		Nav.enabled = false;
-		ridgidbody.isKinematic = false;
-		ridgidbody.AddForce(-transform.forward * (knockback * 2), ForceMode.Impulse);
-
-		yield return new WaitForSeconds(0.05f);
-
-		while ( Vector3.Distance(ridgidbody.velocity, new Vector3(0,0,0)) > 2){
-			yield return new WaitForEndOfFrame( );
-		}
-
-		ridgidbody.isKinematic = true;
-		Nav.enabled = true;
-		///Nav.Agent.enabled = true;
-
-	}
-    public void DOT(int damage, float interval, int hits, WeaponObject item)
-    {
-	    if ( damage <= 1 ){
-		    damage = 1;
-	    }
-        
-        StartCoroutine(EDOT(damage, interval, hits, item));
-
+    public void KnockBack( float knockback ) {
+        StartCoroutine( KnockBackC( knockback ) );
     }
 
-	public abstract void Damage( int damage, BaseItems item );
+    public IEnumerator KnockBackC( float knockback ) {
+        //Nav.Agent.enabled = false;
+        //Nav.enabled = false;
+        ridgidbody.isKinematic = false;
+        ridgidbody.AddForce( -transform.forward * ( knockback * 2 ) , ForceMode.Impulse );
+
+        yield return new WaitForSeconds( 0.4f );
+
+        while ( Vector3.Distance( ridgidbody.velocity , new Vector3( 0 , 0 , 0 ) ) > 2 ){
+            yield return new WaitForEndOfFrame( );
+        }
+
+        ridgidbody.isKinematic = true;
+
+        //Nav.enabled = true;
+        //Nav.Agent.enabled = true;
+    }
+
+    public void DOT( int damage , float interval , int hits , WeaponObject item ) {
+        if ( damage <= 1 ){
+            damage = 1;
+        }
+
+        StartCoroutine( EDOT( damage , interval , hits , item ) );
+    }
+
+    private void IncreaseCritChance( float critInc ) {
+        stats.luck += critInc;
+
+        //Never let the crit chance go out of range
+        if ( stats.luck > 100.0f ){
+            stats.luck = 60;
+        }
+    }
+
+    public virtual void Damage( int _damage , BaseItems item ) {
+        float randValue = Random.Range( 1 , 100 );
+
+        if ( randValue > 100 - item.AttachedCharacter.stats.luck ){
+            var damage = _damage * 2;
+            stats.Health -= damage;
+            InstatiateFloatingText.InstantiateFloatingCriticalText( damage.ToString( ) , Color.yellow , this );
+            IncreaseCritChance( 1 );
+        }
+        else if ( randValue < ( 100 - item.AttachedCharacter.stats.luck ) * 0.25 ){
+            InstatiateFloatingText.InstantiateFloatingMissText( "MISS" , Color.gray , this );
+        }
+        else{
+            var damage = _damage;
+            stats.Health -= damage;
+            InstatiateFloatingText.InstantiateFloatingText( damage.ToString( ) , Color.white , this );
+        }
+
+        if ( item.AttachedCharacter.stats.health <= 0 ){
+            Destroy( item.AttachedCharacter.gameObject );
+        }
+    }
+
     // Update is called once per frame
-    protected void Update () {
-
-	}
-
+    protected void Update( ) { }
 
 }

@@ -8,40 +8,35 @@ using UnityEngine.UI;
 
 public class Stat : MonoBehaviour {
 
-    [ SerializeField ] public float agility;
+    [ HideInInspector ] public float agility;
 
-    public int attackCost = 3;
+    [HideInInspector] public int attackPoints;
 
-    [ SerializeField ] public int attackPoints;
+    [HideInInspector] public float charisma;
 
-    [ SerializeField ] public float charisma;
+    [HideInInspector] public float dexterity;
 
-    [ SerializeField ] public float dexterity;
+    [HideInInspector] public float dialogText;
 
-    [ SerializeField ] public float dialogText;
+    [HideInInspector] public float endurance;
 
-    [ SerializeField ] public float endurance;
+    [HideInInspector] public float health;
 
-    [ SerializeField ] public float health;
+    [HideInInspector] public float intelligence;
 
-    [ SerializeField ] public float intelligence;
+    [HideInInspector] public float luck;
 
-    [ SerializeField ] public float luck;
+    [HideInInspector] public float maxHealth;
 
-    [ SerializeField ] public float maxHealth;
+    [HideInInspector] public float maxStamina;
 
-    [ SerializeField ] public float maxStamina;
+    [HideInInspector] public string name;
 
-    [ SerializeField ] public string name;
+    [HideInInspector] public float perception;
 
-    [ SerializeField ] public float perception;
+    [HideInInspector] public float stamina;
 
-    [ SerializeField ] public float stamina;
-
-    [ SerializeField ] public float strength;
-
-    public int maxAttackpoints = 6;
-
+    [HideInInspector] public float strength;
 
     public object this[string propertyName]
     {
@@ -149,8 +144,7 @@ public class Stat : MonoBehaviour {
         charisma     = Random.Range( 0 , 30 );
         perception   = Random.Range( 0 , 30 );
         intelligence = Random.Range( 0 , 30 );
-        luck = Random.Range( 1 , 100 );
-        attackPoints = maxAttackpoints;
+        luck = Random.Range( 1 , 45);
         stamina      = Random.Range( 0 , 30 );
         XP           = 0;
         maxHealth    = 100;

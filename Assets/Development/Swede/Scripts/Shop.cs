@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,7 +15,25 @@ public class Shop : MonoBehaviour
 
     public GameObject ShopContainer;
 
-    public List <Companion> companions;
+    [Serializable]
+    public struct CompanionStruct
+    {
+
+        public Companion companion;
+
+        public int Melee;
+
+        public int Range;
+
+        public int Magic;
+
+        public GameObject weapon;
+
+        public int cost;
+
+    }
+    [SerializeField]
+    public List <CompanionStruct> companions;
 
     public GameObject sellContainer;
     // Use this for initialization
@@ -27,23 +46,24 @@ public class Shop : MonoBehaviour
     }
 
     IEnumerator init( ) {
-
-        foreach ( var l_companion in companions ){
-            var a = Instantiate( l_companion.gameObject, new Vector3(0,0,0), Quaternion.identity );
-            var o = a.GetComponent < Companion >( );
-           
-            while ( !o|| !o.inventory || !o.inventoryUI ){
-                
-                yield return new WaitForEndOfFrame();
-                o.inventoryUI.AddToShop(this);
-                shopCompanions.Add(o.inventoryUI.CompanionSell);
-                o.inventoryUI.CompanionSell.transform.SetParent(Buy.transform);
-                o.inventoryUI.CompanionSell.transform.localScale = new Vector3( 1,1,1);
-                o.inventoryUI.UpdateCharacter(o.inventoryUI.ShopCharacterText);
-                o.inventoryUI.UpdateItem(o.inventoryUI.ShopWeaponsText, o.attachedWeapon);
-                o.inventoryUI.tab.gameObject.SetActive(false);
-            }
+        yield return new WaitForSeconds(2);
+        foreach (var l_companion in companions)
+        {
+            //l_companion.companion.inventoryUI.Init(l_companion.companion);
+            l_companion.companion.inventoryUI.AddToShop(this);
+            shopCompanions.Add(l_companion.companion.inventoryUI.CompanionSell);
+            l_companion.companion.inventoryUI.CompanionSell.transform.SetParent(Buy.transform);
+            l_companion.companion.inventoryUI.CompanionSell.transform.localScale = new Vector3(1, 1, 1);
+            l_companion.companion.mele.CurrentLevel = l_companion.Melee;
+            l_companion.companion.magic.CurrentLevel = l_companion.Magic;
+            l_companion.companion.range.CurrentLevel = l_companion.Range;
+            l_companion.companion.cost = l_companion.cost;
+            l_companion.companion.inventoryUI.UpdateCharacter(l_companion.companion.inventoryUI.ShopCharacterText);
+            l_companion.companion.startWeapon = l_companion.weapon;
+            l_companion.companion.inventoryUI.UpdateWeapon(l_companion.companion.inventoryUI.ShopWeaponsText, l_companion.weapon.GetComponent<WeaponObject>());
+            
         }
+            yield return new WaitForEndOfFrame();
     }
     public List <Tab> shopCompanions = new List < Tab >();
     

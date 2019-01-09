@@ -12,7 +12,7 @@ public class UIUpdate : MonoBehaviour
     public Image StaminaBar;
     public Text HpText;
     public Text StaminaText;
-
+    
     public Text CoinText;
 
     private Stat Selected;

@@ -9,28 +9,23 @@ public class SwordType : WeaponObject {
     public override void Use()
     {
         base.Use();
-        
-        AttachedCharacter.AnimationClass.Play(AnimationClass.states.AttackTrigger);
-        AttachedCharacter.attachedWeapon.AnimationClass.Play(AnimationClass.weaponstates.EnabledTrigger);
-    }
+        if (KnockBack)
+        {
+            AttachedCharacter.KnockBack(KnockBackAmount);
 
-    public void NotHit( ) {
-        hit = false;
-    }
-
-    public void CheckHit( ) {
-        if (  hit == false ){
-            InstatiateFloatingText.InstantiateFloatingText( "MISS" , AttachedCharacter , Color.grey, new Vector3(0.5f, 0.5f, 0.5f) );
         }
-    }
-    protected override void OnTriggerEnter(Collider collider)
-    {
-        base.OnTriggerEnter(collider);
+        AttachedCharacter.AnimationClass.Play(AnimationClass.states.Attack);
 
-        if ( ( collider.tag == "Enemy" || collider.tag == "Companion" || collider.tag == "Player" ) && tag == "Weapon" ){
-            hit = true;
-        }
     }
+    
+    public override void Activate( ) {
+         AttachedCharacter.leftHand.GetComponentInChildren < BoxCollider >( ).enabled = true;
+    }
+
+    public override void Deactivate( ) {
+        AttachedCharacter.leftHand.GetComponentInChildren < BoxCollider >( ).enabled = false;
+    }
+    
     public override void IncreaseSubClass( float amount ) {
         
         base.IncreaseSubClass(amount);
@@ -39,7 +34,7 @@ public class SwordType : WeaponObject {
         character.mele.IncreaseLevel(amount);
         int currLevel = (int)character.mele.CurrentLevel;
         if (currLevel - level == 1)
-            InstatiateFloatingText.InstantiateFloatingText("MELEE++",character, Color.magenta, new Vector3(1,1,1));
+            InstatiateFloatingText.InstantiateFloatingText("MELE++",character, Color.green, new Vector3(1,1,1), 0.2f);
     }
 
     public override void AssignDamage( ) {

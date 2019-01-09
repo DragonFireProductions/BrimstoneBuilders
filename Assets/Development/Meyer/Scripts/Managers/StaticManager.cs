@@ -84,7 +84,6 @@ public class StaticManager : MonoBehaviour
         uiManager = GetComponent < UIInventoryManager >( );
 
         levelCalc = GetComponent < ItemLevelCalculation >( );
-
     }
 
     public void LoadMainMenu()

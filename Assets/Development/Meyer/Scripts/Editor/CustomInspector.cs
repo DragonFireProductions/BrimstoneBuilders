@@ -102,8 +102,6 @@ public class CustomInspector : EditorWindow {
                 Debug.Log("List is null");
             if (WeaponItemList.itemList != null && WeaponItemList.itemList.Count > 0) 
             {
-
-
                 GUILayout.BeginHorizontal ();
                 viewIndex = Mathf.Clamp (EditorGUILayout.IntField ("Current Item", viewIndex, GUILayout.ExpandWidth(false)), 1, WeaponItemList.itemList.Count);
                 //Mathf.Clamp (viewIndex, 1, inventoryItemList.itemList.Count);
@@ -215,7 +213,14 @@ public class CustomInspector : EditorWindow {
                         EditorGUILayout.LabelField("Knock Back Velocity");
                         ob1.KnockBackAmount = EditorGUILayout.FloatField(ob1.KnockBackAmount);
 
+                        EditorGUIUtility.labelWidth = 45;
+                        EditorGUILayout.LabelField("Left Hand");
+                        ob1.leftHand = EditorGUILayout.ObjectField(ob1.leftHand, typeof(GameObject), true) as GameObject;
 
+                        EditorGUIUtility.labelWidth = 45;
+                        EditorGUILayout.LabelField("Right Hand");
+                        ob1.rightHand = EditorGUILayout.ObjectField(ob1.rightHand, typeof(GameObject), true) as GameObject;
+                        
                         if ( WeaponItemList.itemList[ viewIndex - 1 ] is GunType ){
                             var ob = WeaponItemList.itemList[ viewIndex - 1 ] as GunType;
 
