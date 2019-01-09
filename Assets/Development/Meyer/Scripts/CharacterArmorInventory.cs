@@ -99,17 +99,22 @@ public class ArmorStuff {
         text.text = items.Count.ToString();
         obj.transform.localScale = new Vector3(1,1,1);
         labels.Add(obj);
+       
     }
 
     public void Switch(ref GameObject current_game_object) {
         parent.SetActive(true);
         current_game_object = parent;
+         FixLayout( );
     }
 
-    public void Equip( ) {
+    public void DeleteLabel(GameObject label ) {
+        labels.Remove( label );
+    }
+    public void FixLayout( ) {
        
         for ( int i = 0 ; i < labels.Count ; i++ ){
-            
+            labels[ i ].gameObject.transform.position = StaticManager.uiManager.ArmorGrid[ i ].transform.position;
         }
     }
 }

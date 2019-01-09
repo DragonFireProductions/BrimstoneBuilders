@@ -19,15 +19,17 @@ public class Shoulder : ArmorItem {
 		var companion = AttachedCharacter as Companion;
         if (companion.armor.currentShoulder)
         {
-            companion.armor.currentShoulder.armor.SetActive(false);
+			parent.labels.Add(companion.armor.currentShoulder.label);
+            companion.armor.currentShoulder.model.SetActive(false);
             companion.armor.currentShoulder.tab.gameObject.SetActive(true);
         }
         else if (companion.armor.startShoulder)
         {
             companion.armor.startShoulder.SetActive(false);
         }
+		parent.DeleteLabel(label);
         companion.armor.currentShoulder = this;
-		armor.SetActive(true);
+		model.SetActive(true);
     }
     public override void PickUp(Companion companion)
     {

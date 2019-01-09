@@ -19,7 +19,8 @@ public class Clothes : ArmorItem {
 		var companion = AttachedCharacter as Companion;
         if (companion.armor.currentBody)
         {
-            companion.armor.currentBody.armor.SetActive(false);
+			parent.labels.Add(companion.armor.currentBody.label);
+            companion.armor.currentBody.model.SetActive(false);
             companion.armor.currentBody.tab.gameObject.SetActive(true);
         }
         else if (companion.armor.startBody)
@@ -27,7 +28,8 @@ public class Clothes : ArmorItem {
             companion.armor.startBody.SetActive(false);
         }
         companion.armor.currentBody = this;
-		armor.SetActive(true);
+	parent.DeleteLabel(label);
+		model.SetActive(true);
     }
     public override void PickUp(Companion companion)
     {

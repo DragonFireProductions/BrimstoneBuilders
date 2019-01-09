@@ -19,13 +19,15 @@ public class Belt : ArmorItem {
 		var companion = AttachedCharacter as Companion;
         if (companion.armor.currentBelt)
         {
-            companion.armor.currentBelt.armor.SetActive(false);
+			parent.labels.Add(companion.armor.currentBelt.label);
+            companion.armor.currentBelt.model.SetActive(false);
             companion.armor.currentBelt.tab.gameObject.SetActive(true);
         }
         else if (companion.armor.startBelt)
         {
             companion.armor.startBelt.SetActive(false);
         }
+		parent.DeleteLabel(label);
         companion.armor.currentBelt = this;
     }
 

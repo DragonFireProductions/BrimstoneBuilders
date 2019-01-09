@@ -18,15 +18,17 @@ public class Head : ArmorItem {
 		var companion = AttachedCharacter as Companion;
         if (companion.armor.currentHead)
         {
-            companion.armor.currentHead.armor.SetActive(false);
+			parent.labels.Add(companion.armor.currentHead.label);
+            companion.armor.currentHead.model.SetActive(false);
             companion.armor.currentHead.tab.gameObject.SetActive(true);
         }
         else if (companion.armor.startHead)
         {
             companion.armor.startHead.SetActive(false);
         }
+		parent.DeleteLabel(label);
         companion.armor.currentHead = this;
-		armor.SetActive(true);
+		model.SetActive(true);
     }
     public override void PickUp(Companion companion)
     {

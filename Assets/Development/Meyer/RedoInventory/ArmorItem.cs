@@ -11,11 +11,13 @@ public class ArmorItem : BaseItems {
 
 	public Type type;
 
-	public GameObject armor;
+	public GameObject model;
 
 	public Tab tab;
 
 	public ArmorStuff parent;
+
+	public GameObject label;
 	public virtual void PickUp(Companion companion ) {
         var newlabel = Instantiate(StaticManager.uiManager.Armor.gameObject);
         newlabel.GetComponent<Tab>().companion = companion;
@@ -40,6 +42,8 @@ public class ArmorItem : BaseItems {
 
         AttachedCharacter = companion;
 
+		label = l.obj;
+
         newlabel.SetActive(true);
 
         companion.inventory.armorInventory.armor.Add(l);
@@ -48,21 +52,20 @@ public class ArmorItem : BaseItems {
         
 	}
 	public override void Attach() { 
-		armor.transform.SetParent(AttachedCharacter.transform);
-		armor.GetComponent < SkinnedMeshRenderer >( ).rootBone = AttachedCharacter.transform.Find( "root" );		tab.gameObject.SetActive(false);
-		
+		model.transform.SetParent(AttachedCharacter.transform);
+		model.GetComponent < SkinnedMeshRenderer >( ).rootBone = AttachedCharacter.transform.Find( "root" );		tab.gameObject.SetActive(false);
+		parent.DeleteLabel(tab.gameObject);
+		parent.FixLayout();
 	}
-
-	
 
 	public void OnTriggerEnter( Collider collider ) {
 		if ( collider.tag == "Player" && tag == "PickUp" ){
 			StaticManager.Character.inventory.PickUp(this);
 			this.GetComponent < Collider >( ).enabled = false;
 			AttachedCharacter = collider.GetComponent < Companion >( );
-			armor = Instantiate( armor );
-			armor.SetActive(false);
-			armor.transform.SetParent(AttachedCharacter.transform);
+			model = Instantiate( model );
+			model.SetActive(false);
+			model.transform.SetParent(AttachedCharacter.transform);
 		}
 	}
 

@@ -19,15 +19,19 @@ public class Shoe : ArmorItem {
 		var companion = AttachedCharacter as Companion;
         if (companion.armor.currentShoe)
         {
-            companion.armor.currentShoe.armor.SetActive(false);
+		    parent.labels.Add(companion.armor.currentShoe.label);
+            companion.armor.currentShoe.label.gameObject.SetActive(true);
             companion.armor.currentShoe.tab.gameObject.SetActive(true);
         }
-        else if (companion.armor.currentShoe)
+        else if (companion.armor.startShoe)
         {
+			
             companion.armor.startShoe.SetActive(false);
         }
-        companion.armor.currentBelt = this;
-		armor.SetActive(true);
+        companion.armor.currentShoe = this;
+		parent.DeleteLabel(label);
+		model.SetActive(true);
+		parent.FixLayout();
     }
     public override void PickUp(Companion companion)
     {
