@@ -17,14 +17,14 @@ public class Shoe : ArmorItem {
     {
 		base.Attach();
 		var companion = AttachedCharacter as Companion;
-        if (companion.armor.currentBelt)
+        if (companion.armor.currentShoe)
         {
-            companion.armor.currentBelt.armor.SetActive(false);
-            companion.armor.currentBelt.tab.gameObject.SetActive(true);
+            companion.armor.currentShoe.armor.SetActive(false);
+            companion.armor.currentShoe.tab.gameObject.SetActive(true);
         }
-        else if (companion.armor.startBelt)
+        else if (companion.armor.currentShoe)
         {
-            companion.armor.startBelt.SetActive(false);
+            companion.armor.startShoe.SetActive(false);
         }
         companion.armor.currentBelt = this;
 		armor.SetActive(true);
