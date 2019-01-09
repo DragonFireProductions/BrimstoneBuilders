@@ -39,7 +39,7 @@ public class ContainerScript : MonoBehaviour  {
         if ( gameObject.GetComponent < Tab >( )){
             var item =  gameObject.GetComponent < Tab >( ).item;
             StaticManager.uiManager.comparedInventoryWeapons.SetActive(true);
-            StaticManager.inventories.inventory.character.inventoryUI.UpdateItem(StaticManager.uiManager.comparedInventoryWeapons.GetComponentInChildren<UIItemsWithLabels>(), item);
+            StaticManager.inventories.inventory.character.inventoryUI.UpdateWeapon(StaticManager.uiManager.comparedInventoryWeapons.GetComponentInChildren<UIItemsWithLabels>(), item as WeaponObject);
 
         }
     }

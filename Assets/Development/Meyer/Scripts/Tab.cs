@@ -25,6 +25,8 @@ public class Tab : MonoBehaviour {
 
 	public int index;
 
+	public ArmorItem.Type type;
+
     public void Attach( ) {
 		StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.Equip);
 		StaticManager.inventories.selectedObj = item;
