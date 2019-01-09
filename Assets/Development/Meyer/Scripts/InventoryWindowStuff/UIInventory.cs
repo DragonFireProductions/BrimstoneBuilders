@@ -79,13 +79,7 @@ public class UIInventory : MonoBehaviour
         set { showWindow = value; }
     }
 
-    public void UpdateStats( BaseItems _object , UIItemsWithLabels instanceToUpdate ) {
-        for ( int i = 0 ; i < instanceToUpdate.Labels.Count ; i++ ){
-            var a = _object.stats[ instanceToUpdate.Labels[ i ].name ] ?? _object[ instanceToUpdate.Labels[ i ].name ];
-
-            instanceToUpdate.Labels[ i ].labelText.text = a.ToString( );
-        }
-    }
+   
     public void RemoveMainInventory(WeaponObject _item, PlayerInventory inventory)
     {
         for (var l_i = 0; l_i < inventory.Slots.Count; l_i++)
@@ -107,16 +101,6 @@ public class UIInventory : MonoBehaviour
                 var l_slot = inventory.PotionSlots[l_i].obj;
                 inventory.PotionSlots.RemoveAt(l_i);
                 inventory.potions.Remove( _item );
-                Destroy(l_slot);
-            }
-        }
-    }
-
-    public void RemoveBackpack( WeaponObject _item ) {
-        for ( var l_i = 0 ; l_i < BackpackSlots.Count ; l_i++ ){
-            if ( BackpackSlots[l_i].name == _item.name + "Slot"){
-                var l_slot = BackpackSlots[ l_i ].gameObject;
-                BackpackSlots.RemoveAt(l_i);
                 Destroy(l_slot);
             }
         }
@@ -178,7 +162,6 @@ public class UIInventory : MonoBehaviour
                 StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PauseUI);
             }
         }
-        StaticManager.UiInventory.ViewEnemyStats();
 
     }
 
@@ -226,36 +209,6 @@ public class UIInventory : MonoBehaviour
         }
         
 
-    }
-    public void ViewEnemyStats()
-    {
-        if (Input.GetMouseButton(1))
-        {
-            Debug.Log("Mouse is down");
-
-            RaycastHit l_hitInfo;
-            var l_hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out l_hitInfo);
-            if (l_hit)
-            {
-                Debug.Log("Hit " + l_hitInfo.transform.gameObject.name);
-                if (l_hitInfo.transform.gameObject.tag == "Enemy" || l_hitInfo.transform.gameObject.tag == "Player" || l_hitInfo.transform.gameObject.tag == "Companion")
-                {
-                    //UpdateStats(l_hitInfo.transform.gameObject.GetComponent<Stat>(), ItemsInstance.StatUI);
-
-                }
-                else if (l_hitInfo.transform.gameObject.tag == "Weapon")
-                {
-                   //UpdateStats(l_hitInfo.transform.gameObject.GetComponent<WeaponObject>().Stats, ItemsInstance.WeaponStatsUI);
-                    //UpdateGameWeaponStats(l_hitInfo.]transform.gameObject.GetComponent<GunType>());
-                }
-            }
-            else
-            {
-                Debug.Log("No hit");
-            }
-            Debug.Log("Mouse is down");
-
-        }
     }
 
 }

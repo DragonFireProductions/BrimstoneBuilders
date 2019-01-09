@@ -124,13 +124,7 @@ public class CharacterInventoryUI : MonoBehaviour {
         tab.gameObject.SetActive( true );
         StaticManager.tabManager.tabs.Add( tab );
     }
-
-    public void AddWeapon( BaseItems item ) {
-        companion.inventory.WeaponInventory.PickUp(item);
-    }
-
-   
-
+    
     public void AddPotion( BaseItems item ) {
         var newlabel = Instantiate( StaticManager.uiManager.Potion.gameObject );
         newlabel.GetComponent < Tab >( ).companion = companion;
@@ -186,8 +180,10 @@ public class CharacterInventoryUI : MonoBehaviour {
     }
 
     public void EnableContainer( BaseItems item ) {
-        if ( item is WeaponObject ){
-           companion.inventory.WeaponInventory.EnableContainer(item as WeaponObject);
+        var l_o = item as WeaponObject;
+
+        if ( l_o != null ){
+           companion.inventory.WeaponInventory.EnableContainer(l_o);
         }
     }
 

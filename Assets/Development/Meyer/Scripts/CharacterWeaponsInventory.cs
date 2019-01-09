@@ -120,8 +120,6 @@ public class CharacterWeaponsInventory : PlayerInventory
         labels.Add(l.obj);
 
         item.gameObject.SetActive(false);
-
-
     }
 
     // Update is called once per frame

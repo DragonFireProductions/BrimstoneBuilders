@@ -132,10 +132,7 @@ public class CameraController : MonoBehaviour {
             var plane = new Plane( Vector3.up , playerTransform.position );
             var ray   = Camera.main.ScreenPointToRay( Input.mousePosition ); //sends a line according to the z and x axis
 
-            if ( plane.Raycast( ray , out l_raylength ) && StaticManager.Character.Nav.SetState != BaseNav.state.ATTACKING && StaticManager.Character.Nav.SetState != BaseNav.state.ENEMY_CLICKED ){
-                var point = ray.GetPoint( l_raylength );
-                playerTransform.transform.LookAt( point );
-            }
+            
 
             float l_rotation = 0;
 
