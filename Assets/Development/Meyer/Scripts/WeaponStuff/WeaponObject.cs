@@ -71,7 +71,7 @@ public abstract class WeaponObject : BaseItems
         }
         leftHand.SetActive(true);
         rightHand.SetActive(true);
-        StaticManager.inventories.inventory.character.inventoryUI.UpdateItem(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), this);
+        StaticManager.inventories.inventory.character.inventoryUI.UpdateWeapon(StaticManager.uiManager.WeaponInventoryStats.GetComponent<UIItemsWithLabels>(), this);
         var c = AttachedCharacter as Companion;
 
         StaticManager.UiInventory.RemoveMainInventory(this as WeaponObject, c.inventory);

@@ -13,6 +13,8 @@ public class PlayerInventory : MonoBehaviour {
 
     public static UIInventory uiInventory = StaticManager.UiInventory;
 
+    public CharacterArmorInventory armorInventory;
+
 
     [ HideInInspector ] public List < WeaponObject > BackPackInventoryList;
 
@@ -56,7 +58,7 @@ public class PlayerInventory : MonoBehaviour {
     }
 
     public void PickUp( WeaponObject weapon ) {
-        PickedUpWeapons.Add( weapon );
+        
         character.inventoryUI.AddWeapon(weapon);
         weapon.gameObject.SetActive(false);
     }
@@ -69,7 +71,7 @@ public class PlayerInventory : MonoBehaviour {
 
     public void PickUp( ArmorItem item ) {
         pickedupArmor.Add(item);
-        character.inventoryUI.AddArmor(item);
+        character.inventory.armorInventory.AddArmor(item);
         item.gameObject.SetActive(false);
     }
     public void PickUpCoin(int _coinWorth)

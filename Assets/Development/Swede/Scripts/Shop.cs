@@ -60,7 +60,7 @@ public class Shop : MonoBehaviour
             l_companion.companion.cost = l_companion.cost;
             l_companion.companion.inventoryUI.UpdateCharacter(l_companion.companion.inventoryUI.ShopCharacterText);
             l_companion.companion.startWeapon = l_companion.weapon;
-            l_companion.companion.inventoryUI.UpdateItem(l_companion.companion.inventoryUI.ShopWeaponsText, l_companion.weapon.GetComponent<WeaponObject>());
+            l_companion.companion.inventoryUI.UpdateWeapon(l_companion.companion.inventoryUI.ShopWeaponsText, l_companion.weapon.GetComponent<WeaponObject>());
             
         }
             yield return new WaitForEndOfFrame();

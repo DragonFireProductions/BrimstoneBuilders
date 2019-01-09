@@ -24,14 +24,14 @@ public class ParticleManager : MonoBehaviour
         Selected,
         Embers,
         Spawn,
-        Shock,
+        //shock,
         Click,
         Snow,
         Leaves,
         EnemySelected,
         Blood,
-        SmallExplosion,
-        PoisonCloud,
+        //SmallExplosion,
+        //PoisonCloud,
         Empty
     }
 

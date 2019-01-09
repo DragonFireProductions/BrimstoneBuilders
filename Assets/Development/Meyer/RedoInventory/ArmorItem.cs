@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class ArmorItem : BaseItems {
 
-    public enum Type {head, shoulder, shoe, glove, body, belt }
+    public enum Type {Head, Shoulder, Shoe, glove, Clothes, Belt }
 
 	public Type type;
 
@@ -23,7 +23,7 @@ public class ArmorItem : BaseItems {
 		armor.transform.SetParent(AttachedCharacter.transform);
 		armor.GetComponent < SkinnedMeshRenderer >( ).rootBone = AttachedCharacter.transform.Find( "root" );
 			switch ( type ){
-                case Type.belt:
+                case Type.Belt:
 
 	                if ( companion.armor.currentBelt ){
 	                companion.armor.currentBelt.armor.SetActive( false );
@@ -36,7 +36,7 @@ public class ArmorItem : BaseItems {
                 companion.armor.currentBelt = this;
 					
 	                break;
-                case Type.shoulder:
+                case Type.Shoulder:
                 if (companion.armor.currentShoulder)
                 {
                     companion.armor.currentShoulder.armor.SetActive(false);
@@ -49,7 +49,7 @@ public class ArmorItem : BaseItems {
                 companion.armor.currentShoulder = this;
 
 	                break;
-                case Type.body:
+                case Type.Clothes:
                 if (companion.armor.currentBody)
                 {
                     companion.armor.currentBody.armor.SetActive(false);
@@ -75,7 +75,7 @@ public class ArmorItem : BaseItems {
                 companion.armor.currentGlove = this;
 
                     break;
-                case Type.shoe:
+                case Type.Shoe:
                 if (companion.armor.currentShoe)
                 {
                     companion.armor.currentShoe.armor.SetActive(false);
@@ -90,7 +90,7 @@ public class ArmorItem : BaseItems {
 
                     break;
 
-                case Type.head:
+                case Type.Head:
                 if (companion.armor.currentHead)
                 {
                     companion.armor.currentHead.armor.SetActive(false);

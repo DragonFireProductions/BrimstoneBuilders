@@ -55,9 +55,12 @@ public class UIInventoryManager : MonoBehaviour {
 
     public GameObject pauseWindow;
 
+    public GameObject PlayerImage;
+
     //add a new window
+    public GameObject[] Grid;
 
-
+    public GameObject[] ArmorGrid;
     public void Start( ) {
         
         WeaponInventoryStats.GetComponent<UIItemsWithLabels>().FindLabels();

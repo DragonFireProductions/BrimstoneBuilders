@@ -109,8 +109,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void Despawn() {
         instantiated.RemoveAll( item => item == null );
-        for (int i = 0; i < instantiated.Count; i++){
-            Destroy(instantiated[i]);
+        foreach ( var l_t in instantiated ){
+            Destroy(l_t);
         }
         gameObject.SetActive(false);
     }

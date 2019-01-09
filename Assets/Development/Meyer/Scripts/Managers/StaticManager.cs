@@ -37,10 +37,6 @@ public class StaticManager : MonoBehaviour
     public static UIInventoryManager uiManager;
 
     public static ItemLevelCalculation levelCalc;
-
-    public static ArmorManager armor;
-
-    
     
 
     public bool unlimitedPotions = false;
@@ -88,8 +84,6 @@ public class StaticManager : MonoBehaviour
         uiManager = GetComponent < UIInventoryManager >( );
 
         levelCalc = GetComponent < ItemLevelCalculation >( );
-
-        armor = GetComponent < ArmorManager >( );
     }
 
     public void LoadMainMenu()
