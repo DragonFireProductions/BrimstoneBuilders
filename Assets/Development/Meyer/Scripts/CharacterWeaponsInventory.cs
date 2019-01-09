@@ -14,6 +14,8 @@ public class CharacterWeaponsInventory : PlayerInventory
     public List<UIItemsWithLabels> weapons = new List<UIItemsWithLabels>();
 
     public GameObject inventoryObj;
+
+    public List <GameObject> labels = new List < GameObject >();
     // Use this for initialization
     void Start()
     {
@@ -91,8 +93,6 @@ public class CharacterWeaponsInventory : PlayerInventory
         newlabel.GetComponent<Tab>().companion = character;
         newlabel.GetComponent<Tab>().item = item;
 
-
-
         var l = newlabel.GetComponent<UIItemsWithLabels>();
 
         l.obj = newlabel;
@@ -117,7 +117,11 @@ public class CharacterWeaponsInventory : PlayerInventory
 
         weapons.Add(l);
 
+        labels.Add(l.obj);
+
         item.gameObject.SetActive(false);
+
+
     }
 
     // Update is called once per frame
@@ -125,53 +129,13 @@ public class CharacterWeaponsInventory : PlayerInventory
     {
 
     }
-}
-public class WeaponsStuff
-{
 
-    public Text text;
-
-    public GameObject parent;
-
-    public List<BaseItems> items = new List<BaseItems>();
-
-    public List<GameObject> labels = new List<GameObject>();
-
-    public WeaponsStuff(string objName, string textName, GameObject armorInventory)
-    {
-        text = armorInventory.transform.Find(textName).GetComponent<Text>();
-        parent = armorInventory.transform.Find(objName).gameObject;
-        parent.SetActive(false);
-    }
-
-    public void Add(GameObject obj, BaseItems item)
-    {
-        obj.transform.SetParent(parent.transform);
-        items.Add(item);
-        obj.transform.position = StaticManager.uiManager.ArmorGrid[items.Count - 1].transform.position;
-        text.text = items.Count.ToString();
-        obj.transform.localScale = new Vector3(1, 1, 1);
-        labels.Add(obj);
-
-    }
-
-    public void Switch(ref GameObject current_game_object)
-    {
-        parent.SetActive(true);
-        current_game_object = parent;
-        FixLayout();
-    }
-
-    public void DeleteLabel(GameObject label)
-    {
-        labels.Remove(label);
-    }
-    public void FixLayout()
-    {
+    public void Attach(WeaponObject obj ) {
+        labels.Remove( obj.label );
 
         for (int i = 0; i < labels.Count; i++)
         {
-            labels[i].gameObject.transform.position = StaticManager.uiManager.ArmorGrid[i].transform.position;
+            labels[i].gameObject.transform.position = StaticManager.uiManager.Grid[i].transform.position;
         }
     }
 }

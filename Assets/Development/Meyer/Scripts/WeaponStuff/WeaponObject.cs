@@ -89,6 +89,13 @@ public abstract class WeaponObject : BaseItems
         AttachedCharacter.attachedWeapon.tag = "Weapon";
 
         AttachedCharacter.AnimationClass.SwitchWeapon(this);
+
+        mesh.SetActive(false);
+
+        if ( AttachedCharacter is Companion ){
+            var a = AttachedCharacter as Companion;
+            a.inventory.WeaponInventory.Attach(this);
+        }
     }
     public void Attach(Enemy enemy)
     {
