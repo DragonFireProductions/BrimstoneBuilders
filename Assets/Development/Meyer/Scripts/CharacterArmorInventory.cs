@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using UnityEditor;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -126,6 +129,8 @@ public class ArmorStuff {
 
     public List < BaseItems > items = new List < BaseItems >();
 
+    public List <GameObject> labels = new List < GameObject >();
+
     public ArmorStuff(string objName , string textName, GameObject armorInventory) {
         text = armorInventory.transform.Find( textName ).GetComponent < Text >( );
         parent = armorInventory.transform.Find( objName ).gameObject;
@@ -137,10 +142,18 @@ public class ArmorStuff {
         items.Add(item);
         obj.transform.position = StaticManager.uiManager.ArmorGrid[items.Count - 1].transform.position;
         text.text = items.Count.ToString();
+        labels.Add(obj);
     }
 
     public void Switch(ref GameObject current_game_object) {
         parent.SetActive(true);
         current_game_object = parent;
+    }
+
+    public void Equip( ) {
+       
+        for ( int i = 0 ; i < labels.Count ; i++ ){
+            
+        }
     }
 }
