@@ -191,6 +191,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		if ( obj is WeaponObject ){
 			var a = obj as WeaponObject;
 			a.PickUp(cha);
+			inventory.character.inventory.WeaponInventory.DeleteObject(a);
 		}
 
 		if ( obj is Potions ){

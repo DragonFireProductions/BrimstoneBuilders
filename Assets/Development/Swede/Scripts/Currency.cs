@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class Currency : MonoBehaviour {
@@ -72,7 +73,7 @@ public class Currency : MonoBehaviour {
                     .GetLabel( "CompanionBuyError" , StaticManager.UiInventory.ItemsInstance.ShopUI )
                     .text = "";
 
-            var newCompanion = Instantiate( container.companion.gameObject );
+            var newCompanion = Instantiate( container.companion.gameObject,_shop.transform.position, Quaternion.identity );
             Destroy( container.gameObject );
             var companion = newCompanion.GetComponent < Companion >( );
             companion.inventoryUI.AddToShop( _shop );
@@ -81,11 +82,14 @@ public class Currency : MonoBehaviour {
             companion.startWeapon = Instantiate( companion.startWeapon );
             companion.startWeapon.GetComponent < WeaponObject >( ).PickUp( companion );
             companion.startWeapon.GetComponent < WeaponObject >( ).Attach( );
+            companion.inventory.WeaponInventory.PickUp(companion.startWeapon.GetComponent<WeaponObject>());
+            companion.inventory.WeaponInventory.Attach(companion.startWeapon.GetComponent<WeaponObject>());
             companion.inventoryUI.SellButton.SetActive( true );
             companion.inventoryUI.BuyButton.SetActive( false );
             companion.inventoryUI.tab.gameObject.SetActive( true );
             companion.inventoryUI.UpdateCharacter( container.companion.inventoryUI.ShopCharacterText );
             companion.inventoryUI.CompanionSell.gameObject.transform.SetParent( sellContainer.transform );
+            companion.GetComponent < NavMeshAgent >( ).Warp( _shop.transform.position );
 
             StaticManager.particleManager.Play( ParticleManager.states.Spawn , position );
 
@@ -96,7 +100,6 @@ public class Currency : MonoBehaviour {
             newButton.transform.SetParent( location.transform , false );
             newButton.transform.position = location.transform.position;
             StaticManager.inventories.behaviors.Add( newButton );
-            companion.gameObject.transform.position = position;
 
             StaticManager.RealTime.Companions.Add( companion );
             StaticManager.inventories.alllables.Add( companion.inventory );
