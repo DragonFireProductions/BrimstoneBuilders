@@ -177,8 +177,15 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		tab.companion.inventoryUI.CharacterInventory.SetActive(true);
 		tab.GetComponent < Image >( ).color = Color.red;
 		inventory = tab.companion.inventory;
-		prevPos = inventory.character.transform.position;
+
+	    if ( prev_inventory ){
+		     prev_inventory.sendToButton.gameObject.SetActive(true);
+	    }
+       
+        inventory.character.inventoryUI.sendToButton.gameObject.SetActive(false);
+        prevPos = inventory.character.transform.position;
 		prev_inventory = inventory.character.inventoryUI;
+		
         Vector3 characterpos = new Vector3(inventory.character.transform.position.x, 30, inventory.character.transform.position.z);
         inventory.character.transform.position = characterpos;
         Vector3 pos = characterpos + (inventory.character.transform.forward * 4);
