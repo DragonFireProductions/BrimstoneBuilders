@@ -82,8 +82,6 @@ public class Currency : MonoBehaviour {
             companion.startWeapon = Instantiate( companion.startWeapon );
             companion.startWeapon.GetComponent < WeaponObject >( ).PickUp( companion );
             companion.startWeapon.GetComponent < WeaponObject >( ).Attach( );
-            companion.inventory.WeaponInventory.PickUp(companion.startWeapon.GetComponent<WeaponObject>());
-            companion.inventory.WeaponInventory.Attach(companion.startWeapon.GetComponent<WeaponObject>());
             companion.inventoryUI.SellButton.SetActive( true );
             companion.inventoryUI.BuyButton.SetActive( false );
             companion.inventoryUI.tab.gameObject.SetActive( true );

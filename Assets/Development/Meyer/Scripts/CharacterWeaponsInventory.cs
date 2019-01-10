@@ -128,6 +128,13 @@ public class CharacterWeaponsInventory : PlayerInventory
 
     }
 
+    public void UpdateGrid( ) {
+        labels.RemoveAll( item => null == item );
+        for (int i = 0; i < labels.Count; i++)
+        {
+            labels[i].gameObject.transform.position = StaticManager.uiManager.Grid[i].transform.position;
+        }
+    }
     public void Attach(WeaponObject obj ) {
         labels.Remove( obj.label );
 

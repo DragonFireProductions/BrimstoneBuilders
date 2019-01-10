@@ -82,6 +82,8 @@ public abstract class WeaponObject : BaseItems
 
         gameObject.SetActive(true);
 
+        var prev_attached = AttachedCharacter.attachedWeapon;
+
         AttachedCharacter.attachedWeapon = this as WeaponObject;
 
         AttachedCharacter.attachedWeapon.gameObject.layer = AttachedCharacter.gameObject.layer;
@@ -95,6 +97,12 @@ public abstract class WeaponObject : BaseItems
         if ( AttachedCharacter is Companion ){
             var a = AttachedCharacter as Companion;
             a.inventory.WeaponInventory.Attach(this);
+
+            if ( prev_attached ){
+                a.inventory.WeaponInventory.labels.Add(prev_attached.label);
+                a.inventory.WeaponInventory.UpdateGrid();
+            }
+           
         }
     }
     public void Attach(Enemy enemy)
@@ -117,6 +125,8 @@ public abstract class WeaponObject : BaseItems
         AttachedCharacter.attachedWeapon.tag = "Weapon";
 
         AttachedCharacter.AnimationClass.SwitchWeapon(this);
+
+
     }
     public override void IncreaseSubClass(float amount ) {
         if ( Damage <= 10 ){
