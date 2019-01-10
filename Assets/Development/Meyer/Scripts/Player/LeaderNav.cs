@@ -107,14 +107,7 @@ public class LeaderNav : CompanionNav {
             }
         }
 
-        if ( Agent.velocity == Vector3.zero ){
-            character.AnimationClass.Stop( AnimationClass.states.Walk );
-            character.AnimationClass.Play( AnimationClass.states.Idle );
-        }
-        else{
-            character.AnimationClass.Stop( AnimationClass.states.Idle );
-            character.AnimationClass.Play( AnimationClass.states.Walk );
-        }
+       
 
         if ( StaticManager.UiInventory.ItemsInstance.windowIsOpen == false ){
             if ( Input.GetMouseButtonDown( 1 ) ){

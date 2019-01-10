@@ -193,8 +193,13 @@ public class MultipleInventoryHolder : MonoBehaviour {
 			a.PickUp(cha);
 			inventory.character.inventory.WeaponInventory.RemoveObject(a);
 			inventory.character.inventory.WeaponInventory.DeleteObject(a);
+			inventory.character.inventory.WeaponInventory.labels.Remove( a.label );
+			Debug.Log("Labels count for " + inventory.character.name + " : " + inventory.character.inventory.WeaponInventory.labels.Count );
 			cha.inventory.WeaponInventory.UpdateGrid();
 			inventory.character.inventory.WeaponInventory.UpdateGrid();
+			 Debug.Log(inventory.character.name + "Has sent weapon to " + cha.name + " Weapon: " + obj.name);
+			Debug.Log("Labels count for " + inventory.character.name + " : " + inventory.character.inventory.WeaponInventory.labels.Count );
+			Debug.Log("Labels count for " + cha.name + " : " + cha.inventory.WeaponInventory.labels.Count );
 		}
 
 		if ( obj is Potions ){

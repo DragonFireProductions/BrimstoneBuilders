@@ -88,13 +88,12 @@ public class CompanionNav : BaseNav {
 
         switch ( aggState ){
             case AggressionStates.PASSIVE: {
-                Debug.Log( "now in the passive state" );
+
                 Agent.destination = StaticManager.Character.transform.position;
             }
 
                 break;
             case AggressionStates.BERZERK: {
-                Debug.Log( "now in berzerk state" );
                 enemiesToAttack = StaticManager.RealTime.AllEnemies;
                 enemiesToAttack.RemoveAll( item => item == null );
 
@@ -143,7 +142,6 @@ public class CompanionNav : BaseNav {
 
                 break;
             case AggressionStates.DEFEND: {
-                Debug.Log( "now in the defend state" );
                 StaticManager.Character.attackers.RemoveAll( item => item == null );
 
                 if ( StaticManager.Character.attackers.Count > 0 ){
@@ -182,7 +180,6 @@ public class CompanionNav : BaseNav {
 
                 break;
             case AggressionStates.PROVOKED: {
-                Debug.Log( "now in the provoked state" );
                 character.attackers.RemoveAll( item => item == null );
 
                 if ( character.attackers.Count > 0 ){

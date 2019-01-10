@@ -104,7 +104,6 @@ public class Currency : MonoBehaviour {
             companion.gameObject.SetActive( true );
             companion.inventoryUI.sendToButton.gameObject.SetActive( true );
             companion.Nav.enabled = true;
-            Debug.Log( "Enabled" );
             companion.Nav.SetState                                       = BaseNav.state.IDLE;
             companion.GetComponent < CompanionNav >( ).SetAgreesionState = CompanionNav.AggressionStates.PASSIVE;
             StartCoroutine( Wait( companion ) );

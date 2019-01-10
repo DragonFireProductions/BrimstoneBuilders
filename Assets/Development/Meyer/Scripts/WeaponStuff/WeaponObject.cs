@@ -100,10 +100,12 @@ public abstract class WeaponObject : BaseItems
 
             if ( prev_attached ){
                 a.inventory.WeaponInventory.labels.Add(prev_attached.label);
+                  Debug.Log(a.name + " has added label " + prev_attached.name);
                 a.inventory.WeaponInventory.UpdateGrid();
             }
            
         }
+        Debug.Log(AttachedCharacter.name + "Has attached weaponObj: " + AttachedCharacter.attachedWeapon.name);
     }
     public void Attach(Enemy enemy)
     {
@@ -195,6 +197,10 @@ public abstract class WeaponObject : BaseItems
            else if ( type == SubClasses.Types.MAGIC ){
                 Damage = a.range.CurrentLevel;
             }
+            Debug.Log(AttachedCharacter.name + "Has picked up weaponObj: " + this.name);
+            Debug.Log("Labels count for " + a.name + " : " + a.inventory.WeaponInventory.labels.Count );
+
+
         }
     }
     public void PickUp(Enemy character)

@@ -118,6 +118,8 @@ public class CharacterWeaponsInventory : PlayerInventory
         weapons.Add(l);
 
         labels.Add(l.obj);
+          Debug.Log(character.name + " has added label " + l.item.name);
+        Debug.Log(character.name + " label count: " + labels.Count);
 
         item.gameObject.SetActive(false);
     }
@@ -137,6 +139,8 @@ public class CharacterWeaponsInventory : PlayerInventory
     }
     public void Attach(WeaponObject obj ) {
         labels.Remove( obj.label );
+        Debug.Log(character.name + " has removed label " + obj.name);
+        Debug.Log(character.name + " label count: " + labels.Count);
 
         for (int i = 0; i < labels.Count; i++)
         {
