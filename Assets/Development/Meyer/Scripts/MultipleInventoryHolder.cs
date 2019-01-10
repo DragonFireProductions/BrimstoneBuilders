@@ -70,32 +70,47 @@ public class MultipleInventoryHolder : MonoBehaviour {
             inventory.armorInventory.currentArmorTab.SetActive(false);
         }
 
+	    if (  inventory.armorInventory.prev_tab ){
+		    inventory.armorInventory.prev_tab.GetComponent < Text >( ).color = Color.white;
+	    }
+	    
         switch (obj.type)
         {
 
             case ArmorItem.Type.Head:
-
+				inventory.armorInventory.Head.button.GetComponent<Text>().color = Color.red;
+	            
                 inventory.armorInventory.Head.Switch(ref inventory.armorInventory.currentArmorTab);
+	            inventory.armorInventory.prev_tab = inventory.armorInventory.Head.button;
 
                 break;
             case ArmorItem.Type.Shoulder:
+				inventory.armorInventory.Shoulder.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Shoulder.Switch(ref inventory.armorInventory.currentArmorTab);
+				 inventory.armorInventory.prev_tab = inventory.armorInventory.Shoulder.button;
 
                 break;
             case ArmorItem.Type.Clothes:
+				inventory.armorInventory.Clothes.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Clothes.Switch(ref inventory.armorInventory.currentArmorTab);
+				 inventory.armorInventory.prev_tab = inventory.armorInventory.Clothes.button;
 
                 break;
             case ArmorItem.Type.Shoe:
+				inventory.armorInventory.Shoes.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Shoes.Switch(ref inventory.armorInventory.currentArmorTab);
+				 inventory.armorInventory.prev_tab = inventory.armorInventory.Shoes.button;
 
                 break;
             case ArmorItem.Type.Belt:
+				inventory.armorInventory.Belt.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Belt.Switch(ref inventory.armorInventory.currentArmorTab);
+				 inventory.armorInventory.prev_tab = inventory.armorInventory.Belt.button;
 
                 break;
         }
-
+		
+	   
     }
     public void SwitchArmorTab(ArmorItem.Type obj)
     {
@@ -110,7 +125,6 @@ public class MultipleInventoryHolder : MonoBehaviour {
         {
 
             case ArmorItem.Type.Head:
-
                 inventory.armorInventory.Head.Switch(ref inventory.armorInventory.currentArmorTab);
 
                 break;
