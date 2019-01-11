@@ -80,6 +80,9 @@ public class Map : MonoBehaviour {
 	            list = Player;
 
 				break;
+            case "npc":
+
+	            break;
         }
 
 	    if (list != null && list.Count > 0 ){
