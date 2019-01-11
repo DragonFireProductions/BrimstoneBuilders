@@ -53,6 +53,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
     }
 
     public void SwitchToWeapons( ) {
+	    inventory.character.transform.position = prevPos;
+		StaticManager.map.CloseMap();
 		inventory.character.inventory.WeaponInventory.inventoryObj.SetActive(true);
 		inventory.character.inventoryUI.PotionsInventory.SetActive( false );
 	    inventory.armorInventory.ArmorInventory.SetActive(false);
@@ -148,7 +150,16 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
     }
     public void SwitchToArmor( ) {
-		inventory.armorInventory.ArmorInventory.SetActive(true);
+
+		StaticManager.map.CloseMap();
+        prevPos = inventory.character.transform.position;
+        Vector3 characterpos = new Vector3(inventory.character.transform.position.x, 30, inventory.character.transform.position.z);
+        inventory.character.transform.position = characterpos;
+        Vector3 pos = characterpos + (inventory.character.transform.forward * 4);
+        pos.y = 30.77f;
+        playerCam.transform.position = pos;
+        playerCam.transform.LookAt(inventory.character.transform.position + (inventory.transform.up * 0.77f));
+        inventory.armorInventory.ArmorInventory.SetActive(true);
 		inventory.character.inventory.WeaponInventory.inventoryObj.SetActive(false);
 		inventory.character.inventoryUI.PotionsInventory.SetActive( false );
 		inventory.armorInventory.UpdateArmor();
@@ -157,6 +168,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		
     }
     public void SwitchInventory(Tab tab ) {
+		StaticManager.map.CloseMap();
 		StaticManager.uiManager.inventoryCharacterStats.SetActive(true);
 
 		tab.companion.inventoryUI.UpdateCharacter( StaticManager.uiManager.inventoryCharacterStats.GetComponentInChildren < UIItemsWithLabels >( ) );
@@ -183,21 +195,20 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	    }
        
         inventory.character.inventoryUI.sendToButton.gameObject.SetActive(false);
-        prevPos = inventory.character.transform.position;
+        
 		prev_inventory = inventory.character.inventoryUI;
 		
-        Vector3 characterpos = new Vector3(inventory.character.transform.position.x, 30, inventory.character.transform.position.z);
-        inventory.character.transform.position = characterpos;
-        Vector3 pos = characterpos + (inventory.character.transform.forward * 4);
-        pos.y = 30.77f;
-        playerCam.transform.position = pos;
-        playerCam.transform.LookAt(inventory.character.transform.position + (inventory.transform.up * 0.77f));
 
 		tab.companion.inventoryUI.UpdateItem();
 
 		SwitchToWeapons();
 
     }
+
+	public void SwitchToMap( ) {
+		inventory.character.transform.position = prevPos;
+		StaticManager.map.ShowMap();
+	}
 
     public BaseItems GetItemFromAssetList(string name)
     {

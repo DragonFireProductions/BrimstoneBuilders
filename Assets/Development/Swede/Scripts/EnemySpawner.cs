@@ -54,7 +54,7 @@ public class EnemySpawner : MonoBehaviour
         Vector3 character = new Vector3(StaticManager.Character.transform.position.x, 0, StaticManager.Character.transform.position.z);
 
         playerDistance =
-            Vector3.Distance(character, this.gameObject.transform.position);
+            Vector3.Distance(StaticManager.Character.transform.position, this.gameObject.transform.position);
         //If the player is within the minRange of the spawner, spawns enemies.
         if (playerDistance <= minRange && isActive == false)
         {

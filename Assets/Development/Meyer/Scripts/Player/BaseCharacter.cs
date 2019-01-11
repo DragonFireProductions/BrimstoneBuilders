@@ -46,6 +46,8 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     public GameObject startWeapon;
 
+    public GameObject icon;
+
     protected virtual void Awake( ) {
         obj       = gameObject;
         attackers = new List < BaseCharacter >( );

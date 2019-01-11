@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Assets.Meyer.TestScripts.Player;
+
+using UnityEngine;
 
 public class Companion : BaseCharacter {
 
@@ -52,6 +54,13 @@ public class Companion : BaseCharacter {
         }
 
         StaticManager.RealTime.Companions.Add( this );
+
+        if ( this as Character ){
+            
+        }
+        else{
+            StaticManager.map.Companions.Add(icon);
+        }
     }
 
     public void OnTriggerEnter( Collider collider ) { }
