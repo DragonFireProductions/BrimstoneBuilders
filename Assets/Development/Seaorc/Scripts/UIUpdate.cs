@@ -42,7 +42,7 @@ public class UIUpdate : MonoBehaviour
                 float HP = Selected.Health / Selected.MaxHealth;
 
                 HPBar.fillAmount = HP;
-                HPBar.color = Color.Lerp(Color.red, Color.green, HP);
+                HPBar.color = Color.Lerp(Color.red, Color.blue, HP);
             }
 
             if (StaminaBar != null)
