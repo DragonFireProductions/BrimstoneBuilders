@@ -23,7 +23,7 @@ public class SwordType : WeaponObject {
     }
 
     public override void Deactivate( ) {
-        AttachedCharacter.leftHand.GetComponentInChildren < BoxCollider >( ).enabled = false;
+        //AttachedCharacter.leftHand.GetComponentInChildren < BoxCollider >( ).enabled = false;
     }
     
     public override void IncreaseSubClass( float amount ) {
