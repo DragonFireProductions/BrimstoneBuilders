@@ -82,6 +82,8 @@ public abstract class WeaponObject : BaseItems
 
         gameObject.SetActive(true);
 
+        var prev_attached = AttachedCharacter.attachedWeapon;
+
         AttachedCharacter.attachedWeapon = this as WeaponObject;
 
         AttachedCharacter.attachedWeapon.gameObject.layer = AttachedCharacter.gameObject.layer;
@@ -95,7 +97,15 @@ public abstract class WeaponObject : BaseItems
         if ( AttachedCharacter is Companion ){
             var a = AttachedCharacter as Companion;
             a.inventory.WeaponInventory.Attach(this);
+
+            if ( prev_attached ){
+                a.inventory.WeaponInventory.labels.Add(prev_attached.label);
+                  Debug.Log(a.name + " has added label " + prev_attached.name);
+                a.inventory.WeaponInventory.UpdateGrid();
+            }
+           
         }
+        Debug.Log(AttachedCharacter.name + "Has attached weaponObj: " + AttachedCharacter.attachedWeapon.name);
     }
     public void Attach(Enemy enemy)
     {
@@ -117,6 +127,8 @@ public abstract class WeaponObject : BaseItems
         AttachedCharacter.attachedWeapon.tag = "Weapon";
 
         AttachedCharacter.AnimationClass.SwitchWeapon(this);
+
+
     }
     public override void IncreaseSubClass(float amount ) {
         if ( Damage <= 10 ){
@@ -185,6 +197,10 @@ public abstract class WeaponObject : BaseItems
            else if ( type == SubClasses.Types.MAGIC ){
                 Damage = a.range.CurrentLevel;
             }
+            Debug.Log(AttachedCharacter.name + "Has picked up weaponObj: " + this.name);
+            Debug.Log("Labels count for " + a.name + " : " + a.inventory.WeaponInventory.labels.Count );
+
+
         }
     }
     public void PickUp(Enemy character)

@@ -25,6 +25,8 @@ public class CharacterArmorInventory : PlayerInventory {
 
     public ArmorStuff Shoulder;
 
+    public Button prev_tab;
+
     // Use this for initialization
     public void Init( ) {
         armor = new List < UIItemsWithLabels >( );
@@ -32,11 +34,11 @@ public class CharacterArmorInventory : PlayerInventory {
         ArmorInventory = companion.inventoryUI.CharacterInventory.transform.Find( "ArmorInventory" ).gameObject;
 
         ArmorInventory.SetActive( false );
-        Clothes  = new ArmorStuff( "Clothes" ,  "ClothesCount" ,  ArmorInventory );
-        Shoulder = new ArmorStuff( "Shoulder" , "ShoulderCount" , ArmorInventory );
-        Head     = new ArmorStuff( "Head" ,     "HeadCount" ,     ArmorInventory );
-        Belt     = new ArmorStuff( "Belt" ,     "BeltCount" ,     ArmorInventory );
-        Shoes    = new ArmorStuff( "Shoes" ,    "ShoeCount" ,     ArmorInventory );
+        Clothes  = new ArmorStuff( "Clothes" ,  "ClothesCount" , "ClothesB",  ArmorInventory );
+        Shoulder = new ArmorStuff( "Shoulder" , "ShoulderCount", "ShoulderB" , ArmorInventory );
+        Head     = new ArmorStuff( "Head" ,     "HeadCount" , "HeadB",     ArmorInventory );
+        Belt     = new ArmorStuff( "Belt" ,     "BeltCount" , "BeltB" ,    ArmorInventory );
+        Shoes    = new ArmorStuff( "Shoes" ,    "ShoeCount" , "ShoesB",     ArmorInventory );
     }
 
     public override void PickUp( BaseItems item ) {
@@ -70,10 +72,12 @@ public class ArmorStuff {
 
     public Text text;
 
-    public ArmorStuff( string objName , string textName , GameObject armorInventory ) {
+    public Button button;
+    public ArmorStuff( string objName , string textName, string buttonName , GameObject armorInventory ) {
         text   = armorInventory.transform.Find( textName ).GetComponent < Text >( );
         parent = armorInventory.transform.Find( objName ).gameObject;
         parent.SetActive( false );
+        button = armorInventory.transform.Find( buttonName ).GetComponentInChildren< Button >( );
     }
 
     public void Add( GameObject obj , BaseItems item ) {

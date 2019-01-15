@@ -82,8 +82,6 @@ public class Currency : MonoBehaviour {
             companion.startWeapon = Instantiate( companion.startWeapon );
             companion.startWeapon.GetComponent < WeaponObject >( ).PickUp( companion );
             companion.startWeapon.GetComponent < WeaponObject >( ).Attach( );
-            companion.inventory.WeaponInventory.PickUp(companion.startWeapon.GetComponent<WeaponObject>());
-            companion.inventory.WeaponInventory.Attach(companion.startWeapon.GetComponent<WeaponObject>());
             companion.inventoryUI.SellButton.SetActive( true );
             companion.inventoryUI.BuyButton.SetActive( false );
             companion.inventoryUI.tab.gameObject.SetActive( true );
@@ -106,7 +104,6 @@ public class Currency : MonoBehaviour {
             companion.gameObject.SetActive( true );
             companion.inventoryUI.sendToButton.gameObject.SetActive( true );
             companion.Nav.enabled = true;
-            Debug.Log( "Enabled" );
             companion.Nav.SetState                                       = BaseNav.state.IDLE;
             companion.GetComponent < CompanionNav >( ).SetAgreesionState = CompanionNav.AggressionStates.PASSIVE;
             StartCoroutine( Wait( companion ) );

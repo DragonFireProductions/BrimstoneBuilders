@@ -53,6 +53,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
     }
 
     public void SwitchToWeapons( ) {
+	    inventory.character.transform.position = prevPos;
+		StaticManager.map.CloseMap();
 		inventory.character.inventory.WeaponInventory.inventoryObj.SetActive(true);
 		inventory.character.inventoryUI.PotionsInventory.SetActive( false );
 	    inventory.armorInventory.ArmorInventory.SetActive(false);
@@ -70,32 +72,47 @@ public class MultipleInventoryHolder : MonoBehaviour {
             inventory.armorInventory.currentArmorTab.SetActive(false);
         }
 
+	    if (  inventory.armorInventory.prev_tab ){
+		    inventory.armorInventory.prev_tab.GetComponent < Text >( ).color = Color.white;
+	    }
+	    
         switch (obj.type)
         {
 
             case ArmorItem.Type.Head:
-
+				inventory.armorInventory.Head.button.GetComponent<Text>().color = Color.red;
+	            
                 inventory.armorInventory.Head.Switch(ref inventory.armorInventory.currentArmorTab);
+	            inventory.armorInventory.prev_tab = inventory.armorInventory.Head.button;
 
                 break;
             case ArmorItem.Type.Shoulder:
+				inventory.armorInventory.Shoulder.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Shoulder.Switch(ref inventory.armorInventory.currentArmorTab);
+				 inventory.armorInventory.prev_tab = inventory.armorInventory.Shoulder.button;
 
                 break;
             case ArmorItem.Type.Clothes:
+				inventory.armorInventory.Clothes.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Clothes.Switch(ref inventory.armorInventory.currentArmorTab);
+				 inventory.armorInventory.prev_tab = inventory.armorInventory.Clothes.button;
 
                 break;
             case ArmorItem.Type.Shoe:
+				inventory.armorInventory.Shoes.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Shoes.Switch(ref inventory.armorInventory.currentArmorTab);
+				 inventory.armorInventory.prev_tab = inventory.armorInventory.Shoes.button;
 
                 break;
             case ArmorItem.Type.Belt:
+				inventory.armorInventory.Belt.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Belt.Switch(ref inventory.armorInventory.currentArmorTab);
+				 inventory.armorInventory.prev_tab = inventory.armorInventory.Belt.button;
 
                 break;
         }
-
+		
+	   
     }
     public void SwitchArmorTab(ArmorItem.Type obj)
     {
@@ -110,7 +127,6 @@ public class MultipleInventoryHolder : MonoBehaviour {
         {
 
             case ArmorItem.Type.Head:
-
                 inventory.armorInventory.Head.Switch(ref inventory.armorInventory.currentArmorTab);
 
                 break;
@@ -134,7 +150,16 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
     }
     public void SwitchToArmor( ) {
-		inventory.armorInventory.ArmorInventory.SetActive(true);
+
+		StaticManager.map.CloseMap();
+        prevPos = inventory.character.transform.position;
+        Vector3 characterpos = new Vector3(inventory.character.transform.position.x, 30, inventory.character.transform.position.z);
+        inventory.character.transform.position = characterpos;
+        Vector3 pos = characterpos + (inventory.character.transform.forward * 4);
+        pos.y = 30.77f;
+        playerCam.transform.position = pos;
+        playerCam.transform.LookAt(inventory.character.transform.position + (inventory.transform.up * 0.77f));
+        inventory.armorInventory.ArmorInventory.SetActive(true);
 		inventory.character.inventory.WeaponInventory.inventoryObj.SetActive(false);
 		inventory.character.inventoryUI.PotionsInventory.SetActive( false );
 		inventory.armorInventory.UpdateArmor();
@@ -143,6 +168,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		
     }
     public void SwitchInventory(Tab tab ) {
+		StaticManager.map.CloseMap();
 		StaticManager.uiManager.inventoryCharacterStats.SetActive(true);
 
 		tab.companion.inventoryUI.UpdateCharacter( StaticManager.uiManager.inventoryCharacterStats.GetComponentInChildren < UIItemsWithLabels >( ) );
@@ -163,20 +189,26 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		tab.companion.inventoryUI.CharacterInventory.SetActive(true);
 		tab.GetComponent < Image >( ).color = Color.red;
 		inventory = tab.companion.inventory;
-		prevPos = inventory.character.transform.position;
+
+	    if ( prev_inventory ){
+		     prev_inventory.sendToButton.gameObject.SetActive(true);
+	    }
+       
+        inventory.character.inventoryUI.sendToButton.gameObject.SetActive(false);
+        
 		prev_inventory = inventory.character.inventoryUI;
-        Vector3 characterpos = new Vector3(inventory.character.transform.position.x, 30, inventory.character.transform.position.z);
-        inventory.character.transform.position = characterpos;
-        Vector3 pos = characterpos + (inventory.character.transform.forward * 4);
-        pos.y = 30.77f;
-        playerCam.transform.position = pos;
-        playerCam.transform.LookAt(inventory.character.transform.position + (inventory.transform.up * 0.77f));
+		
 
 		tab.companion.inventoryUI.UpdateItem();
 
 		SwitchToWeapons();
 
     }
+
+	public void SwitchToMap( ) {
+		inventory.character.transform.position = prevPos;
+		StaticManager.map.ShowMap();
+	}
 
     public BaseItems GetItemFromAssetList(string name)
     {
@@ -191,7 +223,15 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		if ( obj is WeaponObject ){
 			var a = obj as WeaponObject;
 			a.PickUp(cha);
+			inventory.character.inventory.WeaponInventory.RemoveObject(a);
 			inventory.character.inventory.WeaponInventory.DeleteObject(a);
+			inventory.character.inventory.WeaponInventory.labels.Remove( a.label );
+			Debug.Log("Labels count for " + inventory.character.name + " : " + inventory.character.inventory.WeaponInventory.labels.Count );
+			cha.inventory.WeaponInventory.UpdateGrid();
+			inventory.character.inventory.WeaponInventory.UpdateGrid();
+			 Debug.Log(inventory.character.name + "Has sent weapon to " + cha.name + " Weapon: " + obj.name);
+			Debug.Log("Labels count for " + inventory.character.name + " : " + inventory.character.inventory.WeaponInventory.labels.Count );
+			Debug.Log("Labels count for " + cha.name + " : " + cha.inventory.WeaponInventory.labels.Count );
 		}
 
 		if ( obj is Potions ){

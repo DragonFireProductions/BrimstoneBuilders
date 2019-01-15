@@ -20,6 +20,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private bool PreSpawn = false;
     [SerializeField] private float AggroRange = 10;
 
+    public GameObject icon;
     [Serializable]
     public struct EnemyStruct
     {
@@ -47,6 +48,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
+        StaticManager.map.All.Add(icon);
+        StaticManager.map.Enemies.Add(icon);
         instantiated = new List<GameObject>();
     }
 
@@ -57,7 +60,7 @@ public class EnemySpawner : MonoBehaviour
         Vector3 character = StaticManager.Character.transform.position;
 
         playerDistance =
-            Vector3.Distance(character, this.gameObject.transform.position);
+            Vector3.Distance(StaticManager.Character.transform.position, this.gameObject.transform.position);
         //If the player is within the minRange of the spawner, spawns enemies.
         if (playerDistance <= minRange && isActive == false)
         {

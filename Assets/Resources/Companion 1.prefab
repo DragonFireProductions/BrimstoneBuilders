@@ -1469,6 +1469,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!1 &1641399642712102
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4413090850076824}
+  - component: {fileID: 33477296931696392}
+  - component: {fileID: 23385372393256388}
+  m_Layer: 14
+  m_Name: Quad (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1659397651596148
 GameObject:
   m_ObjectHideFlags: 1
@@ -2662,6 +2679,19 @@ Transform:
   m_Father: {fileID: 4843814598484316}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4413090850076824
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1641399642712102}
+  m_LocalRotation: {x: 0.5033629, y: -0.49661437, z: 0.49661437, w: 0.5033629}
+  m_LocalPosition: {x: -0.34, y: 4.823612, z: -1.2}
+  m_LocalScale: {x: 14.78, y: 14.6, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4734035315682174}
+  m_RootOrder: 62
+  m_LocalEulerAnglesHint: {x: 90.00001, y: 0, z: 89.227005}
 --- !u!4 &4413797102006962
 Transform:
   m_ObjectHideFlags: 1
@@ -3249,7 +3279,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1047446260753508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -515.0696, y: 3.01, z: 13.944352}
+  m_LocalPosition: {x: 2914.2422, y: 1866.1418, z: 3863.36}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4874220167212308}
@@ -3314,6 +3344,7 @@ Transform:
   - {fileID: 224191457762432562}
   - {fileID: 4917674785484220}
   - {fileID: 4646169580588690}
+  - {fileID: 4413090850076824}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3748,6 +3779,41 @@ Transform:
   m_Father: {fileID: 4159767982051950}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &23385372393256388
+MeshRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1641399642712102}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
+  m_Materials:
+  - {fileID: 2100000, guid: 0d8965a17ce30864e99ca6b6c3b8fda1, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!23 &23524347192496528
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -3789,6 +3855,13 @@ MeshFilter:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1271087664762818}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &33477296931696392
+MeshFilter:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1641399642712102}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &54859080138030056
 Rigidbody:
@@ -3901,6 +3974,7 @@ MonoBehaviour:
   AttachedWeapons: []
   weapons: []
   inventoryObj: {fileID: 0}
+  labels: []
 --- !u!114 &114121487814559824
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3992,6 +4066,7 @@ MonoBehaviour:
   ridgidbody: {fileID: 54859080138030056}
   startWeapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28,
     type: 2}
+  icon: {fileID: 1641399642712102}
   inventory: {fileID: 114007708337776426}
   inventoryUI: {fileID: 114206196702207148}
   cost: 0
@@ -4053,12 +4128,8 @@ MonoBehaviour:
   ArmorInventory: {fileID: 0}
   companion: {fileID: 0}
   currentArmorTab: {fileID: 0}
-  Headcount: {fileID: 0}
-  shoulderCount: {fileID: 0}
-  ShoeCount: {fileID: 0}
-  beltCount: {fileID: 0}
-  clothesCount: {fileID: 0}
   pickedupArmor: []
+  prev_tab: {fileID: 0}
 --- !u!114 &114598818362544930
 MonoBehaviour:
   m_ObjectHideFlags: 1
