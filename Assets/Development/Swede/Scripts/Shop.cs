@@ -15,6 +15,8 @@ public class Shop : MonoBehaviour
 
     public GameObject ShopContainer;
 
+    public GameObject icon;
+
     [Serializable]
     public struct CompanionStruct
     {
@@ -43,6 +45,8 @@ public class Shop : MonoBehaviour
         Buy = ShopContainer.transform.Find( "Buy" ).gameObject;
         Sell = ShopContainer.transform.Find( "Sell" ).gameObject;
         StartCoroutine( init( ) );
+        StaticManager.map.All.Add(icon);
+        StaticManager.map.Shops.Add(icon);
     }
 
     IEnumerator init( ) {

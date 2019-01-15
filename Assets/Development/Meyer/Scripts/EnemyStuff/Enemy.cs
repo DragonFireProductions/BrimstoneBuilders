@@ -23,6 +23,7 @@ namespace Kristal {
             MaxCoinCount          = Random.Range( 1 , MaxCoinCount );
             attachedWeapon.Damage = damage;
             StaticManager.map.Enemies.Add(icon);
+            StaticManager.map.All.Add(icon);
         }
 
         public void Remove( BaseCharacter chara ) { }

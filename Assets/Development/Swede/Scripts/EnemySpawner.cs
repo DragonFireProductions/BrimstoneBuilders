@@ -17,8 +17,12 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float maxRange = 25;
     [SerializeField] private float spawnRadius = 10;
 
-    
-   [Serializable] public struct EnemyStruct
+    [SerializeField] private bool PreSpawn = false;
+    [SerializeField] private float AggroRange = 10;
+
+    public GameObject icon;
+    [Serializable]
+    public struct EnemyStruct
     {
 
         public Enemy enemy;
@@ -44,6 +48,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
+        StaticManager.map.All.Add(icon);
+        StaticManager.map.Enemies.Add(icon);
         instantiated = new List<GameObject>();
     }
 
@@ -51,18 +57,25 @@ public class EnemySpawner : MonoBehaviour
     private void Update()
     {
         //Constantly sets the distance from the player to the spawner for checks.
-        Vector3 character = new Vector3(StaticManager.Character.transform.position.x, 0, StaticManager.Character.transform.position.z);
+        Vector3 character = StaticManager.Character.transform.position;
 
         playerDistance =
             Vector3.Distance(StaticManager.Character.transform.position, this.gameObject.transform.position);
         //If the player is within the minRange of the spawner, spawns enemies.
         if (playerDistance <= minRange && isActive == false)
         {
+            Debug.Log("Distance is working");
             Spawn();
             isActive = true;
         }
+
+        if (PreSpawn && playerDistance <= AggroRange && isActive)
+        {
+            StaticManager.RealTime.SetAttackEnemies();
+        }
+
         //If the player goes outside the maxRange, the instantiated enemies will despawn.
-        else if (playerDistance > maxRange && isActive == true && !StaticManager.UiInventory.ItemsInstance.windowIsOpen)
+        if (playerDistance > maxRange && isActive == true && !StaticManager.UiInventory.ItemsInstance.windowIsOpen)
         {
             Despawn();
             isActive = false;
@@ -76,9 +89,9 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < numberofEnemies; i++)
         {
             Vector3 position = Random.insideUnitSphere * spawnRadius + this.gameObject.transform.position;
-            var random = Random.Range( 0 , enemies.Length );
-            var newEnemy = Instantiate(enemies[random].enemy.gameObject, position, Quaternion.identity);
-            
+            var random = Random.Range(0, enemies.Length);
+            var newEnemy = Instantiate(enemies[i].enemy.gameObject, position, Quaternion.identity);
+
             //Randomizes the spawn position (within the set range) of the current enemy.
             newEnemy.GetComponent<EnemyNav>().location = gameObject;
 
@@ -88,28 +101,34 @@ public class EnemySpawner : MonoBehaviour
 
             StaticManager.particleManager.Play(ParticleManager.states.Spawn, position);
             newEnemy.GetComponent<EnemyNav>().location = this.gameObject;
-            
+
             //warps the enemy to the position ^
             newEnemy.GetComponent<Enemy>().Nav.Agent.Warp(position);
             //adds the enemy to the list of instantiated enemies.
             instantiated.Add(newEnemy.gameObject);
-           
 
-            newEnemy.GetComponent < Enemy >( ).startWeapon = Instantiate(enemies[ random ].weapon);
+
+            newEnemy.GetComponent<Enemy>().startWeapon = Instantiate(enemies[random].weapon);
 
             newEnemy.GetComponent<Enemy>().startWeapon.GetComponent<WeaponObject>().PickUp(newEnemy.GetComponent<Enemy>());
             newEnemy.GetComponent<Enemy>().startWeapon.GetComponent<WeaponObject>().Attach(newEnemy.GetComponent<Enemy>());
             StaticManager.RealTime.Enemies.Add(newEnemy.GetComponent<Enemy>());
-            newEnemy.GetComponent < Enemy >( ).damage = enemies[ random ].Damage;
-            newEnemy.GetComponent < Stat >( ).luck = enemies[ random ].luck;
-            StaticManager.RealTime.SetAttackEnemies();
+            newEnemy.GetComponent<Enemy>().damage = enemies[random].Damage;
+            newEnemy.GetComponent<Stat>().luck = enemies[random].luck;
+
+            if(!PreSpawn)
+                StaticManager.RealTime.SetAttackEnemies();
+            else
+                newEnemy.GetComponent<EnemyNav>().SetState = BaseNav.state.IDLE;
         }
 
     }
 
-    private void Despawn() {
-        instantiated.RemoveAll( item => item == null );
-        foreach ( var l_t in instantiated ){
+    private void Despawn()
+    {
+        instantiated.RemoveAll(item => item == null);
+        foreach (var l_t in instantiated)
+        {
             Destroy(l_t);
         }
         gameObject.SetActive(false);

@@ -29,6 +29,8 @@ public class Map : MonoBehaviour {
 
 	public Texture notSelectedImage;
 
+	
+
 	private bool active;
 
 	public enum Type {
