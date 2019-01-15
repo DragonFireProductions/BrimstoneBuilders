@@ -3442,7 +3442,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &230049963891438431
 Transform:
   m_ObjectHideFlags: 0
@@ -6722,13 +6722,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e479aa9880b30564f9f63bc67162a361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minRange: 15
-  maxRange: 25
-  spawnRadius: 10
-  PreSpawn: 0
-  AggroRange: 10
+  minRange: 27.84
+  maxRange: 81.1
+  spawnRadius: 16.4
+  PreSpawn: 1
+  AggroRange: 14.18
   icon: {fileID: 3672751615870403869}
   enemies:
+  - enemy: {fileID: 114932892065668812, guid: 8b3689f0546616c419c405018796038a, type: 3}
+    Damage: 2
+    luck: 0
+    weapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28, type: 3}
   - enemy: {fileID: 114932892065668812, guid: 8b3689f0546616c419c405018796038a, type: 3}
     Damage: 2
     luck: 0
@@ -6830,7 +6834,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6992148026945249705
 Transform:
   m_ObjectHideFlags: 0
