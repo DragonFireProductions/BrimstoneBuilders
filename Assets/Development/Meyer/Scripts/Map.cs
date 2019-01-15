@@ -23,6 +23,8 @@ public class Map : MonoBehaviour {
 
 	public List < GameObject > Player;
 
+	public List < GameObject > NPC;
+
     public List<GameObject> Destination;
 
 	public Texture selectedImage;
@@ -34,7 +36,7 @@ public class Map : MonoBehaviour {
 	private bool active;
 
 	public enum Type {
-		enemy, companion, shop, destination
+		enemy, companion, shop, destination, NPC
 		
 
 	}
@@ -56,6 +58,10 @@ public class Map : MonoBehaviour {
             case Type.shop:
 				Shops.Add(icon);
 				break;
+            case Type.NPC:
+				NPC.Add(icon);
+
+	            break;
 		}
 		All.Add(icon);
 	}
@@ -83,7 +89,7 @@ public class Map : MonoBehaviour {
 
 				break;
             case "npc":
-
+	            list = NPC;
 	            break;
         }
 
