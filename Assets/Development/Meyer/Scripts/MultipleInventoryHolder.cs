@@ -44,6 +44,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	}
 
 	public void SwitchToPotionsTab( ) {
+		StaticManager.questManager.questWindow.SetActive(false);
 		inventory.character.inventory.WeaponInventory.inventoryObj.SetActive(false);
 		inventory.character.inventoryUI.PotionsInventory.SetActive(true);
 		inventory.armorInventory.ArmorInventory.SetActive(false);
@@ -53,6 +54,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
     }
 
     public void SwitchToWeapons( ) {
+		StaticManager.questManager.questWindow.SetActive(false);
 	    inventory.character.transform.position = prevPos;
 		StaticManager.map.CloseMap();
 		inventory.character.inventory.WeaponInventory.inventoryObj.SetActive(true);
@@ -63,6 +65,10 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		StaticManager.uiManager.WeaponWindow.SetActive(true);
 		StaticManager.uiManager.PlayerImage.SetActive(false);
     }
+
+	public void SwitchToQuest( ) {
+		StaticManager.questManager.questWindow.SetActive(true);
+	}
     public void SwitchArmorTab(Tab obj)
     {
 		StaticManager.uiManager.PlayerImage.SetActive(true);
