@@ -14,7 +14,7 @@ using UnityEngine.UI;
 public class UIInventory : MonoBehaviour
 {
     public UIItems ItemsInstance;
-
+    public GameObject BackDrop;
 
     private bool showWindow;
 
@@ -45,7 +45,7 @@ public class UIInventory : MonoBehaviour
         
         ItemsInstance = gameObject.GetComponent<UIItems>();
         ItemsInstance.Initalize();
-
+        BackDrop.SetActive(false);
     }
     
     public void ShowNotification(string _message, float _time ) {
@@ -197,7 +197,7 @@ public class UIInventory : MonoBehaviour
             ItemsInstance.windowIsOpen = false;
             Time.timeScale = 1;
         }
-        
+        BackDrop.SetActive(false);
     }
     public void ShowWindow(GameObject item)
     {
@@ -206,6 +206,7 @@ public class UIInventory : MonoBehaviour
             ItemsInstance.windowIsOpen = item;
             ItemsInstance.openedWindow.Add(item);
             Time.timeScale = 0.0f;
+            BackDrop.SetActive(true);
         }
         
 
