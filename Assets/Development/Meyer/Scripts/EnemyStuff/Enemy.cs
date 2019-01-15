@@ -12,6 +12,8 @@ namespace Kristal {
 
         public int damage;
 
+        [SerializeField] public GameObject key;
+
         protected void Awake( ) {
             base.Awake( );
         }
@@ -38,25 +40,26 @@ namespace Kristal {
             }
             else{
                 item.IncreaseSubClass( 0.3f );
-                drop = Random.Range( 1 , 10 );
+                //drop = Random.Range( 1 , 10 );
 
-                if ( drop > 5 ){
-                    for ( var i = 0 ; i < MaxCoinCount ; i++ ){
-                        deadPos   = Random.insideUnitSphere * 2.5f + gameObject.transform.position;
-                        deadPos.y = StaticManager.Character.gameObject.transform.position.y;
-                        var newCoin = Instantiate( Resources.Load < GameObject >( "Coin" ) );
-                        newCoin.gameObject.transform.position = deadPos;
-                    }
-                }
-                else{
-                    deadPos   = Random.insideUnitSphere * 2.5f + gameObject.transform.position;
-                    deadPos.y = StaticManager.Character.gameObject.transform.position.y;
-                    var newsword = Instantiate( attachedWeapon );
-                    newsword.tag = "PickUp";
+                //if ( drop > 5 ){
+                //    for ( var i = 0 ; i < MaxCoinCount ; i++ ){
+                //        deadPos   = Random.insideUnitSphere * 2.5f + gameObject.transform.position;
+                //        deadPos.y = StaticManager.Character.gameObject.transform.position.y;
+                //        var newCoin = Instantiate( Resources.Load < GameObject >( "Coin" ) );
+                //        newCoin.gameObject.transform.position = deadPos;
+                //    }
+                //}
+                //else{
+                //    deadPos   = Random.insideUnitSphere * 2.5f + gameObject.transform.position;
+                //    deadPos.y = StaticManager.Character.gameObject.transform.position.y;
+                //    var newsword = Instantiate( attachedWeapon );
+                //    newsword.tag = "PickUp";
 
-                    newsword.transform.localScale          = new Vector3( 1.0f , 1.0f , 1.0f );
-                    newsword.gameObject.transform.position = deadPos;
-                }
+                //    newsword.transform.localScale          = new Vector3( 1.0f , 1.0f , 1.0f );
+                //    newsword.gameObject.transform.position = deadPos;
+                //}
+                StaticManager.drop.Drop_Loot(this);
 
                 StaticManager.RealTime.Enemies.Remove( this );
                 Destroy( gameObject );

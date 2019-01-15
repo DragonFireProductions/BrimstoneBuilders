@@ -39,7 +39,8 @@ public class StaticManager : MonoBehaviour
     public static ItemLevelCalculation levelCalc;
 
     public static Map map;
-    
+
+    public static Drops drop;
 
     public bool unlimitedPotions = false;
 
@@ -88,6 +89,8 @@ public class StaticManager : MonoBehaviour
         levelCalc = GetComponent < ItemLevelCalculation >( );
 
         map = GetComponent < Map >( );
+
+        drop = GetComponent<Drops>();
     }
 
     public void LoadMainMenu()
@@ -114,5 +117,4 @@ public class StaticManager : MonoBehaviour
     {
         //UiInventory.ItemsInstance.SendToCompanion.SetActive(true);
     }
-
 }
