@@ -15,12 +15,11 @@ public class QuestManager : MonoBehaviour {
 
         public string message;
 
-        public NPCQuest NPC;
+        public QuestItem objectToCollect;
 
     }
 
-    public List < Quest > quests = new List < Quest >( );
-
+    public List < QuestObjective > objectives = new List < QuestObjective >( );
 
     [SerializeField]
     public Quest placeHolder;
@@ -30,7 +29,11 @@ public class QuestManager : MonoBehaviour {
     public GameObject questsHolder;
 
 
+    public GameObject keyItemsHolder;
+
     public Quest currentQuest;
+
+    public QuestObject keyItems;
 
     // Start is called before the first frame update
     void Start()
@@ -45,33 +48,73 @@ public class QuestManager : MonoBehaviour {
 
     }
 
-    public void AddQuest( MyStruct quest ) {
-        Quest _quest = newQuest( quest.message , quest.NPC );
-        quests.Add(_quest);
+    public QuestObjective NewObjective(NPCQuest npc ) {
+        QuestObjective obj = new QuestObjective(npc);
+        objectives.Add(obj);
+
+        return obj;
+    }
+    
+    public void AddQuest( MyStruct quest, QuestObjective objective ) {
+        objective.newQuest( quest.message , quest.objectToCollect, objective );
     }
 
+    public void QuestComplete(QuestObjective objective, Quest quest ) {
+        objective.QuestComplete(quest);
+        StartCoroutine(message( quest.questMessage ));
+        StaticManager.map.All.Remove( quest.objectToGet.mapIcon );
+        StaticManager.map.Destination.Remove( quest.objectToGet.mapIcon );
+        //Destroy(quest.keyItems);
+        Destroy(quest.gameObject);
+        quest.objectToGet.light.gameObject.SetActive(false);
+    }
+    public IEnumerator message(string text)
+    {
 
-    public Quest newQuest(string text, NPCQuest _NPC)
+        StaticManager.UiInventory.ShowWindow(StaticManager.uiManager.MessageWindow);
+        StaticManager.uiManager.messageText.text = text;
+
+        yield return new WaitForSecondsRealtime(5);
+
+        StaticManager.UiInventory.CloseWindow(StaticManager.uiManager.MessageWindow);
+    }
+
+}
+
+public class QuestObjective {
+
+    public List <Quest> quests;
+
+    public NPCQuest npc;
+
+    public void QuestComplete(Quest quest ) {
+        quests.Remove( quest );
+    }
+
+    public QuestObjective(NPCQuest _npc) {
+        quests = new List < Quest >();
+        npc = _npc;
+    }
+    public void newQuest(string text, QuestItem objecttocollect, QuestObjective objective)
     {
         Quest quest = StaticManager.questManager.placeHolderInst();
         quest.questMessage = text;
-        quest.NPC = _NPC;
+        quest.NPC = objective.npc;
         quest.questText.text = text;
+        objecttocollect.quest = quest;
+        quest.objectToGet = objecttocollect;
 
         quest.transform.SetParent(StaticManager.questManager.questsHolder.transform);
         quest.gameObject.SetActive(true);
-        quest.objectNeededContainer.icon.GetComponent<RawImage>().texture = _NPC.objectToGet.stats.icon;
+
+        quest.objectNeededContainer.icon.GetComponent<RawImage>().texture = objecttocollect.mapIcon.texture;
         quest.objectNeededContainer.labels.FindLabels();
-        quest.objectNeededContainer.labels.Labels[ 0 ].labelText.text = _NPC.objectToGet.gameObject.name;
+        quest.objectNeededContainer.labels.Labels[0].labelText.text = objecttocollect.gameObject.name;
+        StaticManager.map.Add(Map.Type.destination, quest.objectToGet.mapIcon);
+        quest.objectToGet.light.gameObject.SetActive(true);
 
-
-        return quest;
-
+        quests.Add(quest);
 
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

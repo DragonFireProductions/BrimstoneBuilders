@@ -5,6 +5,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+using UnityEngine.UI;
+
 using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
@@ -20,7 +22,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private bool PreSpawn = false;
     [SerializeField] private float AggroRange = 10;
 
-    public GameObject icon;
+    public RawImage icon;
     [Serializable]
     public struct EnemyStruct
     {
@@ -48,8 +50,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        StaticManager.map.All.Add(icon);
-        StaticManager.map.Enemies.Add(icon);
+        StaticManager.map.Add(Map.Type.enemy, icon);
         instantiated = new List<GameObject>();
     }
 

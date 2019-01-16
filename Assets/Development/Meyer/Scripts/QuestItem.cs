@@ -1,14 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 [SerializeField]
-public class QuestItem : BaseItems {
+public class QuestItem : MonoBehaviour{
 
-    public GameObject mapIcon;
+    public RawImage mapIcon;
+
+    public Sprite icon;
 
     public Quest quest;
+
+    public string message;
+
+    public bool collected;
+
+    public Light light;
+
+    public UnityEvent events;
+
+    public Quest.Type type;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,8 +37,21 @@ public class QuestItem : BaseItems {
 
     public void OnTriggerEnter(Collider collider ) {
         if ( collider.tag == "Player" ){
-             quest.CollectItem(this);
+            switch (type)
+            {
+                case Quest.Type.Kill:
+
+                    break;
+                case Quest.Type.Escort:
+
+                    break;
+                case Quest.Type.Key:
+                    collected = true;
+                    light.enabled = false;
+                    quest.Complete(this, message);
+                    this.GetComponent < Collider >( ).enabled = false;
+                    break;
+            }
         }
-       
     }
 }
