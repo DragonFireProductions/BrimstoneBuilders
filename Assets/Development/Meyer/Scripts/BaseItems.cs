@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class BaseItems : MonoBehaviour {
+
+
 
     public virtual object this[ string propertyName ] {
         get {
@@ -22,6 +25,10 @@ public class BaseItems : MonoBehaviour {
     public BaseCharacter AttachedCharacter;
 
     public string objectName;
+
+    public RawImage icon;
+
+    public GameObject light;
 
     protected virtual void Start( ) { }
 

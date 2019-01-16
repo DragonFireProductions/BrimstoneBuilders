@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NPCQuest : BaseCharacter
-{
-    public QuestItem objectToGet;
+public class NPCQuest : BaseCharacter {
+
+    public Quest quest;
 
     public QuestManager.MyStruct mission;
 
@@ -13,65 +13,76 @@ public class NPCQuest : BaseCharacter
 
     public bool hasTriggered = false;
 
-    public Quest quest;
-
     public string thankyouMessage;
 
     public GameObject mapObject;
 
-    public GameObject Icon;
+    public QuestObjective objective;
+
+    public GameObject npcQuestItem;
+
+    public BoxCollider collider;
+
+    public bool Completed;
+
+    public QuestItem Goal;
+
+    public Quest quest2;
+
+    public QuestItem key;
+
+    public Collider goalCollider;
 
     // Start is called before the first frame update
     void Start() {
-        objectToGet.AttachedCharacter = this;
-        StaticManager.map.Add(Map.Type.NPC, Icon);
+        StaticManager.map.Add(Map.Type.NPC, icon);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 
+    public void Complete( ) {
+        Completed = true;
+        light.SetActive(true);
+    }
     public void OnTriggerEnter(Collider collider ) {
         if ( collider.tag == "Player" ){
-            if ( hasTriggered ){
-                if ( quest.hasCollecteditem ){
-                    Destroy(quest.keyItems.gameObject);
-                    Destroy(quest.gameObject);
-                    StartCoroutine( message( thankyouMessage ) );
 
-                    //TODO: Drop key
+            if (Completed)
+            {
+                foreach ( var l_questKeyItem in quest.keyItems ){
+                    Destroy(l_questKeyItem.gameObject);
                 }
+                GetComponent<Collider>().enabled = false;
+                light.SetActive(false);
+                StartCoroutine(StaticManager.questManager.message(thankyouMessage));
+                ///dropKey
+                var keyitem = Instantiate(StaticManager.questManager.keyItems);
+                quest.questText.text = key.message;
+                keyitem.transform.SetParent(StaticManager.questManager.keyItemsHolder.gameObject.transform);
+                keyitem.gameObject.SetActive(true);
+                keyitem.icon.sprite = key.icon;
+                keyitem.labels.FindLabels();
+                keyitem.labels.Labels[0].labelText.text = key.gameObject.name;
+
+                goalCollider.enabled = true;
+
             }
             else{
-                StaticManager.questManager.AddQuest( mission );
-                quest = StaticManager.questManager.quests[StaticManager.questManager.quests.Count - 1];
-                objectToGet.quest = quest;
-                hasTriggered = true;
-                StartCoroutine( message( popupMessage ) );
-
-                //Todo: add to map
-                var obj = Instantiate( objectToGet.mapIcon );
-                objectToGet.mapIcon = obj;
-                obj.transform.position = new Vector3(mapObject.transform.position.x, mapObject.transform.position.y + 10, mapObject.transform.position.z);
-                obj.transform.SetParent(mapObject.transform);
-                StaticManager.map.All.Add(obj.gameObject);
-                StaticManager.map.Destination.Add(obj.gameObject);
-                
-
+                var _quest = Instantiate(StaticManager.questManager.placeHolder);
+                _quest.items = quest.items;
+                _quest.type = quest.type;
+                _quest.questMessage = quest.questMessage;
+                _quest.NPC = this;
+                quest = _quest;
+                StartCoroutine( StaticManager.questManager.message( popupMessage ) );
+                quest.Accept();
             }
+
         }
-    }
-
-    public IEnumerator message(string text ) {
-
-        StaticManager.UiInventory.ShowWindow(StaticManager.uiManager.MessageWindow);
-        StaticManager.uiManager.messageText.text = text;
-
-        yield return new WaitForSecondsRealtime(5);
-
-        StaticManager.UiInventory.CloseWindow(StaticManager.uiManager.MessageWindow);
     }
 
 }

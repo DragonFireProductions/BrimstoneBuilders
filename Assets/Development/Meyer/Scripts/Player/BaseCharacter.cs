@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 using Random = UnityEngine.Random;
 
@@ -46,8 +47,9 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     public GameObject startWeapon;
 
-    public GameObject icon;
+    public RawImage icon;
 
+    public GameObject light;
     protected virtual void Awake( ) {
         obj       = gameObject;
         attackers = new List < BaseCharacter >( );
