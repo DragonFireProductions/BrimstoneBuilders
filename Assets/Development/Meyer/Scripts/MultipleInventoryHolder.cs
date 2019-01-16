@@ -71,23 +71,23 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	}
     public void SwitchArmorTab(Tab obj)
     {
+        StaticManager.questManager.questWindow.SetActive(false);
 		StaticManager.uiManager.PlayerImage.SetActive(true);
 		 StaticManager.uiManager.WeaponWindow.SetActive(false);
         if (inventory.armorInventory.currentArmorTab)
         {
             inventory.armorInventory.currentArmorTab.SetActive(false);
         }
-
+        Color color = new Color(94.0f/255.0f, 39.0f/255.0f, 39.0f/255.0f, 1.0f);
 	    if (  inventory.armorInventory.prev_tab ){
-		    inventory.armorInventory.prev_tab.GetComponent < Text >( ).color = Color.white;
+            inventory.armorInventory.prev_tab.GetComponent<Text>().color = color;
 	    }
 	    
         switch (obj.type)
         {
 
             case ArmorItem.Type.Head:
-				inventory.armorInventory.Head.button.GetComponent<Text>().color = Color.red;
-	            
+                inventory.armorInventory.Head.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Head.Switch(ref inventory.armorInventory.currentArmorTab);
 	            inventory.armorInventory.prev_tab = inventory.armorInventory.Head.button;
 
@@ -95,13 +95,13 @@ public class MultipleInventoryHolder : MonoBehaviour {
             case ArmorItem.Type.Shoulder:
 				inventory.armorInventory.Shoulder.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Shoulder.Switch(ref inventory.armorInventory.currentArmorTab);
-				 inventory.armorInventory.prev_tab = inventory.armorInventory.Shoulder.button;
+				inventory.armorInventory.prev_tab = inventory.armorInventory.Shoulder.button;
 
                 break;
             case ArmorItem.Type.Clothes:
 				inventory.armorInventory.Clothes.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Clothes.Switch(ref inventory.armorInventory.currentArmorTab);
-				 inventory.armorInventory.prev_tab = inventory.armorInventory.Clothes.button;
+				inventory.armorInventory.prev_tab = inventory.armorInventory.Clothes.button;
 
                 break;
             case ArmorItem.Type.Shoe:
@@ -113,7 +113,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
             case ArmorItem.Type.Belt:
 				inventory.armorInventory.Belt.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Belt.Switch(ref inventory.armorInventory.currentArmorTab);
-				 inventory.armorInventory.prev_tab = inventory.armorInventory.Belt.button;
+				inventory.armorInventory.prev_tab = inventory.armorInventory.Belt.button;
 
                 break;
         }
@@ -124,6 +124,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
     {
 		StaticManager.uiManager.PlayerImage.SetActive(true);
 	    StaticManager.uiManager.WeaponWindow.SetActive(false);
+        StaticManager.questManager.questWindow.SetActive(false);
         if (inventory.armorInventory.currentArmorTab)
         {
            inventory.armorInventory.currentArmorTab.SetActive(false);
@@ -214,6 +215,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	public void SwitchToMap( ) {
 		inventory.character.transform.position = prevPos;
 		StaticManager.map.ShowMap();
+        StaticManager.questManager.questWindow.SetActive(false);
 	}
 
     public BaseItems GetItemFromAssetList(string name)
