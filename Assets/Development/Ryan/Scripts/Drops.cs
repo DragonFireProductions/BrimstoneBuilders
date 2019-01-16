@@ -37,12 +37,12 @@ public class Drops : MonoBehaviour
 
     public void Drop_Loot(Enemy _ene)
     {
-        if (_ene.stats.health <= 0)
-        {
-            _ene.transform.position = Random.insideUnitSphere * 2.5f + gameObject.transform.position;
+            //_ene.key.GetComponent < MeshRenderer >( ).enabled = true;
+            //_ene.key.GetComponent < Collider >( ).enabled = true;
+            //_ene.key.transform.SetParent(GameObject.Find("Weapons").transform);
             //a_ene.transform.position.y = StaticManager.Character.gameObject.transform.position.y;
-            var newKey = Instantiate(_ene.key);
-            newKey.gameObject.transform.position = _ene.transform.position;
-        }
+            _ene.key.SetActive( true );
+          StartCoroutine( StaticManager.questManager.message( "You have picked up" + _ene.key.gameObject.name ) );
+            _ene.key.transform.position = _ene.transform.position;
     }
 }

@@ -41,6 +41,7 @@ public class StaticManager : MonoBehaviour
     public static Map map;
 
     public static Drops drop;
+    public static QuestManager questManager;
 
     public bool unlimitedPotions = false;
 
@@ -87,6 +88,8 @@ public class StaticManager : MonoBehaviour
         uiManager = GetComponent < UIInventoryManager >( );
 
         levelCalc = GetComponent < ItemLevelCalculation >( );
+
+        questManager = GetComponent < QuestManager >( );
 
         map = GetComponent < Map >( );
 

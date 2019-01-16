@@ -5,6 +5,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+using UnityEngine.UI;
+
 using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
@@ -20,7 +22,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private bool PreSpawn = false;
     [SerializeField] private float AggroRange = 10;
 
-    public GameObject icon;
+    public RawImage icon;
     [Serializable]
     public struct EnemyStruct
     {
@@ -32,6 +34,8 @@ public class EnemySpawner : MonoBehaviour
         public float luck;
 
         public GameObject weapon;
+
+        public GameObject key;
 
 
     }
@@ -48,8 +52,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        StaticManager.map.All.Add(icon);
-        StaticManager.map.Enemies.Add(icon);
+        StaticManager.map.Add(Map.Type.enemy, icon);
         instantiated = new List<GameObject>();
     }
 
@@ -116,6 +119,11 @@ public class EnemySpawner : MonoBehaviour
             newEnemy.GetComponent<Enemy>().damage = enemies[random].Damage;
             newEnemy.GetComponent<Stat>().luck = enemies[random].luck;
 
+            if ( enemies[random].key ){
+                newEnemy.GetComponent<Enemy>().key = enemies[random].key;
+                newEnemy.GetComponent<Enemy>().key.gameObject.transform.SetParent(transform);
+            }
+           
             if(!PreSpawn)
                 StaticManager.RealTime.SetAttackEnemies();
             else

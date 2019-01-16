@@ -56,12 +56,10 @@ public class Companion : BaseCharacter {
         StaticManager.RealTime.Companions.Add( this );
 
         if ( this as Character ){
-            StaticManager.map.Player.Add(icon);
-            StaticManager.map.All.Add(icon);
+            StaticManager.map.Add(Map.Type.player, icon);
         }
         else{
-            StaticManager.map.Companions.Add(icon);
-            StaticManager.map.All.Add(icon);
+            StaticManager.map.Add(Map.Type.companion, icon);
         }
     }
 

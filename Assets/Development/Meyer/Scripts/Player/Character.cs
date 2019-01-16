@@ -1,4 +1,6 @@
-﻿using Boo.Lang;
+﻿using System.Runtime.CompilerServices;
+
+using Boo.Lang;
 
 using Kristal;
 
@@ -8,10 +10,14 @@ namespace Assets.Meyer.TestScripts.Player {
 
     public class Character : Companion {
 
-        [HideInInspector] public static GameObject Player;
+        public static GameObject Player;
 
+        protected override void Start( ) {
+            base.Start();
+            Player = gameObject;
+        }
         [ SerializeField ] private GameObject camHolder;
 
     }
-
+   
 }

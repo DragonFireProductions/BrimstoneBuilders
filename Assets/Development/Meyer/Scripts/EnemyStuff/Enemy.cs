@@ -16,6 +16,8 @@ namespace Kristal {
 
         protected void Awake( ) {
             base.Awake( );
+            
+
         }
 
         protected void Start( ) {
@@ -38,7 +40,8 @@ namespace Kristal {
                 var blood = StaticManager.particleManager.Play( ParticleManager.states.Blood , transform.position );
                 blood.transform.SetParent( gameObject.transform );
             }
-            else{
+
+            if ( stats.health <= 0 ){
                 item.IncreaseSubClass( 0.3f );
                 //drop = Random.Range( 1 , 10 );
 
@@ -59,8 +62,9 @@ namespace Kristal {
                 //    newsword.transform.localScale          = new Vector3( 1.0f , 1.0f , 1.0f );
                 //    newsword.gameObject.transform.position = deadPos;
                 //}
-                StaticManager.drop.Drop_Loot(this);
-
+                if ( key != null ){
+                     StaticManager.drop.Drop_Loot(this);
+                }
                 StaticManager.RealTime.Enemies.Remove( this );
                 Destroy( gameObject );
             }
