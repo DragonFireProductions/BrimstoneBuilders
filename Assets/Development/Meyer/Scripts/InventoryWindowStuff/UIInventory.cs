@@ -31,6 +31,9 @@ public class UIInventory : MonoBehaviour
 
     private Vector3 pos;
 
+    [HideInInspector] public bool isMouseOver = false;
+
+    [ HideInInspector ] public bool mouse = false;
     private Vector3 pos2;
 
 
@@ -200,6 +203,15 @@ public class UIInventory : MonoBehaviour
         }
         
     }
+
+    public void OnMouseOver( ) {
+        mouse = true;
+    }
+
+    public void OnMouseExit( ) {
+        mouse = false;
+    }
+
     public void ShowWindow(GameObject item)
     {
         if ( !item.activeSelf ){
