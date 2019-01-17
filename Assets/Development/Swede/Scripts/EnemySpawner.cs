@@ -96,10 +96,22 @@ public class EnemySpawner : MonoBehaviour
             GameObject newEnemy;
             if ( i >= enemies.Length ){
              newEnemy = Instantiate(enemies[0].enemy.gameObject, position, Quaternion.identity);
+                if (enemies[0].key != null)
+                {
+                    Debug.Log("got key");
+                    newEnemy.GetComponent<Enemy>().key = enemies[random].key;
+                    newEnemy.GetComponent<Enemy>().dropKey = true;
+                }
 
             }
             else{
                 newEnemy = Instantiate(enemies[i].enemy.gameObject, position, Quaternion.identity);
+                if (enemies[i].key != null)
+                {
+                    Debug.Log("got key");
+                    newEnemy.GetComponent<Enemy>().key = enemies[random].key;
+                    newEnemy.GetComponent<Enemy>().dropKey = true;
+                }
             }
             
 
@@ -127,11 +139,7 @@ public class EnemySpawner : MonoBehaviour
             newEnemy.GetComponent<Enemy>().damage = enemies[random].Damage;
             newEnemy.GetComponent<Stat>().luck = enemies[random].luck;
 
-            if ( enemies[random].key != null ){
-                Debug.Log("got key"  );
-                newEnemy.GetComponent<Enemy>().key = enemies[random].key;
-                newEnemy.GetComponent < Enemy >( ).dropKey = true;
-            }
+            
            
             if(!PreSpawn)
                 StaticManager.RealTime.SetAttackEnemies();
