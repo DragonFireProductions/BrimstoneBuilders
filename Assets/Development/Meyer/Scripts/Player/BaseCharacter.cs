@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 using Random = UnityEngine.Random;
 
@@ -46,8 +47,9 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     public GameObject startWeapon;
 
-    public GameObject icon;
+    public RawImage icon;
 
+    public GameObject light;
     protected virtual void Awake( ) {
         obj       = gameObject;
         attackers = new List < BaseCharacter >( );
@@ -167,7 +169,7 @@ public abstract class BaseCharacter : MonoBehaviour {
             InstatiateFloatingText.InstantiateFloatingText( damage.ToString( ) , Color.white , this );
         }
 
-        if ( item.AttachedCharacter.stats.health <= 0 ){
+        if ( item.AttachedCharacter.stats.health <= 0  && this is Companion){
             Destroy( item.AttachedCharacter.gameObject );
         }
     }

@@ -61,6 +61,12 @@ public class UIInventoryManager : MonoBehaviour {
     public GameObject[] Grid;
 
     public GameObject[] ArmorGrid;
+
+    public static QuestManager manager;
+
+    public GameObject MessageWindow;
+
+    public Text messageText;
     public void Start( ) {
         
         WeaponInventoryStats.GetComponent<UIItemsWithLabels>().FindLabels();
@@ -68,6 +74,7 @@ public class UIInventoryManager : MonoBehaviour {
         comparedInventoryWeapons.GetComponent < UIItemsWithLabels >( ).FindLabels( );
         CompanionSellStats.transform.Find("CharacterStats").GetComponent<UIItemsWithLabels>().FindLabels();
         CompanionSellStats.transform.Find("WeaponStats").GetComponent<UIItemsWithLabels>().FindLabels();
+        manager = gameObject.GetComponent < QuestManager >( );
     }
 
     public object this[string propertyName]

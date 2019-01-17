@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Shop : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class Shop : MonoBehaviour
 
     public GameObject ShopContainer;
 
-    public GameObject icon;
+    public RawImage icon;
 
     [Serializable]
     public struct CompanionStruct
@@ -45,8 +46,7 @@ public class Shop : MonoBehaviour
         Buy = ShopContainer.transform.Find( "Buy" ).gameObject;
         Sell = ShopContainer.transform.Find( "Sell" ).gameObject;
         StartCoroutine( init( ) );
-        StaticManager.map.All.Add(icon);
-        StaticManager.map.Shops.Add(icon);
+        StaticManager.map.Add(Map.Type.shop, icon);
     }
 
     IEnumerator init( ) {

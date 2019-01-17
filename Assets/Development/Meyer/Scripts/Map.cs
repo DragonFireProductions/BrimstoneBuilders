@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class Map : MonoBehaviour {
@@ -13,17 +14,19 @@ public class Map : MonoBehaviour {
 	public GameObject map;
 	
 
-	public List < GameObject > Companions;
+	public List < RawImage > Companions;
 
-	public List < GameObject > Shops;
+	public List < RawImage > Shops;
 
-	public List < GameObject > Enemies;
+	public List < RawImage > Enemies;
 
-	public List < GameObject > All;
+	public List < RawImage > All;
 
-	public List < GameObject > Player;
+	public List < RawImage > Player;
 
-    public List<GameObject> Destination;
+	public List < RawImage > NPC;
+
+    public List<RawImage> Destination;
 
 	public Texture selectedImage;
 
@@ -34,19 +37,20 @@ public class Map : MonoBehaviour {
 	private bool active;
 
 	public enum Type {
-		enemy, companion, shop, destination
+		enemy, companion, shop, destination, NPC, player
 		
 
 	}
 
-	public void Add( Type type, GameObject icon ) {
+	public void Add( Type type, RawImage icon ) {
+			Assert.IsNotNull(icon, type.ToString() + " was null ");
 		switch ( type ){
             case Type.companion:
 				Companions.Add(icon);
 
 	            break;
             case Type.destination:
-				Companions.Add(icon);
+				Destination.Add(icon);
 
 	            break;
             case Type.enemy:
@@ -56,11 +60,18 @@ public class Map : MonoBehaviour {
             case Type.shop:
 				Shops.Add(icon);
 				break;
+            case Type.NPC:
+				NPC.Add(icon);
+
+	            break;
+            case Type.player:
+				Player.Add(icon);
+				break;
 		}
 		All.Add(icon);
 	}
     public void Enable(string type) {
-	    List < GameObject > list = new List < GameObject >();
+	    List < RawImage > list = new List < RawImage >();
         switch (type)
         {
             case "companion":
@@ -83,15 +94,16 @@ public class Map : MonoBehaviour {
 
 				break;
             case "npc":
-
+	            list = NPC;
 	            break;
         }
 
+	    list.RemoveAll( item => item == null );
 	    if (list != null && list.Count > 0 ){
-            active = !list[0].activeSelf;
+            active = !list[0].gameObject.activeSelf;
             foreach (var l_gameObject in list)
             {
-                l_gameObject.SetActive(active);
+                l_gameObject.gameObject.SetActive(active);
             }
 
 		    
@@ -111,7 +123,7 @@ public class Map : MonoBehaviour {
     }
     public void EnableAll( ) {
 		foreach ( var l_gameObject in All ){
-			l_gameObject.SetActive(true);
+			l_gameObject.gameObject.SetActive(true);
 		}
 	}
 	// Use this for initialization
@@ -121,7 +133,7 @@ public class Map : MonoBehaviour {
 
 	public void ShowMap( ) {
 		map.SetActive(true);
-		EnableAll();
+		//EnableAll();
 	}
 
 	public void CloseMap( ) {
