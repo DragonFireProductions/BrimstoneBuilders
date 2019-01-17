@@ -12,6 +12,8 @@ namespace Kristal {
 
         public int damage;
 
+        public bool dropKey = false;
+
         [SerializeField] public GameObject key;
 
         protected void Awake( ) {
@@ -45,7 +47,7 @@ namespace Kristal {
                     //drop = Random.Range( 1 , 10 );
                     Debug.Log("Hit if <0");
                     
-                    if (key != null)
+                    if (dropKey)
                     {
                         Debug.Log("Hit dropped loot");
                         StaticManager.drop.Drop_Loot(this);
