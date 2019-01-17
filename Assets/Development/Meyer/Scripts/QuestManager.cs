@@ -74,7 +74,7 @@ public class QuestManager : MonoBehaviour {
         StaticManager.UiInventory.ShowWindow(StaticManager.uiManager.MessageWindow);
         StaticManager.uiManager.messageText.text = text;
 
-        yield return new WaitForSecondsRealtime(5);
+        yield return new WaitForSecondsRealtime(15);
 
         StaticManager.UiInventory.CloseWindow(StaticManager.uiManager.MessageWindow);
     }

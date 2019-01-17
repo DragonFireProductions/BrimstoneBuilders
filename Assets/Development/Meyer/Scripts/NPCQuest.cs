@@ -21,7 +21,7 @@ public class NPCQuest : BaseCharacter {
 
     public GameObject npcQuestItem;
 
-    public BoxCollider collider;
+    public BoxCollider _collider;
 
     public bool Completed;
 
@@ -32,6 +32,8 @@ public class NPCQuest : BaseCharacter {
     public QuestItem key;
 
     public Collider goalCollider;
+
+    public GameObject spawner;
 
     // Start is called before the first frame update
     void Start() {
@@ -47,21 +49,24 @@ public class NPCQuest : BaseCharacter {
     public void Complete( ) {
         Completed = true;
         light.SetActive(true);
+        _collider.enabled = true;
     }
     public void OnTriggerEnter(Collider collider ) {
         if ( collider.tag == "Player" ){
 
-            if (Completed)
-            {
+            if (Completed){
+                quest.keyItems.RemoveAll( item => item == null );
                 foreach ( var l_questKeyItem in quest.keyItems ){
                     Destroy(l_questKeyItem.gameObject);
                 }
-                GetComponent<Collider>().enabled = false;
+                _collider.enabled = false;
                 light.SetActive(false);
                 StartCoroutine(StaticManager.questManager.message(thankyouMessage));
+
                 ///dropKey
                 var keyitem = Instantiate(StaticManager.questManager.keyItems);
-                quest.questText.text = key.message;
+
+                quest.questText.text = "Go to wall";
                 keyitem.transform.SetParent(StaticManager.questManager.keyItemsHolder.gameObject.transform);
                 keyitem.gameObject.SetActive(true);
                 keyitem.icon.sprite = key.icon;
@@ -79,7 +84,9 @@ public class NPCQuest : BaseCharacter {
                 _quest.NPC = this;
                 quest = _quest;
                 StartCoroutine( StaticManager.questManager.message( popupMessage ) );
+                spawner.SetActive(true);
                 quest.Accept();
+                 _collider.enabled = false;
             }
 
         }

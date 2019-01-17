@@ -35,6 +35,8 @@ public class EnemySpawner : MonoBehaviour
 
         public GameObject weapon;
 
+        public GameObject key;
+
 
     }
     [SerializeField]
@@ -91,7 +93,15 @@ public class EnemySpawner : MonoBehaviour
         {
             Vector3 position = Random.insideUnitSphere * spawnRadius + this.gameObject.transform.position;
             var random = Random.Range(0, enemies.Length);
-            var newEnemy = Instantiate(enemies[i].enemy.gameObject, position, Quaternion.identity);
+            GameObject newEnemy;
+            if ( i > enemies.Length ){
+             newEnemy = Instantiate(enemies[0].enemy.gameObject, position, Quaternion.identity);
+
+            }
+            else{
+                newEnemy = Instantiate(enemies[i].enemy.gameObject, position, Quaternion.identity);
+            }
+            
 
             //Randomizes the spawn position (within the set range) of the current enemy.
             newEnemy.GetComponent<EnemyNav>().location = gameObject;
@@ -117,6 +127,11 @@ public class EnemySpawner : MonoBehaviour
             newEnemy.GetComponent<Enemy>().damage = enemies[random].Damage;
             newEnemy.GetComponent<Stat>().luck = enemies[random].luck;
 
+            if ( enemies[random].key ){
+                Debug.Log("got key"  );
+                newEnemy.GetComponent<Enemy>().key = enemies[random].key;
+            }
+           
             if(!PreSpawn)
                 StaticManager.RealTime.SetAttackEnemies();
             else

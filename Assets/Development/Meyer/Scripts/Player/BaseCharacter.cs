@@ -169,7 +169,7 @@ public abstract class BaseCharacter : MonoBehaviour {
             InstatiateFloatingText.InstantiateFloatingText( damage.ToString( ) , Color.white , this );
         }
 
-        if ( item.AttachedCharacter.stats.health <= 0 ){
+        if ( item.AttachedCharacter.stats.health <= 0  && this is Companion){
             Destroy( item.AttachedCharacter.gameObject );
         }
     }

@@ -14,7 +14,11 @@ public class SwordType : WeaponObject {
             AttachedCharacter.KnockBack(KnockBackAmount);
 
         }
+
+        if ( AttachedCharacter ){
         AttachedCharacter.AnimationClass.Play(AnimationClass.states.Attack);
+
+        }
 
     }
     

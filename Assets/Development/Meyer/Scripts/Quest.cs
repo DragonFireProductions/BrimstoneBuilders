@@ -83,19 +83,20 @@ public class Quest : MonoBehaviour
                 break;
             case Type.Key:
                 var keyitem = Instantiate(StaticManager.questManager.keyItems);
-                keyitem.transform.SetParent(StaticManager.questManager.keyItemsHolder.gameObject.transform);
-                keyItems.Add(keyitem);
                 keyitem.gameObject.SetActive(true);
+                keyitem.gameObject.transform.SetParent(StaticManager.questManager.keyItemsHolder.gameObject.transform);
+                keyItems.Add(keyitem);
                 keyitem.icon.sprite = items[ 0 ].icon;
                 keyitem.labels.FindLabels();
                 keyitem.labels.Labels[ 0 ].labelText.text = items[ 0 ].gameObject.name;
+                items[0].gameObject.SetActive(false);
                 items.RemoveAt(0 );
-               
                 
                 if ( items.Count == 0 ){
                     NPC.Complete();
                 }
                 else{
+                    
                     questText.text = "Collect " + items[ 0 ].gameObject.name;
                     objectNeededContainer.icon.sprite = items[ 0 ].icon;
                     items[ 0 ].light.enabled = true;

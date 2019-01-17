@@ -40,6 +40,7 @@ public class StaticManager : MonoBehaviour
 
     public static Map map;
 
+    public static Drops drop;
     public static QuestManager questManager;
 
     public bool unlimitedPotions = false;
@@ -91,6 +92,8 @@ public class StaticManager : MonoBehaviour
         questManager = GetComponent < QuestManager >( );
 
         map = GetComponent < Map >( );
+
+        drop = GetComponent<Drops>();
     }
 
     public void LoadMainMenu()
@@ -117,5 +120,4 @@ public class StaticManager : MonoBehaviour
     {
         //UiInventory.ItemsInstance.SendToCompanion.SetActive(true);
     }
-
 }

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+ using Kristal;
 
-public class Drops : BaseCharacter
+public class Drops : MonoBehaviour
 {
     [SerializeField] GameObject drop;
 
@@ -30,12 +31,18 @@ public class Drops : BaseCharacter
 	// Update is called once per frame
 	void Update()
     {
-		if (stats.health <= 0)
-        {
-            keyPos = Random.insideUnitSphere * 2.5f + gameObject.transform.position;
-            keyPos.y = StaticManager.Character.gameObject.transform.position.y;
-            var newKey = Instantiate(drop);
-            newKey.gameObject.transform.position = keyPos;
-        }
 	}
+
+   
+
+    public void Drop_Loot(Enemy _ene)
+    {
+            //_ene.key.GetComponent < MeshRenderer >( ).enabled = true;
+            //_ene.key.GetComponent < Collider >( ).enabled = true;
+            //_ene.key.transform.SetParent(GameObject.Find("Weapons").transform);
+            //a_ene.transform.position.y = StaticManager.Character.gameObject.transform.position.y;
+            _ene.key.SetActive( true );
+          StartCoroutine( StaticManager.questManager.message( _ene.gameObject.name + " has dropped! Pick it up to continue!" ) );
+            _ene.key.transform.position = _ene.transform.position;
+    }
 }

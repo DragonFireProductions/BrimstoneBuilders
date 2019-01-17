@@ -105,7 +105,7 @@ public class BaseNav : MonoBehaviour {
     }
     // Update is called once per frame
     protected virtual void Update( ) {
-         character.AnimationClass.animation.SetFloat("Walk", 3);
+         //character.AnimationClass.animation.SetFloat("Walk", 3);
         switch ( State ){
             
             default:

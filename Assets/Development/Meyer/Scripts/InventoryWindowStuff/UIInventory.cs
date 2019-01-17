@@ -196,8 +196,9 @@ public class UIInventory : MonoBehaviour
         if ( ItemsInstance.openedWindow.Count == 0 ){
             ItemsInstance.windowIsOpen = false;
             Time.timeScale = 1;
+            BackDrop.SetActive(false);
         }
-        BackDrop.SetActive(false);
+        
     }
     public void ShowWindow(GameObject item)
     {
