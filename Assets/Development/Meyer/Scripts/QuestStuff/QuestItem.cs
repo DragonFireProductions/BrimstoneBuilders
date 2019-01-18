@@ -31,8 +31,11 @@ public class QuestItem : MonoBehaviour {
                 gameObject.SetActive(false);
             }
           else if ( type == Type.gate ){
-                quest.Complete( );
-                gameObject.SetActive(false);
+                if ( quest.PickedUpKey == true ){
+                    quest.Complete();
+                    gameObject.SetActive(false);
+                }
+               
             }
         }
         

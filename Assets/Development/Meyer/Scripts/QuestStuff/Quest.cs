@@ -10,6 +10,8 @@ public class Quest : MonoBehaviour {
 
      public QuestItem key;
 
+    public bool PickedUpKey;
+
     protected virtual void Accept( ) {
         if (ui == null)
         {
@@ -44,8 +46,8 @@ public class Quest : MonoBehaviour {
         item.keyItem = keyContainer.GetComponent < KeyItemContainer >( );
 
     }
-    public virtual void CollidedWithKey(QuestItem item)
-    {
+    public virtual void CollidedWithKey(QuestItem item) {
+        PickedUpKey = true;
         this.CollidedWithItem(item);
     }
 
