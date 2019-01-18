@@ -118,7 +118,7 @@ public class CharacterWeaponsInventory : PlayerInventory
         weapons.Add(l);
 
         labels.Add(l.obj);
-          Debug.Log(character.name + " has added label " + l.item.name);
+        Debug.Log(character.name + " has added label " + l.item.name);
         Debug.Log(character.name + " label count: " + labels.Count);
 
         item.gameObject.SetActive(false);

@@ -37,12 +37,9 @@ public class Drops : MonoBehaviour
 
     public void Drop_Loot(Enemy _ene)
     {
-            //_ene.key.GetComponent < MeshRenderer >( ).enabled = true;
-            //_ene.key.GetComponent < Collider >( ).enabled = true;
-            //_ene.key.transform.SetParent(GameObject.Find("Weapons").transform);
-            //a_ene.transform.position.y = StaticManager.Character.gameObject.transform.position.y;
-            _ene.key.SetActive( true );
-          StartCoroutine( StaticManager.questManager.message( _ene.gameObject.name + " has dropped! Pick it up to continue!" ) );
-            _ene.key.transform.position = _ene.transform.position;
+        if ( _ene.questItem.quest is KeyQuest ){
+            var quest = (KeyQuest)_ene.questItem.quest;
+            quest.DropLoot(_ene.questItem, _ene);
+        }
     }
 }

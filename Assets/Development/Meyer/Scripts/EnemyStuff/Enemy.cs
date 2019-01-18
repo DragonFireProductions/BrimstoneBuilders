@@ -14,7 +14,7 @@ namespace Kristal {
 
         public bool dropKey = false;
 
-        [SerializeField] public GameObject key;
+        public QuestItem questItem;
 
         protected void Awake( ) {
             base.Awake( );

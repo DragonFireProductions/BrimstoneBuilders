@@ -41,6 +41,7 @@ public class StaticManager : MonoBehaviour
     public static Map map;
 
     public static Drops drop;
+
     public static QuestManager questManager;
 
     public bool unlimitedPotions = false;
