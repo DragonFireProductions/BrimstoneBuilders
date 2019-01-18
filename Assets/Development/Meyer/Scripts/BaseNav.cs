@@ -28,6 +28,8 @@ public class BaseNav : MonoBehaviour {
 
     public BaseCharacter character;
 
+    public AudioSource audio;
+
     protected float innerRadius = 8f;
 
     protected Vector3 newpos;
@@ -96,6 +98,7 @@ public class BaseNav : MonoBehaviour {
     // Use this for initialization
     protected void Start( ) {
         Agent.stoppingDistance = stoppingDistance;
+        audio = gameObject.GetComponent<AudioSource>();
     }
     void FixedUpdate()
     {
@@ -105,7 +108,9 @@ public class BaseNav : MonoBehaviour {
     }
     // Update is called once per frame
     protected virtual void Update( ) {
-         //character.AnimationClass.animation.SetFloat("Walk", 3);
+        if (!Agent.isStopped)
+            audio.Play();
+        //character.AnimationClass.animation.SetFloat("Walk", 3);
         switch ( State ){
             
             default:

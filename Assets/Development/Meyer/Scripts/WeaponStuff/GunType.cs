@@ -65,6 +65,7 @@ public class GunType : WeaponObject {
 
         if ( canFire && Ammo > 0 ){
             AttachedCharacter.AnimationClass.Play( AnimationClass.states.Attack );
+            audio.Play();
         }
         else if ( !reloading && Ammo == 0 ){
             StartCoroutine( Reload( ) );

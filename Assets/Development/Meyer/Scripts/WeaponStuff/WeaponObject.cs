@@ -33,11 +33,15 @@ public abstract class WeaponObject : BaseItems
     public GameObject mesh;
 
     public GameObject label;
+
+    public AudioSource audio;
+
+    public AudioClip[] clips;
     protected override void Start() {
         base.Start();
         AnimationClass = gameObject.GetComponent < AnimationClass >( );
         item = this.gameObject;
-        
+        audio = gameObject.GetComponent<AudioSource>();
     }
     public override object this[string propertyName]
     {
@@ -141,7 +145,7 @@ public abstract class WeaponObject : BaseItems
     }
 
     public override void Use( ) {
-        
+        //StaticManager.audioManager.PlaySound(stats.clip.name.ToString());
     }
 
     public void PickUp(BaseCharacter character ) {
