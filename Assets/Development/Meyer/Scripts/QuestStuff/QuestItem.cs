@@ -30,6 +30,7 @@ public class QuestItem : MonoBehaviour {
             else if ( type == Type.key ){
                 quest.CollidedWithKey(this);
                 gameObject.SetActive(false);
+                StaticManager.uiManager.ShowMessage(quest.KeyDropDialog, 10);
             }
           else if ( type == Type.gate ){
                 if ( quest.PickedUpKey == true ){

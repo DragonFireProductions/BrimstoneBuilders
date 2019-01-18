@@ -62,7 +62,6 @@ public class Quest : MonoBehaviour {
     }
 
     public virtual void Complete( ) {
-        StaticManager.uiManager.show( KeyDropDialog , 10 );
     }
     // Start is called before the first frame update
     void Start()
