@@ -401,6 +401,7 @@ Transform:
   - {fileID: 420515240}
   - {fileID: 572368249}
   - {fileID: 367045228}
+  - {fileID: 1418493221}
   - {fileID: 832740189}
   - {fileID: 1108772872}
   - {fileID: 1593695600}
@@ -1287,10 +1288,9 @@ Transform:
   - {fileID: 1684851535}
   - {fileID: 143908292}
   - {fileID: 1819509133}
-  - {fileID: 1418493221}
   - {fileID: 1680770365}
   m_Father: {fileID: 86274268}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &832740190
 BoxCollider:
@@ -1320,6 +1320,10 @@ MonoBehaviour:
   destination: {x: 0, y: 0, z: 0}
   npc: {fileID: 832740193}
   key: {fileID: 1593695595}
+  PickedUpKey: 0
+  QuestDialog: I need some help battling some enemys ahead. Collect -object name for
+    me and I will give you a key to advance!
+  KeyDropDialog: Thank you! Take this key and travel to the wall! You may advance!
   ui: {fileID: 0}
   pickedUp: []
   list:
@@ -1649,6 +1653,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   mapIcon: {fileID: 0}
   icon: {fileID: 21300000, guid: 5b1a64ea234fb2343b8d0686c51280de, type: 3}
   quest: {fileID: 0}
@@ -1698,7 +1710,7 @@ Transform:
   - {fileID: 1368632866}
   - {fileID: 917259985}
   m_Father: {fileID: 86274268}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1108772873
 MonoBehaviour:
@@ -1714,7 +1726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 832740191}
   icon: {fileID: 21300000, guid: 4db017495c69e8140a56a0e2b669e3f8, type: 3}
-  needToCollMessage: Go to wall
+  needToCollMessage: Pick up object and go to npc
   keyItem: {fileID: 0}
   type: 0
 --- !u!65 &1108772874
@@ -2066,10 +2078,10 @@ GameObject:
   - component: {fileID: 1418493225}
   - component: {fileID: 1418493224}
   - component: {fileID: 1418493223}
-  - component: {fileID: 1418493222}
   - component: {fileID: 1418493226}
+  - component: {fileID: 1418493222}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2083,12 +2095,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1418493220}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -69.1, y: 4.9, z: 15.2}
+  m_LocalPosition: {x: -37.80005, y: 3.0800018, z: -68.860016}
   m_LocalScale: {x: 1, y: 17.12, z: 88.32}
   m_Children:
   - {fileID: 1105623735}
-  m_Father: {fileID: 832740189}
-  m_RootOrder: 4
+  m_Father: {fileID: 86274268}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1418493222
 MonoBehaviour:
@@ -2099,9 +2111,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1418493220}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39783d8ce0cf7ba46bced8490bba205f, type: 3}
+  m_Script: {fileID: 11500000, guid: 751f454d5c680d242bbe88d9ca5ea9e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  quest: {fileID: 832740191}
+  icon: {fileID: 0}
+  needToCollMessage: 
+  keyItem: {fileID: 0}
+  type: 2
 --- !u!65 &1418493223
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2111,7 +2128,7 @@ BoxCollider:
   m_GameObject: {fileID: 1418493220}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 16.06, y: 1.48, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -2172,7 +2189,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
@@ -2313,7 +2330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest: {fileID: 832740191}
   icon: {fileID: 21300000, guid: 4db017495c69e8140a56a0e2b669e3f8, type: 3}
-  needToCollMessage: 
+  needToCollMessage: Take key to wall
   keyItem: {fileID: 0}
   type: 1
 --- !u!54 &1593695596
@@ -2405,7 +2422,7 @@ Transform:
   - {fileID: 1617130086}
   - {fileID: 760657432}
   m_Father: {fileID: 86274268}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1596263775 stripped
 Transform:
@@ -2471,7 +2488,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 832740189}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1684851535 stripped
 RectTransform:
@@ -2722,6 +2739,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd43a00159c9af146b61cb1cc07f408f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Name: 
   m_EditorClassIdentifier: 
   m_Name: 

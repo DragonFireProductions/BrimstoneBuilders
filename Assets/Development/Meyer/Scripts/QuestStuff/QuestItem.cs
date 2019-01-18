@@ -25,6 +25,7 @@ public class QuestItem : MonoBehaviour {
             if ( type == Type.item ){
                 quest.CollidedWithItem(this);
                 gameObject.SetActive(false);
+
             }
             else if ( type == Type.key ){
                 quest.CollidedWithKey(this);

@@ -102,5 +102,19 @@ public class UIInventoryManager : MonoBehaviour {
             }
         }
     }
+
+    public void ShowMessage(string message, int time ) {
+        StartCoroutine( show( message , time ) );
+    }
+
+    public IEnumerator show( string message , int time ) {
+        StaticManager.UiInventory.ShowWindow(MessageWindow);
+          messageText.text = message;
+        yield return new WaitForSeconds(time);
+        StaticManager.UiInventory.CloseWindow(MessageWindow);
+      
+
+
+    }
     
 }

@@ -110,11 +110,11 @@ public class KeyQuest : Quest
                 list.Add(key);
                 Accept();
             }
-            else if ( pickedUp.Count > 0 ){
-                //StartCoroutine( message( list[ 0 ].needToCollectmsg ) );
-            }
-            else if ( pickedUp.Count == 0 ){
+            else if ( pickedUp.Count == 0 && ui == null){
                 Accept();
+            }
+            else{
+                StaticManager.uiManager.ShowMessage("Please open quest log to see your current objective", 5);
             }
              
         }

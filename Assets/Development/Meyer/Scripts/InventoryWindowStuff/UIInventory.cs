@@ -15,8 +15,8 @@ public class UIInventory : MonoBehaviour
 {
     public UIItems ItemsInstance;
     public GameObject BackDrop;
-
     private bool showWindow;
+
 
     public struct Stats {
 
