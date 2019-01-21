@@ -16,9 +16,11 @@ namespace Kristal {
 
         public QuestItem questItem;
 
+        public Quest quest;
+
+
         protected void Awake( ) {
             base.Awake( );
-            
 
         }
 
@@ -43,13 +45,12 @@ namespace Kristal {
                 blood.transform.SetParent(gameObject.transform);
                 if (stats.health <= 0)
                 {
+                    quest.EnemyDied(this);
                     item.IncreaseSubClass(0.3f);
-                    //drop = Random.Range( 1 , 10 );
                     Debug.Log("Hit if <0");
-                    
+
                     if (dropKey)
                     {
-                        Debug.Log("Hit dropped loot");
                         StaticManager.drop.Drop_Loot(this);
                     }
                     StaticManager.RealTime.Enemies.Remove(this);

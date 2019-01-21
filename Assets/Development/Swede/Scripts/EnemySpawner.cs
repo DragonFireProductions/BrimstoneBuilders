@@ -35,7 +35,9 @@ public class EnemySpawner : MonoBehaviour
 
         public GameObject weapon;
 
-        public QuestItem quest;
+        public bool DropLoot;
+
+        public Quest quest;
 
 
     }
@@ -96,11 +98,10 @@ public class EnemySpawner : MonoBehaviour
             GameObject newEnemy;
             if ( i >= enemies.Length ){
              newEnemy = Instantiate(enemies[0].enemy.gameObject, position, Quaternion.identity);
-                if (enemies[0].quest != null)
-                {
-                    Debug.Log("got key");
-                    newEnemy.GetComponent<Enemy>().questItem = enemies[0].quest;
-                    newEnemy.GetComponent<Enemy>().dropKey = true;
+                if (enemies[0].quest != null){
+                    newEnemy.GetComponent < Enemy >( ).dropKey = enemies[ 0 ].DropLoot;
+                    newEnemy.GetComponent < Enemy >( ).quest = enemies[ 0 ].quest;
+                    newEnemy.GetComponent<Enemy>().quest.InstEnemies(newEnemy.GetComponent<Enemy>());
                 }
 
             }
@@ -108,9 +109,9 @@ public class EnemySpawner : MonoBehaviour
                 newEnemy = Instantiate(enemies[i].enemy.gameObject, position, Quaternion.identity);
                 if (enemies[i].quest != null)
                 {
-                    Debug.Log("got key");
-                    newEnemy.GetComponent<Enemy>().questItem = enemies[i].quest;
-                    newEnemy.GetComponent<Enemy>().dropKey = true;
+                     newEnemy.GetComponent < Enemy >( ).dropKey = enemies[ i ].DropLoot;
+                     newEnemy.GetComponent < Enemy >( ).quest = enemies[ i ].quest;
+                     newEnemy.GetComponent<Enemy>().quest.InstEnemies(newEnemy.GetComponent<Enemy>());
                 }
             }
             

@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
+using Kristal;
+
 using UnityEngine;
 
 public class Quest : MonoBehaviour {
@@ -14,12 +17,13 @@ public class Quest : MonoBehaviour {
 
     public string QuestDialog;
 
-
     public string KeyDropDialog;
 
-    protected virtual void Accept( ) {
+    public bool Completed = false;
 
-        
+    public QuestItem loot;
+
+    protected virtual void Accept( ) {
         if (ui == null)
         {
             StaticManager.uiManager.ShowMessage(QuestDialog, 10);
@@ -33,12 +37,19 @@ public class Quest : MonoBehaviour {
         }
       
     }
-    
 
+    public virtual void InstEnemies(Enemy enemy ) {
+
+    }
+
+    public virtual void EnemyDied( Enemy enemy ) {
+
+    }
     private Quest obj;
 
     public QuestUI ui;
     public void ReturnToNPC( ) {
+        ui.questText.text = KeyDropDialog;
 
     }
 

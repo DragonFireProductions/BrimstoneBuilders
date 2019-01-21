@@ -22,6 +22,8 @@ public class KeyQuest : Quest
     public Type type;
 
     public bool completed;
+
+    public int index;
     public enum Type {
 
         attachToEnemy,
@@ -68,6 +70,15 @@ public class KeyQuest : Quest
             completed = true;
         }
     }
+
+    public override void InstEnemies( Enemy enemy ) {
+        base.InstEnemies( enemy );
+        if ( enemy.dropKey ){
+            enemy.GetComponent<Enemy>().questItem = list[index];
+            index++;
+        }
+    }
+
     public override void CollidedWithKey(QuestItem item)
     {
         base.CollidedWithKey(item);
