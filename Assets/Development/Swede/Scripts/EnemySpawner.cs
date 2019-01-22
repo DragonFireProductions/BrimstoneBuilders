@@ -35,10 +35,13 @@ public class EnemySpawner : MonoBehaviour
 
         public GameObject weapon;
 
-        public bool DropLoot;
+        public bool DropKey;
 
         public Quest quest;
 
+        public GameObject dropItem;
+
+        public bool DropWeapon;
 
     }
     [SerializeField]
@@ -99,9 +102,11 @@ public class EnemySpawner : MonoBehaviour
             if ( i >= enemies.Length ){
              newEnemy = Instantiate(enemies[0].enemy.gameObject, position, Quaternion.identity);
                 if (enemies[0].quest != null){
-                    newEnemy.GetComponent < Enemy >( ).dropKey = enemies[ 0 ].DropLoot;
+                    newEnemy.GetComponent < Enemy >( ).dropKey = enemies[ 0 ].DropKey;
                     newEnemy.GetComponent < Enemy >( ).quest = enemies[ 0 ].quest;
                     newEnemy.GetComponent<Enemy>().quest.InstEnemies(newEnemy.GetComponent<Enemy>());
+                    newEnemy.GetComponent < Enemy >( ).DropWeapon = enemies[ 0 ].DropWeapon;
+                         newEnemy.GetComponent < Enemy >( ).objectToDrop = enemies[ 0 ].dropItem;
                 }
 
             }
@@ -109,9 +114,11 @@ public class EnemySpawner : MonoBehaviour
                 newEnemy = Instantiate(enemies[i].enemy.gameObject, position, Quaternion.identity);
                 if (enemies[i].quest != null)
                 {
-                     newEnemy.GetComponent < Enemy >( ).dropKey = enemies[ i ].DropLoot;
+                     newEnemy.GetComponent < Enemy >( ).dropKey = enemies[ i ].DropKey;
                      newEnemy.GetComponent < Enemy >( ).quest = enemies[ i ].quest;
-                     newEnemy.GetComponent<Enemy>().quest.InstEnemies(newEnemy.GetComponent<Enemy>());
+                    newEnemy.GetComponent<Enemy>().quest.InstEnemies(newEnemy.GetComponent<Enemy>());
+                         newEnemy.GetComponent < Enemy >( ).DropWeapon = enemies[ i ].DropWeapon;
+                    newEnemy.GetComponent < Enemy >( ).objectToDrop = enemies[ i ].dropItem;
                 }
             }
             

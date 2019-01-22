@@ -37,9 +37,23 @@ public class Drops : MonoBehaviour
 
     public void Drop_Loot(Enemy _ene)
     {
-        if ( _ene.questItem.quest is KeyQuest ){
+        if (_ene.dropKey && _ene.questItem.quest is KeyQuest ){
             var quest = (KeyQuest)_ene.questItem.quest;
             quest.DropLoot(_ene.questItem, _ene);
+        }
+        else if ( _ene.DropWeapon ){
+            var a = Instantiate( _ene.attachedWeapon.gameObject );
+
+            a.SetActive(true);
+            a.transform.position = _ene.transform.position;
+            a.tag = "PickUp";
+            a.GetComponent < WeaponObject >( ).leftHand = Instantiate( _ene.attachedWeapon.leftHand.gameObject );
+            a.GetComponent < WeaponObject >( ).rightHand = Instantiate( _ene.attachedWeapon.rightHand.gameObject );
+            a.GetComponent < Collider >( ).enabled = true;
+        }
+        else if ( _ene.objectToDrop ){
+            var objects = Instantiate( _ene.objectToDrop );
+            objects.transform.position = _ene.transform.position;
         }
     }
 }

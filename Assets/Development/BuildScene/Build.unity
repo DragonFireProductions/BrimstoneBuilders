@@ -1154,14 +1154,18 @@ MonoBehaviour:
     Damage: 1
     luck: 0
     weapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28, type: 3}
-    DropLoot: 0
+    DropKey: 0
     quest: {fileID: 737227248}
+    dropItem: {fileID: 0}
+    DropWeapon: 0
   - enemy: {fileID: 114932892065668812, guid: 8b3689f0546616c419c405018796038a, type: 3}
     Damage: 1
     luck: 0
     weapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28, type: 3}
-    DropLoot: 0
+    DropKey: 0
     quest: {fileID: 737227248}
+    dropItem: {fileID: 0}
+    DropWeapon: 0
   numberofEnemies: 2
 --- !u!1 &624422978
 GameObject:
@@ -2001,7 +2005,7 @@ GameObject:
   m_Component:
   - component: {fileID: 821929474}
   m_Layer: 15
-  m_Name: GameObject (2)
+  m_Name: NPCDestination
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2035,7 +2039,7 @@ GameObject:
   - component: {fileID: 832740193}
   - component: {fileID: 832740191}
   m_Layer: 15
-  m_Name: Cube
+  m_Name: KeyQuest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2499,7 +2503,7 @@ GameObject:
   - component: {fileID: 1071510515}
   - component: {fileID: 1071510514}
   m_Layer: 15
-  m_Name: Cube (1)
+  m_Name: KillQuest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2672,7 +2676,7 @@ GameObject:
   - component: {fileID: 1108772878}
   - component: {fileID: 1108772873}
   m_Layer: 15
-  m_Name: Quest1
+  m_Name: PickUpItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3018,7 +3022,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1159667195}
   m_Layer: 13
-  m_Name: GameObject (2)
+  m_Name: Enemy Retreat Destination
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3203,14 +3207,18 @@ MonoBehaviour:
     Damage: 1
     luck: 0
     weapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28, type: 3}
-    DropLoot: 0
+    DropKey: 0
     quest: {fileID: 1071510514}
+    dropItem: {fileID: 0}
+    DropWeapon: 1
   - enemy: {fileID: 114932892065668812, guid: 8b3689f0546616c419c405018796038a, type: 3}
     Damage: 1
     luck: 0
     weapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28, type: 3}
-    DropLoot: 0
+    DropKey: 0
     quest: {fileID: 1071510514}
+    dropItem: {fileID: 0}
+    DropWeapon: 1
   numberofEnemies: 2
 --- !u!4 &1331553176 stripped
 Transform:
@@ -3581,7 +3589,7 @@ GameObject:
   - component: {fileID: 1593695596}
   - component: {fileID: 1593695595}
   m_Layer: 15
-  m_Name: Quest1 (1)
+  m_Name: Key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

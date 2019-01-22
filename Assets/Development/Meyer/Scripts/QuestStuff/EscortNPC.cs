@@ -12,6 +12,7 @@ public class EscortNPC : BaseCharacter {
     public int runAwayDistance;
 
     public GameObject retreat_destination;
+    
     public override void Damage( int _damage , BaseItems item ) {
         base.Damage(_damage, item );
 
@@ -19,12 +20,7 @@ public class EscortNPC : BaseCharacter {
             quest.Failed();
         }
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    
 
     
     // Update is called once per frame
