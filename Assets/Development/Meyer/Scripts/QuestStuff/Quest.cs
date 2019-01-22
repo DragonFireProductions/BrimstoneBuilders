@@ -23,10 +23,10 @@ public class Quest : MonoBehaviour {
 
     public QuestItem loot;
 
-    protected virtual void Accept( ) {
+    public virtual void Accept( ) { 
         if (ui == null)
         {
-            StaticManager.uiManager.ShowMessage(QuestDialog, 10);
+            
             var a = Instantiate(StaticManager.questManager.questUI.gameObject);
             var b = a.GetComponent<QuestUI>();
 
@@ -34,6 +34,11 @@ public class Quest : MonoBehaviour {
             a.SetActive(true);
             ui = b;
             ui.labels.FindLabels();
+            ui.questText.text = QuestDialog;
+        }
+
+        if ( !StaticManager.RealTime.Companions.Contains(StaticManager.Character) ){
+            StaticManager.RealTime.Companions.Add( StaticManager.Character );
         }
       
     }
@@ -49,7 +54,7 @@ public class Quest : MonoBehaviour {
 
     public QuestUI ui;
     public void ReturnToNPC( ) {
-        ui.questText.text = KeyDropDialog;
+        ui.questText.text = "Return to NPC";
 
     }
 
@@ -72,8 +77,8 @@ public class Quest : MonoBehaviour {
         this.CollidedWithItem(item);
     }
 
-    public virtual void Complete( ) {
-    }
+    public virtual void Complete( ) { }
+
     // Start is called before the first frame update
     void Start()
     {

@@ -39,7 +39,7 @@ public class KeyQuest : Quest
         
     }
 
-    protected override void Accept( ) {
+    public override void Accept( ) {
         base.Accept();
         ui.questText.text = list[0].needToCollMessage;
         ui.icon.sprite = list[0].icon;
@@ -122,7 +122,8 @@ public class KeyQuest : Quest
                 Accept();
             }
             else if ( pickedUp.Count == 0 && ui == null){
-                Accept();
+                 StaticManager.questManager.currentQuest = this;
+                 StaticManager.questManager.QuestConfirmation(this);
             }
             else{
                 StaticManager.uiManager.ShowMessage("Please open quest log to see your current objective", 5);
