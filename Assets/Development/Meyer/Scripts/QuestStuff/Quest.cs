@@ -23,7 +23,47 @@ public class Quest : MonoBehaviour {
 
     public QuestItem loot;
 
+    public GameObject QuestAvalible;
+
+    public GameObject CollectionReady;
+
+    public GameObject QuestInProgress;
+
+    public enum state {
+
+        QuestAvailble,
+
+        QuestInProgress,
+
+        CollectionReady,
+
+        QuestComplete
+
+    }
+
+    protected state currState;
+
+    public void SwitchState( state state ) {
+        QuestAvalible.SetActive(false);
+        CollectionReady.SetActive(false);
+        QuestInProgress.SetActive( false );
+        switch ( state ){
+            case state.CollectionReady:
+                   CollectionReady.SetActive(true);
+                break;
+            case state.QuestAvailble:
+          QuestAvalible.SetActive(true);
+                break;
+            case state.QuestInProgress:
+                QuestInProgress.SetActive( true );
+                break;
+            case state.QuestComplete:
+
+                break;
+        }
+    }
     public virtual void Accept( ) { 
+        SwitchState(state.QuestInProgress);
         if (ui == null)
         {
             
@@ -54,6 +94,7 @@ public class Quest : MonoBehaviour {
 
     public QuestUI ui;
     public void ReturnToNPC( ) {
+        SwitchState(state.CollectionReady);
         ui.questText.text = "Return to NPC";
 
     }
@@ -80,9 +121,9 @@ public class Quest : MonoBehaviour {
     public virtual void Complete( ) { }
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
-        
+        SwitchState(state.QuestAvailble);
     }
 
     // Update is called once per frame

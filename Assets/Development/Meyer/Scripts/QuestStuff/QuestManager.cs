@@ -43,6 +43,7 @@ public class QuestManager : MonoBehaviour {
         currentQuest.Accept();
     }
     public void CompleteQuest(Quest quest ) {
+        quest.SwitchState(Quest.state.QuestComplete);
         StaticManager.uiManager.ShowMessage(quest.KeyDropDialog, 10);
         for ( int i = 0 ; i < quests.Count ; i++ ){
             if ( quests[i] == quest ){

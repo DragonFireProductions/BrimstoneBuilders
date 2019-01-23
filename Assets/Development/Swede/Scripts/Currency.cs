@@ -17,7 +17,7 @@ public class Currency : MonoBehaviour {
 
     public GameObject sellContainer;
 
-    public List < GameObject > shops;
+    public List < GameObject > shops = new List < GameObject >();
 
     public GameObject sellButton;
 

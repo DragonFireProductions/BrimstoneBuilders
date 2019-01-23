@@ -34,12 +34,6 @@ public class EscortQuest : Quest {
     public void Failed( ) {
         //StaticManager.uiManager.ShowMessage("");
 
-
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -60,7 +54,7 @@ public class EscortQuest : Quest {
             if (Completed)
             {
                 var key = Instantiate(winObject);
-                key.transform.position = transform.position;
+                key.transform.position = transform.position + (transform.forward * 3);
                 key.gameObject.SetActive(true);
                 gameObject.GetComponent<Collider>().enabled = false;
                 StaticManager.questManager.CompleteQuest(this);

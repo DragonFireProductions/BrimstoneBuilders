@@ -37,16 +37,20 @@ public class EscortNPC : BaseCharacter {
                     
                 }
             }
-
-           
-            if (agent.isActiveAndEnabled && StaticManager.Utility.NavDistanceCheck(agent) == DistanceCheck.HAS_REACHED_DESTINATION ){
-             quest.Complete();
-             quest.Completed = true;
-             StaticManager.RealTime.Companions.Add(StaticManager.Character);
-             agent.enabled = false;
+            if (agent.isActiveAndEnabled && StaticManager.Utility.NavDistanceCheck(agent) == DistanceCheck.HAS_REACHED_DESTINATION)
+            {
+                quest.SwitchState(Quest.state.CollectionReady);
+                quest.Complete();
+                quest.Completed = true;
+                StaticManager.RealTime.Companions.Add(StaticManager.Character);
+                agent.enabled = false;
+                animator.SetBool("Walking", false);
             }
+
+
         }
-        
+      
+          animator.SetFloat( "Walk" , agent.velocity.magnitude / agent.speed );
     }
 
 

@@ -38,12 +38,7 @@ public class KillQuest : Quest {
         enemies.Remove( enemy );
         ui.labels.Labels[ 0 ].labelText.text = "Kill Count: " + enemies.Count;
     }
-
-    // Start is called before the first frame update
-    void Start()
-    { 
-        
-    }
+    
 
     // Update is called once per frame
     void Update()
@@ -64,7 +59,7 @@ public class KillQuest : Quest {
             if (Completed)
             {
                 var key = Instantiate(winObject);
-                key.transform.position = transform.position;
+                key.transform.position = transform.position + (transform.forward * 3);
                 key.gameObject.SetActive(true);
                 StaticManager.questManager.CompleteQuest(this);
                 gameObject.GetComponent<Collider>().enabled = false;

@@ -78,9 +78,18 @@ public class LeaderNav : CompanionNav {
                 if ( hit.collider.tag == "ShopKeeper" && !StaticManager.UiInventory.ItemsInstance.windowIsOpen ) //Left Click
                 {
                     StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.ShopUI.obj );
+
+                    foreach ( var l_currencyManagerShop in StaticManager.currencyManager.shops ){
+
+
+                        if ( hit.collider.gameObject != l_currencyManagerShop ){
+                            l_currencyManagerShop.GetComponent<Shop>().ShopContainer.SetActive(false);
+                        }
+                    }
+
                     hit.collider.GetComponent < Shop >( ).ShopContainer.SetActive( true );
                     StaticManager.currencyManager._shop = hit.collider.GetComponent < Shop >( );
-                    StaticManager.currencyManager.shops.Add( hit.collider.gameObject );
+                   
                     StaticManager.currencyManager.SwitchToBuy( );
                     StaticManager.Instance.Freeze( );
                 }
