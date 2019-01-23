@@ -65,13 +65,14 @@ public class LeaderNav : CompanionNav {
         if ( Input.GetMouseButtonDown( 1 ) ){
             Agent.isStopped = true;
             SetState        = state.FREEZE;
-            l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );
+
             if ( character.attachedWeapon is GunType && Physics.Raycast( l_ray , out hit ) ){
                 if ( hit.collider.tag != "Companion" && hit.collider.tag != "Player" ){
-                    if (character.agent.isStopped){
+                    character.attachedWeapon.Use( );
+
+                    if ( State != state.MOVE ){
                         StartCoroutine( rotate( ) );
                     }
-                    character.attachedWeapon.Use( );
                 }
             }
         }
@@ -154,7 +155,7 @@ public class LeaderNav : CompanionNav {
 
         switch ( State ){
             case state.ATTACKING:
-                Agent.stoppingDistance = 3;
+
                 if ( character.attachedWeapon is SwordType ){ }
 
                 if ( enemy == null ){
@@ -174,12 +175,11 @@ public class LeaderNav : CompanionNav {
 
                 break;
             case state.MOVE:
-                  Agent.stoppingDistance = 0;
                 Agent.SetDestination( hit.point );
 
                 break;
             case state.ENEMY_CLICKED:
-                  Agent.stoppingDistance = 3;
+
                 if ( Vector3.Distance( enemy.transform.position , gameObject.transform.position ) < 3 ){
                     SetState = state.ATTACKING;
                 }
@@ -207,8 +207,8 @@ public class LeaderNav : CompanionNav {
                 break;
         }
     }
-
-    public IEnumerator rotate( ) {
+    public IEnumerator rotate()
+    {
         Plane playerPlane = new Plane(Vector3.up, transform.position);
 
         // Generate a ray from the cursor position
@@ -223,23 +223,24 @@ public class LeaderNav : CompanionNav {
         // If the ray is parallel to the plane, Raycast will return false.
         if (playerPlane.Raycast(ray, out hitdist))
         {
+
             // Get the point along the ray that hits the calculated distance.
             Vector3 targetPoint = ray.GetPoint(hitdist);
 
             // Determine the target rotation.  This is the rotation if the transform looks at the target point.
             Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
 
-            while ( transform.rotation != targetRotation && State != state.MOVE  ){
+            while (transform.rotation != targetRotation && State != state.MOVE)
+            {
                 // Smoothly rotate towards the target point.
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
                 yield return new WaitForEndOfFrame();
             }
-          
 
-            
+
+
         }
     }
-
     private IEnumerator show( ) {
         message.enabled = true;
 

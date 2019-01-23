@@ -67,6 +67,10 @@ public class UIInventoryManager : MonoBehaviour {
     public GameObject MessageWindow;
 
     public Text messageText;
+
+    public Text NotificationText;
+
+    public GameObject notificationWindow;
     public void Start( ) {
         
         WeaponInventoryStats.GetComponent<UIItemsWithLabels>().FindLabels();
@@ -83,6 +87,17 @@ public class UIInventoryManager : MonoBehaviour {
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
 
+    public void ShowNotification( string message , int time ) {
+        StartCoroutine( notfication( message , time ) );
+    }
+
+    public IEnumerator notfication( string message , int time ) {
+        notificationWindow.SetActive(true);
+        NotificationText.text = message;
+        yield return new WaitForSeconds(time);
+        notificationWindow.SetActive(false);
+        NotificationText.text = "";
+    }
     public void Update() {
         if ( StaticManager.Character.attachedWeapon != null ){
 
