@@ -70,6 +70,8 @@ public class UIInventoryManager : MonoBehaviour {
 
     public Text NotificationText;
 
+    public GameObject GameOverWindow;
+
     public GameObject notificationWindow;
     public void Start( ) {
         
