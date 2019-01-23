@@ -154,7 +154,7 @@ public class LeaderNav : CompanionNav {
 
         switch ( State ){
             case state.ATTACKING:
-
+                Agent.stoppingDistance = 3;
                 if ( character.attachedWeapon is SwordType ){ }
 
                 if ( enemy == null ){
@@ -174,11 +174,12 @@ public class LeaderNav : CompanionNav {
 
                 break;
             case state.MOVE:
+                  Agent.stoppingDistance = 0;
                 Agent.SetDestination( hit.point );
 
                 break;
             case state.ENEMY_CLICKED:
-
+                  Agent.stoppingDistance = 3;
                 if ( Vector3.Distance( enemy.transform.position , gameObject.transform.position ) < 3 ){
                     SetState = state.ATTACKING;
                 }
