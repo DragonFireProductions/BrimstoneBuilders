@@ -624,7 +624,7 @@ MonoBehaviour:
     DropKey: 0
     quest: {fileID: 737227248}
     dropItem: {fileID: 0}
-    DropWeapon: 0
+    DropWeapon: 1
   - enemy: {fileID: 114932892065668812, guid: 8b3689f0546616c419c405018796038a, type: 3}
     Damage: 1
     luck: 0
@@ -1667,7 +1667,7 @@ MonoBehaviour:
     DropKey: 0
     quest: {fileID: 1071510514}
     dropItem: {fileID: 0}
-    DropWeapon: 1
+    DropWeapon: 0
   - enemy: {fileID: 114932892065668812, guid: 8b3689f0546616c419c405018796038a, type: 3}
     Damage: 1
     luck: 0
@@ -5411,6 +5411,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1122163039750788, guid: 123df733c16d1f44b9cbd22b5d87c6aa,
         type: 3}
+    - target: {fileID: 5488731450600796507, guid: fef76a0e50c1357408637344ebb0eff7,
+        type: 3}
+      propertyPath: enemies.Array.data[0].DropKey
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5963550941247653974, guid: fef76a0e50c1357408637344ebb0eff7,
         type: 3}
       propertyPath: m_SizeDelta.x
