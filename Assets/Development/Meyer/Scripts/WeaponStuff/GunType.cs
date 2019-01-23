@@ -2,17 +2,18 @@
 
 using UnityEngine;
 
-public class GunType : WeaponObject {
+public class GunType : WeaponObject
+{
 
-    [ SerializeField ] public int Ammo;
+    [SerializeField] public int Ammo;
 
     private bool canFire = true;
 
-    [ SerializeField ] public int Capacity;
+    [SerializeField] public int Capacity;
 
-    [ SerializeField ] public float FireRate;
+    [SerializeField] public float FireRate;
 
-    [ SerializeField ] public float Range;
+    [SerializeField] public float Range;
 
     private bool reloading;
 
@@ -20,133 +21,157 @@ public class GunType : WeaponObject {
 
     private GameObject[] bullets;
 
-    [ SerializeField ] public float ReloadTime;
+    [SerializeField] public float ReloadTime;
 
-    protected override void Start( ) {
-        base.Start( );
+    protected override void Start()
+    {
+        base.Start();
 
-        if ( tag != "PickUp" ){
-            FillBullets( AttachedCharacter.gameObject );
+        if (tag != "PickUp")
+        {
+            FillBullets(AttachedCharacter.gameObject);
         }
 
         type = SubClasses.Types.RANGE;
     }
 
-    public void FillBullets( GameObject collider ) {
+    public void FillBullets(GameObject collider)
+    {
         bullets = new GameObject[10];
 
-        for ( var i = 0 ; i < bullets.Length ; i++ ){
-            bullets[ i ] = Instantiate( projectile.gameObject );
-            bullets[ i ].gameObject.SetActive( false );
-            bullets[ i ].gameObject.layer = collider.gameObject.layer;
-            bullets[ i ].transform.SetParent( GameObject.Find( "BulletContainer" ).transform );
-            bullets[ i ].GetComponent < Projectile >( ).weapon = this;
+        for (var i = 0; i < bullets.Length; i++)
+        {
+            bullets[i] = Instantiate(projectile.gameObject);
+            bullets[i].gameObject.SetActive(false);
+            bullets[i].gameObject.layer = collider.gameObject.layer;
+            bullets[i].transform.SetParent(GameObject.Find("BulletContainer").transform);
+            bullets[i].GetComponent<Projectile>().weapon = this;
         }
     }
 
-    public override object this[ string propertyName ] {
-        get {
-            if ( GetType( ).GetField( propertyName ) != null ){
-                return GetType( ).GetField( propertyName ).GetValue( this );
+    public override object this[string propertyName]
+    {
+        get
+        {
+            if (GetType().GetField(propertyName) != null)
+            {
+                return GetType().GetField(propertyName).GetValue(this);
             }
 
-            if ( base[ propertyName ] != null ){
-                return base[ propertyName ];
+            if (base[propertyName] != null)
+            {
+                return base[propertyName];
             }
 
             return null;
         }
-        set { GetType( ).GetField( propertyName ).SetValue( this , value ); }
+        set { GetType().GetField(propertyName).SetValue(this, value); }
     }
 
-    public override void Use( ) {
-        base.Use( );
-        Debug.Log( "Attacking" );
+    public override void Use()
+    {
+        base.Use();
+        Debug.Log("Attacking");
 
-        if ( canFire && Ammo > 0 ){
-            AttachedCharacter.AnimationClass.Play( AnimationClass.states.Attack );
-            audio.Play();
+        if (canFire && Ammo > 0)
+        {
+            AttachedCharacter.AnimationClass.Play(AnimationClass.states.Attack);
         }
-        else if ( !reloading && Ammo == 0 ){
-            StartCoroutine( Reload( ) );
+        else if (!reloading && Ammo == 0)
+        {
+            StartCoroutine(Reload());
         }
     }
 
-    public override void Activate( ) {
-        StartCoroutine( Fire( ) );
+    public override void Activate()
+    {
+        StartCoroutine(Fire());
     }
 
-    private IEnumerator Fire( ) {
-        if ( KnockBack ){
-            AttachedCharacter.KnockBack( KnockBackAmount );
+    private IEnumerator Fire()
+    {
+        if (KnockBack)
+        {
+            AttachedCharacter.KnockBack(KnockBackAmount);
         }
 
-        var proj = GetPulledBullets( );
+        var proj = GetPulledBullets();
 
         proj.gameObject.transform.position = AttachedCharacter.bulletPosition.position;
-        proj.transform.rotation            = AttachedCharacter.bulletPosition.rotation;
+        proj.transform.rotation = AttachedCharacter.bulletPosition.rotation;
 
-        proj.gameObject.SetActive( true );
-        proj.GetComponent < Rigidbody >( ).AddForce( AttachedCharacter.transform.forward * proj.GetComponent < Projectile >( ).GetSpeed( ) , ForceMode.Impulse );
-        StartCoroutine( stopBullet( 2 , proj ) );
+        proj.gameObject.SetActive(true);
+        proj.GetComponent<Rigidbody>().AddForce(AttachedCharacter.transform.forward * proj.GetComponent<Projectile>().GetSpeed(), ForceMode.Impulse);
+        StartCoroutine(stopBullet(2, proj));
         Ammo -= 1;
 
-        yield return new WaitForSeconds( FireRate );
+        audio.Play();
+        yield return new WaitForSeconds(FireRate);
 
         canFire = true;
     }
 
-    public IEnumerator stopBullet( int i , GameObject proj ) {
-        yield return new WaitForSeconds( i );
+    public IEnumerator stopBullet(int i, GameObject proj)
+    {
+        yield return new WaitForSeconds(i);
 
-        proj.SetActive( false );
+        proj.SetActive(false);
     }
 
-    public override void AssignDamage( ) {
+    public override void AssignDamage()
+    {
         var a = AttachedCharacter as Companion;
         Damage = a.range.CurrentLevel;
     }
 
-    private IEnumerator Reload( ) {
+    private IEnumerator Reload()
+    {
         reloading = true;
 
-        yield return new WaitForSeconds( ReloadTime );
+        yield return new WaitForSeconds(ReloadTime);
 
-        Ammo      = Capacity;
+        Ammo = Capacity;
         reloading = false;
     }
 
-    public override void Attach( ) {
-        base.Attach( );
+    public override void Attach()
+    {
+        base.Attach();
 
-        if ( bullets == null ){
-            FillBullets( AttachedCharacter.gameObject );
+        if (bullets == null)
+        {
+            FillBullets(AttachedCharacter.gameObject);
         }
     }
 
-    public override void IncreaseSubClass( float amount ) {
-        base.IncreaseSubClass( amount );
+    public override void IncreaseSubClass(float amount)
+    {
+        base.IncreaseSubClass(amount);
         var character = AttachedCharacter as Companion;
-        var level     = ( int )character.range.CurrentLevel;
-        character.range.IncreaseLevel( amount );
-        var currLevel = ( int )character.range.CurrentLevel;
+        var level = (int)character.range.CurrentLevel;
+        character.range.IncreaseLevel(amount);
+        var currLevel = (int)character.range.CurrentLevel;
 
-        if ( currLevel - level == 1 ){
-            InstatiateFloatingText.InstantiateFloatingText( "RANGE++" , character , Color.green , new Vector3( 1 , 1 , 1 ) , 0.2f );
+        if (currLevel - level == 1)
+        {
+            InstatiateFloatingText.InstantiateFloatingText("RANGE++", character, Color.green, new Vector3(1, 1, 1), 0.2f);
         }
     }
 
-    [ HideInInspector ] protected int _lastBullet;
+    [HideInInspector] protected int _lastBullet;
 
-    public GameObject GetPulledBullets( ) {
+    public GameObject GetPulledBullets()
+    {
         GameObject currentBullet;
 
-        if ( _lastBullet == bullets.Length - 1 ){
-            _lastBullet   = 0;
-            currentBullet = bullets[ 0 ];
+        if (_lastBullet == bullets.Length - 1)
+        {
+            _lastBullet = 0;
+            currentBullet = bullets[0];
         }
-        else{
-            currentBullet = bullets[ _lastBullet ];
+        else
+        {
+            currentBullet = bullets[_lastBullet];
         }
 
         _lastBullet += 1;

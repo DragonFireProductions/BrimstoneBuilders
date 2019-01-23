@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class LeaderNav : CompanionNav {
+public class LeaderNav : BaseNav {
 
     private Collider[] colliders;
 
@@ -27,7 +27,8 @@ public class LeaderNav : CompanionNav {
 
     private bool timerEnabled = false;
 
-    private void Start( ) {
+    protected override void Start( ) {
+        base.Start();
         hit            = new RaycastHit( );
         mask           = LayerMask.GetMask( "Enemy" );
         battleDistance = 4;
@@ -40,6 +41,7 @@ public class LeaderNav : CompanionNav {
 
     // Update is called once per frame
     protected override void Update( ) {
+        base.Update();
         character.AnimationClass.animation.SetFloat( "Walk" , Agent.velocity.magnitude / Agent.speed );
 
         if ( Input.GetMouseButton( 0 ) && !StaticManager.UiInventory.ItemsInstance.windowIsOpen && !EventSystem.current.IsPointerOverGameObject( ) ){
@@ -48,7 +50,6 @@ public class LeaderNav : CompanionNav {
             if ( Physics.Raycast( l_ray , out hit ) ){
                 if ( hit.collider.name == "Terrain" ){
                     SetState = state.MOVE;
-
                     if ( enemy ){
                         enemy.projector.gameObject.SetActive( false );
                     }

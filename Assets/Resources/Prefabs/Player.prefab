@@ -2107,12 +2107,9 @@ MonoBehaviour:
   Agent: {fileID: 195716155690410798}
   battleDistance: 3
   character: {fileID: 114476351334043018}
+  clip: {fileID: 8300000, guid: 1f4f82529c1fbf642896b198345ce90e, type: 3}
   stoppingDistance: 0
   waittime: 2
-  companion: {fileID: 114476351334043018}
-  aggState: 0
-  behaviors: {fileID: 0}
-  enemiesToAttack: []
   enemy: {fileID: 0}
   enemySystem: {fileID: 0}
   message: {fileID: 0}
@@ -9436,21 +9433,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4997758706275636}
     m_Modifications:
-    - target: {fileID: 5374004888353748547, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
-        type: 3}
-      propertyPath: m_Texture
-      value: 
-      objectReference: {fileID: 2800000, guid: eb5f6e2757c821940b69cf1456f7865a, type: 3}
-    - target: {fileID: 1020615464733101051, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 1020615464733101051, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 6188346990203889501, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
         type: 3}
       propertyPath: m_Name
@@ -9561,6 +9543,21 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1020615464733101051, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1020615464733101051, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5374004888353748547, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: eb5f6e2757c821940b69cf1456f7865a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0cd91a5a4faa7184094c40c9ab9ca03c, type: 3}
 --- !u!224 &7559736685789391728 stripped
