@@ -94,9 +94,9 @@ public abstract class BaseCharacter : MonoBehaviour {
         var hits = 0;
 
         while ( hits < _hits ){
-            item.AttachedCharacter.stats.health -= damage;
+            stats.health -= damage;
 
-            if ( item.AttachedCharacter.stats.health <= 0 ){
+            if ( stats.health <= 0 ){
                 Destroy( item.AttachedCharacter.gameObject );
             }
 

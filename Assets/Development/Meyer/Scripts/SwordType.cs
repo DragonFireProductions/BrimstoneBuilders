@@ -51,5 +51,6 @@ public class SwordType : WeaponObject {
         AnimationClass = gameObject.GetComponent<AnimationClass>();
         item = this.gameObject;
         type = SubClasses.Types.MELEE;
+         AttachedCharacter.AnimationClass.SwitchWeapon(this);
     }
 }

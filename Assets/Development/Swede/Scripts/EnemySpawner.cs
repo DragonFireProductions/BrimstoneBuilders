@@ -141,6 +141,7 @@ public class EnemySpawner : MonoBehaviour
 
             newEnemy.GetComponent<Enemy>().startWeapon = Instantiate(enemies[random].weapon);
 
+
             newEnemy.GetComponent<Enemy>().startWeapon.GetComponent<WeaponObject>().PickUp(newEnemy.GetComponent<Enemy>());
             newEnemy.GetComponent<Enemy>().startWeapon.GetComponent<WeaponObject>().Attach(newEnemy.GetComponent<Enemy>());
             StaticManager.RealTime.Enemies.Add(newEnemy.GetComponent<Enemy>());
