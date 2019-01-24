@@ -2036,7 +2036,7 @@ NavMeshAgent:
   m_Speed: 12
   m_Acceleration: 200
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 420
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
@@ -2107,9 +2107,12 @@ MonoBehaviour:
   Agent: {fileID: 195716155690410798}
   battleDistance: 3
   character: {fileID: 114476351334043018}
-  clip: {fileID: 8300000, guid: 1f4f82529c1fbf642896b198345ce90e, type: 3}
   stoppingDistance: 0
   waittime: 2
+  companion: {fileID: 114476351334043018}
+  aggState: 0
+  behaviors: {fileID: 0}
+  enemiesToAttack: []
   enemy: {fileID: 0}
   enemySystem: {fileID: 0}
   message: {fileID: 0}
@@ -9438,6 +9441,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: IconCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5374004888353748547, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: eb5f6e2757c821940b69cf1456f7865a, type: 3}
     - target: {fileID: 1273390263847446084, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9553,11 +9561,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 30
       objectReference: {fileID: 0}
-    - target: {fileID: 5374004888353748547, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
-        type: 3}
-      propertyPath: m_Texture
-      value: 
-      objectReference: {fileID: 2800000, guid: eb5f6e2757c821940b69cf1456f7865a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0cd91a5a4faa7184094c40c9ab9ca03c, type: 3}
 --- !u!224 &7559736685789391728 stripped

@@ -72,14 +72,12 @@ public class Companion : BaseCharacter {
 
         if ( stats.Health <= 0 ){
             if ( this == StaticManager.Character ){
-                StaticManager.UiInventory.ItemsInstance.GameOverUI.SetActive( true );
+                StaticManager.uiManager.GameOverWindow.SetActive( true );
                 Time.timeScale = 0;
             }
 
             Destroy( GetComponent < CompanionNav >( ).behaviors.gameObject );
             StaticManager.RealTime.Companions.Remove( this );
-            StaticManager.inventories.Destroy( inventory );
-            Destroy( gameObject );
         }
     }
 

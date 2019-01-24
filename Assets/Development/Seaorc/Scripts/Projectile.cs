@@ -33,6 +33,7 @@ public class Projectile : MonoBehaviour
     /// <param name="other"></param>
     protected virtual void OnTriggerEnter(Collider other)
     {
+        var strin = tag;
         if (other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player")
         {
             if(weapon.KnockBack)

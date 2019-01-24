@@ -42,6 +42,7 @@ public class Shop : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+         StaticManager.currencyManager.shops.Add(gameObject );
        StaticManager.UiInventory.ItemsInstance.GetLabel("CompanionSellError", StaticManager.UiInventory.ItemsInstance.ShopUI).text = " ";
         Buy = ShopContainer.transform.Find( "Buy" ).gameObject;
         Sell = ShopContainer.transform.Find( "Sell" ).gameObject;

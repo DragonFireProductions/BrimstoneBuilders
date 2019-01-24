@@ -26,13 +26,16 @@ public class AudioManager : MonoBehaviour
         SoundDictionary = new Dictionary<string, Sound>();
         foreach (Sound sound in Clips)
         {
-            GameObject GO = new GameObject("Sound: " + sound.GetName());
+            GameObject GO = new GameObject(sound.GetName());
 
             GO.transform.SetParent(this.transform);
 
             sound.SetSource(GO.AddComponent<AudioSource>());
+           
 
             SoundDictionary.Add(sound.GetName(), sound);
+
+
         }
     }
 

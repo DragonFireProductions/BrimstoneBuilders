@@ -12,6 +12,7 @@ namespace Assets.Meyer.TestScripts.Player {
 
         public static GameObject Player;
 
+        public GameObject cam_pos;
         protected override void Start( ) {
             base.Start();
             Player = gameObject;

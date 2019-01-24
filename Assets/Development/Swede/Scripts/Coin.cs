@@ -33,6 +33,7 @@ public class Coin : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player"){
+            StaticManager.uiManager.ShowNotification("Picked up coin", 5);
             StaticManager.Character.inventory.coinCount += coinWorth;
             Debug.Log("Hitting Trigger");
             Destroy(this.gameObject);

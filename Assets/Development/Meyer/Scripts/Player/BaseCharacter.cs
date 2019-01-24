@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using Kristal;
+
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -94,10 +96,16 @@ public abstract class BaseCharacter : MonoBehaviour {
         var hits = 0;
 
         while ( hits < _hits ){
-            item.AttachedCharacter.stats.health -= damage;
+            stats.health -= damage;
 
-            if ( item.AttachedCharacter.stats.health <= 0 ){
-                Destroy( item.AttachedCharacter.gameObject );
+            if ( stats.health <= 0 ){
+
+                if (this is Enemy){
+                    var a = this as Enemy;
+                    a.quest.EnemyDied(this as Enemy);
+                    StaticManager.drop.Drop_Loot(this as Enemy);
+                }
+                Destroy( gameObject );
             }
 
             hits++;
