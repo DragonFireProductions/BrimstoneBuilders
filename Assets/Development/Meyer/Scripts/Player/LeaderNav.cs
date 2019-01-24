@@ -62,7 +62,7 @@ public class LeaderNav : CompanionNav {
             }
         }
 
-        if ( Input.GetMouseButtonDown( 1 ) ){
+        if ( Input.GetMouseButtonDown( 1 ) && !Input.GetKey(KeyCode.LeftShift) ){
             Agent.isStopped = true;
             SetState        = state.FREEZE;
 
@@ -122,23 +122,6 @@ public class LeaderNav : CompanionNav {
 
        
 
-        if ( StaticManager.UiInventory.ItemsInstance.windowIsOpen == false ){
-            if ( Input.GetMouseButtonDown( 1 ) ){
-                var l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );
-                var hit1  = new RaycastHit( );
-
-                if ( Physics.Raycast( l_ray , out hit1 ) ){
-                    if ( hit1.collider.tag == "Companion" || hit1.collider.tag == "Player" ){
-                        //	//		StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.PlayerStats );
-                        //	StaticManager.UiInventory.UpdateStats( hit1.collider.GetComponent < BaseCharacter >( ).attachedWeapon.stats , StaticManager.UiInventory.ItemsInstance.AttachedWeapon );
-                        //			StaticManager.UiInventory.UpdateStats( hit1.collider.GetComponent < BaseCharacter >( ).stats ,                      StaticManager.UiInventory.ItemsInstance.CharacterStats, false );
-//						StaticManager.UiInventory.ItemsInstance.PlayerStats.transform.Find( "WeaponImage" ).GetComponent < RawImage >( ).texture = hit1.collider.GetComponent < BaseCharacter >( ).attachedWeapon.stats.icon;
-                    }
-                }
-
-                character.attachedWeapon.Use( );
-            }
-        }
         
         if ( !StaticManager.RealTime.Attacking ){
             colliders = Physics.OverlapSphere( transform.position , 10 , mask );
