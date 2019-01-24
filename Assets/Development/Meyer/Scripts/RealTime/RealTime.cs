@@ -11,14 +11,14 @@ public class RealTime : MonoBehaviour {
 	public Enemy EnemyClicked { get; set; }
 
 	public List < Enemy > Enemies;
-	public List < Companion > Companions;
+	public List < BaseCharacter > Companions;
     public List<Enemy> AllEnemies;
 
 	[SerializeField] public Color ClickedColor { get; set; }
 
 	public void Awake( ) {
         AllEnemies = new List<Enemy>();
-		Companions = new List < Companion >();
+		Companions = new List < BaseCharacter >();
 		Enemies = new List < Enemy >();
 	}
 
@@ -57,7 +57,7 @@ public class RealTime : MonoBehaviour {
 	        l_enemy.Nav.SetState = BaseNav.state.ATTACKING;
         }
     }
-
+	
 
     public BaseCharacter getnewType( BaseCharacter character ) {
 		if (character is Enemy && Companions.Count > 0){

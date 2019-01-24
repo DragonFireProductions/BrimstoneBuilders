@@ -18,12 +18,16 @@ public class SwordType : WeaponObject {
         if ( AttachedCharacter ){
         AttachedCharacter.AnimationClass.Play(AnimationClass.states.Attack);
 
+
         }
 
     }
     
     public override void Activate( ) {
-         AttachedCharacter.leftHand.GetComponentInChildren < BoxCollider >( ).enabled = true;
+        int ind = Random.Range(0, 3);
+        AttachedCharacter.leftHand.GetComponentInChildren < BoxCollider >( ).enabled = true;
+        audio.clip = clips[ind];
+        audio.Play();
     }
 
     public override void Deactivate( ) {
