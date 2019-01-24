@@ -120,6 +120,8 @@ public class Currency : MonoBehaviour {
                     break;
                 }
             }
+
+            newButton.GetComponent<companionBehaviors>().color(newButton.transform.Find("Passive").gameObject);
         }
         else{
             StaticManager.UiInventory.ItemsInstance

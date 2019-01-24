@@ -27,6 +27,7 @@ public abstract class Potions : BaseItems {
         if (AttachedCharacter == null)
         {
             gameObject.SetActive(false);
+            
         }
     }
 
@@ -36,6 +37,9 @@ public abstract class Potions : BaseItems {
             StaticManager.Character.inventory.PickUp(this);
             this.GetComponent<BoxCollider>().enabled = false;
             AttachedCharacter = StaticManager.Character;
+            AttachedCharacter.GetComponent<PlayerInventory>().potions.Add(this);
+            gameObject.SetActive(false);
+            StaticManager.uiManager.ShowNotification("Picked up potion", 4);
         }
     }
     public virtual object this[string propertyName]

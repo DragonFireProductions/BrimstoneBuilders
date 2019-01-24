@@ -74,6 +74,10 @@ public class PlayerInventory : MonoBehaviour {
          StaticManager.inventories.SwitchToWeapons();
          Time.timeScale = 0;
         }
+
+        if ( Input.GetKeyDown(KeyCode.H) && potions.Count > 0 && character is Character ){
+            potions[0].Cast(character);
+        }
     }
 
 }

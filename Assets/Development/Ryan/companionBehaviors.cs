@@ -32,7 +32,7 @@ public class companionBehaviors : MonoBehaviour
 
     public void color(GameObject go)
     {
-        go.GetComponent<Image>().color = Color.green;
+        go.GetComponent<Image>().color = new Color(29.0f/255.0f,188.0f/255.0f,8.0f/255.0f);
 
 
         prev_button = go;

@@ -26,8 +26,7 @@ public class SwordType : WeaponObject {
     public override void Activate( ) {
         int ind = Random.Range(0, 3);
         AttachedCharacter.leftHand.GetComponentInChildren < BoxCollider >( ).enabled = true;
-        audio.clip = clips[ind];
-        audio.Play();
+        StaticManager.audioManager.PlaySound("Sword");
     }
 
     public override void Deactivate( ) {
@@ -55,5 +54,9 @@ public class SwordType : WeaponObject {
         AnimationClass = gameObject.GetComponent<AnimationClass>();
         item = this.gameObject;
         type = SubClasses.Types.MELEE;
+        if (AttachedCharacter)
+        {
+            AttachedCharacter.AnimationClass.SwitchWeapon(this);
+        }
     }
 }

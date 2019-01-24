@@ -138,6 +138,7 @@ public class Map : MonoBehaviour {
 
 	public void CloseMap( ) {
 		map.SetActive(false);
+		StaticManager.inventories.mapCamera.SetActive(false);
 	}
 	// Update is called once per frame
 	void Update () {

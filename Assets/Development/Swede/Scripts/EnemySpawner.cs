@@ -57,7 +57,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        StaticManager.map.Add(Map.Type.enemy, icon);
+        //StaticManager.map.Add(Map.Type.enemy, icon);
         instantiated = new List<GameObject>();
     }
 
