@@ -2,6 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using Assets.Meyer.TestScripts.Player;
+
+using Kristal;
+
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -94,11 +98,16 @@ public abstract class BaseCharacter : MonoBehaviour {
         var hits = 0;
 
         while ( hits < _hits ){
-            item.AttachedCharacter.stats.health -= damage;
-
-            if ( item.AttachedCharacter.stats.health <= 0 ){
-                Destroy( item.AttachedCharacter.gameObject );
+            if ( this is Character ){
+                gameObject.GetComponent<Character>().Damage(damage, item);
             }
+            else if ( this is Enemy ){
+                gameObject.GetComponent<Enemy>().Damage(damage, item);
+            }
+            else if ( this is Companion ){
+                gameObject.GetComponent<Enemy>().Damage(damage, item);
+            }
+
 
             hits++;
 
@@ -168,9 +177,9 @@ public abstract class BaseCharacter : MonoBehaviour {
             stats.Health -= damage;
             InstatiateFloatingText.InstantiateFloatingText( damage.ToString( ) , Color.white , this );
         }
-
-        if ( item.AttachedCharacter.stats.health <= 0  && this is Companion){
-            Destroy( item.AttachedCharacter.gameObject );
+        
+        if ( stats.health <= 0 && this is Character){
+            StaticManager.uiManager.GameOverWindow.SetActive(true);
         }
     }
 

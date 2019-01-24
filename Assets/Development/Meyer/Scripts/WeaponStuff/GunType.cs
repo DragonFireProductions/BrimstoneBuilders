@@ -30,6 +30,10 @@ public class GunType : WeaponObject {
         }
 
         type = SubClasses.Types.RANGE;
+
+        if ( AttachedCharacter ){
+            AttachedCharacter.AnimationClass.SwitchWeapon(this);
+        }
     }
 
     public void FillBullets( GameObject collider ) {
@@ -116,6 +120,7 @@ public class GunType : WeaponObject {
     }
 
     public override void Attach( ) {
+        type = SubClasses.Types.RANGE;
         base.Attach( );
 
         if ( bullets == null ){

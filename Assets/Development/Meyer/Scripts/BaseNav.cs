@@ -28,6 +28,8 @@ public class BaseNav : MonoBehaviour {
 
     public BaseCharacter character;
 
+    public AudioClip clip;
+
     protected float innerRadius = 8f;
 
     protected Vector3 newpos;
@@ -45,6 +47,10 @@ public class BaseNav : MonoBehaviour {
     protected float speed;
 
     protected Vector3 lastPosition;
+
+    protected AudioSource audio;
+
+    protected float dist;
 
     public void RunAway( ) {
         SetState = state.IDLE;
@@ -94,8 +100,9 @@ public class BaseNav : MonoBehaviour {
     }
 
     // Use this for initialization
-    protected void Start( ) {
+    protected virtual void Start( ) {
         Agent.stoppingDistance = stoppingDistance;
+        audio = gameObject.AddComponent<AudioSource>();
     }
     void FixedUpdate()
     {
@@ -105,7 +112,14 @@ public class BaseNav : MonoBehaviour {
     }
     // Update is called once per frame
     protected virtual void Update( ) {
-         //character.AnimationClass.animation.SetFloat("Walk", 3);
+        //character.AnimationClass.animation.SetFloat("Walk", 3);
+        float dist = Agent.velocity.magnitude / Agent.speed;
+        audio.playOnAwake = false;
+        audio.clip = clip;
+        if (dist != 0 && !audio.isPlaying)
+        {
+            audio.PlayOneShot(clip, .05f);
+        }
         switch ( State ){
             
             default:

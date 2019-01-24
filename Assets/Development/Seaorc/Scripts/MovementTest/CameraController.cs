@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour {
 
     [ SerializeField ] private Transform camRig;
 
-    [ SerializeField ] private Transform playercam;
+    [ SerializeField ] public Transform playercam;
 
     [ SerializeField ] private Transform colonyCam;
 

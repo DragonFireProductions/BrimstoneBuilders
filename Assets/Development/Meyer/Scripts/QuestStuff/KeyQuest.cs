@@ -31,15 +31,8 @@ public class KeyQuest : Quest
         spawnObject
 
     }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    protected override void Accept( ) {
+    
+    public override void Accept( ) {
         base.Accept();
         ui.questText.text = list[0].needToCollMessage;
         ui.icon.sprite = list[0].icon;
@@ -115,14 +108,15 @@ public class KeyQuest : Quest
             if ( completed ){
                 DeleteAllKeys();
                 var key = Instantiate( this.key );
-                key.transform.position = transform.position;
+                key.transform.position = transform.position + (transform.forward * 3);
                 key.gameObject.SetActive(true);
                 key.quest = this;
                 list.Add(key);
                 Accept();
             }
             else if ( pickedUp.Count == 0 && ui == null){
-                Accept();
+                 StaticManager.questManager.currentQuest = this;
+                 StaticManager.questManager.QuestConfirmation(this);
             }
             else{
                 StaticManager.uiManager.ShowMessage("Please open quest log to see your current objective", 5);

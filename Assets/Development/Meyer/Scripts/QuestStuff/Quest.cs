@@ -23,10 +23,50 @@ public class Quest : MonoBehaviour {
 
     public QuestItem loot;
 
-    protected virtual void Accept( ) {
+    public GameObject QuestAvalible;
+
+    public GameObject CollectionReady;
+
+    public GameObject QuestInProgress;
+
+    public enum state {
+
+        QuestAvailble,
+
+        QuestInProgress,
+
+        CollectionReady,
+
+        QuestComplete
+
+    }
+
+    protected state currState;
+
+    public void SwitchState( state state ) {
+        QuestAvalible.SetActive(false);
+        CollectionReady.SetActive(false);
+        QuestInProgress.SetActive( false );
+        switch ( state ){
+            case state.CollectionReady:
+                   CollectionReady.SetActive(true);
+                break;
+            case state.QuestAvailble:
+          QuestAvalible.SetActive(true);
+                break;
+            case state.QuestInProgress:
+                QuestInProgress.SetActive( true );
+                break;
+            case state.QuestComplete:
+
+                break;
+        }
+    }
+    public virtual void Accept( ) { 
+        SwitchState(state.QuestInProgress);
         if (ui == null)
         {
-            StaticManager.uiManager.ShowMessage(QuestDialog, 10);
+            
             var a = Instantiate(StaticManager.questManager.questUI.gameObject);
             var b = a.GetComponent<QuestUI>();
 
@@ -34,6 +74,11 @@ public class Quest : MonoBehaviour {
             a.SetActive(true);
             ui = b;
             ui.labels.FindLabels();
+            ui.questText.text = QuestDialog;
+        }
+
+        if ( !StaticManager.RealTime.Companions.Contains(StaticManager.Character) ){
+            StaticManager.RealTime.Companions.Add( StaticManager.Character );
         }
       
     }
@@ -49,7 +94,8 @@ public class Quest : MonoBehaviour {
 
     public QuestUI ui;
     public void ReturnToNPC( ) {
-        ui.questText.text = KeyDropDialog;
+        SwitchState(state.CollectionReady);
+        ui.questText.text = "Return to NPC";
 
     }
 
@@ -72,12 +118,12 @@ public class Quest : MonoBehaviour {
         this.CollidedWithItem(item);
     }
 
-    public virtual void Complete( ) {
-    }
+    public virtual void Complete( ) { }
+
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
-        
+        SwitchState(state.QuestAvailble);
     }
 
     // Update is called once per frame

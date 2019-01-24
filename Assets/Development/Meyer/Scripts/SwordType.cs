@@ -18,12 +18,15 @@ public class SwordType : WeaponObject {
         if ( AttachedCharacter ){
         AttachedCharacter.AnimationClass.Play(AnimationClass.states.Attack);
 
+
         }
 
     }
     
     public override void Activate( ) {
-         AttachedCharacter.leftHand.GetComponentInChildren < BoxCollider >( ).enabled = true;
+        int ind = Random.Range(0, 3);
+        AttachedCharacter.leftHand.GetComponentInChildren < BoxCollider >( ).enabled = true;
+        StaticManager.audioManager.PlaySound("Sword");
     }
 
     public override void Deactivate( ) {
@@ -51,5 +54,9 @@ public class SwordType : WeaponObject {
         AnimationClass = gameObject.GetComponent<AnimationClass>();
         item = this.gameObject;
         type = SubClasses.Types.MELEE;
+        if (AttachedCharacter)
+        {
+            AttachedCharacter.AnimationClass.SwitchWeapon(this);
+        }
     }
 }

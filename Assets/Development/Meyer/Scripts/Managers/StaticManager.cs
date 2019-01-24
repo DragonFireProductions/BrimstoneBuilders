@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class StaticManager : MonoBehaviour
 {
 
-    public static AudioManager Manager;
+    public static AudioManager audioManager;
 
     public static Character Character;
 
@@ -61,7 +61,7 @@ public class StaticManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        Manager = FindObjectOfType<AudioManager>();
+        audioManager = FindObjectOfType<AudioManager>();
 
         Character = GameObject.Find("Player").GetComponent<Character>();
 
