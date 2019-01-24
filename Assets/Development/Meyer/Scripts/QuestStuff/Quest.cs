@@ -108,12 +108,12 @@ public class Quest : MonoBehaviour {
         keyContainer.GetComponent<KeyItemContainer>().labels.Labels[0].labelText.text = item.gameObject.name;
         item.keyItem = keyContainer.GetComponent < KeyItemContainer >( );
 
-        StaticManager.uiManager.ShowMessage("You have found a " + item.gameObject.name, 5);
+        StaticManager.uiManager.ShowMessage("You have found a " + item.gameObject.name, 5, false);
 
     }
     public virtual void CollidedWithKey(QuestItem item) {
 
-        StaticManager.uiManager.ShowMessage(item.needToCollMessage, 10);
+        StaticManager.uiManager.ShowMessage(item.needToCollMessage, 10, false);
         PickedUpKey = true;
         this.CollidedWithItem(item);
     }

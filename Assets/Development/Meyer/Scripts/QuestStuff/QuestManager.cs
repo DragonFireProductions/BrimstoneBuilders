@@ -34,17 +34,16 @@ public class QuestManager : MonoBehaviour {
     }
 
     public void QuestConfirmation(Quest quest ) {
-        StaticManager.uiManager.ShowMessage(currentQuest.QuestDialog, 10);
-        StaticManager.UiInventory.ShowWindow( questConfirmation );
+        StaticManager.uiManager.ShowMessage(currentQuest.QuestDialog, 10, true);
     }
 
     public void Accept( ) {
       
         currentQuest.Accept();
     }
-    public void CompleteQuest(Quest quest ) {
+    public void CompleteQuest(Quest quest, string message ) {
         quest.SwitchState(Quest.state.QuestComplete);
-        StaticManager.uiManager.ShowMessage(quest.KeyDropDialog, 10);
+        StaticManager.uiManager.ShowMessage(message, 10, false);
         for ( int i = 0 ; i < quests.Count ; i++ ){
             if ( quests[i] == quest ){
              quests.RemoveAt(i);

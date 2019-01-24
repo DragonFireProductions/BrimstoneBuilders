@@ -62,7 +62,7 @@ public class UIInventoryManager : MonoBehaviour {
 
     public GameObject[] ArmorGrid;
 
-    public static QuestManager manager;
+    public  QuestManager manager;
 
     public GameObject MessageWindow;
 
@@ -120,8 +120,15 @@ public class UIInventoryManager : MonoBehaviour {
         }
     }
 
-    public void ShowMessage(string message, int time ) {
+    public void ShowMessage(string message, int time, bool questConfirmationl ) {
         StartCoroutine( show( message , time ) );
+
+        if ( questConfirmationl ){
+            StaticManager.questManager.questConfirmation.SetActive(true);
+        }
+        else{
+            StaticManager.questManager.questConfirmation.SetActive(false);
+        }
     }
 
     public IEnumerator show( string message , int time ) {

@@ -28,7 +28,9 @@ public class AudioManager : MonoBehaviour
         {
             GameObject GO = new GameObject(sound.GetName());
 
-            GO.transform.SetParent(this.transform);
+            GO.transform.position = Camera.main.transform.position;
+
+            GO.transform.SetParent(Camera.main.transform);
 
             sound.SetSource(GO.AddComponent<AudioSource>());
            
@@ -38,6 +40,7 @@ public class AudioManager : MonoBehaviour
 
         }
     }
+
 
     /// <summary>
     /// Plays a sound based on the passed in string
