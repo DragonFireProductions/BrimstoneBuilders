@@ -151,6 +151,8 @@ public abstract class WeaponObject : BaseItems
     public void PickUp(BaseCharacter character ) {
         if (tag == "PickUp")
         {
+
+            StaticManager.uiManager.ShowNotification("Picked up weapon", 10);
             if ( mesh ){
                  mesh.SetActive(false);
             }

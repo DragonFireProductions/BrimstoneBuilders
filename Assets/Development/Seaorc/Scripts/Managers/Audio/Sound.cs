@@ -33,6 +33,8 @@ public class Sound
         Source.pitch = Pitch;
     }
 
+
+
     /// <summary>
     /// Sets the valume to current valume settings
     /// </summary>
@@ -62,9 +64,12 @@ public class Sound
     /// </summary>
     public void PlaySound()
     {
-        Source.volume = 1.0f;
+        if ( !Source.isPlaying ){
+            Source.volume = 1.0f;
         Source.Play();
         Debug.Log("Audio is playing");
+        }
+        
     }
 
     public void StopSound()

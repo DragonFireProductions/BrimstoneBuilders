@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour {
 
+	public void ReturnToNpc( ) {
+
+	}
 	// Use this for initialization
 	void Start () {
 		
