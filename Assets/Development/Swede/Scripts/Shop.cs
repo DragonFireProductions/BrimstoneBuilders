@@ -18,6 +18,8 @@ public class Shop : MonoBehaviour
 
     public RawImage icon;
 
+    public RawImage notIcon;
+
     [Serializable]
     public struct CompanionStruct
     {
@@ -48,6 +50,7 @@ public class Shop : MonoBehaviour
         Sell = ShopContainer.transform.Find( "Sell" ).gameObject;
         StartCoroutine( init( ) );
         StaticManager.map.Add(Map.Type.shop, icon);
+        notIcon.enabled = true;
     }
 
     IEnumerator init( ) {
@@ -74,8 +77,13 @@ public class Shop : MonoBehaviour
     
    
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+        shopCompanions.RemoveAll( items => items == null );
+        if ( shopCompanions.Count <= 0 ){
+            notIcon.enabled = false;
+        }
+        else{
+            notIcon.enabled = true;
+        }
     }
 }

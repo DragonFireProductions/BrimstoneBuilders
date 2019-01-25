@@ -32,6 +32,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
     public List<companionBehaviors> behaviors;
 
+	public GameObject mapCamera;
+
     public void Awake( ) {
 		WeaponAssetList = itemList.itemList;
 		alllables       = new List < PlayerInventory >( );
@@ -45,6 +47,10 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
 	public void SwitchToPotionsTab( ) {
 		StaticManager.questManager.questWindow.SetActive(false);
+		StaticManager.map.CloseMap();
+		playerCam.gameObject.SetActive(false);
+		mapCamera.SetActive(false);
+
 		inventory.character.inventory.WeaponInventory.inventoryObj.SetActive(false);
 		inventory.character.inventoryUI.PotionsInventory.SetActive(true);
 		inventory.armorInventory.ArmorInventory.SetActive(false);
@@ -57,6 +63,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		StaticManager.questManager.questWindow.SetActive(false);
 	    inventory.character.transform.position = prevPos;
 		StaticManager.map.CloseMap();
+		playerCam.gameObject.SetActive(false);
+
 		inventory.character.inventory.WeaponInventory.inventoryObj.SetActive(true);
 		inventory.character.inventoryUI.PotionsInventory.SetActive( false );
 	    inventory.armorInventory.ArmorInventory.SetActive(false);
@@ -67,10 +75,14 @@ public class MultipleInventoryHolder : MonoBehaviour {
     }
 
 	public void SwitchToQuest( ) {
+		StaticManager.map.CloseMap();
+		playerCam.gameObject.SetActive(false);
 		StaticManager.questManager.questWindow.SetActive(true);
 	}
     public void SwitchArmorTab(Tab obj)
     {
+		playerCam.gameObject.SetActive(true);
+		StaticManager.map.CloseMap();
         StaticManager.questManager.questWindow.SetActive(false);
 		StaticManager.uiManager.PlayerImage.SetActive(true);
 		 StaticManager.uiManager.WeaponWindow.SetActive(false);
@@ -122,7 +134,9 @@ public class MultipleInventoryHolder : MonoBehaviour {
     }
     public void SwitchArmorTab(ArmorItem.Type obj)
     {
-		StaticManager.uiManager.PlayerImage.SetActive(true);
+        playerCam.gameObject.SetActive(true);
+        StaticManager.map.CloseMap();
+        StaticManager.uiManager.PlayerImage.SetActive(true);
 	    StaticManager.uiManager.WeaponWindow.SetActive(false);
         StaticManager.questManager.questWindow.SetActive(false);
         if (inventory.armorInventory.currentArmorTab)

@@ -100,7 +100,7 @@ public class KeyQuest : Quest
     }
     public override void Complete( ) {
        DeleteAllKeys();
-        StaticManager.questManager.CompleteQuest(this);
+        StaticManager.questManager.CompleteQuest(this, "Gate is Now Open");
     }
 
     public void OnTriggerEnter( Collider collider ) {
@@ -119,7 +119,7 @@ public class KeyQuest : Quest
                  StaticManager.questManager.QuestConfirmation(this);
             }
             else{
-                StaticManager.uiManager.ShowMessage("Please open quest log to see your current objective", 5);
+                StaticManager.uiManager.ShowMessage("Please open quest log to see your current objective", 5, false);
             }
              
         }

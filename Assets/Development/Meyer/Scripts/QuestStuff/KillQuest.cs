@@ -19,6 +19,8 @@ public class KillQuest : Quest {
 
     public Sprite EnemyIcon;
     private bool accepted = false;
+
+    public int enemiesKilled = 0;
     public override void Accept( ) {
         accepted = true;
         base.Accept();
@@ -37,13 +39,14 @@ public class KillQuest : Quest {
     public override void EnemyDied( Enemy enemy ) {
         enemies.Remove( enemy );
         ui.labels.Labels[ 0 ].labelText.text = "Kill Count: " + enemies.Count;
+        enemiesKilled++;
     }
     
 
     // Update is called once per frame
     void Update()
     {
-        if (enemies != null && ui && accepted &&  enemies.Count <= 0 ){
+        if (KillAmount == enemiesKilled){
             ReturnToNPC();
             Completed = true;
         }
@@ -61,7 +64,7 @@ public class KillQuest : Quest {
                 var key = Instantiate(winObject);
                 key.transform.position = transform.position + (transform.forward * 3);
                 key.gameObject.SetActive(true);
-                StaticManager.questManager.CompleteQuest(this);
+                StaticManager.questManager.CompleteQuest(this, KeyDropDialog);
                 gameObject.GetComponent<Collider>().enabled = false;
             }
             else if (( enemies.Count == 0 && !Completed) || !accepted ){
@@ -70,7 +73,7 @@ public class KillQuest : Quest {
             }
             else
             {
-                StaticManager.uiManager.ShowMessage("Please open quest log to see your current objective", 5);
+                StaticManager.uiManager.ShowMessage("Please open quest log to see your current objective", 5, false);
             }
 
         }
