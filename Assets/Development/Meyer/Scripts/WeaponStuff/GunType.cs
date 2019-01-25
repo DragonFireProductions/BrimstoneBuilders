@@ -30,7 +30,10 @@ public class GunType : WeaponObject {
         }
 
         type = SubClasses.Types.RANGE;
-         AttachedCharacter.AnimationClass.SwitchWeapon(this);
+
+        if ( AttachedCharacter ){
+            AttachedCharacter.AnimationClass.SwitchWeapon(this);
+        }
     }
 
     public void FillBullets( GameObject collider ) {
@@ -70,6 +73,10 @@ public class GunType : WeaponObject {
         else if ( !reloading && Ammo == 0 ){
             StartCoroutine( Reload( ) );
         }
+
+        int ind = Random.Range( 0 , clips.Length - 1 );
+        audio.clip = clips[ind];
+        audio.Play();
     }
 
     public override void Activate( ) {

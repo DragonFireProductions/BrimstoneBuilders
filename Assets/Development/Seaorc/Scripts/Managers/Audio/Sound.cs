@@ -7,7 +7,7 @@ using UnityEngine;
 public class Sound
 {
     /// <remarks>Set in inspector</remarks>
-    [SerializeField] AudioClip Clip;
+    [SerializeField] public AudioClip Clip;
     [SerializeField] string name;
     [SerializeField] SoundType Type;
     [SerializeField] bool Looping;
@@ -33,28 +33,14 @@ public class Sound
         Source.pitch = Pitch;
     }
 
+
+
     /// <summary>
     /// Sets the valume to current valume settings
     /// </summary>
-    public void UpdateVolume()
-    {
-        switch (Type)
-        {
-            case SoundType.Music:
-                Source.volume = Volume * AudioManager.GetMusicVolume() * AudioManager.GetMasterVolume();
-                break;
-            case SoundType.Effect:
-                Source.volume = Volume * AudioManager.GetEffectVolume() * AudioManager.GetMasterVolume();
-                break;
-            case SoundType.Voice:
-                Source.volume = Volume * AudioManager.GetVoiceVolume() * AudioManager.GetMasterVolume();
-                break;
-            case SoundType.Environment:
-                Source.volume = Volume * AudioManager.GetEnvironmentVolume() * AudioManager.GetMasterVolume();
-                break;
-            default:
-                break;
-        }
+    public void UpdateVolume() {
+        Volume = 1.0f;
+
     }
 
     /// <summary>
@@ -63,7 +49,7 @@ public class Sound
     public void PlaySound()
     {
         Source.volume = 1.0f;
-        Source.Play();
+        Source.PlayOneShot(Source.clip, 0.7f);
         Debug.Log("Audio is playing");
     }
 

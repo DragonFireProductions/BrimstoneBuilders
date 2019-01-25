@@ -44,7 +44,7 @@ public class EscortQuest : Quest {
 
     public override void Complete( ) {
         base.Complete( );
-        StaticManager.uiManager.ShowMessage(KeyDropDialog, 10);
+        StaticManager.uiManager.ShowMessage(KeyDropDialog, 10, false);
     }
 
     public void OnTriggerEnter(Collider collider)
@@ -57,7 +57,7 @@ public class EscortQuest : Quest {
                 key.transform.position = transform.position + (transform.forward * 3);
                 key.gameObject.SetActive(true);
                 gameObject.GetComponent<Collider>().enabled = false;
-                StaticManager.questManager.CompleteQuest(this);
+                StaticManager.questManager.CompleteQuest(this, KeyDropDialog);
             }
             else if (!accepted){
                  StaticManager.questManager.currentQuest = this;
@@ -65,7 +65,7 @@ public class EscortQuest : Quest {
             }
             else
             {
-                StaticManager.uiManager.ShowMessage("Please open quest log to see your current objective", 5);
+                StaticManager.uiManager.ShowMessage("Please open quest log to see your current objective", 5, false);
             }
 
         }

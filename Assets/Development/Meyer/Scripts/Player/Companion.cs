@@ -76,10 +76,9 @@ public class Companion : BaseCharacter {
                 Time.timeScale = 0;
             }
 
+            StaticManager.currencyManager.companions--;
             Destroy( GetComponent < CompanionNav >( ).behaviors.gameObject );
             StaticManager.RealTime.Companions.Remove( this );
-            StaticManager.inventories.Destroy( inventory );
-            Destroy( gameObject );
         }
     }
 

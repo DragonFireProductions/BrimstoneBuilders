@@ -41,7 +41,7 @@ public class EnemyNav : BaseNav {
         started           = true;
     }
 
-    private void Update( ) {
+    protected override void Update( ) {
         base.Update( );
         character.AnimationClass.animation.SetFloat( "Walk" , Agent.velocity.magnitude / Agent.speed );
         timer += Time.deltaTime;

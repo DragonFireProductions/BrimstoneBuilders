@@ -7,8 +7,9 @@ public class InstatiateFloatingText : MonoBehaviour
 
     private static FloatingText Miss;
 
-
     private static FloatingText Critical;
+
+
     public static void Initalize()
     {
         popupText = Resources.Load < FloatingText >( "Parent" );
