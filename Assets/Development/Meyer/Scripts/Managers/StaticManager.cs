@@ -44,6 +44,8 @@ public class StaticManager : MonoBehaviour
 
     public static QuestManager questManager;
 
+    public static RandomName RandName;
+
     public bool unlimitedPotions = false;
 
     public bool unlimitedSpawns = false;
@@ -95,6 +97,8 @@ public class StaticManager : MonoBehaviour
         map = GetComponent < Map >( );
 
         drop = GetComponent<Drops>();
+
+        RandName = GetComponent<RandomName>();
     }
 
     public void LoadMainMenu()

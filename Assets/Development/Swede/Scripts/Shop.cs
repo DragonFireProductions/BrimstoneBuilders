@@ -66,10 +66,11 @@ public class Shop : MonoBehaviour
             l_companion.companion.magic.CurrentLevel = l_companion.Magic;
             l_companion.companion.range.CurrentLevel = l_companion.Range;
             l_companion.companion.cost = l_companion.cost;
+            l_companion.companion.characterName = StaticManager.RandName.GenerateName();
+
             l_companion.companion.inventoryUI.UpdateCharacter(l_companion.companion.inventoryUI.ShopCharacterText);
             l_companion.companion.startWeapon = l_companion.weapon;
             l_companion.companion.inventoryUI.UpdateWeapon(l_companion.companion.inventoryUI.ShopWeaponsText, l_companion.weapon.GetComponent<WeaponObject>());
-            
         }
             yield return new WaitForEndOfFrame();
     }
