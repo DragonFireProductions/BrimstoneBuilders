@@ -33,7 +33,7 @@ public class EnemyHealth : MonoBehaviour
 	            float hp = enemy.Health / enemy.MaxHealth;
 
 	            HPbar.fillAmount = hp;
-	            HPbar.color = Color.Lerp(Color.red, Color.green, hp);
+	            //HPbar.color = Color.Lerp(Color.red, Color.green, hp);
 	        }
 	    }
 	}
