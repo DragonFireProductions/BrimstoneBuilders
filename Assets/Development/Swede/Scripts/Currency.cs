@@ -23,6 +23,7 @@ public class Currency : MonoBehaviour {
 
     public GameObject buyButton;
 
+    public int companions = 0;
     public void AddCoins( Shop shop ) {
         StaticManager.Character.inventory.coinCount += shop.resaleWorth;
     }
@@ -41,7 +42,7 @@ public class Currency : MonoBehaviour {
     }
 
     public bool RemoveCoins( int coins ) {
-        return StaticManager.Character.inventory.coinCount >= coins;
+        return StaticManager.Character.inventory.coinCount > coins;
     }
 
     public void SwitchToBuy( ) {
@@ -63,7 +64,7 @@ public class Currency : MonoBehaviour {
     }
 
     public void BuyCompanion( Tab container ) {
-        if ( RemoveCoins( container.companion.cost ) ){
+        if ( RemoveCoins( container.companion.cost ) && companions <= 5 ){
             var position = Random.insideUnitSphere * 5 + StaticManager.Character.transform.position;
             position.y                                  =  0;
             StaticManager.Character.inventory.coinCount -= container.companion.cost;

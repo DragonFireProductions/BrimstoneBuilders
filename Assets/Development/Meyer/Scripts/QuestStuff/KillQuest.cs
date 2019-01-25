@@ -64,7 +64,7 @@ public class KillQuest : Quest {
                 var key = Instantiate(winObject);
                 key.transform.position = transform.position + (transform.forward * 3);
                 key.gameObject.SetActive(true);
-                StaticManager.questManager.CompleteQuest(this);
+                StaticManager.questManager.CompleteQuest(this, KeyDropDialog);
                 gameObject.GetComponent<Collider>().enabled = false;
             }
             else if (( enemies.Count == 0 && !Completed) || !accepted ){
@@ -73,7 +73,7 @@ public class KillQuest : Quest {
             }
             else
             {
-                StaticManager.uiManager.ShowMessage("Please open quest log to see your current objective", 5);
+                StaticManager.uiManager.ShowMessage("Please open quest log to see your current objective", 5, false);
             }
 
         }
