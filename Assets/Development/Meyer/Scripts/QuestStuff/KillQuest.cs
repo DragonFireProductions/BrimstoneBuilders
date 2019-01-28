@@ -22,13 +22,7 @@ public class KillQuest : Quest {
     public override void Accept( ) {
         accepted = true;
         base.Accept();
-        foreach (var l_enemySpawnerStuff in spawners)
-        {
-            foreach (var l_keyEnemiese in l_enemySpawnerStuff.enemies)
-            {
-                KillAmount++;
-            }
-        }
+       
         ui.questText.text = "Please Kill " + KillAmount + " enemies.";
         ui.icon.sprite = EnemyIcon;
 
@@ -46,8 +40,17 @@ public class KillQuest : Quest {
         enemiesKilled++;
           ui.labels.Labels[ 0 ].labelText.text = "Kill Count: " + enemiesKilled;
     }
-    
 
+    public override void Start( ) {
+        base.Start();
+        foreach (var l_enemySpawnerStuff in spawners)
+        {
+            foreach (var l_keyEnemiese in l_enemySpawnerStuff.enemies)
+            {
+                KillAmount++;
+            }
+        }
+    }
     // Update is called once per frame
     void Update()
     {

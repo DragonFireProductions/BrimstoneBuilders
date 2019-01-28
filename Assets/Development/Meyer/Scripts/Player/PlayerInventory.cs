@@ -62,17 +62,45 @@ public class PlayerInventory : MonoBehaviour {
     {
         StaticManager.currencyManager.AddCoins(_coinWorth);
     }
+
+    public virtual void Close( ) {
+        character.inventoryUI.PotionsInventory.gameObject.SetActive(false);
+    }
     
     private void Update( ) {
         if ( Input.GetButtonDown( "Inventory" ) ){
-            
-         StaticManager.inventories.prevPos = StaticManager.Character.transform.position;
-         StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.PlayerUI );
-         character.inventoryUI.UpdateItem();
-         StaticManager.inventories.SwitchInventory(StaticManager.Character.inventoryUI.tab);
-         StaticManager.inventories.inventory.character.projector.gameObject.SetActive(false);
-         StaticManager.inventories.SwitchToWeapons();
-         Time.timeScale = 0;
+
+            if ( StaticManager.uiManager.playerUI.gameObject.activeSelf ){
+                StaticManager.inventories.CloseAll();
+
+            }
+            else{
+                 StaticManager.inventories.prevPos = StaticManager.Character.transform.position;
+                 StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.PlayerUI );
+                 character.inventoryUI.UpdateItem();
+                 StaticManager.inventories.SwitchInventory(StaticManager.Character.inventoryUI.tab);
+                 StaticManager.inventories.inventory.character.projector.gameObject.SetActive(false);
+                 StaticManager.inventories.SwitchToWeapons();
+            }
+        
+        }
+
+        if ( Input.GetKeyDown(KeyCode.M) ){
+            if ( StaticManager.map.map.activeSelf ){
+                StaticManager.inventories.CloseAll();
+            }
+            else{
+                StaticManager.inventories.SwitchToMap();
+            }
+        }
+
+        if ( Input.GetKeyDown(KeyCode.L) ){
+            if ( StaticManager.questManager.questWindow.activeSelf ){
+                StaticManager.inventories.CloseAll();
+            }
+            else{
+                StaticManager.inventories.SwitchToQuest();
+            }
         }
 
         if ( Input.GetKeyDown(KeyCode.H) && potions.Count > 0 && character is Character ){

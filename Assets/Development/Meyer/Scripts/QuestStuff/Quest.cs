@@ -191,7 +191,7 @@ public class Quest : MonoBehaviour {
     public virtual void Complete( ) { }
 
     // Start is called before the first frame update
-    public void Start()
+    public virtual void Start()
     {
         SwitchState(state.QuestAvailble);
         InitSpawners();

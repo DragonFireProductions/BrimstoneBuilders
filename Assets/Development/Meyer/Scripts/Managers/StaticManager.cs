@@ -44,6 +44,8 @@ public class StaticManager : MonoBehaviour
 
     public static QuestManager questManager;
 
+    
+
     public bool unlimitedPotions = false;
 
     public bool unlimitedSpawns = false;

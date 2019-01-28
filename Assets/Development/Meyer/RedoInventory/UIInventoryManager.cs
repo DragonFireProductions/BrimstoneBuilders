@@ -57,6 +57,8 @@ public class UIInventoryManager : MonoBehaviour {
 
     public GameObject PlayerImage;
 
+    public GameObject playerUI;
+
     //add a new window
     public GameObject[] Grid;
 
