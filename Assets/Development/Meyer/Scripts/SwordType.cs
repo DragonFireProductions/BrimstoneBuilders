@@ -22,12 +22,16 @@ public class SwordType : WeaponObject {
         }
 
     }
-    
-    public override void Activate( ) {
+
+    public override void Activate()
+    {
         int ind = Random.Range(0, 3);
-        AttachedCharacter.leftHand.GetComponentInChildren < BoxCollider >( ).enabled = true;
+        AttachedCharacter.leftHand.GetComponentInChildren<BoxCollider>().enabled = true;
         audio.clip = clips[ind];
-        audio.Play();
+        if (!audio.isPlaying)
+        {
+            audio.Play();
+        }
     }
 
     public override void Deactivate( ) {

@@ -398,13 +398,15 @@ GameObject:
   - component: {fileID: 3938884035385218587}
   - component: {fileID: 6288941675759180013}
   - component: {fileID: 1139062283069663880}
+  - component: {fileID: 421398645}
+  - component: {fileID: 421398646}
   m_Layer: 5
   m_Name: Panel 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5076610521074321368
 RectTransform:
   m_ObjectHideFlags: 0
@@ -488,6 +490,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentstate: 1
   newFriend: {fileID: 0}
+  XPBar: {fileID: 0}
+  XPText: {fileID: 0}
+--- !u!114 &421398645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3202947908001355656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49c42a984d4a3fb44a635aa60ad9a8fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  companion: {fileID: 0}
+  item: {fileID: 0}
+  imageContainer: {fileID: 0}
+  CharacterStats: {fileID: 0}
+  WeaponStats: {fileID: 0}
+  bar: {fileID: 7725706190856112565}
+  Level: {fileID: 7725706191341381402}
+  SubClass: {fileID: 0}
+  shop: {fileID: 0}
+  index: 0
+  type: 0
+--- !u!114 &421398646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3202947908001355656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4807d16456bf68f4abeae6eb55fff696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HPBar: {fileID: 7725706191897313026}
+  StaminaBar: {fileID: 7725706190454766697}
+  HpText: {fileID: 7725706191057663368}
+  StaminaText: {fileID: 7725706190759730834}
+  XPText: {fileID: 0}
+  CoinText: {fileID: 0}
 --- !u!1 &3217519314299770332
 GameObject:
   m_ObjectHideFlags: 0

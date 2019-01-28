@@ -2091,6 +2091,7 @@ MonoBehaviour:
     character: {fileID: 0}
     CurrentLevel: 1
   armor: {fileID: 114239833086384634}
+  cam_pos: {fileID: 0}
   camHolder: {fileID: 0}
 --- !u!114 &114057763851344862
 MonoBehaviour:
@@ -2107,12 +2108,9 @@ MonoBehaviour:
   Agent: {fileID: 195716155690410798}
   battleDistance: 3
   character: {fileID: 114476351334043018}
+  clip: {fileID: 8300000, guid: 6dc57758557a8124ea91288de328a9fa, type: 3}
   stoppingDistance: 0
   waittime: 2
-  companion: {fileID: 114476351334043018}
-  aggState: 0
-  behaviors: {fileID: 0}
-  enemiesToAttack: []
   enemy: {fileID: 0}
   enemySystem: {fileID: 0}
   message: {fileID: 0}
@@ -9441,11 +9439,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: IconCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 5374004888353748547, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
-        type: 3}
-      propertyPath: m_Texture
-      value: 
-      objectReference: {fileID: 2800000, guid: eb5f6e2757c821940b69cf1456f7865a, type: 3}
     - target: {fileID: 1273390263847446084, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9551,6 +9544,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5374004888353748547, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: eb5f6e2757c821940b69cf1456f7865a, type: 3}
     - target: {fileID: 1020615464733101051, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
         type: 3}
       propertyPath: m_SizeDelta.x
