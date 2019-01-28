@@ -77,7 +77,6 @@ public class Currency : MonoBehaviour {
                     .text = "";
             
             
-            container.companion.inventoryUI.CompanionSell.shop.shopContainer.sell.SetActive( true );
             container.companion.inventoryUI.UpdateCharacter( container.companion.inventoryUI.CompanionSell.characterstats );
             container.companion.inventoryUI.CompanionSell.gameObject.transform.SetParent( _shop.shopContainer.sell.transform );
             container.companion.GetComponent < NavMeshAgent >( ).Warp( _shop.transform.position );
