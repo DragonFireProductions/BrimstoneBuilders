@@ -27,6 +27,8 @@ public class LeaderNav : BaseNav {
 
     private bool timerEnabled = false;
 
+    private ShopContainer prev_container;
+
     protected override void Start( ) {
         base.Start();
         hit            = new RaycastHit( );
@@ -84,15 +86,18 @@ public class LeaderNav : BaseNav {
                 {
                     StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.ShopUI.obj );
 
-                    foreach ( var l_currencyManagerShop in StaticManager.currencyManager.shops ){
-
-
-                        if ( hit.collider.gameObject != l_currencyManagerShop ){
-                            l_currencyManagerShop.GetComponent<Shop>().ShopContainer.SetActive(false);
-                        }
+                    if ( prev_container ){
+                        prev_container.gameObject.SetActive(false);
                     }
 
-                    hit.collider.GetComponent < Shop >( ).ShopContainer.SetActive( true );
+                    var a = hit.collider.gameObject.GetComponent < Shop >( );
+
+                    a.shopContainer.gameObject.SetActive(true);
+
+                    prev_container = a.shopContainer;
+                    
+
+                    hit.collider.GetComponent < Shop >( ).shopContainer.gameObject.SetActive( true );
                     StaticManager.currencyManager._shop = hit.collider.GetComponent < Shop >( );
                    
                     StaticManager.currencyManager.SwitchToBuy( );

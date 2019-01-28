@@ -10,11 +10,7 @@ public class CharacterInventoryUI : MonoBehaviour {
 
     public GameObject CharacterInventory;
 
-    public Tab CompanionSell;
-
-    public GameObject SellButton;
-
-    public GameObject BuyButton;
+    public CompanionContainer CompanionSell;
   
 
     public List < UIItemsWithLabels > potions;
@@ -95,26 +91,7 @@ public class CharacterInventoryUI : MonoBehaviour {
         companion.inventory.armorInventory.Init( );
 
     }
-
-    public void AddToShop( Shop shop ) {
-        gameObject.SetActive( false );
-        var b = Instantiate( StaticManager.uiManager.CompanionSellStats );
-        CompanionSell                    = b.GetComponent < Tab >( );
-        CompanionSell.companion          = companion;
-        CompanionSell.transform.position = StaticManager.uiManager.CompanionSellStats.transform.position;
-        BuyButton                        = CompanionSell.gameObject.transform.Find( "BuyButton" ).gameObject;
-        SellButton                       = CompanionSell.gameObject.transform.Find( "SellButton" ).gameObject;
-        CompanionSell.transform.SetParent( shop.ShopContainer.transform );
-        ShopCharacterText = CompanionSell.transform.Find( "CharacterStats" ).GetComponent < UIItemsWithLabels >( );
-        ShopWeaponsText   = CompanionSell.transform.Find( "WeaponStats" ).GetComponent < UIItemsWithLabels >( );
-
-        ShopCharacterText.FindLabels( );
-        ShopWeaponsText.FindLabels( );
-        BuyButton.SetActive( true );
-        SellButton.SetActive( false );
-        CompanionSell.gameObject.SetActive( true );
-        StaticManager.RealTime.Companions.Remove( companion );
-    }
+    
 
     public void RemoveFromShop( ) {
         Destroy( CompanionSell.gameObject );

@@ -886,6 +886,27 @@ MonoBehaviour:
   m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &265211585 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1714599621715383374, guid: fef76a0e50c1357408637344ebb0eff7,
+    type: 3}
+  m_PrefabInstance: {fileID: 4267357748913432206}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &265211588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265211585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c0835e01c177ac40a24658560bc2335, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterstats: {fileID: 466956382}
+  weaponstats: {fileID: 686098322}
+  companion: {fileID: 0}
 --- !u!224 &267947954 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1273390263847446084, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
@@ -1340,6 +1361,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8296153219701149068}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &411739028 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5389627046756606354, guid: fef76a0e50c1357408637344ebb0eff7,
+    type: 3}
+  m_PrefabInstance: {fileID: 4267357748913432206}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &415070621
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,6 +1511,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &466956382 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4286900586138766365, guid: fef76a0e50c1357408637344ebb0eff7,
+    type: 3}
+  m_PrefabInstance: {fileID: 4267357748913432206}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aecabe7bc47d25b4d838fd0b791c363a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &470578173
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1827,11 +1866,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   companionPrice: 0
   resaleWorth: 0
-  Buy: {fileID: 0}
-  Sell: {fileID: 0}
-  ShopContainer: {fileID: 877185460}
   icon: {fileID: 273030146}
   notIcon: {fileID: 578577009}
+  container: {fileID: 0}
   companions:
   - companion: {fileID: 114406641560423168, guid: 05223e61ff69f7946a76b71d18c483d7,
       type: 3}
@@ -1847,7 +1884,6 @@ MonoBehaviour:
     Magic: 0
     weapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28, type: 3}
     cost: 0
-  sellContainer: {fileID: 0}
   shopCompanions: []
 --- !u!65 &624376353
 BoxCollider:
@@ -2259,6 +2295,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8296153219701149068}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &686098322 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2786349074447339622, guid: fef76a0e50c1357408637344ebb0eff7,
+    type: 3}
+  m_PrefabInstance: {fileID: 4267357748913432206}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aecabe7bc47d25b4d838fd0b791c363a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &694626289
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4114,6 +4162,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb78e276d38b88e449d9099f8d1aaefa, type: 3}
+--- !u!1 &1196769538 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4569173918888069697, guid: fef76a0e50c1357408637344ebb0eff7,
+    type: 3}
+  m_PrefabInstance: {fileID: 4267357748913432206}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1204358491 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3552578754129942118, guid: fef76a0e50c1357408637344ebb0eff7,
@@ -5955,11 +6009,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   companionPrice: 0
   resaleWorth: 0
-  Buy: {fileID: 0}
-  Sell: {fileID: 0}
-  ShopContainer: {fileID: 1868989903}
   icon: {fileID: 1433768754}
   notIcon: {fileID: 1152773388}
+  container: {fileID: 0}
   companions:
   - companion: {fileID: 114406641560423168, guid: 05223e61ff69f7946a76b71d18c483d7,
       type: 3}
@@ -5975,7 +6027,6 @@ MonoBehaviour:
     Magic: 0
     weapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28, type: 3}
     cost: 0
-  sellContainer: {fileID: 0}
   shopCompanions: []
 --- !u!65 &1952970277
 BoxCollider:
@@ -6047,6 +6098,27 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 848402082}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1969944605 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 614438955774203816, guid: fef76a0e50c1357408637344ebb0eff7,
+    type: 3}
+  m_PrefabInstance: {fileID: 4267357748913432206}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1969944606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969944605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21923e9b3e81151418b304f9ebb45e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buy: {fileID: 1196769538}
+  sell: {fileID: 411739028}
+  shop: {fileID: 0}
 --- !u!4 &1984640867 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4392328175182342, guid: 1220801ba16df7441866a6a05943d6a6,
@@ -9768,6 +9840,16 @@ PrefabInstance:
       propertyPath: shops.Array.data[3]
       value: 
       objectReference: {fileID: 624376349}
+    - target: {fileID: 3638936123901440199, guid: fef76a0e50c1357408637344ebb0eff7,
+        type: 3}
+      propertyPath: container
+      value: 
+      objectReference: {fileID: 265211588}
+    - target: {fileID: 3638936123901440199, guid: fef76a0e50c1357408637344ebb0eff7,
+        type: 3}
+      propertyPath: containerHolder
+      value: 
+      objectReference: {fileID: 1969944606}
     - target: {fileID: 3445064359653571852, guid: fef76a0e50c1357408637344ebb0eff7,
         type: 3}
       propertyPath: NotificationText
@@ -11678,6 +11760,8 @@ PrefabInstance:
     - {fileID: 6877537615505571954, guid: fef76a0e50c1357408637344ebb0eff7, type: 3}
     - {fileID: 6876539400015331496, guid: fef76a0e50c1357408637344ebb0eff7, type: 3}
     - {fileID: 3608382734567319753, guid: fef76a0e50c1357408637344ebb0eff7, type: 3}
+    - {fileID: 4489624460237303660, guid: fef76a0e50c1357408637344ebb0eff7, type: 3}
+    - {fileID: 7876902666169170255, guid: fef76a0e50c1357408637344ebb0eff7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fef76a0e50c1357408637344ebb0eff7, type: 3}
 --- !u!1 &4267357748913432208 stripped
 GameObject:
