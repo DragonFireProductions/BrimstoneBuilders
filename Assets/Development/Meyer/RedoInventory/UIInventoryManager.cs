@@ -75,6 +75,10 @@ public class UIInventoryManager : MonoBehaviour {
     public GameObject GameOverWindow;
 
     public GameObject notificationWindow;
+
+    public GameObject weaponGrid;
+
+    public GameObject armorGrid;
     public void Start( ) {
         
         WeaponInventoryStats.GetComponent<UIItemsWithLabels>().FindLabels();

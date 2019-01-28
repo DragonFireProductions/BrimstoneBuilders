@@ -77,6 +77,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		Time.timeScale = 0;
         List<GameObject> windows = new List<GameObject>();
 
+		windows.Add(StaticManager.uiManager.weaponGrid);
 		windows.Add(inventory.character.inventoryUI.CharacterInventory);
         windows.Add(StaticManager.uiManager.inventoryCharacterStats);
         windows.Add(inventory.character.inventory.WeaponInventory.inventoryObj);
@@ -195,6 +196,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		Time.timeScale = 0;
 		List <GameObject> windows = new List < GameObject >();
 
+		windows.Add(StaticManager.uiManager.armorGrid);
 		windows.Add(inventory.character.inventoryUI.CharacterInventory);
 		windows.Add(playerCam.gameObject);
 		windows.Add(inventory.armorInventory.ArmorInventory);
