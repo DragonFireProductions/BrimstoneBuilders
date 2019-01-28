@@ -15,12 +15,12 @@ public class EnemySpawner : MonoBehaviour
     //minRange is the distance the player has to be from the spawner in order to spawn in the enemies.
     //maxRange '' in order to despawn the enemies.
     //spawnRadius is the radius from the origin of the spawner that the enemies will be randomly spawned within.
-    [SerializeField] private float minRange = 15;
-    [SerializeField] private float maxRange = 25;
-    [SerializeField] private float spawnRadius = 10;
-
-    [SerializeField] private bool PreSpawn = false;
-    [SerializeField] private float AggroRange = 10;
+    [SerializeField] public float minRange = 15;
+    [SerializeField] public float maxRange = 25;
+    [SerializeField] public float spawnRadius = 10;
+                   
+    [SerializeField] public bool PreSpawn = false;
+    [SerializeField] public float AggroRange = 10;
 
     public RawImage icon;
     [Serializable]
@@ -35,19 +35,13 @@ public class EnemySpawner : MonoBehaviour
 
         public GameObject weapon;
 
-        public bool DropKey;
-
-        public Quest quest;
+        public bool DropWeapon;
 
         public GameObject dropItem;
-
-        public bool DropWeapon;
 
     }
     [SerializeField]
     public EnemyStruct[] enemies;
-
-
 
     private List<GameObject> instantiated;
     private float playerDistance;
@@ -55,6 +49,9 @@ public class EnemySpawner : MonoBehaviour
 
     public int numberofEnemies;
 
+    public Quest quest;
+
+    public int index;
     private void Start()
     {
         //StaticManager.map.Add(Map.Type.enemy, icon);
@@ -64,6 +61,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
+        
         //Constantly sets the distance from the player to the spawner for checks.
         Vector3 character = StaticManager.Character.transform.position;
 
@@ -73,7 +71,14 @@ public class EnemySpawner : MonoBehaviour
         if (playerDistance <= minRange && isActive == false)
         {
             Debug.Log("Distance is working");
-            Spawn();
+
+            if ( quest ){
+                Spawn(quest.spawners[index]);
+            }
+            else{
+                 Spawn();
+            }
+           
             isActive = true;
         }
 
@@ -90,6 +95,38 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    public void Spawn( KeyQuest.EnemySpawnerStuff enemies ) {
+        for ( int i = 0 ; i < enemies.enemies.Count ; i++ ){
+            Vector3 pos = Random.insideUnitSphere * enemies.spawnRadius + enemies.enemySpawnerPos.transform.position;
+            var randomEnemy = Random.Range( 0 , enemies.enemies.Count );
+
+            GameObject newEnemy = Instantiate( enemies.enemies[ randomEnemy ].enemy.gameObject );
+
+            newEnemy.GetComponent < EnemyNav >( ).location = enemies.enemySpawnerPos;
+
+            pos.y = StaticManager.Character.transform.position.y;
+
+            StaticManager.particleManager.Play( ParticleManager.states.Spawn , pos);
+
+            newEnemy.GetComponent < Enemy >( ).Nav.Agent.Warp( pos );
+            instantiated.Add(newEnemy.gameObject);
+
+
+            newEnemy.GetComponent<Enemy>().startWeapon = Instantiate(enemies.enemies[randomEnemy].weapon);
+
+
+            newEnemy.GetComponent<Enemy>().startWeapon.GetComponent<WeaponObject>().PickUp(newEnemy.GetComponent<Enemy>());
+            newEnemy.GetComponent<Enemy>().startWeapon.GetComponent<WeaponObject>().Attach(newEnemy.GetComponent<Enemy>());
+            StaticManager.RealTime.Enemies.Add(newEnemy.GetComponent<Enemy>());
+            newEnemy.GetComponent<Enemy>().damage = enemies.enemies[randomEnemy].Damage;
+            newEnemy.GetComponent<Stat>().luck = enemies.enemies[randomEnemy].luck;
+            newEnemy.GetComponent < Enemy >( ).quest = quest;
+            if (!PreSpawn)
+                StaticManager.RealTime.SetAttackEnemies();
+            else
+                newEnemy.GetComponent<EnemyNav>().SetState = BaseNav.state.IDLE;
+        }
+    }
     private void Spawn()
     {
         StaticManager.RealTime.Enemies.RemoveAll(nulls => nulls == null);
@@ -101,25 +138,25 @@ public class EnemySpawner : MonoBehaviour
             GameObject newEnemy;
             if ( i >= enemies.Length ){
              newEnemy = Instantiate(enemies[0].enemy.gameObject, position, Quaternion.identity);
-                if (enemies[0].quest != null){
-                    newEnemy.GetComponent < Enemy >( ).dropKey = enemies[ 0 ].DropKey;
-                    newEnemy.GetComponent < Enemy >( ).quest = enemies[ 0 ].quest;
-                    newEnemy.GetComponent<Enemy>().quest.InstEnemies(newEnemy.GetComponent<Enemy>());
-                    newEnemy.GetComponent < Enemy >( ).DropWeapon = enemies[ 0 ].DropWeapon;
-                         newEnemy.GetComponent < Enemy >( ).objectToDrop = enemies[ 0 ].dropItem;
-                }
+                //if (enemies[0].quest != null){
+                //    newEnemy.GetComponent < Enemy >( ).dropKey = enemies[ 0 ].DropKey;
+                //    newEnemy.GetComponent < Enemy >( ).quest = enemies[ 0 ].quest;
+                //    newEnemy.GetComponent<Enemy>().quest.InstEnemies(newEnemy.GetComponent<Enemy>());
+                //    newEnemy.GetComponent < Enemy >( ).DropWeapon = enemies[ 0 ].DropWeapon;
+                //         newEnemy.GetComponent < Enemy >( ).objectToDrop = enemies[ 0 ].dropItem;
+                //}
 
             }
             else{
                 newEnemy = Instantiate(enemies[i].enemy.gameObject, position, Quaternion.identity);
-                if (enemies[i].quest != null)
-                {
-                     newEnemy.GetComponent < Enemy >( ).dropKey = enemies[ i ].DropKey;
-                     newEnemy.GetComponent < Enemy >( ).quest = enemies[ i ].quest;
-                    newEnemy.GetComponent<Enemy>().quest.InstEnemies(newEnemy.GetComponent<Enemy>());
-                         newEnemy.GetComponent < Enemy >( ).DropWeapon = enemies[ i ].DropWeapon;
-                    newEnemy.GetComponent < Enemy >( ).objectToDrop = enemies[ i ].dropItem;
-                }
+                //if (enemies[i].quest != null)
+                //{
+                //     newEnemy.GetComponent < Enemy >( ).dropKey = enemies[ i ].DropKey;
+                //     newEnemy.GetComponent < Enemy >( ).quest = enemies[ i ].quest;
+                //    newEnemy.GetComponent<Enemy>().quest.InstEnemies(newEnemy.GetComponent<Enemy>());
+                //         newEnemy.GetComponent < Enemy >( ).DropWeapon = enemies[ i ].DropWeapon;
+                //    newEnemy.GetComponent < Enemy >( ).objectToDrop = enemies[ i ].dropItem;
+                //}
             }
             
 

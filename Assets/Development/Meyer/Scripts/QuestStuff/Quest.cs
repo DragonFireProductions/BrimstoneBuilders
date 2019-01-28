@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using Kristal;
@@ -29,6 +30,9 @@ public class Quest : MonoBehaviour {
 
     public GameObject QuestInProgress;
 
+    [SerializeField]
+       public List < EnemySpawnerStuff > spawners;
+
     public enum state {
 
         QuestAvailble,
@@ -42,6 +46,8 @@ public class Quest : MonoBehaviour {
     }
 
     protected state currState;
+
+
 
     public void SwitchState( state state ) {
         QuestAvalible.SetActive(false);
@@ -62,6 +68,70 @@ public class Quest : MonoBehaviour {
                 break;
         }
     }
+    [Serializable]
+    public struct EnemySpawnerStuff
+    {
+
+        public GameObject enemySpawnerPos;
+
+        public List<KeyEnemies> enemies;
+
+        public int spawnRadius;
+
+        public bool prespawn;
+
+        public int aggroRadius;
+
+        public float minRadus;
+
+        public float maxRadius;
+
+    }
+    [Serializable]
+    public struct KeyEnemies
+    {
+
+        public Enemy enemy;
+
+        public int Damage;
+
+        public float luck;
+
+        public GameObject weapon;
+
+        public bool dropKey;
+
+    }
+ 
+    public void InitSpawners()
+    {
+        foreach (var l_spawner in spawners)
+        {
+            l_spawner.enemySpawnerPos.AddComponent<EnemySpawner>();
+
+            var a = l_spawner.enemySpawnerPos.GetComponent<EnemySpawner>();
+            a.AggroRange = l_spawner.aggroRadius;
+            a.PreSpawn = l_spawner.prespawn;
+            a.maxRange = l_spawner.maxRadius;
+            a.minRange = l_spawner.minRadus;
+            a.quest = this;
+
+            l_spawner.enemySpawnerPos.SetActive(false);
+        }
+
+        for ( int i = 0 ; i < spawners.Count ; i++ ){
+            var a = spawners[ i ].enemySpawnerPos.GetComponent < EnemySpawner >( );
+            a.index = i;
+        }
+    }
+
+    public void ActivateSpawner()
+    {
+        foreach (var l_spawner in spawners)
+        {
+            l_spawner.enemySpawnerPos.SetActive(true);
+        }
+    }
     public virtual void Accept( ) { 
         SwitchState(state.QuestInProgress);
         if (ui == null)
@@ -80,7 +150,7 @@ public class Quest : MonoBehaviour {
         if ( !StaticManager.RealTime.Companions.Contains(StaticManager.Character) ){
             StaticManager.RealTime.Companions.Add( StaticManager.Character );
         }
-      
+      ActivateSpawner();
     }
 
     public virtual void InstEnemies(Enemy enemy ) {
@@ -124,6 +194,7 @@ public class Quest : MonoBehaviour {
     public void Start()
     {
         SwitchState(state.QuestAvailble);
+        InitSpawners();
     }
 
     // Update is called once per frame
