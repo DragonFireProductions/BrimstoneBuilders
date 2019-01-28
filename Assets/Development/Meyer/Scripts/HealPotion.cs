@@ -23,7 +23,7 @@ public class HealPotion : Potions {
 			var e = enemy as Companion;
 			StaticManager.UiInventory.RemoveMainInventory(this, e.inventory);
 		}
-		
+
 	}
 
 	public override void IncreaseSubClass( float amount ) {
