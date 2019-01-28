@@ -205,6 +205,7 @@ public class UIInventory : MonoBehaviour
             }
         }
         ItemsInstance.openedWindow.Clear();
+        ItemsInstance.windowIsOpen = false;
         Time.timeScale = 1;
         BackDrop.SetActive(false);
 

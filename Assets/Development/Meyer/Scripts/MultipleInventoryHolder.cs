@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 
+using Assets.Meyer.TestScripts.Player;
+
 using Boo.Lang.Environments;
 
 using TMPro;
@@ -61,8 +63,10 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		CloseAll();
         List<GameObject> windows = new List<GameObject>();
 
+
         windows.Add( inventory.character.inventoryUI.PotionsInventory);
 		windows.Add(StaticManager.uiManager.playerUI);
+		windows.Add(inventory.character.inventoryUI.CharacterInventory);
 
         StaticManager.UiInventory.ShowWindow(windows);
 		inventory.character.inventoryUI.UpdatePotions();
@@ -73,6 +77,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		Time.timeScale = 0;
         List<GameObject> windows = new List<GameObject>();
 
+		windows.Add(inventory.character.inventoryUI.CharacterInventory);
         windows.Add(StaticManager.uiManager.inventoryCharacterStats);
         windows.Add(inventory.character.inventory.WeaponInventory.inventoryObj);
 		windows.Add(StaticManager.uiManager.WeaponWindow);
@@ -190,9 +195,11 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		Time.timeScale = 0;
 		List <GameObject> windows = new List < GameObject >();
 
+		windows.Add(inventory.character.inventoryUI.CharacterInventory);
 		windows.Add(playerCam.gameObject);
 		windows.Add(inventory.armorInventory.ArmorInventory);
 		windows.Add(StaticManager.uiManager.playerUI);
+		windows.Add(StaticManager.uiManager.PlayerImage);
 
 		StaticManager.UiInventory.ShowWindow(windows);
 		
@@ -303,6 +310,57 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		Assert.IsNotNull(null, "Cannot Find inventory parent with name" + parentName + " Line number : 29 - MultipleInventoryHolder");
 		return null;
 	}
+
+	public void Update( ) {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+
+            if (StaticManager.uiManager.playerUI.gameObject.activeSelf)
+            {
+                StaticManager.inventories.CloseAll();
+
+            }
+            else
+            {
+                StaticManager.inventories.prevPos = StaticManager.Character.transform.position;
+                StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PlayerUI);
+                inventory.character.inventoryUI.UpdateItem();
+                StaticManager.inventories.SwitchInventory(StaticManager.Character.inventoryUI.tab);
+                StaticManager.inventories.inventory.character.projector.gameObject.SetActive(false);
+                StaticManager.inventories.SwitchToWeapons();
+            }
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            if (StaticManager.map.map.activeSelf)
+            {
+                StaticManager.inventories.CloseAll();
+            }
+            else
+            {
+                StaticManager.inventories.SwitchToMap();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (StaticManager.questManager.questWindow.activeSelf)
+            {
+                StaticManager.inventories.CloseAll();
+            }
+            else
+            {
+                StaticManager.inventories.SwitchToQuest();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.H) && StaticManager.Character.inventory.potions.Count > 0)
+        {
+            StaticManager.Character.inventory.potions[0].Cast(StaticManager.Character);
+        }
+    }
 	public void Destroy(PlayerInventory inventory ) {
 		inventory.character.inventoryUI.tab.gameObject.SetActive(false);
 		Destroy(inventory.character.inventoryUI.tab);

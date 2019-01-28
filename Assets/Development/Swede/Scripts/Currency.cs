@@ -84,6 +84,7 @@ public class Currency : MonoBehaviour {
             StaticManager.particleManager.Play( ParticleManager.states.Spawn , position );
 
             var location  = GameObject.Find( "panel_location" );
+
             var newButton = Instantiate( Resources.Load < companionBehaviors >( "Panel" ) );
             container.companion.GetComponent < CompanionNav >( ).behaviors       = newButton.GetComponent < companionBehaviors >( );
             newButton.GetComponent < companionBehaviors >( ).newFriend = container.companion;
@@ -103,6 +104,11 @@ public class Currency : MonoBehaviour {
             container.companion.attachedWeapon.AssignDamage();
 
             newButton.GetComponent<companionBehaviors>().color(newButton.transform.Find("Passive").gameObject);
+
+           container.companion.inventoryUI.sendToButton.gameObject.SetActive(true);
+           container.companion.inventoryUI.tab.gameObject.SetActive(true);
+
+            ///doesn't work
         }
         else{
             StaticManager.UiInventory.ItemsInstance

@@ -120,6 +120,7 @@ public class UIInventoryManager : MonoBehaviour {
                 SubclassHub.Level.text     = cur.ToString( );
             }
         }
+
     }
 
     public void ShowMessage(string message, int time, bool questConfirmationl ) {

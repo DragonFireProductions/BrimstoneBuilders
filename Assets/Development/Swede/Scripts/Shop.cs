@@ -86,14 +86,17 @@ public class Shop : MonoBehaviour
             companion.inventoryUI.UpdateWeapon(companion.inventoryUI.CompanionSell.weaponstats, companion.startWeapon.GetComponent<WeaponObject>());
 
 
-
             
             companion.inventoryUI.Init(companion);
             companion.startWeapon = Instantiate(companion.startWeapon);
             companion.startWeapon.GetComponent<WeaponObject>().PickUp(companion);
             companion.startWeapon.GetComponent<WeaponObject>().Attach();
 
+            companion.inventoryUI.sendToButton.gameObject.SetActive(false);
+            companion.inventoryUI.tab.gameObject.SetActive(false);
+
             companion.gameObject.SetActive(false);
+            StaticManager.RealTime.Companions.Remove( companion );
         }
 
         shop.gameObject.transform.position = StaticManager.currencyManager.containerHolder.transform.position;

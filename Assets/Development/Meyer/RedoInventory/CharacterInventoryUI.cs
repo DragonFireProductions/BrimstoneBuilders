@@ -33,6 +33,7 @@ public class CharacterInventoryUI : MonoBehaviour {
         potions            = new List < UIItemsWithLabels >( );
        
         CharacterInventory = Instantiate( StaticManager.uiManager.CharacterInventory );
+        
 
         var a = Instantiate( StaticManager.uiManager.SendToButton , StaticManager.uiManager.SendToButton.transform.position , Quaternion.identity );
 
