@@ -47,12 +47,11 @@ public class PlayerInventory : MonoBehaviour {
        // PickedUpWeapons.Add(gameObject.transform.Find("Cube").gameObject.GetComponentInChildren<WeaponObject>());
         coinCount = 0;
     }
-    
 
-    public void PickUp( Potions potions ) {
-        PickedUpPotions.Add(potions);
-        character.inventoryUI.AddPotion(potions);
-        potions.gameObject.SetActive(false);
+    public void PickUp( Potions _potions ) {
+        PickedUpPotions.Add(_potions);
+        _potions.gameObject.SetActive(false);
+        character.inventoryUI.HealCount.text = potions.Count.ToString();
     }
 
     public virtual void PickUp( BaseItems item ) {

@@ -69,6 +69,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		windows.Add(inventory.character.inventoryUI.CharacterInventory);
 
         StaticManager.UiInventory.ShowWindow(windows);
+		inventory.character.inventoryUI.currentHealth.text = ((int)inventory.character.stats.health).ToString( );
 		inventory.character.inventoryUI.UpdatePotions();
     }
 
@@ -153,6 +154,12 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		
 	   
     }
+
+	public void UseHealPotion( ) {
+		if ( inventory.potions.Count > 0 ){
+			inventory.potions[0].Cast(inventory.character);
+		}
+	}
     public void SwitchArmorTab(ArmorItem.Type obj)
     {
         playerCam.gameObject.SetActive(true);

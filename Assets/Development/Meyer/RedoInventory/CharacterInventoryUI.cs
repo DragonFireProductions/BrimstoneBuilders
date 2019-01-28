@@ -25,7 +25,9 @@ public class CharacterInventoryUI : MonoBehaviour {
 
     public Tab tab;
 
-   
+    public Text HealCount;
+
+    public Text currentHealth;
 
     public void Init( Companion _companion ) {
         companion          = _companion;
@@ -52,6 +54,10 @@ public class CharacterInventoryUI : MonoBehaviour {
         CharacterInventory.name = companion.name + "Inventory";
 
         PotionsInventory = CharacterInventory.transform.Find( "PotionsInventory" ).gameObject;
+
+        HealCount = PotionsInventory.transform.Find( "HealCount" ).GetComponent < Text >( );
+
+        currentHealth = PotionsInventory.transform.Find( "CurrentHealth" ).GetComponent < Text >( );
 
         PotionsInventory.SetActive( false );
 
@@ -90,6 +96,8 @@ public class CharacterInventoryUI : MonoBehaviour {
         CharacterInventory.transform.SetParent( StaticManager.uiManager.inventories.transform );
         companion.inventory.armorInventory.companion = companion;
         companion.inventory.armorInventory.Init( );
+
+        
 
     }
     

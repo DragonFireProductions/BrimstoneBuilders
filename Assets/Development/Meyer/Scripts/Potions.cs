@@ -27,7 +27,9 @@ public abstract class Potions : BaseItems {
         if (AttachedCharacter == null)
         {
             gameObject.SetActive(false);
+
             
+
         }
     }
 
