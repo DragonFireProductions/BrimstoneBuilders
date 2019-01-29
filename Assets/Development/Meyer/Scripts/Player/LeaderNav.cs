@@ -27,6 +27,8 @@ public class LeaderNav : BaseNav {
 
     private bool timerEnabled = false;
 
+    private ShopContainer prev_container;
+
     protected override void Start( ) {
         base.Start();
         hit            = new RaycastHit( );
@@ -38,6 +40,8 @@ public class LeaderNav : BaseNav {
         speed        = Mathf.Lerp( speed , ( transform.position - lastPosition ).magnitude / Time.deltaTime , 0.75f );
         lastPosition = transform.position;
     }
+
+    public Vector3 clickpos;
 
     // Update is called once per frame
     protected override void Update( ) {
@@ -84,15 +88,18 @@ public class LeaderNav : BaseNav {
                 {
                     StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.ShopUI.obj );
 
-                    foreach ( var l_currencyManagerShop in StaticManager.currencyManager.shops ){
-
-
-                        if ( hit.collider.gameObject != l_currencyManagerShop ){
-                            l_currencyManagerShop.GetComponent<Shop>().ShopContainer.SetActive(false);
-                        }
+                    if ( prev_container ){
+                        prev_container.gameObject.SetActive(false);
                     }
 
-                    hit.collider.GetComponent < Shop >( ).ShopContainer.SetActive( true );
+                    var a = hit.collider.gameObject.GetComponent < Shop >( );
+
+                    a.shopContainer.gameObject.SetActive(true);
+
+                    prev_container = a.shopContainer;
+                    
+
+                    hit.collider.GetComponent < Shop >( ).shopContainer.gameObject.SetActive( true );
                     StaticManager.currencyManager._shop = hit.collider.GetComponent < Shop >( );
                    
                     StaticManager.currencyManager.SwitchToBuy( );
@@ -107,11 +114,19 @@ public class LeaderNav : BaseNav {
                     if ( enemy ){
                         enemy.projector.gameObject.SetActive( false );
                     }
+                     enemy = hit.collider.GetComponent<Enemy>();
+                    if ( character.attachedWeapon is GunType ){
+                        SetState = state.FREEZE;
+                        rotate1();
+                        
+                    }
+                    else{
+                       SetState = state.ENEMY_CLICKED;
+                    }
+                    Destroy(enemySystem);
+                    
+                    enemy.projector.gameObject.SetActive(true);
 
-                    Destroy( enemySystem );
-                    enemy    = hit.collider.GetComponent < Enemy >( );
-                    SetState = state.ENEMY_CLICKED;
-                    enemy.projector.gameObject.SetActive( true );
                 }
                 else if ( hit.collider.tag == "Post" ){
                     message.text = hit.collider.name == "End" ? "The End is Neigh!" : "Go Forth!";
@@ -140,20 +155,21 @@ public class LeaderNav : BaseNav {
         switch ( State ){
             case state.ATTACKING:
 
-                if ( character.attachedWeapon is SwordType ){ }
+                if ( character.attachedWeapon is SwordType ){
 
-                if ( enemy == null ){
-                    SetState = state.FREEZE;
+                    if ( enemy == null ){
+                        SetState = state.FREEZE;
 
-                    return;
+                        return;
+                    }
+
+                    if ( Vector3.Distance( enemy.transform.position , gameObject.transform.position ) > 3 ){
+                        SetState = state.ENEMY_CLICKED;
+                    }
+
+                    transform.LookAt( enemy.transform.position );
+                    character.attachedWeapon.Use( );
                 }
-
-                if ( Vector3.Distance( enemy.transform.position , gameObject.transform.position ) > 3 ){
-                    SetState = state.ENEMY_CLICKED;
-                }
-
-                transform.LookAt( enemy.transform.position );
-                character.attachedWeapon.Use( );
 
                 break;
 
@@ -164,17 +180,17 @@ public class LeaderNav : BaseNav {
                 break;
             case state.ENEMY_CLICKED:
 
-                if ( Vector3.Distance( enemy.transform.position , gameObject.transform.position ) < 3 ){
-                    SetState = state.ATTACKING;
-                }
-                else{
-                    Agent.SetDestination( enemy.transform.position );
-                }
+                if ( character.attachedWeapon is SwordType ){
 
-                if ( character.attachedWeapon is GunType ){
-                    character.attachedWeapon.Use( );
-                    SetState = state.IDLE;
+
+                    if ( Vector3.Distance( enemy.transform.position , gameObject.transform.position ) < 3 ){
+                        SetState = state.ATTACKING;
+                    }
+                    else{
+                        Agent.SetDestination( enemy.transform.position );
+                    }
                 }
+                
 
                 break;
             case state.IDLE:
@@ -224,6 +240,12 @@ public class LeaderNav : BaseNav {
 
 
         }
+    }
+
+    public void rotate1( ) {
+        Quaternion targetRotation = Quaternion.LookRotation(enemy.transform.position - transform.position);
+       character.transform.LookAt(enemy.transform.position);
+        character.attachedWeapon.Use();
     }
     private IEnumerator show( ) {
         message.enabled = true;

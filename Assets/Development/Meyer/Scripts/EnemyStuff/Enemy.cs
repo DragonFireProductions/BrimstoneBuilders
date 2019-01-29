@@ -49,7 +49,10 @@ namespace Kristal {
                 blood.transform.SetParent(gameObject.transform);
                 if (stats.health <= 0)
                 {
-                    quest.EnemyDied(this);
+                    if ( quest ){
+                         quest.EnemyDied(this);
+                    }
+                   
                     item.IncreaseSubClass(0.3f);
                     Debug.Log("Hit if <0");
                     

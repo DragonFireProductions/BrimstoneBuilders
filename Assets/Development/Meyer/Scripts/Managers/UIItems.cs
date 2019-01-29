@@ -32,7 +32,7 @@ public class UIItems : MonoBehaviour {
 
 
     public bool windowIsOpen;
-    public List <GameObject> openedWindow { get; set; }
+    public List <List <GameObject> > openedWindow { get; set; }
 
     public Text GetLabel(string name, UIItemsWithLabels labels)
     {
@@ -52,7 +52,7 @@ public class UIItems : MonoBehaviour {
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
     public void Initalize () {
-		openedWindow = new List < GameObject >();
+		openedWindow = new List < List <GameObject> >();
         var properties = this.GetType().GetFields();
         
 	    for (int i = 0; i < properties.Length; i ++ ){

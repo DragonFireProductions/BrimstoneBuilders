@@ -69,11 +69,11 @@ public class BaseNav : MonoBehaviour {
             Agent.isStopped = false;
 
             if ( value == state.FOLLOW ){
-                Agent.stoppingDistance = stoppingDistance;
+                Agent.stoppingDistance = 2;
             }
 
             if ( value == state.ATTACKING ){
-                Agent.stoppingDistance = stoppingDistance;
+                Agent.stoppingDistance = 1;
                 newpos = StaticManager.Utility.randomInsideDonut(outerRadius, innerRadius, StaticManager.Character.transform.position);
             }
 
@@ -83,7 +83,7 @@ public class BaseNav : MonoBehaviour {
             }
 
             if ( value == state.ENEMY_CLICKED ){
-                Agent.stoppingDistance = stoppingDistance;
+                Agent.stoppingDistance = 2;
             }
 
             if ( value == state.IDLE ){
