@@ -121,31 +121,26 @@ public class MultipleInventoryHolder : MonoBehaviour {
         {
 
             case ArmorItem.Type.Head:
-                inventory.armorInventory.Head.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Head.Switch(ref inventory.armorInventory.currentArmorTab);
 	            inventory.armorInventory.prev_tab = inventory.armorInventory.Head.button;
 
                 break;
             case ArmorItem.Type.Shoulder:
-				inventory.armorInventory.Shoulder.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Shoulder.Switch(ref inventory.armorInventory.currentArmorTab);
 				inventory.armorInventory.prev_tab = inventory.armorInventory.Shoulder.button;
 
                 break;
             case ArmorItem.Type.Clothes:
-				inventory.armorInventory.Clothes.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Clothes.Switch(ref inventory.armorInventory.currentArmorTab);
 				inventory.armorInventory.prev_tab = inventory.armorInventory.Clothes.button;
 
                 break;
             case ArmorItem.Type.Shoe:
-				inventory.armorInventory.Shoes.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Shoes.Switch(ref inventory.armorInventory.currentArmorTab);
 				 inventory.armorInventory.prev_tab = inventory.armorInventory.Shoes.button;
 
                 break;
             case ArmorItem.Type.Belt:
-				inventory.armorInventory.Belt.button.GetComponent<Text>().color = Color.red;
                 inventory.armorInventory.Belt.Switch(ref inventory.armorInventory.currentArmorTab);
 				inventory.armorInventory.prev_tab = inventory.armorInventory.Belt.button;
 
@@ -293,19 +288,27 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		}
 
 		if ( obj is Potions ){
-			cha.inventoryUI.AddPotion(obj);
+
+			cha.inventory.potions.Add(obj as Potions);
+			inventory.potions.Remove( obj as Potions );
 		}
 
 		if ( obj is ArmorItem){
 			inventory.armorInventory.PickUp(obj);
 		}
 		inventory.character.inventoryUI.DeleteObject(selectedObj);
-		SwitchToWeapons();
         SwitchInventory(tab);
 		SwitchToPotionsTab();
 
 
     }
+
+	public void SendPotion( ) {
+		if ( inventory.potions.Count > 0 ){
+			selectedObj = inventory.potions[ 0 ];
+			StaticManager.UiInventory.ShowWindow(StaticManager.uiManager.SendToWindow);
+		}
+	}
     public void Use( ) {
         selectedObj.Attach();
 	}
