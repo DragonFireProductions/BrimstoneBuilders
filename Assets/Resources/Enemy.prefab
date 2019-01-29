@@ -3914,7 +3914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.050980393, g: 0.99215686, b: 0.2, a: 0.6862745}
+  m_Color: {r: 1, g: 0.22650254, b: 0.18396229, a: 0.6862745}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -6642,6 +6642,11 @@ MonoBehaviour:
   icon: {fileID: 2060380018540595415}
   light: {fileID: 0}
   damage: 0
+  dropKey: 0
+  questItem: {fileID: 0}
+  quest: {fileID: 0}
+  DropWeapon: 0
+  objectToDrop: {fileID: 0}
 --- !u!114 &114668748591974072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6657,6 +6662,7 @@ MonoBehaviour:
   Agent: {fileID: 195712952222014972}
   battleDistance: 3
   character: {fileID: 114932892065668812}
+  clip: {fileID: 0}
   stoppingDistance: 3
   waittime: 0.5
   animator: {fileID: 95065464750875492}

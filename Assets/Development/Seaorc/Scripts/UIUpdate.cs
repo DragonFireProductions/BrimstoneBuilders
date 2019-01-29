@@ -12,7 +12,8 @@ public class UIUpdate : MonoBehaviour
     public Image StaminaBar;
     public Text HpText;
     public Text StaminaText;
-    
+    public Text XPText;
+
     public Text CoinText;
 
     private Stat Selected;
@@ -52,6 +53,9 @@ public class UIUpdate : MonoBehaviour
 
             if (StaminaText != null)
                 StaminaText.text = Selected.Stamina.ToString() + " / " + (Selected.Endurance * 10).ToString();
+
+            if (XPText != null)
+                XPText.text = Selected.XP.ToString();
         }
 
         if(Coins == 0)

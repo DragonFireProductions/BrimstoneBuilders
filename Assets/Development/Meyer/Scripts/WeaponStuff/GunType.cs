@@ -76,11 +76,15 @@ public class GunType : WeaponObject {
 
         int ind = Random.Range( 0 , clips.Length - 1 );
         audio.clip = clips[ind];
-        audio.Play();
+
     }
 
     public override void Activate( ) {
         StartCoroutine( Fire( ) );
+        if (!audio.isPlaying)
+        {
+            audio.Play();
+        }
     }
 
     private IEnumerator Fire( ) {
