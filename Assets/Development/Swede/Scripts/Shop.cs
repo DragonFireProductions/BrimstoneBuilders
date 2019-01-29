@@ -9,17 +9,13 @@ public class Shop : MonoBehaviour
 {
     [SerializeField] public int companionPrice;
     [SerializeField] public int resaleWorth;
-
-    public GameObject Buy;
-
-    public GameObject Sell;
-
-    public GameObject ShopContainer;
+    
 
     public RawImage icon;
 
     public RawImage notIcon;
 
+    public ShopContainer shopContainer;
     [Serializable]
     public struct CompanionStruct
     {
@@ -40,40 +36,75 @@ public class Shop : MonoBehaviour
     [SerializeField]
     public List <CompanionStruct> companions;
 
-    public GameObject sellContainer;
     // Use this for initialization
     void Start()
     {
-         StaticManager.currencyManager.shops.Add(gameObject );
-       StaticManager.UiInventory.ItemsInstance.GetLabel("CompanionSellError", StaticManager.UiInventory.ItemsInstance.ShopUI).text = " ";
-        Buy = ShopContainer.transform.Find( "Buy" ).gameObject;
-        Sell = ShopContainer.transform.Find( "Sell" ).gameObject;
+        StaticManager.currencyManager.shops.Add(gameObject );
+        var _container = Instantiate( StaticManager.currencyManager.containerHolder.gameObject );
+        shopContainer = _container.GetComponent < ShopContainer >( );
+
+        StaticManager.UiInventory.ItemsInstance.GetLabel("CompanionSellError", StaticManager.UiInventory.ItemsInstance.ShopUI).text = " ";
         StartCoroutine( init( ) );
         StaticManager.map.Add(Map.Type.shop, icon);
         notIcon.enabled = true;
     }
 
     IEnumerator init( ) {
-        yield return new WaitForSeconds(2);
-        foreach (var l_companion in companions)
-        {
-            //l_companion.companion.inventoryUI.Init(l_companion.companion);
-            l_companion.companion.inventoryUI.AddToShop(this);
+        yield return new WaitForSeconds(1);
+        var shop = Instantiate(StaticManager.currencyManager.containerHolder);
+        var container = shop.GetComponent<ShopContainer>();
+        container.transform.SetParent(StaticManager.currencyManager.ShopUI.transform);
+        container.gameObject.SetActive(false);
+        container.shop = this;
+        shopContainer = container;
+        
+        foreach (var l_companion in companions){
+
+            var companion = Instantiate( l_companion.companion );
+
             shopCompanions.Add(l_companion.companion.inventoryUI.CompanionSell);
-            l_companion.companion.inventoryUI.CompanionSell.transform.SetParent(Buy.transform);
-            l_companion.companion.inventoryUI.CompanionSell.transform.localScale = new Vector3(1, 1, 1);
-            l_companion.companion.mele.CurrentLevel = l_companion.Melee;
-            l_companion.companion.magic.CurrentLevel = l_companion.Magic;
-            l_companion.companion.range.CurrentLevel = l_companion.Range;
-            l_companion.companion.cost = l_companion.cost;
-            l_companion.companion.inventoryUI.UpdateCharacter(l_companion.companion.inventoryUI.ShopCharacterText);
-            l_companion.companion.startWeapon = l_companion.weapon;
-            l_companion.companion.inventoryUI.UpdateWeapon(l_companion.companion.inventoryUI.ShopWeaponsText, l_companion.weapon.GetComponent<WeaponObject>());
+
+            var c = Instantiate( StaticManager.currencyManager.container.gameObject );
+            c.gameObject.SetActive(true);
+
+            companion.inventoryUI.CompanionSell = c.GetComponent < CompanionContainer >( );
+            companion.inventoryUI.CompanionSell.characterstats.FindLabels();
+            companion.inventoryUI.CompanionSell.weaponstats.FindLabels();
+            companion.inventoryUI.CompanionSell.companion = companion;
+
+            c.GetComponent < CompanionContainer >( ).shop = this;
+
+            companion.inventoryUI.CompanionSell.transform.SetParent(container.buy.transform);
+
+            companion.inventoryUI.CompanionSell.transform.localScale = new Vector3(1, 1, 1);
+            companion.mele.CurrentLevel = l_companion.Melee;
+            companion.magic.CurrentLevel = l_companion.Magic;
+            companion.range.CurrentLevel = l_companion.Range;
+            companion.cost = l_companion.cost;
+            companion.inventoryUI.UpdateCharacter(companion.inventoryUI.CompanionSell.characterstats);
+            companion.startWeapon = l_companion.weapon;
+            companion.inventoryUI.UpdateWeapon(companion.inventoryUI.CompanionSell.weaponstats, companion.startWeapon.GetComponent<WeaponObject>());
+
+
             
+            companion.inventoryUI.Init(companion);
+            companion.startWeapon = Instantiate(companion.startWeapon);
+            companion.startWeapon.GetComponent<WeaponObject>().PickUp(companion);
+            companion.startWeapon.GetComponent<WeaponObject>().Attach();
+
+            companion.inventoryUI.sendToButton.gameObject.SetActive(false);
+            companion.inventoryUI.tab.gameObject.SetActive(false);
+
+            companion.gameObject.SetActive(false);
+            StaticManager.RealTime.Companions.Remove( companion );
         }
-            yield return new WaitForEndOfFrame();
+
+        shop.gameObject.transform.position = StaticManager.currencyManager.containerHolder.transform.position;
+        
+
+        yield return new WaitForEndOfFrame();
     }
-    public List <Tab> shopCompanions = new List < Tab >();
+    public List <CompanionContainer> shopCompanions = new List < CompanionContainer >();
     
    
     // Update is called once per frame

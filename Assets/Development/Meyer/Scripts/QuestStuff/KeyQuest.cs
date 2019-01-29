@@ -17,13 +17,14 @@ public class KeyQuest : Quest
     [SerializeField]
     public List < QuestItem > list;
 
-    public GameObject enemySpawner;
-
+ 
     public Type type;
 
     public bool completed;
 
     public int index;
+
+   
     public enum Type {
 
         attachToEnemy,
@@ -43,7 +44,6 @@ public class KeyQuest : Quest
             
         }
         else if ( type == Type.attachToEnemy ){
-            enemySpawner.SetActive(true);
         }
     }
 

@@ -47,12 +47,11 @@ public class PlayerInventory : MonoBehaviour {
        // PickedUpWeapons.Add(gameObject.transform.Find("Cube").gameObject.GetComponentInChildren<WeaponObject>());
         coinCount = 0;
     }
-    
 
-    public void PickUp( Potions potions ) {
-        PickedUpPotions.Add(potions);
-        character.inventoryUI.AddPotion(potions);
-        potions.gameObject.SetActive(false);
+    public void PickUp( Potions _potions ) {
+        PickedUpPotions.Add(_potions);
+        _potions.gameObject.SetActive(false);
+        character.inventoryUI.HealCount.text = potions.Count.ToString();
     }
 
     public virtual void PickUp( BaseItems item ) {
@@ -62,22 +61,13 @@ public class PlayerInventory : MonoBehaviour {
     {
         StaticManager.currencyManager.AddCoins(_coinWorth);
     }
+
+    public virtual void Close( ) {
+        character.inventoryUI.PotionsInventory.gameObject.SetActive(false);
+    }
     
     private void Update( ) {
-        if ( Input.GetButtonDown( "Inventory" ) ){
-            
-         StaticManager.inventories.prevPos = StaticManager.Character.transform.position;
-         StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.PlayerUI );
-         character.inventoryUI.UpdateItem();
-         StaticManager.inventories.SwitchInventory(StaticManager.Character.inventoryUI.tab);
-         StaticManager.inventories.inventory.character.projector.gameObject.SetActive(false);
-         StaticManager.inventories.SwitchToWeapons();
-         Time.timeScale = 0;
-        }
 
-        if ( Input.GetKeyDown(KeyCode.H) && potions.Count > 0 && character is Character ){
-            potions[0].Cast(character);
-        }
     }
 
 }

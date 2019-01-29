@@ -105,7 +105,7 @@ public abstract class BaseCharacter : MonoBehaviour {
                 gameObject.GetComponent<Enemy>().Damage(damage, item);
             }
             else if ( this is Companion ){
-                gameObject.GetComponent<Enemy>().Damage(damage, item);
+                gameObject.GetComponent<Companion>().Damage(damage, item);
             }
 
 

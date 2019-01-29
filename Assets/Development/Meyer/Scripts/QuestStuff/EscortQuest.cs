@@ -11,8 +11,6 @@ public class EscortQuest : Quest {
 
     public GameObject _destination;
 
-    public GameObject spawner;
-
     public Sprite CompanionIcon;
 
     public override void Accept( ) {
@@ -28,7 +26,7 @@ public class EscortQuest : Quest {
         }
 
         ui.labels.Labels[ 0 ].labelText.text = name;
-        spawner.SetActive(true);
+        
     }
 
     public void Failed( ) {

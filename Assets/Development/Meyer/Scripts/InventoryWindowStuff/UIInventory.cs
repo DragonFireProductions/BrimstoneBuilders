@@ -173,28 +173,22 @@ public class UIInventory : MonoBehaviour
         if ( item == null ){
             var window = ItemsInstance.openedWindow[ItemsInstance.openedWindow.Count - 1];
 
-            if (window == StaticManager.UiInventory.ItemsInstance.PlayerUI)
-            {
-                StaticManager.uiManager.inventoryCharacterStats.SetActive(false);
-                StaticManager.inventories.inventory.character.transform.position = StaticManager.inventories.prevPos;
-                Time.timeScale = 1;
-                StaticManager.Character.projector.gameObject.SetActive(true);
+            foreach ( var l_gameObject in window ){
+                l_gameObject.SetActive(false);
             }
-            window.SetActive(false);
             ItemsInstance.openedWindow.RemoveAt(ItemsInstance.openedWindow.Count - 1);
-
-           
         }
         else{
-            if (item == StaticManager.UiInventory.ItemsInstance.PlayerUI)
-            {
-                StaticManager.uiManager.inventoryCharacterStats.SetActive(false);
-                StaticManager.inventories.inventory.character.transform.position = StaticManager.inventories.prevPos;
-                Time.timeScale = 1;
-                StaticManager.Character.projector.gameObject.SetActive(true);
+            for ( int i = 0 ; i < ItemsInstance.openedWindow.Count ; i++ ){
+                for ( int j = 0 ; j <  ItemsInstance.openedWindow[i].Count; j++ ){
+                    if ( ItemsInstance.openedWindow[i][j] == item ){
+                        ItemsInstance.openedWindow.RemoveAt(i);
+
+                        break;
+                    }
+                }
             }
             item.SetActive(false);
-            ItemsInstance.openedWindow.Remove( item );
         }
         if ( ItemsInstance.openedWindow.Count == 0 ){
             ItemsInstance.windowIsOpen = false;
@@ -204,6 +198,18 @@ public class UIInventory : MonoBehaviour
         
     }
 
+    public void CloseAll( ) {
+        for ( int i = 0 ; i < ItemsInstance.openedWindow.Count ; i++ ){
+            for ( int j = 0 ; j < ItemsInstance.openedWindow[i].Count ; j++ ){
+                ItemsInstance.openedWindow[i][j].gameObject.SetActive(false);
+            }
+        }
+        ItemsInstance.openedWindow.Clear();
+        ItemsInstance.windowIsOpen = false;
+        Time.timeScale = 1;
+        BackDrop.SetActive(false);
+
+    }
     public void OnMouseOver( ) {
         mouse = true;
     }
@@ -217,12 +223,25 @@ public class UIInventory : MonoBehaviour
         if ( !item.activeSelf ){
             item.SetActive(true);
             ItemsInstance.windowIsOpen = item;
-            ItemsInstance.openedWindow.Add(item);
+            List <GameObject> list = new List < GameObject >();
+            list.Add(item);
+            ItemsInstance.openedWindow.Add(list);
             Time.timeScale = 0.0f;
             BackDrop.SetActive(true);
         }
         
 
+    }
+
+    public void ShowWindow( List < GameObject > list ) {
+        
+        foreach ( var l_gameObject in list ){
+             l_gameObject.SetActive(true);
+            ItemsInstance.windowIsOpen = l_gameObject;
+        }
+        ItemsInstance.openedWindow.Add(list);
+        Time.timeScale = 0.0f;
+        BackDrop.SetActive(true);
     }
 
 }
