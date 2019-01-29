@@ -11,12 +11,15 @@ public class companionBehaviors : MonoBehaviour
     public Companion newFriend;
 
     public Image XPBar;
-    private GameObject prev_button;
     public Image HPBar;
     public Image StaminaBar;
     public Text HpText;
     public Text StaminaText;
+    public Text XPText;
+    public Text LvlText;
     private Text name;
+    private GameObject prev_button;
+
     // Use this for initialization
     void Start()
     {
@@ -52,6 +55,8 @@ public class companionBehaviors : MonoBehaviour
             if (XPBar != null)
             {
                 XPBar.fillAmount = newFriend.CurrentSubClass.CurrentLevel - (int)newFriend.CurrentSubClass.CurrentLevel;
+                XPText.text = ((int)newFriend.CurrentSubClass.CurrentLevel).ToString();
+                LvlText.text = ((int)newFriend.CurrentSubClass.CurrentLevel).ToString();
             }
             if (HPBar != null)
             {
@@ -75,6 +80,12 @@ public class companionBehaviors : MonoBehaviour
     {
         if (newFriend.inventory.potions.Count > 0)
         {
+            newFriend.inventory.potions[0].Cast(this.newFriend);
+        }
+        else if (StaticManager.Character.inventory.potions.Count > 0)
+        {
+            newFriend.inventory.potions.Add(StaticManager.Character.inventory.potions[0]);
+            StaticManager.Character.inventory.potions.RemoveAt(0);
             newFriend.inventory.potions[0].Cast(this.newFriend);
         }
     }
