@@ -59,10 +59,11 @@ public class EnemyNav : BaseNav {
 
                 break;
             case state.ATTACKING: {
+
                 character.attackers.RemoveAll( item => item               == null );
                 StaticManager.RealTime.Companions.RemoveAll( item => item == null );
                 StaticManager.RealTime.Enemies.RemoveAll( item => item    == null );
-
+               
                 if ( character.attackers.Count > 0 && character.enemy == null ){
                     var enemy = character.attackers[ Random.Range( 0 , character.attackers.Count ) ];
                     character.enemy = enemy;
@@ -93,17 +94,19 @@ public class EnemyNav : BaseNav {
                             timer  = 0;
                         }
                     }
-
-                    transform.LookAt( character.enemy.transform );
+                    Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
+                    transform.LookAt( look );
                     character.attachedWeapon.Use( );
                     Agent.SetDestination( newpos );
                 }
 
                 if ( character.attachedWeapon is SwordType ){
                     SetState = state.ATTACKING;
+                    Agent.stoppingDistance = 2;
                     Agent.SetDestination( character.enemy.transform.position );
-                    transform.LookAt( character.enemy.transform );
-                    var distance = Vector3.Distance( transform.position , character.enemy.transform.position );
+                        Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
+                        transform.LookAt(look);
+                        var distance = Vector3.Distance( transform.position , character.enemy.transform.position );
 
                     if ( distance < battleDistance ){
                         character.attachedWeapon.Use( );

@@ -24,7 +24,7 @@ public class BaseNav : MonoBehaviour {
 
     public NavMeshAgent Agent;
 
-    public float battleDistance = 3;
+    public float battleDistance = 4;
 
     public BaseCharacter character;
 
@@ -73,7 +73,8 @@ public class BaseNav : MonoBehaviour {
             }
 
             if ( value == state.ATTACKING ){
-                Agent.stoppingDistance = 1;
+                character.canvas.SetActive(true);
+                Agent.stoppingDistance = 2;
                 newpos = StaticManager.Utility.randomInsideDonut(outerRadius, innerRadius, StaticManager.Character.transform.position);
             }
 
@@ -85,8 +86,8 @@ public class BaseNav : MonoBehaviour {
             if ( value == state.ENEMY_CLICKED ){
                 Agent.stoppingDistance = 2;
             }
-
             if ( value == state.IDLE ){
+                 character.canvas.SetActive(false);
                 Agent.stoppingDistance = stoppingDistance;
             }
 

@@ -99,7 +99,7 @@ public class GunType : WeaponObject {
 
         proj.gameObject.SetActive( true );
         proj.GetComponent < Rigidbody >( ).AddForce( AttachedCharacter.transform.forward * proj.GetComponent < Projectile >( ).GetSpeed( ) , ForceMode.Impulse );
-        StartCoroutine( stopBullet( 2 , proj ) );
+        StartCoroutine( stopBullet(  4, proj ) );
         Ammo -= 1;
 
         yield return new WaitForSeconds( FireRate );
