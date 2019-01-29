@@ -75,10 +75,12 @@ public class Companion : BaseCharacter {
                 StaticManager.uiManager.GameOverWindow.SetActive( true );
                 Time.timeScale = 0;
             }
-
-            StaticManager.currencyManager.companions--;
+            else{
+                 StaticManager.currencyManager.companions--;
             Destroy( GetComponent < CompanionNav >( ).behaviors.gameObject );
             StaticManager.RealTime.Companions.Remove( this );
+            }
+           
         }
     }
 
