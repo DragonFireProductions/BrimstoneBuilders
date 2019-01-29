@@ -11,6 +11,10 @@ public class CompanionContainer : MonoBehaviour {
     public Companion companion;
 
     public Shop shop;
+
+    public GameObject buyButton;
+
+    public GameObject sellButton;
     // Start is called before the first frame update
     void Start()
     {

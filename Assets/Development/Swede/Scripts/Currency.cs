@@ -63,6 +63,7 @@ public class Currency : MonoBehaviour {
         sellButton.GetComponent < Image >( ).color = Color.red;
         _shop.shopContainer.buy.SetActive( false );
         _shop.shopContainer.sell.SetActive( true );
+        
     }
 
     public void BuyCompanion( CompanionContainer container ) {
@@ -107,7 +108,8 @@ public class Currency : MonoBehaviour {
 
            container.companion.inventoryUI.sendToButton.gameObject.SetActive(true);
            container.companion.inventoryUI.tab.gameObject.SetActive(true);
-
+            container.buyButton.SetActive(false);
+            container.sellButton.SetActive(true);
             ///doesn't work
         }
         else{
