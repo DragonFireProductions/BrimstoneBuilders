@@ -305,7 +305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &57947302
 Transform:
   m_ObjectHideFlags: 0
@@ -842,6 +842,36 @@ MonoBehaviour:
   m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &281482679
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 281482680}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &281482680
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281482679}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -388, y: 0, z: 502}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1933004954}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &282842168 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4072623858175766, guid: 1220801ba16df7441866a6a05943d6a6,
@@ -864,7 +894,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &308732848
 Transform:
   m_ObjectHideFlags: 0
@@ -1555,7 +1585,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &607344179
 Transform:
   m_ObjectHideFlags: 0
@@ -3828,7 +3858,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1311445785
 Transform:
   m_ObjectHideFlags: 0
@@ -3837,7 +3867,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1311445784}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1218, y: -98.39, z: 110.4}
+  m_LocalPosition: {x: -1331, y: -98.39, z: 54}
   m_LocalScale: {x: 1.00915, y: 1, z: 1.0091501}
   m_Children:
   - {fileID: 668244574}
@@ -3858,9 +3888,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minRange: 112.1
   maxRange: 126.2
-  spawnRadius: 20
+  spawnRadius: 38
   PreSpawn: 1
-  AggroRange: 14.18
+  AggroRange: 26.9
   icon: {fileID: 258528026}
   enemies:
   - enemy: {fileID: 114932892065668812, guid: 8b3689f0546616c419c405018796038a, type: 3}
@@ -3875,7 +3905,13 @@ MonoBehaviour:
     weapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28, type: 3}
     DropWeapon: 1
     dropItem: {fileID: 0}
-  numberofEnemies: 2
+  - enemy: {fileID: 114932892065668812, guid: 8b3689f0546616c419c405018796038a, type: 3}
+    Damage: 2
+    luck: 0
+    weapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28, type: 3}
+    DropWeapon: 1
+    dropItem: {fileID: 0}
+  numberofEnemies: 3
   quest: {fileID: 0}
   index: 0
 --- !u!4 &1318035319 stripped
@@ -5063,6 +5099,8 @@ Transform:
   - {fileID: 1159667195}
   - {fileID: 1071510513}
   - {fileID: 737227245}
+  - {fileID: 281482680}
+  - {fileID: 1989293215}
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5304,6 +5342,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8296153219701149068}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1989293214
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1989293215}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1989293215
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989293214}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -117, y: 0, z: 754}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1933004954}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2009543360 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4506413339530354, guid: 1220801ba16df7441866a6a05943d6a6,
@@ -6348,7 +6416,7 @@ PrefabInstance:
     - target: {fileID: 903319344099812961, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 903319344099812960, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
         type: 3}
@@ -6408,7 +6476,7 @@ PrefabInstance:
     - target: {fileID: 903319344099812989, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
         type: 3}
       propertyPath: spawners.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 903319344099812989, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
         type: 3}
@@ -6440,6 +6508,66 @@ PrefabInstance:
       propertyPath: QuestDialog
       value: I have some valuable items on me and I need assistance past the fence.
         Please help and I'll award you!
+      objectReference: {fileID: 0}
+    - target: {fileID: 903319344099812989, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
+        type: 3}
+      propertyPath: spawners.Array.data[0].enemySpawnerPos
+      value: 
+      objectReference: {fileID: 281482679}
+    - target: {fileID: 903319344099812989, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
+        type: 3}
+      propertyPath: spawners.Array.data[1].enemySpawnerPos
+      value: 
+      objectReference: {fileID: 1989293214}
+    - target: {fileID: 903319344099812989, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
+        type: 3}
+      propertyPath: spawners.Array.data[0].spawnRadius
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 903319344099812989, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
+        type: 3}
+      propertyPath: spawners.Array.data[0].prespawn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 903319344099812989, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
+        type: 3}
+      propertyPath: spawners.Array.data[0].aggroRadius
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 903319344099812989, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
+        type: 3}
+      propertyPath: spawners.Array.data[0].minRadus
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 903319344099812989, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
+        type: 3}
+      propertyPath: spawners.Array.data[0].maxRadius
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 903319344099812989, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
+        type: 3}
+      propertyPath: spawners.Array.data[1].spawnRadius
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 903319344099812989, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
+        type: 3}
+      propertyPath: spawners.Array.data[1].prespawn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 903319344099812989, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
+        type: 3}
+      propertyPath: spawners.Array.data[1].aggroRadius
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 903319344099812989, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
+        type: 3}
+      propertyPath: spawners.Array.data[1].minRadus
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 903319344099812989, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
+        type: 3}
+      propertyPath: spawners.Array.data[1].maxRadius
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 903319344099812962, guid: 80032e7cecf679d4bb5d1df16ba9a2fa,
         type: 3}
@@ -6548,6 +6676,11 @@ PrefabInstance:
     - target: {fileID: 917792888886236539, guid: e3cc960835d5e52468d7bc0a07853604,
         type: 3}
       propertyPath: list.Array.data[0]
+      value: 
+      objectReference: {fileID: 1108772873}
+    - target: {fileID: 917792888886236539, guid: e3cc960835d5e52468d7bc0a07853604,
+        type: 3}
+      propertyPath: loot
       value: 
       objectReference: {fileID: 1108772873}
     m_RemovedComponents: []
@@ -14151,7 +14284,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6833572374261402178}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1423, y: -98.39, z: 38}
+  m_LocalPosition: {x: -1046.4, y: -117.7, z: 122.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 39645033}
@@ -37759,7 +37892,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!222 &6855279132659233368
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -39270,7 +39403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minRange: 112.1
   maxRange: 126.2
-  spawnRadius: 20
+  spawnRadius: 10.46
   PreSpawn: 1
   AggroRange: 14.18
   icon: {fileID: 253148735}
@@ -39280,12 +39413,12 @@ MonoBehaviour:
     luck: 0
     weapon: {fileID: 1122163039750788, guid: 123df733c16d1f44b9cbd22b5d87c6aa, type: 3}
     DropWeapon: 0
-    dropItem: {fileID: 0}
+    dropItem: {fileID: 1531782500733556, guid: bb78e276d38b88e449d9099f8d1aaefa, type: 3}
   - enemy: {fileID: 114932892065668812, guid: 8b3689f0546616c419c405018796038a, type: 3}
     Damage: 1
     luck: 0
     weapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28, type: 3}
-    DropWeapon: 0
+    DropWeapon: 1
     dropItem: {fileID: 0}
   numberofEnemies: 2
   quest: {fileID: 0}

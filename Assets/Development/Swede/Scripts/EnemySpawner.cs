@@ -138,25 +138,29 @@ public class EnemySpawner : MonoBehaviour
             GameObject newEnemy;
             if ( i >= enemies.Length ){
              newEnemy = Instantiate(enemies[0].enemy.gameObject, position, Quaternion.identity);
-                //if (enemies[0].quest != null){
-                //    newEnemy.GetComponent < Enemy >( ).dropKey = enemies[ 0 ].DropKey;
-                //    newEnemy.GetComponent < Enemy >( ).quest = enemies[ 0 ].quest;
-                //    newEnemy.GetComponent<Enemy>().quest.InstEnemies(newEnemy.GetComponent<Enemy>());
-                //    newEnemy.GetComponent < Enemy >( ).DropWeapon = enemies[ 0 ].DropWeapon;
-                //         newEnemy.GetComponent < Enemy >( ).objectToDrop = enemies[ 0 ].dropItem;
-                //}
+
+                if ( enemies[0].dropItem ){
+
+                    newEnemy.GetComponent < Enemy >( ).objectToDrop = enemies[ 0 ].dropItem;
+                }
+
+                if ( enemies[0].DropWeapon ){
+                    newEnemy.GetComponent < Enemy >( ).DropWeapon = true;
+                }
 
             }
             else{
                 newEnemy = Instantiate(enemies[i].enemy.gameObject, position, Quaternion.identity);
-                //if (enemies[i].quest != null)
-                //{
-                //     newEnemy.GetComponent < Enemy >( ).dropKey = enemies[ i ].DropKey;
-                //     newEnemy.GetComponent < Enemy >( ).quest = enemies[ i ].quest;
-                //    newEnemy.GetComponent<Enemy>().quest.InstEnemies(newEnemy.GetComponent<Enemy>());
-                //         newEnemy.GetComponent < Enemy >( ).DropWeapon = enemies[ i ].DropWeapon;
-                //    newEnemy.GetComponent < Enemy >( ).objectToDrop = enemies[ i ].dropItem;
-                //}
+                if (enemies[i].dropItem)
+                {
+
+                    newEnemy.GetComponent<Enemy>().objectToDrop = enemies[i].dropItem;
+
+                }
+                if (enemies[i].DropWeapon)
+                {
+                    newEnemy.GetComponent<Enemy>().DropWeapon = true;
+                }
             }
             
 
