@@ -30,7 +30,7 @@ public class CompanionNav : BaseNav
 
     [HideInInspector] public AggressionStates aggState;
 
-    [HideInInspector] public companionBehaviors behaviors;
+     public companionBehaviors behaviors;
 
     //List of enemies to attack
     [HideInInspector] public List<Enemy> enemiesToAttack;

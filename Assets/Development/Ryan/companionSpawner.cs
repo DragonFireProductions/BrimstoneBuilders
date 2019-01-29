@@ -162,6 +162,8 @@ public class companionSpawner : MonoBehaviour
         companion.gameObject.SetActive(true);
         companion.inventoryUI.sendToButton.gameObject.SetActive(true);
 
+        
+
     }
 
 

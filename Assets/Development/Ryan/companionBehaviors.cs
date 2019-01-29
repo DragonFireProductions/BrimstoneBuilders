@@ -55,7 +55,7 @@ public class companionBehaviors : MonoBehaviour
             if (XPBar != null)
             {
                 XPBar.fillAmount = newFriend.CurrentSubClass.CurrentLevel - (int)newFriend.CurrentSubClass.CurrentLevel;
-                XPText.text = ((int)newFriend.CurrentSubClass.CurrentLevel).ToString();
+         
                 LvlText.text = ((int)newFriend.CurrentSubClass.CurrentLevel).ToString();
             }
             if (HPBar != null)
