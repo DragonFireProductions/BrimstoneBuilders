@@ -130,7 +130,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     public IEnumerator KnockBackC( float knockback ) {
         ridgidbody.isKinematic = false;
-        ridgidbody.AddForce( -transform.forward * ( knockback * 20) , ForceMode.Impulse );
+        ridgidbody.AddForce( -transform.forward * ( knockback * 100f) , ForceMode.Impulse );
         agent.speed = 2;
         yield return new WaitForSeconds( 0.5f );
 

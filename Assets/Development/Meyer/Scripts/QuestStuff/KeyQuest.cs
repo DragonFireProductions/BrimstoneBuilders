@@ -80,8 +80,9 @@ public class KeyQuest : Quest
 
 
     public void DropLoot(QuestItem item, Enemy enemy) {
+        var a = new Vector3(enemy.transform.position.x, StaticManager.Character.transform.position.y, enemy.transform.position.z);
         var temp = Instantiate( item.gameObject );
-        temp.transform.position = enemy.transform.position;
+        temp.transform.position = a;
         temp.SetActive(true);
     }
     

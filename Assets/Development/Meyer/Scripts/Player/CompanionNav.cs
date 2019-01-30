@@ -94,7 +94,7 @@ public class CompanionNav : BaseNav
         enemiesToAttack.RemoveAll(item => item == null);
 
 
-        
+        stoppingDistance = 4;
         switch (aggState)
         {
             case AggressionStates.PASSIVE:
@@ -135,9 +135,6 @@ public class CompanionNav : BaseNav
                         }
                         else
                         {
-                            if (distance > 4 || distance < 2 && distance < 9)
-                                Agent.SetDestination((Random.insideUnitSphere.normalized * 5) + character.enemy.transform.position);
-                            else if (distance > 9)
                                 Agent.SetDestination(character.enemy.transform.position);
 
                             if (enemiesToAttack.Count == 0)
@@ -190,9 +187,6 @@ public class CompanionNav : BaseNav
                         }
                         else
                         {
-                            if ((distance > 4 || distance < 2) && distance < 9)
-                                Agent.SetDestination((Random.insideUnitSphere.normalized * 5) + character.enemy.transform.position);
-                            else if (distance > 9)
                                 Agent.SetDestination(character.enemy.transform.position);
                             Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
                             transform.LookAt(look);
@@ -239,9 +233,6 @@ public class CompanionNav : BaseNav
                         }
                         else
                         {
-                            if ((distance > 4 || distance < 2) && distance < 9)
-                                Agent.SetDestination((Random.insideUnitSphere.normalized * 5) + character.enemy.transform.position);
-                            else if (distance > 9)
                                 Agent.SetDestination(character.enemy.transform.position);
 
                             Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
