@@ -88,9 +88,6 @@ public class GunType : WeaponObject {
     }
 
     private IEnumerator Fire( ) {
-        if ( KnockBack ){
-            AttachedCharacter.KnockBack( KnockBackAmount );
-        }
 
         var proj = GetPulledBullets( );
 

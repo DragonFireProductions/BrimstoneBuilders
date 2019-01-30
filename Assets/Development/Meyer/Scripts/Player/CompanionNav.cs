@@ -128,7 +128,8 @@ public class CompanionNav : BaseNav
                                 }
                             }
 
-                            transform.LookAt(character.enemy.transform);
+                            Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
+                            transform.LookAt(look);
                             character.attachedWeapon.Use();
                             Agent.SetDestination(newpos);
                         }
@@ -149,7 +150,8 @@ public class CompanionNav : BaseNav
                             if (distance < battleDistance)
                             {
                                 character.AnimationClass.Play(AnimationClass.states.Attack);
-                                transform.LookAt(character.enemy.transform.position);
+                                Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
+                                transform.LookAt(look);
                             }
                         }
                     }
@@ -181,7 +183,8 @@ public class CompanionNav : BaseNav
                                 }
                             }
 
-                            transform.LookAt(character.enemy.transform);
+                            Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
+                            transform.LookAt(look);
                             character.attachedWeapon.Use();
                             Agent.SetDestination(newpos);
                         }
@@ -191,7 +194,8 @@ public class CompanionNav : BaseNav
                                 Agent.SetDestination((Random.insideUnitSphere.normalized * 5) + character.enemy.transform.position);
                             else if (distance > 9)
                                 Agent.SetDestination(character.enemy.transform.position);
-                            transform.LookAt(character.enemy.transform.position);
+                            Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
+                            transform.LookAt(look);
 
                             if (distance < battleDistance)
                             {
@@ -240,7 +244,8 @@ public class CompanionNav : BaseNav
                             else if (distance > 9)
                                 Agent.SetDestination(character.enemy.transform.position);
 
-                            transform.LookAt(character.enemy.transform.position);
+                            Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
+                            transform.LookAt(look);
 
                             if ( distance < battleDistance ){
                                 character.AnimationClass.Play(AnimationClass.states.Attack);

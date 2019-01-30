@@ -76,8 +76,8 @@ public class Currency : MonoBehaviour {
             StaticManager.UiInventory.ItemsInstance
                     .GetLabel( "CompanionBuyError" , StaticManager.UiInventory.ItemsInstance.ShopUI )
                     .text = "";
-            
-            
+
+            container.shop.ShopCompanions--;
             container.companion.inventoryUI.UpdateCharacter( container.companion.inventoryUI.CompanionSell.characterstats );
             container.companion.inventoryUI.CompanionSell.gameObject.transform.SetParent( _shop.shopContainer.sell.transform );
             container.companion.GetComponent < NavMeshAgent >( ).Warp( _shop.transform.position );

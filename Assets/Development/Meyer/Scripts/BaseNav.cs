@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+using Kristal;
+
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -75,6 +77,7 @@ public class BaseNav : MonoBehaviour {
             }
 
             if ( value == state.ATTACKING ){
+                if(this is EnemyNav)
                 character.canvas.SetActive(true);
                 Agent.stoppingDistance = 3;
                 newpos = StaticManager.Utility.randomInsideDonut(outerRadius, innerRadius, StaticManager.Character.transform.position);
@@ -89,6 +92,7 @@ public class BaseNav : MonoBehaviour {
                 Agent.stoppingDistance = 8;
             }
             if ( value == state.IDLE ){
+                if (this is EnemyNav)
                  character.canvas.SetActive(false);
                 Agent.stoppingDistance = 0;
             }

@@ -20,11 +20,5 @@ public class IceProjectile : Projectile {
             other.GetComponent<BaseCharacter>().Freeze(6); //Freezes whoever makes contact with the projectile.
         }
     }
-
-    public IEnumerator Freeze(Collider other, float seconds)
-    {
-        other.GetComponent<BaseCharacter>().Nav.SetState = BaseNav.state.FREEZE;
-        yield return new WaitForSeconds(seconds);
-        other.GetComponent<BaseCharacter>().Nav.SetState = BaseNav.state.ATTACKING;
-    }
+    
 }

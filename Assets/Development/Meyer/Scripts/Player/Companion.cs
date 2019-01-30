@@ -92,8 +92,10 @@ public class Companion : BaseCharacter {
             else{
             StaticManager.currencyManager.companions--;
                 var a = Nav as CompanionNav;
+                
             Destroy( a.behaviors.gameObject );
             StaticManager.RealTime.Companions.Remove( this );
+
                 Destroy(inventoryUI.sendToButton.gameObject);
                 Destroy(inventoryUI.tab.gameObject);
                 Destroy(inventoryUI.CompanionSell.gameObject);

@@ -36,6 +36,7 @@ public class Shop : MonoBehaviour
     [SerializeField]
     public List <CompanionStruct> companions;
 
+    public int ShopCompanions = 0;
     // Use this for initialization
     void Start()
     {
@@ -59,7 +60,7 @@ public class Shop : MonoBehaviour
         shopContainer = container;
         
         foreach (var l_companion in companions){
-
+            ShopCompanions++;
             var companion = Instantiate( l_companion.companion );
 
             shopCompanions.Add(l_companion.companion.inventoryUI.CompanionSell);
@@ -110,7 +111,7 @@ public class Shop : MonoBehaviour
     // Update is called once per frame
     void Update() {
         shopCompanions.RemoveAll( items => items == null );
-        if ( shopCompanions.Count <= 0 ){
+        if ( ShopCompanions <= 0 ){
             notIcon.enabled = false;
         }
         else{
