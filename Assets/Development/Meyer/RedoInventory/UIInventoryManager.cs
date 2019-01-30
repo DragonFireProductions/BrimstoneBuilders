@@ -57,6 +57,8 @@ public class UIInventoryManager : MonoBehaviour {
 
     public GameObject PlayerImage;
 
+    public GameObject playerUI;
+
     //add a new window
     public GameObject[] Grid;
 
@@ -73,6 +75,10 @@ public class UIInventoryManager : MonoBehaviour {
     public GameObject GameOverWindow;
 
     public GameObject notificationWindow;
+
+    public GameObject weaponGrid;
+
+    public GameObject armorGrid;
     public void Start( ) {
         
         WeaponInventoryStats.GetComponent<UIItemsWithLabels>().FindLabels();
@@ -118,6 +124,7 @@ public class UIInventoryManager : MonoBehaviour {
                 SubclassHub.Level.text     = cur.ToString( );
             }
         }
+
     }
 
     public void ShowMessage(string message, int time, bool questConfirmationl ) {

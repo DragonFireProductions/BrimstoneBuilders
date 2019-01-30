@@ -24,7 +24,7 @@ namespace Assets.Meyer.TestScripts.Player
         {
             if (inventory.potions.Count > 0)
             {
-                inventory.potions[0].Cast();
+                inventory.potions[0].Cast(this);
             }
         }
 

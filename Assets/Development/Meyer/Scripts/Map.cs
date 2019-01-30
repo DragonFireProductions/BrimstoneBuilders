@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class Map : MonoBehaviour {
 
-	private Camera mapCamera;
+	public Camera mapCamera;
 
 	public GameObject map;
 	
@@ -133,13 +133,17 @@ public class Map : MonoBehaviour {
 
 	public void ShowMap( ) {
 		map.SetActive(true);
-		//EnableAll();
-	}
+		mapCamera.gameObject.SetActive(true);
+        List<GameObject> windows = new List<GameObject>();
 
-	public void CloseMap( ) {
-		map.SetActive(false);
-		StaticManager.inventories.mapCamera.SetActive(false);
-	}
+        windows.Add(map);
+		windows.Add(mapCamera.gameObject);
+		windows.Add(StaticManager.uiManager.playerUI.gameObject);
+
+        StaticManager.UiInventory.ShowWindow(windows);
+        //EnableAll();
+    }
+	
 	// Update is called once per frame
 	void Update () {
 		

@@ -60,6 +60,22 @@ public class CharacterArmorInventory : PlayerInventory {
     // Update is called once per frame
     private void Update( ) { }
 
+    public override void Close( ) {
+        List <GameObject > window = new List < GameObject >();
+
+        window.Add(StaticManager.inventories.playerCam.gameObject);
+        window.Add(ArmorInventory.gameObject);
+        window.Add(StaticManager.uiManager.PlayerImage);
+
+        StaticManager.UiInventory.ItemsInstance.openedWindow.Add(window);
+        StaticManager.inventories.playerCam.gameObject.SetActive(false);
+        ArmorInventory.gameObject.SetActive(false);
+
+        if ( StaticManager.inventories.prevPos != Vector3.zero ){
+            character.transform.position = StaticManager.inventories.prevPos;
+            StaticManager.uiManager.PlayerImage.SetActive(false);
+        }
+    }
 }
 
 public class ArmorStuff {

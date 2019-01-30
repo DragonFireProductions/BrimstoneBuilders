@@ -22,8 +22,11 @@ public class HealPotion : Potions {
         if ( !StaticManager.Instance.unlimitedPotions ){
 			var e = enemy as Companion;
 			StaticManager.UiInventory.RemoveMainInventory(this, e.inventory);
-		}
-		
+	        e.inventory.potions.Remove( this );
+			e.inventory.potions.RemoveAll( item => item == null );
+			e.inventoryUI.HealCount.text = e.inventory.potions.Count.ToString();
+        }
+	
 	}
 
 	public override void IncreaseSubClass( float amount ) {

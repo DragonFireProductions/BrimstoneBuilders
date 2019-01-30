@@ -37,7 +37,7 @@ public class Drops : MonoBehaviour
 
     public void Drop_Loot(Enemy _ene)
     {
-        if (_ene.dropKey && _ene.quest is KeyQuest ){
+        if (_ene.dropKey && _ene.quest && _ene.quest is KeyQuest ){
             var quest = (KeyQuest)_ene.questItem.quest;
             quest.DropLoot(_ene.questItem, _ene);
         }
@@ -50,6 +50,7 @@ public class Drops : MonoBehaviour
             a.GetComponent < WeaponObject >( ).leftHand = Instantiate( _ene.attachedWeapon.leftHand.gameObject );
             a.GetComponent < WeaponObject >( ).rightHand = Instantiate( _ene.attachedWeapon.rightHand.gameObject );
             a.GetComponent < Collider >( ).enabled = true;
+            a.GetComponent<WeaponObject>().mesh.SetActive(true);
         }
         else if ( _ene.objectToDrop ){
             var objects = Instantiate( _ene.objectToDrop );

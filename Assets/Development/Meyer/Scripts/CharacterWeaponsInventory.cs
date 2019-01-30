@@ -147,4 +147,9 @@ public class CharacterWeaponsInventory : PlayerInventory
             labels[i].gameObject.transform.position = StaticManager.uiManager.Grid[i].transform.position;
         }
     }
+
+    public override void Close( ) {
+        inventoryObj.SetActive(false);
+        StaticManager.uiManager.WeaponWindow.SetActive(false);
+    }
 }

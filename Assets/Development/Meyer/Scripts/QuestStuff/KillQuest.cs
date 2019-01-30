@@ -9,13 +9,11 @@ public class KillQuest : Quest {
 
    [HideInInspector] public int EnemiesKilled = 0;
 
-    public int KillAmount;
+    private int KillAmount = 0;
 
-    public List < Enemy > enemies;
+    private List < Enemy > enemies;
 
     public GameObject winObject;
-
-    public GameObject spawner;
 
     public Sprite EnemyIcon;
     private bool accepted = false;
@@ -24,25 +22,35 @@ public class KillQuest : Quest {
     public override void Accept( ) {
         accepted = true;
         base.Accept();
-        spawner.SetActive(true);
-        accepted = true;
-        ui.questText.text = QuestDialog;
+       
+        ui.questText.text = "Please Kill " + KillAmount + " enemies.";
         ui.icon.sprite = EnemyIcon;
-        ui.labels.Labels[ 0 ].labelText.text = "Kill Count: " + enemies.Count;
+
+
+        ui.labels.Labels[ 0 ].labelText.text = "Kill Count: " + KillAmount;
+
+       
     }
 
     public override void InstEnemies(Enemy enemy ) {
-        enemies.Add(enemy);
-        ui.labels.Labels[ 0 ].labelText.text = "Kill Count: " + enemies.Count;
+        ui.labels.Labels[ 0 ].labelText.text = "Kill Count: " + KillAmount;
     }
 
     public override void EnemyDied( Enemy enemy ) {
-        enemies.Remove( enemy );
-        ui.labels.Labels[ 0 ].labelText.text = "Kill Count: " + enemies.Count;
         enemiesKilled++;
+          ui.labels.Labels[ 0 ].labelText.text = "Kill Count: " + enemiesKilled;
     }
-    
 
+    public override void Start( ) {
+        base.Start();
+        foreach (var l_enemySpawnerStuff in spawners)
+        {
+            foreach (var l_keyEnemiese in l_enemySpawnerStuff.enemies)
+            {
+                KillAmount++;
+            }
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -58,7 +66,10 @@ public class KillQuest : Quest {
     public void OnTriggerEnter(Collider collider)
     {
         if (collider.tag == "Player"){
-            enemies.RemoveAll( item => item == null );
+            if ( enemies != null ){
+                 enemies.RemoveAll( item => item == null );
+            }
+           
             if (Completed)
             {
                 var key = Instantiate(winObject);
@@ -67,7 +78,7 @@ public class KillQuest : Quest {
                 StaticManager.questManager.CompleteQuest(this, KeyDropDialog);
                 gameObject.GetComponent<Collider>().enabled = false;
             }
-            else if (( enemies.Count == 0 && !Completed) || !accepted ){
+            else if (( enemiesKilled == 0 && !Completed) || !accepted ){
                 StaticManager.questManager.currentQuest = this;
                  StaticManager.questManager.QuestConfirmation(this);
             }
