@@ -105,10 +105,7 @@ public class EnemyNav : BaseNav {
 
                 if ( character.attachedWeapon is SwordType ){
                     SetState = state.ATTACKING;
-                    Agent.stoppingDistance = 3;
-                    if ((distance > 4 || distance < 2) && distance < 9)
-                    Agent.SetDestination((Random.insideUnitSphere.normalized * 5 ) + character.enemy.transform.position  );
-                   else if ( distance > 9 )
+                    Agent.stoppingDistance = 4;
                         Agent.SetDestination( character.enemy.transform.position );
                         Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
                         transform.LookAt(look);
