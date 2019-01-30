@@ -70,7 +70,7 @@ public class EnemySpawner : MonoBehaviour
         //If the player is within the minRange of the spawner, spawns enemies.
         if (playerDistance <= minRange && isActive == false)
         {
-            Debug.Log("Distance is working");
+
 
             if ( quest ){
                 Spawn(quest.spawners[index]);

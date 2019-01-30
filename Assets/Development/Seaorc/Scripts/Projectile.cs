@@ -33,6 +33,7 @@ public class Projectile : MonoBehaviour
     /// <param name="other"></param>
     protected virtual void OnTriggerEnter(Collider other)
     {
+       
         var strin = tag;
         if (other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player")
         {
@@ -84,12 +85,19 @@ public class Projectile : MonoBehaviour
 
 
     }
-
+    
     
     public void OnCollisionEnter( Collision collision ) {
-
-         InstatiateFloatingText.InstantiateFloatingText( "MISS" , weapon.AttachedCharacter , Color.grey, new Vector3(0.5f, 0.5f, 0.5f), 1.5f);
+        var effect = Instantiate(hiteffect);
+        effect.transform.position = transform.position;
+        effect.Play();
+        StartCoroutine( stop( effect ) );
         gameObject.SetActive(false);
+    }
+
+    public IEnumerator stop(ParticleSystem effect ) {
+        yield return new WaitForSeconds(2);
+        Destroy(effect);
     }
 
     IEnumerator stopBullet(int i)
