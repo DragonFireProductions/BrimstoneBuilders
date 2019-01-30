@@ -40,8 +40,8 @@ public class CompanionNav : BaseNav
         base.Start();
         enemiesToAttack = new List<Enemy>();
         randDistance = Random.Range(1.5f, 1.5f + 2);
-        battleDistance = 4;
         enabled = false;
+        battleDistance = 4;
     }
 
     //Handles assigning enemies for companion
@@ -51,17 +51,15 @@ public class CompanionNav : BaseNav
         set
         {
             Agent.isStopped = false;
-
-            if (value == AggressionStates.BERZERK)
-            {
+              Agent.stoppingDistance = 8;
+            if (value == AggressionStates.BERZERK){
+              
                 aggState = AggressionStates.BERZERK;
             }
             else if (value == AggressionStates.DEFEND)
             {
                 aggState = AggressionStates.DEFEND;
-
-                /// StaticManger.Character.attackers .. pick random to attack from list
-                // or if there are none then passive
+                
             }
             else if (value == AggressionStates.PASSIVE)
             {
@@ -69,17 +67,13 @@ public class CompanionNav : BaseNav
             }
             else if (value == AggressionStates.PROVOKED)
             {
-                //LayerMask mask = LayerMask.NameToLayer("Enemy");
-                //Collider[] colliders = Physics.OverlapSphere(transform.position, 5.0f);
                 if (character.attackers.Count > 0)
                 {
                     character.enemy = character.attackers[0];
                 }
 
                 aggState = AggressionStates.PROVOKED;
-
-                // if character.attackers. count > 0 ... attack random index
-                // if there are none, then defend
+                
             }
         }
     }
@@ -98,12 +92,13 @@ public class CompanionNav : BaseNav
         Debug.Log("Enabled");
         character.attackers.RemoveAll(item => item == null);
         enemiesToAttack.RemoveAll(item => item == null);
+
+
         
         switch (aggState)
         {
             case AggressionStates.PASSIVE:
                 {
-
                     Agent.destination = StaticManager.Character.transform.position;
                 }
 
@@ -139,10 +134,10 @@ public class CompanionNav : BaseNav
                         }
                         else
                         {
-                            if (character.enemy)
-                            {
+                            if (distance > 4 || distance < 2 && distance < 9)
+                                Agent.SetDestination((Random.insideUnitSphere.normalized * 5) + character.enemy.transform.position);
+                            else if (distance > 9)
                                 Agent.SetDestination(character.enemy.transform.position);
-                            }
 
                             if (enemiesToAttack.Count == 0)
                             {
@@ -151,9 +146,7 @@ public class CompanionNav : BaseNav
                                 return;
                             }
 
-                            var dist = Vector3.Distance(transform.position, character.enemy.transform.position);
-
-                            if (dist < battleDistance)
+                            if (distance < battleDistance)
                             {
                                 character.AnimationClass.Play(AnimationClass.states.Attack);
                                 transform.LookAt(character.enemy.transform.position);
@@ -194,11 +187,13 @@ public class CompanionNav : BaseNav
                         }
                         else
                         {
-                            Agent.SetDestination(character.enemy.transform.position);
+                            if ((distance > 4 || distance < 2) && distance < 9)
+                                Agent.SetDestination((Random.insideUnitSphere.normalized * 5) + character.enemy.transform.position);
+                            else if (distance > 9)
+                                Agent.SetDestination(character.enemy.transform.position);
                             transform.LookAt(character.enemy.transform.position);
-                            var distance = Vector3.Distance(transform.position, character.enemy.transform.position);
 
-                            if (distance < 3)
+                            if (distance < battleDistance)
                             {
                                 character.AnimationClass.Play(AnimationClass.states.Attack);
                             }
@@ -240,9 +235,17 @@ public class CompanionNav : BaseNav
                         }
                         else
                         {
-                            Agent.SetDestination(character.enemy.transform.position);
+                            if ((distance > 4 || distance < 2) && distance < 9)
+                                Agent.SetDestination((Random.insideUnitSphere.normalized * 5) + character.enemy.transform.position);
+                            else if (distance > 9)
+                                Agent.SetDestination(character.enemy.transform.position);
+
                             transform.LookAt(character.enemy.transform.position);
-                            character.AnimationClass.Play(AnimationClass.states.Attack);
+
+                            if ( distance < battleDistance ){
+                                character.AnimationClass.Play(AnimationClass.states.Attack);
+                            }
+                            
                         }
                     }
                     else

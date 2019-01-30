@@ -12,8 +12,7 @@ public class LeaderNav : BaseNav {
     private Collider[] colliders;
 
     private float count;
-
-    [ HideInInspector ] public Enemy enemy;
+    
 
     [ HideInInspector ] public ParticleSystem enemySystem;
 
@@ -33,7 +32,6 @@ public class LeaderNav : BaseNav {
         base.Start();
         hit            = new RaycastHit( );
         mask           = LayerMask.GetMask( "Enemy" );
-        battleDistance = 4;
     }
 
     private void FixedUpdate( ) {
@@ -52,10 +50,10 @@ public class LeaderNav : BaseNav {
             l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );
 
             if ( Physics.Raycast( l_ray , out hit ) ){
-                if ( hit.collider.name == "Terrain" ){
+                if ( hit.collider.gameObject.layer == 0 ){
                     SetState = state.MOVE;
-                    if ( enemy ){
-                        enemy.projector.gameObject.SetActive( false );
+                    if ( character.enemy ){
+                        character.enemy.projector.gameObject.SetActive( false );
                     }
 
                     StaticManager.particleManager.Play( ParticleManager.states.Click , hit.point );
@@ -64,7 +62,29 @@ public class LeaderNav : BaseNav {
                         Destroy( enemySystem.gameObject );
                     }
                 }
+
+                if ( hit.collider.tag == "Enemy" ){
+                    if (character.enemy)
+                    {
+                        character.enemy.projector.gameObject.SetActive(false);
+                    }
+                    character.enemy = hit.collider.GetComponent<Enemy>();
+                    if (character.attachedWeapon is GunType)
+                    {
+                        SetState = state.FREEZE;
+                        rotate1();
+
+                    }
+                    else
+                    {
+                        SetState = state.ENEMY_CLICKED;
+                    }
+                    Destroy(enemySystem);
+
+                    character.enemy.projector.gameObject.SetActive(true);
+                }
             }
+
         }
 
         if ( Input.GetMouseButtonDown( 1 ) && !Input.GetKey(KeyCode.LeftShift) ){
@@ -107,37 +127,6 @@ public class LeaderNav : BaseNav {
                 }
             }
         }
-
-        if ( Input.GetMouseButtonUp( 0 ) && !StaticManager.UiInventory.ItemsInstance.windowIsOpen && count < 0.4 ){
-            if ( Physics.Raycast( l_ray , out hit ) ){
-                if ( hit.collider.tag == "Enemy" ){
-                    if ( enemy ){
-                        enemy.projector.gameObject.SetActive( false );
-                    }
-                     enemy = hit.collider.GetComponent<Enemy>();
-                    if ( character.attachedWeapon is GunType ){
-                        SetState = state.FREEZE;
-                        rotate1();
-                        
-                    }
-                    else{
-                       SetState = state.ENEMY_CLICKED;
-                    }
-                    Destroy(enemySystem);
-                    
-                    enemy.projector.gameObject.SetActive(true);
-
-                }
-                else if ( hit.collider.tag == "Post" ){
-                    message.text = hit.collider.name == "End" ? "The End is Neigh!" : "Go Forth!";
-                    
-                    StartCoroutine( show( ) );
-                }
-            }
-        }
-
-       
-
         
         if ( !StaticManager.RealTime.Attacking ){
             colliders = Physics.OverlapSphere( transform.position , 10 , mask );
@@ -155,21 +144,7 @@ public class LeaderNav : BaseNav {
         switch ( State ){
             case state.ATTACKING:
 
-                if ( character.attachedWeapon is SwordType ){
-
-                    if ( enemy == null ){
-                        SetState = state.FREEZE;
-
-                        return;
-                    }
-
-                    if ( Vector3.Distance( enemy.transform.position , gameObject.transform.position ) > 3 ){
-                        SetState = state.ENEMY_CLICKED;
-                    }
-
-                    transform.LookAt( enemy.transform.position );
-                    character.attachedWeapon.Use( );
-                }
+                
 
                 break;
 
@@ -179,18 +154,10 @@ public class LeaderNav : BaseNav {
 
                 break;
             case state.ENEMY_CLICKED:
+                rotate1();
+                character.attachedWeapon.Use();
 
-                if ( character.attachedWeapon is SwordType ){
 
-
-                    if ( Vector3.Distance( enemy.transform.position , gameObject.transform.position ) < 3 ){
-                        SetState = state.ATTACKING;
-                    }
-                    else{
-                        Agent.SetDestination( enemy.transform.position );
-                    }
-                }
-                
 
                 break;
             case state.IDLE:
@@ -243,8 +210,8 @@ public class LeaderNav : BaseNav {
     }
 
     public void rotate1( ) {
-        Quaternion targetRotation = Quaternion.LookRotation(enemy.transform.position - transform.position);
-       character.transform.LookAt(enemy.transform.position);
+        Vector3 enemy = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
+       character.transform.LookAt(enemy);
         character.attachedWeapon.Use();
     }
     private IEnumerator show( ) {

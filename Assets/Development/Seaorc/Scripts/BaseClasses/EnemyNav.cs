@@ -29,7 +29,7 @@ public class EnemyNav : BaseNav {
         base.Start( );
         character      = GetComponent < Enemy >( );
         stats          = GetComponent < Stat >( );
-        battleDistance = 3;
+        battleDistance = 4;
     }
 
     public IEnumerator Nav( ) {
@@ -48,6 +48,7 @@ public class EnemyNav : BaseNav {
 
         switch ( State ){
             case state.IDLE: {
+                Agent.stoppingDistance = 0;
                 //Debug.Log(stats.Strength);
                 var l_check = StaticManager.Utility.NavDistanceCheck( Agent );
 
@@ -59,7 +60,8 @@ public class EnemyNav : BaseNav {
 
                 break;
             case state.ATTACKING: {
-
+                  
+              
                 character.attackers.RemoveAll( item => item               == null );
                 StaticManager.RealTime.Companions.RemoveAll( item => item == null );
                 StaticManager.RealTime.Enemies.RemoveAll( item => item    == null );
@@ -86,6 +88,7 @@ public class EnemyNav : BaseNav {
                 }
 
                 if ( character.attachedWeapon is GunType ){
+                    Agent.stoppingDistance = 0;
                     if ( StaticManager.Utility.NavDistanceCheck( Agent ) == DistanceCheck.HAS_REACHED_DESTINATION || StaticManager.Utility.NavDistanceCheck( Agent ) == DistanceCheck.HAS_NO_PATH ){
                         timer += Time.deltaTime;
 
@@ -102,11 +105,14 @@ public class EnemyNav : BaseNav {
 
                 if ( character.attachedWeapon is SwordType ){
                     SetState = state.ATTACKING;
-                    Agent.stoppingDistance = 2;
-                    Agent.SetDestination( character.enemy.transform.position );
+                    Agent.stoppingDistance = 3;
+                    if ((distance > 4 || distance < 2) && distance < 9)
+                    Agent.SetDestination((Random.insideUnitSphere.normalized * 5 ) + character.enemy.transform.position  );
+                   else if ( distance > 9 )
+                        Agent.SetDestination( character.enemy.transform.position );
                         Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
                         transform.LookAt(look);
-                        var distance = Vector3.Distance( transform.position , character.enemy.transform.position );
+                  
 
                     if ( distance < battleDistance ){
                         character.attachedWeapon.Use( );

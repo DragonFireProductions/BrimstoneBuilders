@@ -24,7 +24,7 @@ public class BaseNav : MonoBehaviour {
 
     public NavMeshAgent Agent;
 
-    public float battleDistance = 4;
+    public float battleDistance = 3;
 
     public BaseCharacter character;
 
@@ -52,6 +52,8 @@ public class BaseNav : MonoBehaviour {
 
     protected float dist;
 
+    protected float distance;
+
     public void RunAway( ) {
         SetState = state.IDLE;
         StartCoroutine( Run( ) );
@@ -69,12 +71,12 @@ public class BaseNav : MonoBehaviour {
             Agent.isStopped = false;
 
             if ( value == state.FOLLOW ){
-                Agent.stoppingDistance = 2;
+                Agent.stoppingDistance = 8;
             }
 
             if ( value == state.ATTACKING ){
                 character.canvas.SetActive(true);
-                Agent.stoppingDistance = 2;
+                Agent.stoppingDistance = 3;
                 newpos = StaticManager.Utility.randomInsideDonut(outerRadius, innerRadius, StaticManager.Character.transform.position);
             }
 
@@ -84,11 +86,11 @@ public class BaseNav : MonoBehaviour {
             }
 
             if ( value == state.ENEMY_CLICKED ){
-                Agent.stoppingDistance = 2;
+                Agent.stoppingDistance = 8;
             }
             if ( value == state.IDLE ){
                  character.canvas.SetActive(false);
-                Agent.stoppingDistance = stoppingDistance;
+                Agent.stoppingDistance = 0;
             }
 
             if(value == state.FREEZE)
@@ -113,6 +115,12 @@ public class BaseNav : MonoBehaviour {
     }
     // Update is called once per frame
     protected virtual void Update( ) {
+        if ( character.enemy ){
+            var a = new Vector3(transform.position.x, 0, transform.position.z);
+            var b = new Vector3(character.enemy.transform.position.x, 0, character.enemy.transform.position.z);
+            distance = Vector3.Distance(a, b);
+        }
+       
         //character.AnimationClass.animation.SetFloat("Walk", 3);
         float dist = Agent.velocity.magnitude / Agent.speed;
         audio.playOnAwake = false;
