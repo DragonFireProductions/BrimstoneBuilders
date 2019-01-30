@@ -6,6 +6,7 @@ using TMPro;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class LeaderNav : BaseNav {
 
@@ -48,8 +49,9 @@ public class LeaderNav : BaseNav {
 
         if ( Input.GetMouseButton( 0 ) && !StaticManager.UiInventory.ItemsInstance.windowIsOpen && !EventSystem.current.IsPointerOverGameObject( ) ){
             l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );
-
-            if ( Physics.Raycast( l_ray , out hit ) ){
+            int mask = 1 << 11;
+            mask = ~mask;
+            if ( Physics.Raycast( l_ray , out hit, 1000, mask) ){
                 if ( hit.collider.gameObject.layer == 0 ){
                     SetState = state.MOVE;
                     if ( character.enemy ){
