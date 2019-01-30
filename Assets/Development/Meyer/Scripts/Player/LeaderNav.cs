@@ -156,10 +156,14 @@ public class LeaderNav : BaseNav {
                 break;
             case state.ENEMY_CLICKED:
                 rotate1();
-                character.attachedWeapon.Use();
-
-
-
+                
+                if ( distance < 3 ){
+                     character.attachedWeapon.Use();
+                }
+                else{
+                    SetState = state.MOVE;
+                }
+               
                 break;
             case state.IDLE:
 
