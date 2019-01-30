@@ -30,7 +30,7 @@ MonoBehaviour:
     m_Settings:
       excludeSkybox: 1
   antialiasing:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       method: 0
       fxaaSettings:
@@ -102,9 +102,9 @@ MonoBehaviour:
     m_Settings:
       bloom:
         intensity: 2
-        threshold: 1.1
-        softKnee: 0.75
-        radius: 3
+        threshold: 1.03
+        softKnee: 0.813
+        radius: 2.66
         antiFlicker: 0
       lensDirt:
         texture: {fileID: 0}
@@ -113,7 +113,7 @@ MonoBehaviour:
     m_Enabled: 1
     m_Settings:
       tonemapping:
-        tonemapper: 2
+        tonemapper: 1
         neutralBlackIn: 0.02
         neutralWhiteIn: 10
         neutralBlackOut: 0
@@ -122,11 +122,11 @@ MonoBehaviour:
         neutralWhiteClip: 10
       basic:
         postExposure: 2
-        temperature: 15
+        temperature: 22
         tint: 0
         hueShift: 0
-        saturation: 1.05
-        contrast: 1.17
+        saturation: 0.78
+        contrast: 0.74
       channelMixer:
         red: {x: 1, y: 0, z: 0}
         green: {x: 0, y: 1, z: 0}
