@@ -21,10 +21,6 @@ public class EscortQuest : Quest {
         
         StaticManager.RealTime.Companions.Add(gameObject.GetComponent<EscortNPC>());
 
-        if ( StaticManager.RealTime.Companions.Contains(StaticManager.Character) ){
-            StaticManager.RealTime.Companions.Remove( StaticManager.Character );
-        }
-
         ui.labels.Labels[ 0 ].labelText.text = name;
         
     }
@@ -32,7 +28,10 @@ public class EscortQuest : Quest {
     public void Failed( ) {
         StaticManager.uiManager.ShowMessage("Quest failed : NPC has died",4, false);
         StaticManager.questManager.quests.Remove( this );
+        this.GetComponent < Collider >( ).enabled = false;
+       
         Destroy(ui.gameObject);
+         Destroy(gameObject);
 
     }
 
@@ -58,6 +57,13 @@ public class EscortQuest : Quest {
                 key.gameObject.SetActive(true);
                 gameObject.GetComponent<Collider>().enabled = false;
                 StaticManager.questManager.CompleteQuest(this, KeyDropDialog);
+
+
+                if (StaticManager.RealTime.Companions.Contains(GetComponent<EscortNPC>()))
+                {
+                    StaticManager.RealTime.Companions.Remove(GetComponent<EscortNPC>());
+                    Destroy(GetComponent<EscortNPC>());
+                }
             }
             else if (!accepted){
                  StaticManager.questManager.currentQuest = this;

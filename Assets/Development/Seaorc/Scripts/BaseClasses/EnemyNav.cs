@@ -86,7 +86,7 @@ public class EnemyNav : BaseNav {
                 }
 
                 //no enemies are alive
-                else if ( character.enemy == null && character is Companion ){
+                else if ( character.enemy == null ){
                     StaticManager.RealTime.Attacking = false;
                     SetState                         = state.IDLE;
 

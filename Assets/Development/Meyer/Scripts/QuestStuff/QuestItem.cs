@@ -17,7 +17,8 @@ public class QuestItem : MonoBehaviour {
 
         item,
         key,
-        gate
+        gate,
+        unlock
 
     }
     public virtual void OnTriggerEnter(Collider collider ) {
@@ -39,8 +40,16 @@ public class QuestItem : MonoBehaviour {
                 }
                
             }
+            
         }
-        
+
+        else if ( collider.gameObject.GetComponent<EscortNPC>()  )
+        {
+            if (type == Type.unlock)
+            {
+                gameObject.SetActive(false);
+            }
+        }
        
     }
 }

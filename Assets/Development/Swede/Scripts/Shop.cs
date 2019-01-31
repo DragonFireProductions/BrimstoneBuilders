@@ -58,6 +58,7 @@ public class Shop : MonoBehaviour
         container.gameObject.SetActive(false);
         container.shop = this;
         shopContainer = container;
+        container.transform.position = StaticManager.currencyManager.containerHolder.transform.position;
         
         foreach (var l_companion in companions){
             ShopCompanions++;
