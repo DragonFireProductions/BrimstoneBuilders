@@ -1119,8 +1119,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: -1.92, y: 1.18, z: 65.6}
-  m_Center: {x: -7.48, y: 0.5733411, z: -0.9}
+  m_Size: {x: 2.4, y: 1.18, z: 63.93}
+  m_Center: {x: -24.06, y: 0.5733411, z: 0.69}
 --- !u!1 &158277537
 GameObject:
   m_ObjectHideFlags: 0
@@ -3158,7 +3158,7 @@ MonoBehaviour:
     Damage: 3
     luck: 0
     weapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28, type: 3}
-    DropWeapon: 0
+    DropWeapon: 1
     dropItem: {fileID: 0}
   - enemy: {fileID: 4915526343240670788, guid: 0573895f21e111f45a33024a41442fea, type: 3}
     Damage: 3
@@ -4103,8 +4103,6 @@ GameObject:
   - component: {fileID: 803086492}
   - component: {fileID: 803086494}
   - component: {fileID: 803086493}
-  - component: {fileID: 803086496}
-  - component: {fileID: 803086495}
   m_Layer: 0
   m_Name: Fence_LOD2 (2)
   m_TagString: Untagged
@@ -4172,39 +4170,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 803086491}
   m_Mesh: {fileID: 4300004, guid: fc8f2ae986030db4fa860416e85a8403, type: 3}
---- !u!114 &803086495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 803086491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 751f454d5c680d242bbe88d9ca5ea9e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  quest: {fileID: 0}
-  icon: {fileID: 0}
-  needToCollMessage: 
-  keyItem: {fileID: 0}
-  type: 2
---- !u!208 &803086496
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 803086491}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.022000002, y: 0.574, z: 0.518}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0.573, z: -0.47400004}
-  m_TimeToStationary: 0.5
 --- !u!224 &805870959 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1273390263847446084, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
