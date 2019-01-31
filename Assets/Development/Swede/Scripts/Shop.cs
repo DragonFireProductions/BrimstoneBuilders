@@ -78,7 +78,7 @@ public class Shop : MonoBehaviour
 
             companion.inventoryUI.CompanionSell.transform.SetParent(container.buy.transform);
 
-            companion.inventoryUI.CompanionSell.transform.localScale = new Vector3(1, 1, 1);
+            //companion.inventoryUI.CompanionSell.transform.localScale = new Vector3(1, 1, 1);
             companion.mele.CurrentLevel = l_companion.Melee;
             companion.magic.CurrentLevel = l_companion.Magic;
             companion.range.CurrentLevel = l_companion.Range;
@@ -93,7 +93,7 @@ public class Shop : MonoBehaviour
             companion.startWeapon = Instantiate(companion.startWeapon);
             companion.startWeapon.GetComponent<WeaponObject>().PickUp(companion);
             companion.startWeapon.GetComponent<WeaponObject>().Attach();
-
+            StaticManager.uiManager.notificationWindow.SetActive(false);
             companion.inventoryUI.sendToButton.gameObject.SetActive(false);
             companion.inventoryUI.tab.gameObject.SetActive(false);
 

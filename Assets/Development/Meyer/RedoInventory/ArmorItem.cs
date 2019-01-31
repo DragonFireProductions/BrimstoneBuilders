@@ -61,7 +61,7 @@ public class ArmorItem : BaseItems {
 
 	public void OnTriggerEnter( Collider collider ) {
 		if ( collider.tag == "Player" && tag == "PickUp" ){
-			StaticManager.uiManager.ShowNotification("Picked up armor", 5);
+			StaticManager.uiManager.ShowNotification("Picked up armor", 2);
 			StaticManager.Character.inventory.PickUp(this);
 			this.GetComponent < Collider >( ).enabled = false;
 			AttachedCharacter = collider.GetComponent < Companion >( );

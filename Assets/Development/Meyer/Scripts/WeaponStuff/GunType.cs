@@ -67,11 +67,8 @@ public class GunType : WeaponObject {
         base.Use( );
         Debug.Log( "Attacking" );
 
-        if ( canFire && Ammo > 0 ){
+        if ( canFire ){
             AttachedCharacter.AnimationClass.Play( AnimationClass.states.Attack );
-        }
-        else if ( !reloading && Ammo == 0 ){
-            StartCoroutine( Reload( ) );
         }
 
         int ind = Random.Range( 0 , clips.Length - 1 );

@@ -89,16 +89,14 @@ public class LeaderNav : BaseNav {
 
         }
 
-        if ( Input.GetMouseButtonDown( 1 ) && !Input.GetKey(KeyCode.LeftShift) ){
+        if ( Input.GetMouseButton( 1 ) && !Input.GetKey(KeyCode.LeftShift) ){
             Agent.isStopped = true;
             SetState        = state.FREEZE;
              l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );
             int _mask = 1 << 11;
             _mask = ~_mask;
             if ( character.attachedWeapon is GunType && Physics.Raycast( l_ray , out hit, 1000, _mask ) ){
-                if ( hit.collider.tag != "Companion" && hit.collider.tag != "Player" ){
                     character.attachedWeapon.Use( );
-                }
             }
         }
 
@@ -183,12 +181,10 @@ public class LeaderNav : BaseNav {
     {
         
         Vector3 _pos = new Vector3(pos.x, transform.position.y, pos.z);
-            // Determine the target rotation.  This is the rotation if the transform looks at the target point.
             Quaternion targetRotation = Quaternion.LookRotation( transform.position - _pos);
 
-            while (transform.rotation != targetRotation && State != state.MOVE)
+            while (transform.rotation != targetRotation)
             {
-                // Smoothly rotate towards the target point.
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
                 yield return new WaitForEndOfFrame();
             }

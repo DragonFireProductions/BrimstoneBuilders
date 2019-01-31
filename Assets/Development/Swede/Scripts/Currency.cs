@@ -67,7 +67,7 @@ public class Currency : MonoBehaviour {
     }
 
     public void BuyCompanion( CompanionContainer container ) {
-        if ( RemoveCoins( container.companion.cost ) && companions <= 5 ){
+        if ( RemoveCoins( container.companion.cost )  ){
             var position = Random.insideUnitSphere * 5 + StaticManager.Character.transform.position;
             position.y                                  =  0;
             StaticManager.Character.inventory.coinCount -= container.companion.cost;
@@ -112,15 +112,17 @@ public class Currency : MonoBehaviour {
             container.sellButton.SetActive(true);
             ///doesn't work
         }
+        else if ( companions >= 5 ){
+            StaticManager.UiInventory.ItemsInstance
+               .GetLabel("CompanionBuyError", StaticManager.UiInventory.ItemsInstance.ShopUI)
+               .text = "Max Companions.";
+        }
         else{
             StaticManager.UiInventory.ItemsInstance
                     .GetLabel( "CompanionBuyError" , StaticManager.UiInventory.ItemsInstance.ShopUI )
                     .text = "Not Enough Coins.";
         }
-
-        StaticManager.UiInventory.ItemsInstance
-                .GetLabel( "CompanionBuyError" , StaticManager.UiInventory.ItemsInstance.ShopUI )
-                .text = "Max Companions.";
+       
     }
 
     private IEnumerator Wait( Companion companion ) {

@@ -6,12 +6,13 @@ public class Coin : MonoBehaviour
 {
     public int coinWorth;
     private float dir;
-    private float TurnSpeed;
+
+    public float TurnSpeed = 1;
     private bool turn;
 
     public void Start()
     {
-        TurnSpeed = Random.Range(0.5f, 2.0f); //Randomizes the turn speed of each coin.
+        
         dir = Random.Range(0.0f, 100.0f); //Randomizes the direction each coin spins.
 
         if ((int)dir % 2 == 0)
@@ -33,7 +34,7 @@ public class Coin : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player"){
-            StaticManager.uiManager.ShowNotification("Picked up coin", 5);
+            StaticManager.uiManager.ShowNotification("Picked up coin", 2);
             StaticManager.Character.inventory.coinCount += coinWorth;
 
             Destroy(this.gameObject);
