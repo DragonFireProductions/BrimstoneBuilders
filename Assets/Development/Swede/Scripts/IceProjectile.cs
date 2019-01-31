@@ -17,7 +17,7 @@ public class IceProjectile : Projectile {
         if (other.tag == "Enemy" || other.tag == "Companion" || other.tag == "Player")
         {
             base.OnTriggerEnter(other); //Calls Projectile's OnTriggerEnter
-            other.GetComponent<BaseCharacter>().Freeze(6); //Freezes whoever makes contact with the projectile.
+            other.GetComponent<BaseCharacter>().Freeze(2); //Freezes whoever makes contact with the projectile.
         }
     }
     

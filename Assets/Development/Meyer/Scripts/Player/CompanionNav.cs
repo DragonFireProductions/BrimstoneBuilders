@@ -15,6 +15,11 @@ public class CompanionNav : BaseNav
 
     private int currenemy;
 
+    public float useTimer;
+
+    public float time;
+    public bool move = false;
+
     public enum AggressionStates
     {
 
@@ -51,7 +56,7 @@ public class CompanionNav : BaseNav
         set
         {
             Agent.isStopped = false;
-              Agent.stoppingDistance = 8;
+              Agent.stoppingDistance = 3;
             if (value == AggressionStates.BERZERK){
               
                 aggState = AggressionStates.BERZERK;
@@ -117,20 +122,37 @@ public class CompanionNav : BaseNav
 
                         if (character.attachedWeapon is GunType)
                         {
-                            if (StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_REACHED_DESTINATION)
+                            if (StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_REACHED_DESTINATION || StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_NO_PATH)
+                            {
+
+                                move = true;
+                            }
+
+                            if (move)
                             {
                                 timer += Time.deltaTime;
 
                                 if (timer > waittime)
                                 {
-                                    newpos = StaticManager.Utility.randomInsideDonut(outerRadius, innerRadius, character.enemy.transform.position);
-                                    timer = 0;
+
+                                    var random = Random.Range(20, 30);
+                                    float randomAngle = Random.Range(0f, Mathf.PI * 2f);
+                                    Vector3 randomPointAround2DCircumference = new Vector3(Mathf.Sin(randomAngle), 0, Mathf.Cos(randomAngle));
+                                    var times = (randomPointAround2DCircumference * random);
+                                    newpos = character.enemy.transform.position + times;
+                                    timer = 0; move = false;
                                 }
                             }
 
                             Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
                             transform.LookAt(look);
-                            character.attachedWeapon.Use();
+                            useTimer += Time.deltaTime;
+
+                            if (useTimer > time){
+                                time = Random.Range( 2 , 7 );
+                                character.attachedWeapon.Use();
+                                useTimer = 0;
+                            }
                             Agent.SetDestination(newpos);
                         }
                         else
@@ -169,20 +191,38 @@ public class CompanionNav : BaseNav
 
                         if (character.attachedWeapon is GunType)
                         {
-                            if (StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_REACHED_DESTINATION)
+                            if (StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_REACHED_DESTINATION || StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_NO_PATH)
+                            {
+
+                                move = true;
+                            }
+
+                            if (move)
                             {
                                 timer += Time.deltaTime;
 
                                 if (timer > waittime)
                                 {
-                                    newpos = StaticManager.Utility.randomInsideDonut(outerRadius, innerRadius, character.enemy.transform.position);
-                                    timer = 0;
+
+                                    var random = Random.Range(20, 30);
+                                    float randomAngle = Random.Range(0f, Mathf.PI * 2f);
+                                    Vector3 randomPointAround2DCircumference = new Vector3(Mathf.Sin(randomAngle), 0, Mathf.Cos(randomAngle));
+                                    var times = (randomPointAround2DCircumference * random);
+                                    newpos = character.enemy.transform.position + times;
+                                    timer = 0; move = false;
                                 }
                             }
 
                             Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
                             transform.LookAt(look);
-                            character.attachedWeapon.Use();
+                            useTimer += Time.deltaTime;
+
+                            if (useTimer > time)
+                            {
+                                 time = Random.Range( 2 , 7 );
+                                character.attachedWeapon.Use();
+                                useTimer = 0;
+                            }
                             Agent.SetDestination(newpos);
                         }
                         else
@@ -216,19 +256,37 @@ public class CompanionNav : BaseNav
 
                         if (character.attachedWeapon is GunType)
                         {
-                            if (StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_REACHED_DESTINATION)
+                            if (StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_REACHED_DESTINATION || StaticManager.Utility.NavDistanceCheck(Agent) == DistanceCheck.HAS_NO_PATH )
+                            {
+
+                                move = true;
+                            }
+
+                            if (move)
                             {
                                 timer += Time.deltaTime;
 
                                 if (timer > waittime)
                                 {
-                                    newpos = StaticManager.Utility.randomInsideDonut(outerRadius, innerRadius, character.enemy.transform.position);
-                                    timer = 0;
+
+                                    var random = Random.Range(20, 30);
+                                    float randomAngle = Random.Range(0f, Mathf.PI * 2f);
+                                    Vector3 randomPointAround2DCircumference = new Vector3(Mathf.Sin(randomAngle), 0, Mathf.Cos(randomAngle));
+                                    var times = (randomPointAround2DCircumference * random);
+                                    newpos = character.enemy.transform.position + times;
+                                    timer = 0; move = false;
                                 }
                             }
 
                             transform.LookAt(character.enemy.transform);
-                            character.attachedWeapon.Use();
+                            useTimer += Time.deltaTime;
+
+                            if (useTimer > time)
+                            {
+                                 time = Random.Range( 2 , 7 );
+                                character.attachedWeapon.Use();
+                                useTimer = 0;
+                            }
                             Agent.SetDestination(newpos);
                         }
                         else

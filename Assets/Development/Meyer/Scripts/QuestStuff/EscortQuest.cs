@@ -30,7 +30,9 @@ public class EscortQuest : Quest {
     }
 
     public void Failed( ) {
-        //StaticManager.uiManager.ShowMessage("");
+        StaticManager.uiManager.ShowMessage("Quest failed : NPC has died",4, false);
+        StaticManager.questManager.quests.Remove( this );
+        Destroy(ui.gameObject);
 
     }
 

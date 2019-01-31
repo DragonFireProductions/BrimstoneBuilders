@@ -38,8 +38,8 @@ public class Drops : MonoBehaviour
     public void Drop_Loot(Enemy _ene)
     {
         if (_ene.dropKey && _ene.quest && _ene.quest is KeyQuest ){
-            var quest = (KeyQuest)_ene.questItem.quest;
-            quest.DropLoot(_ene.questItem, _ene);
+            var quest = (KeyQuest)_ene.quest;
+            quest.DropLoot(quest.key, _ene);
         }
         else if ( _ene.DropWeapon ){
             var a = Instantiate( _ene.attachedWeapon.gameObject );
