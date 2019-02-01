@@ -21,6 +21,8 @@ public class QuestManager : MonoBehaviour {
     public Quest currentQuest;
 
     public GameObject questConfirmation;
+
+    public List < Quest > NPCs;
     // Start is called before the first frame update
     void Start()
     {

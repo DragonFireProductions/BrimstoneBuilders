@@ -42,6 +42,7 @@ public class Companion : BaseCharacter {
     }
 
     protected virtual void Start( ) {
+        
         magic.character = this;
         range.character = this;
         mele.character  = this;

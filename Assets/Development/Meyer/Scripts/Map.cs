@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class Map : MonoBehaviour {
 
@@ -58,7 +59,7 @@ public class Map : MonoBehaviour {
 
 	            break;
             case Type.shop:
-				Shops.Add(icon);
+				//Shops.Add(icon);
 				break;
             case Type.NPC:
 				NPC.Add(icon);
@@ -75,7 +76,11 @@ public class Map : MonoBehaviour {
         switch (type)
         {
             case "companion":
-	            list = Companions;
+
+	            foreach ( var l_realTimeCompanion in StaticManager.RealTime.Companions ){
+		           active =  !l_realTimeCompanion.icon.gameObject.activeSelf;
+					 l_realTimeCompanion.icon.gameObject.SetActive(active);
+	            }
 
                 break;
             case "destination":
@@ -83,30 +88,31 @@ public class Map : MonoBehaviour {
 
                 break;
             case "enemy":
-	            list = Enemies;
+
+	            foreach ( var l_realTimeEnemy in StaticManager.RealTime.AllEnemies ){
+		            active = !l_realTimeEnemy.icon.gameObject.activeSelf;
+					l_realTimeEnemy.icon.gameObject.SetActive(active);
+	            }
 
                 break;
             case "shop":
-	            list = Shops;
+	            foreach ( var l_currencyManagerShop in StaticManager.currencyManager.shops ){
+		            active = !l_currencyManagerShop.GetComponent < Shop >( ).icon.activeSelf;
+		            l_currencyManagerShop.GetComponent<Shop>().icon.SetActive(!l_currencyManagerShop.GetComponent < Shop >( ).icon.activeSelf);
+	            }
                 break;
             case "player":
-	            list = Player;
+	            active = !StaticManager.Character.icon.gameObject.activeSelf;
+				StaticManager.Character.icon.gameObject.SetActive(active);
 
 				break;
             case "npc":
-	            list = NPC;
+
+	            foreach ( var l_questManagerNpC in StaticManager.questManager.NPCs ){
+		            active = !l_questManagerNpC.GetComponent < NPC >( ).icon.gameObject.activeSelf;
+					l_questManagerNpC.GetComponent < NPC >( ).icon.gameObject.SetActive(active);
+	            }
 	            break;
-        }
-
-	    list.RemoveAll( item => item == null );
-	    if (list != null && list.Count > 0 ){
-            active = !list[0].gameObject.activeSelf;
-            foreach (var l_gameObject in list)
-            {
-                l_gameObject.gameObject.SetActive(active);
-            }
-
-		    
         }
 	   
     }

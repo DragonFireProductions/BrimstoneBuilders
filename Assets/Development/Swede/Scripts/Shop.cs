@@ -11,7 +11,7 @@ public class Shop : MonoBehaviour
     [SerializeField] public int resaleWorth;
     
 
-    public RawImage icon;
+    public GameObject icon;
 
     public RawImage notIcon;
 
@@ -40,13 +40,12 @@ public class Shop : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        StaticManager.currencyManager.shops.Add(gameObject );
         var _container = Instantiate( StaticManager.currencyManager.containerHolder.gameObject );
         shopContainer = _container.GetComponent < ShopContainer >( );
 
         StaticManager.UiInventory.ItemsInstance.GetLabel("CompanionSellError", StaticManager.UiInventory.ItemsInstance.ShopUI).text = " ";
         StartCoroutine( init( ) );
-        StaticManager.map.Add(Map.Type.shop, icon);
+
         notIcon.enabled = true;
     }
 
@@ -77,7 +76,10 @@ public class Shop : MonoBehaviour
             c.GetComponent < CompanionContainer >( ).shop = this;
 
             companion.inventoryUI.CompanionSell.transform.SetParent(container.buy.transform);
-
+              var name = StaticManager.name.GenerateName( );
+            companion.gameObject.name = name;
+            companion.characterName = name;
+            companion.stats.name = name;
             //companion.inventoryUI.CompanionSell.transform.localScale = new Vector3(1, 1, 1);
             companion.mele.CurrentLevel = l_companion.Melee;
             companion.magic.CurrentLevel = l_companion.Magic;

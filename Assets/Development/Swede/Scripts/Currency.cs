@@ -110,7 +110,7 @@ public class Currency : MonoBehaviour {
            container.companion.inventoryUI.tab.gameObject.SetActive(true);
             container.buyButton.SetActive(false);
             container.sellButton.SetActive(true);
-            ///doesn't work
+          
         }
         else if ( companions >= 5 ){
             StaticManager.UiInventory.ItemsInstance

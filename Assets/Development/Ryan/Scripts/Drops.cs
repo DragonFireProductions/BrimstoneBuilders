@@ -42,7 +42,7 @@ public class Drops : MonoBehaviour
             var quest = (KeyQuest)_ene.quest;
             quest.DropLoot(quest.key, _ene);
         }
-        else if ( _ene.DropWeapon ){
+        if ( _ene.DropWeapon ){
             var a = Instantiate( _ene.attachedWeapon.gameObject );
 
             a.SetActive(true);
@@ -54,7 +54,7 @@ public class Drops : MonoBehaviour
             a.GetComponent < Collider >( ).enabled = true;
             a.GetComponent<WeaponObject>().mesh.SetActive(true);
         }
-        else if ( _ene.objectToDrop ){
+         if ( _ene.objectToDrop ){
             var objects = Instantiate( _ene.objectToDrop );
             objects.transform.position = vec;
         }
