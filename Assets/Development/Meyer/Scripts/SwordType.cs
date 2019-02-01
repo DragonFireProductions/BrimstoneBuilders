@@ -26,7 +26,7 @@ public class SwordType : WeaponObject {
     public override void Activate()
     {
         int ind = Random.Range(0, 3);
-        AttachedCharacter.leftHand.GetComponentInChildren<BoxCollider>().enabled = true;
+        DamageCollider(AttachedCharacter.enemy.GetComponent<Collider>());
         audio.clip = clips[ind];
         if (!audio.isPlaying)
         {

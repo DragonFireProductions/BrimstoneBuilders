@@ -32,7 +32,8 @@ public class ParticleManager : MonoBehaviour
         Blood,
         //SmallExplosion,
         //PoisonCloud,
-        Empty
+        Empty,
+        
     }
 
 

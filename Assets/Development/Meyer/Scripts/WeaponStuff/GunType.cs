@@ -67,11 +67,8 @@ public class GunType : WeaponObject {
         base.Use( );
         Debug.Log( "Attacking" );
 
-        if ( canFire && Ammo > 0 ){
+        if ( canFire ){
             AttachedCharacter.AnimationClass.Play( AnimationClass.states.Attack );
-        }
-        else if ( !reloading && Ammo == 0 ){
-            StartCoroutine( Reload( ) );
         }
 
         int ind = Random.Range( 0 , clips.Length - 1 );
@@ -81,6 +78,8 @@ public class GunType : WeaponObject {
 
     public override void Activate( ) {
         StartCoroutine( Fire( ) );
+        audio.spatialBlend = 1.0f;
+        audio.rolloffMode = AudioRolloffMode.Linear;
         if (!audio.isPlaying)
         {
             audio.Play();
@@ -88,9 +87,6 @@ public class GunType : WeaponObject {
     }
 
     private IEnumerator Fire( ) {
-        if ( KnockBack ){
-            AttachedCharacter.KnockBack( KnockBackAmount );
-        }
 
         var proj = GetPulledBullets( );
 
@@ -99,7 +95,7 @@ public class GunType : WeaponObject {
 
         proj.gameObject.SetActive( true );
         proj.GetComponent < Rigidbody >( ).AddForce( AttachedCharacter.transform.forward * proj.GetComponent < Projectile >( ).GetSpeed( ) , ForceMode.Impulse );
-        StartCoroutine( stopBullet( 2 , proj ) );
+        StartCoroutine( stopBullet(  4, proj ) );
         Ammo -= 1;
 
         yield return new WaitForSeconds( FireRate );

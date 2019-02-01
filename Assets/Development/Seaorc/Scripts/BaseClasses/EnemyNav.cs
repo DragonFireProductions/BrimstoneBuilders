@@ -23,13 +23,19 @@ public class EnemyNav : BaseNav {
 
     private Stat stats;
 
+    private float useTimer = 0;
+
+    public bool move = false;
+
+    private float time;
+
     private void Awake( ) { }
 
     private void Start( ) {
         base.Start( );
         character      = GetComponent < Enemy >( );
         stats          = GetComponent < Stat >( );
-        battleDistance = 3;
+        battleDistance = 4;
     }
 
     public IEnumerator Nav( ) {
@@ -48,6 +54,7 @@ public class EnemyNav : BaseNav {
 
         switch ( State ){
             case state.IDLE: {
+                Agent.stoppingDistance = 0;
                 //Debug.Log(stats.Strength);
                 var l_check = StaticManager.Utility.NavDistanceCheck( Agent );
 
@@ -59,10 +66,12 @@ public class EnemyNav : BaseNav {
 
                 break;
             case state.ATTACKING: {
+                  
+              
                 character.attackers.RemoveAll( item => item               == null );
                 StaticManager.RealTime.Companions.RemoveAll( item => item == null );
                 StaticManager.RealTime.Enemies.RemoveAll( item => item    == null );
-
+               
                 if ( character.attackers.Count > 0 && character.enemy == null ){
                     var enemy = character.attackers[ Random.Range( 0 , character.attackers.Count ) ];
                     character.enemy = enemy;
@@ -77,33 +86,60 @@ public class EnemyNav : BaseNav {
                 }
 
                 //no enemies are alive
-                else if ( character.enemy == null && character is Companion ){
+                else if ( character.enemy == null ){
                     StaticManager.RealTime.Attacking = false;
                     SetState                         = state.IDLE;
 
                     return;
                 }
-
+                
                 if ( character.attachedWeapon is GunType ){
+                    Agent.stoppingDistance = 0;
                     if ( StaticManager.Utility.NavDistanceCheck( Agent ) == DistanceCheck.HAS_REACHED_DESTINATION || StaticManager.Utility.NavDistanceCheck( Agent ) == DistanceCheck.HAS_NO_PATH ){
-                        timer += Time.deltaTime;
 
-                        if ( timer > waittime ){
-                            newpos = StaticManager.Utility.randomInsideDonut( outerRadius , innerRadius , character.enemy.transform.position );
-                            timer  = 0;
-                        }
+                        move = true;
                     }
 
-                    transform.LookAt( character.enemy.transform );
-                    character.attachedWeapon.Use( );
+                    if ( move ){
+                            timer += Time.deltaTime;
+
+                            if (timer > waittime){
+
+                                var random = Random.Range( 30 , 40 );
+                                float randomAngle = Random.Range(0f, Mathf.PI * 2f);
+                                Vector3 randomPointAround2DCircumference = new Vector3(Mathf.Sin(randomAngle),0,  Mathf.Cos(randomAngle));
+                                var times = ( randomPointAround2DCircumference * random );
+                                newpos = character.enemy.transform.position + times;
+                                timer = 0; move = false;
+                            }
+                        }
+                    Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
+                    transform.LookAt( look );
+                    var a = character.attachedWeapon as GunType;
+                    if ( a.projectile is IceProjectile || a.projectile is FireProjectile ){
+                        useTimer += Time.deltaTime;
+
+                        if ( useTimer > time ){
+                             time = Random.Range( 5 , 8 );
+                             character.attachedWeapon.Use( );
+                            useTimer = 0;
+                        }
+                        
+                    }
+                    else{
+                        character.attachedWeapon.Use( );
+                    }
+                    
                     Agent.SetDestination( newpos );
                 }
 
-                if ( character.attachedWeapon is SwordType ){
+                else if ( character.attachedWeapon is SwordType ){
                     SetState = state.ATTACKING;
-                    Agent.SetDestination( character.enemy.transform.position );
-                    transform.LookAt( character.enemy.transform );
-                    var distance = Vector3.Distance( transform.position , character.enemy.transform.position );
+                    Agent.stoppingDistance = 4;
+                        Agent.SetDestination( character.enemy.transform.position );
+                        Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
+                        transform.LookAt(look);
+                  
 
                     if ( distance < battleDistance ){
                         character.attachedWeapon.Use( );
@@ -117,4 +153,8 @@ public class EnemyNav : BaseNav {
         }
     }
 
+    public IEnumerator wait( ) {
+        yield return new WaitForSeconds(6);
+        character.attachedWeapon.Use();
+    }
 }

@@ -11,7 +11,7 @@ public class Shop : MonoBehaviour
     [SerializeField] public int resaleWorth;
     
 
-    public RawImage icon;
+    public GameObject icon;
 
     public RawImage notIcon;
 
@@ -36,16 +36,16 @@ public class Shop : MonoBehaviour
     [SerializeField]
     public List <CompanionStruct> companions;
 
+    public int ShopCompanions = 0;
     // Use this for initialization
     void Start()
     {
-        StaticManager.currencyManager.shops.Add(gameObject );
         var _container = Instantiate( StaticManager.currencyManager.containerHolder.gameObject );
         shopContainer = _container.GetComponent < ShopContainer >( );
 
         StaticManager.UiInventory.ItemsInstance.GetLabel("CompanionSellError", StaticManager.UiInventory.ItemsInstance.ShopUI).text = " ";
         StartCoroutine( init( ) );
-        StaticManager.map.Add(Map.Type.shop, icon);
+
         notIcon.enabled = true;
     }
 
@@ -57,9 +57,10 @@ public class Shop : MonoBehaviour
         container.gameObject.SetActive(false);
         container.shop = this;
         shopContainer = container;
+        container.transform.position = StaticManager.currencyManager.containerHolder.transform.position;
         
         foreach (var l_companion in companions){
-
+            ShopCompanions++;
             var companion = Instantiate( l_companion.companion );
 
             shopCompanions.Add(l_companion.companion.inventoryUI.CompanionSell);
@@ -75,8 +76,11 @@ public class Shop : MonoBehaviour
             c.GetComponent < CompanionContainer >( ).shop = this;
 
             companion.inventoryUI.CompanionSell.transform.SetParent(container.buy.transform);
-
-            companion.inventoryUI.CompanionSell.transform.localScale = new Vector3(1, 1, 1);
+              var name = StaticManager.name.GenerateName( );
+            companion.gameObject.name = name;
+            companion.characterName = name;
+            companion.stats.name = name;
+            //companion.inventoryUI.CompanionSell.transform.localScale = new Vector3(1, 1, 1);
             companion.mele.CurrentLevel = l_companion.Melee;
             companion.magic.CurrentLevel = l_companion.Magic;
             companion.range.CurrentLevel = l_companion.Range;
@@ -91,7 +95,7 @@ public class Shop : MonoBehaviour
             companion.startWeapon = Instantiate(companion.startWeapon);
             companion.startWeapon.GetComponent<WeaponObject>().PickUp(companion);
             companion.startWeapon.GetComponent<WeaponObject>().Attach();
-
+            StaticManager.uiManager.notificationWindow.SetActive(false);
             companion.inventoryUI.sendToButton.gameObject.SetActive(false);
             companion.inventoryUI.tab.gameObject.SetActive(false);
 
@@ -110,7 +114,7 @@ public class Shop : MonoBehaviour
     // Update is called once per frame
     void Update() {
         shopCompanions.RemoveAll( items => items == null );
-        if ( shopCompanions.Count <= 0 ){
+        if ( ShopCompanions <= 0 ){
             notIcon.enabled = false;
         }
         else{

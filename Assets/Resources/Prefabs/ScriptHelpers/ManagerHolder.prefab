@@ -76,6 +76,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemsInstance: {fileID: 0}
+  BackDrop: {fileID: 0}
+  isMouseOver: 0
+  mouse: 0
   BackpackSlots: []
   Dragging: 0
   SelectedItem: {fileID: 0}
@@ -199,13 +202,16 @@ MonoBehaviour:
   inventoryList: []
   allItems: []
   alllables: []
-  itemList: {fileID: 11400000, guid: e90afde8a221fd34f904926985d0f61a, type: 2}
+  itemList: {fileID: 0}
   inventory: {fileID: 0}
   prev_inventory: {fileID: 0}
   playerCam: {fileID: 0}
   prevPos: {x: 0, y: 0, z: 0}
   selectedObj: {fileID: 0}
   behaviors: []
+  mapCamera: {fileID: 0}
+  PlayerUI: {fileID: 0}
+  weaponsPanel: {fileID: 0}
 --- !u!114 &5108775577787193919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,12 +240,13 @@ MonoBehaviour:
   companionBuyCost: 0
   companionSellCost: 0
   _shop: {fileID: 0}
-  buyContainer: {fileID: 0}
-  sellContainer: {fileID: 0}
-  shops:
-  - {fileID: 0}
+  containerHolder: {fileID: 0}
+  container: {fileID: 0}
+  shops: []
   sellButton: {fileID: 0}
   buyButton: {fileID: 0}
+  ShopUI: {fileID: 0}
+  companions: 0
 --- !u!114 &57184337505799602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,6 +296,7 @@ MonoBehaviour:
   rangeBar: {fileID: 0}
   pauseWindow: {fileID: 0}
   PlayerImage: {fileID: 0}
+  playerUI: {fileID: 0}
   Grid:
   - {fileID: 0}
   - {fileID: 0}
@@ -336,6 +344,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  manager: {fileID: 0}
+  MessageWindow: {fileID: 0}
+  messageText: {fileID: 0}
+  NotificationText: {fileID: 0}
+  GameOverWindow: {fileID: 0}
+  notificationWindow: {fileID: 0}
+  weaponGrid: {fileID: 0}
+  armorGrid: {fileID: 0}
 --- !u!114 &1717023653686230547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,6 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe6ef32f379e5e940b35c1b8f279c836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapCamera: {fileID: 0}
   map: {fileID: 0}
   Companions: []
   Shops: []
@@ -367,6 +384,7 @@ MonoBehaviour:
   All: []
   Player:
   - {fileID: 0}
+  NPC: []
   Destination: []
   selectedImage: {fileID: 2800000, guid: 4db017495c69e8140a56a0e2b669e3f8, type: 3}
   notSelectedImage: {fileID: 2800000, guid: 827c9cd4a3943534f909ac6473e17288, type: 3}

@@ -115,13 +115,20 @@ public class Quest : MonoBehaviour {
             a.maxRange = l_spawner.maxRadius;
             a.minRange = l_spawner.minRadus;
             a.quest = this;
-
+            
             l_spawner.enemySpawnerPos.SetActive(false);
+
+            if ( this is KeyQuest ){
+                foreach ( var l_spawnerEnemy in l_spawner.enemies ){
+                    l_spawnerEnemy.enemy.dropKey = l_spawnerEnemy.dropKey;
+                }
+            }
         }
 
         for ( int i = 0 ; i < spawners.Count ; i++ ){
             var a = spawners[ i ].enemySpawnerPos.GetComponent < EnemySpawner >( );
             a.index = i;
+            
         }
     }
 

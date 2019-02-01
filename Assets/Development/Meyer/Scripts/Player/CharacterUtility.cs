@@ -72,7 +72,7 @@ namespace Assets.Meyer.TestScripts {
 
             if ( !_m_nav_mesh_agent.pathPending ){
                 activated = true;
-                if ( _m_nav_mesh_agent.remainingDistance <= _m_nav_mesh_agent.stoppingDistance ){
+                if ( _m_nav_mesh_agent.remainingDistance <= _m_nav_mesh_agent.stoppingDistance){
                     if ( !_m_nav_mesh_agent.hasPath || Math.Abs( _m_nav_mesh_agent.velocity.sqrMagnitude ) < 0.3f ){
                         return DistanceCheck.HAS_REACHED_DESTINATION;
                     }

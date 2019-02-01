@@ -42,9 +42,24 @@ public class Companion : BaseCharacter {
     }
 
     protected virtual void Start( ) {
+        
         magic.character = this;
         range.character = this;
         mele.character  = this;
+
+        switch (attachedWeapon.type)
+        {
+            case SubClasses.Types.MELEE:
+                CurrentSubClass = mele;
+                break;
+            case SubClasses.Types.RANGE:
+                CurrentSubClass = range;
+
+                break;
+            case SubClasses.Types.MAGIC:
+                CurrentSubClass = magic;
+                break;
+        }
 
         if ( tag == "Player" ){
             inventoryUI.Init( this );
@@ -76,9 +91,16 @@ public class Companion : BaseCharacter {
                 Time.timeScale = 0;
             }
             else{
-                 StaticManager.currencyManager.companions--;
-            Destroy( GetComponent < CompanionNav >( ).behaviors.gameObject );
+            StaticManager.currencyManager.companions--;
+                var a = Nav as CompanionNav;
+                
+            Destroy( a.behaviors.gameObject );
             StaticManager.RealTime.Companions.Remove( this );
+
+                Destroy(inventoryUI.sendToButton.gameObject);
+                Destroy(inventoryUI.tab.gameObject);
+                Destroy(inventoryUI.CompanionSell.gameObject);
+                Destroy(gameObject);
             }
            
         }

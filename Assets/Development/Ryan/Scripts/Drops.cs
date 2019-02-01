@@ -37,24 +37,26 @@ public class Drops : MonoBehaviour
 
     public void Drop_Loot(Enemy _ene)
     {
+         var vec = new Vector3(_ene.transform.position.x, -94, _ene.transform.position.z);
         if (_ene.dropKey && _ene.quest && _ene.quest is KeyQuest ){
-            var quest = (KeyQuest)_ene.questItem.quest;
-            quest.DropLoot(_ene.questItem, _ene);
+            var quest = (KeyQuest)_ene.quest;
+            quest.DropLoot(quest.key, _ene);
         }
-        else if ( _ene.DropWeapon ){
+        if ( _ene.DropWeapon ){
             var a = Instantiate( _ene.attachedWeapon.gameObject );
 
             a.SetActive(true);
-            a.transform.position = _ene.transform.position;
+           
+            a.transform.position = vec;
             a.tag = "PickUp";
             a.GetComponent < WeaponObject >( ).leftHand = Instantiate( _ene.attachedWeapon.leftHand.gameObject );
             a.GetComponent < WeaponObject >( ).rightHand = Instantiate( _ene.attachedWeapon.rightHand.gameObject );
             a.GetComponent < Collider >( ).enabled = true;
             a.GetComponent<WeaponObject>().mesh.SetActive(true);
         }
-        else if ( _ene.objectToDrop ){
+         if ( _ene.objectToDrop ){
             var objects = Instantiate( _ene.objectToDrop );
-            objects.transform.position = _ene.transform.position;
+            objects.transform.position = vec;
         }
     }
 }

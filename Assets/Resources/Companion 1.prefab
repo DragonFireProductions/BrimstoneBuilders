@@ -654,7 +654,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 8.63
+  m_Speed: 10.2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -726,7 +726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd0e49802fd78e244a89f4b2ca89ec9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPbar: {fileID: 114839800907966434}
+  HPbar: {fileID: 7375357292126670153}
 --- !u!114 &114040323579979166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -746,6 +746,9 @@ MonoBehaviour:
   stoppingDistance: 3
   waittime: 0.5
   companion: {fileID: 114406641560423168}
+  useTimer: 0
+  time: 0
+  move: 0
   aggState: 0
   behaviors: {fileID: 0}
   enemiesToAttack: []
@@ -782,6 +785,7 @@ MonoBehaviour:
     type: 3}
   icon: {fileID: 5833416505793396946}
   light: {fileID: 0}
+  speed: 0
   inventory: {fileID: 114007708337776426}
   inventoryUI: {fileID: 114206196702207148}
   cost: 0
@@ -826,14 +830,14 @@ MonoBehaviour:
   PotionsInventory: {fileID: 0}
   CharacterInventory: {fileID: 0}
   CompanionSell: {fileID: 0}
-  SellButton: {fileID: 0}
-  BuyButton: {fileID: 0}
   potions: []
   ShopWeaponsText: {fileID: 0}
   ShopCharacterText: {fileID: 0}
   companion: {fileID: 114406641560423168}
   sendToButton: {fileID: 0}
   tab: {fileID: 0}
+  HealCount: {fileID: 0}
+  currentHealth: {fileID: 0}
 --- !u!114 &114575091359770150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3476,7 +3480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224032930344779806}
   - component: {fileID: 222236449749270316}
-  - component: {fileID: 114839800907966434}
+  - component: {fileID: 7375357292126670153}
   m_Layer: 13
   m_Name: PlayerHealth
   m_TagString: Untagged
@@ -3493,7 +3497,7 @@ RectTransform:
   m_GameObject: {fileID: 1216566610805996}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.95, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 224692873718923936}
   m_RootOrder: 0
@@ -3511,7 +3515,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1216566610805996}
   m_CullTransparentMesh: 0
---- !u!114 &114839800907966434
+--- !u!114 &7375357292126670153
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3524,19 +3528,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.22650254, b: 0.18396229, a: 0.6862745}
+  m_Color: {r: 1, g: 0.22745098, b: 0.18431373, a: 0.6862745}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 5d6432b54c4ab504dabcda5068089443, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8c87fd29d2261c248ba15b6d22057f79, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0.82
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -5922,8 +5926,8 @@ GameObject:
   m_Component:
   - component: {fileID: 224692873718923936}
   - component: {fileID: 222882921624953240}
-  - component: {fileID: 114620223369781840}
   - component: {fileID: 114121487814559824}
+  - component: {fileID: 2151380331910547690}
   m_Layer: 13
   m_Name: PlayerHealthBarBG
   m_TagString: Untagged
@@ -5940,7 +5944,7 @@ RectTransform:
   m_GameObject: {fileID: 1418094794764048}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.000004474073}
   m_LocalPosition: {x: 0, y: 0, z: -0.00001555058}
-  m_LocalScale: {x: 1.34, y: 1.42, z: 1.59}
+  m_LocalScale: {x: 1.34, y: 1, z: 1.59}
   m_Children:
   - {fileID: 224032930344779806}
   m_Father: {fileID: 224509875915031608}
@@ -5959,35 +5963,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1418094794764048}
   m_CullTransparentMesh: 0
---- !u!114 &114620223369781840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1418094794764048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.13207549, g: 0.1184921, b: 0.110270575, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
 --- !u!114 &114121487814559824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6001,6 +5976,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
+--- !u!114 &2151380331910547690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418094794764048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.0754717, g: 0.0754717, b: 0.0754717, a: 0.6862745}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 8c87fd29d2261c248ba15b6d22057f79, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
 --- !u!1 &1418617256309304
 GameObject:
   m_ObjectHideFlags: 0
@@ -10860,7 +10864,7 @@ GameObject:
   - component: {fileID: 4264417450700100209}
   - component: {fileID: 2617374159168985383}
   - component: {fileID: 5833416505793396946}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10931,7 +10935,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4726986290787228091}
   - component: {fileID: 3755692295886707451}
-  m_Layer: 13
+  m_Layer: 14
   m_Name: iconCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -41,7 +41,7 @@ public abstract class Potions : BaseItems {
             AttachedCharacter = StaticManager.Character;
             AttachedCharacter.GetComponent<PlayerInventory>().potions.Add(this);
             gameObject.SetActive(false);
-            StaticManager.uiManager.ShowNotification("Picked up potion", 4);
+            StaticManager.uiManager.ShowNotification("Picked up potion", 2);
         }
     }
     public virtual object this[string propertyName]
