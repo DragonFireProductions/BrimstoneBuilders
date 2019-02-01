@@ -78,6 +78,8 @@ public class GunType : WeaponObject {
 
     public override void Activate( ) {
         StartCoroutine( Fire( ) );
+        audio.spatialBlend = 1.0f;
+        audio.rolloffMode = AudioRolloffMode.Linear;
         if (!audio.isPlaying)
         {
             audio.Play();

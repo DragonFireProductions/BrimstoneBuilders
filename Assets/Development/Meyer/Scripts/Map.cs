@@ -84,7 +84,6 @@ public class Map : MonoBehaviour {
 
                 break;
             case "destination":
-	            list = Destination;
 
                 break;
             case "enemy":
