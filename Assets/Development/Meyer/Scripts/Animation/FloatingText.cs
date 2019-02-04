@@ -22,7 +22,9 @@ public class FloatingText : MonoBehaviour {
 		Destroy(gameObject, info[ 0 ].clip.length);
         audio = gameObject.AddComponent<AudioSource>();
         audio.clip = clip;
-	}
+        audio.spatialBlend = 1.0f;
+        audio.rolloffMode = AudioRolloffMode.Linear;
+    }
 
 	public void SetDamage( string damage, Color color ) {
 		damageText.color = color;
