@@ -42,8 +42,6 @@ public abstract class WeaponObject : BaseItems
         AnimationClass = gameObject.GetComponent < AnimationClass >( );
         item = this.gameObject;
         audio = gameObject.GetComponent<AudioSource>();
-        audio.spatialBlend = 1.0f;
-        audio.rolloffMode = AudioRolloffMode.Linear;
     }
     public override object this[string propertyName]
     {

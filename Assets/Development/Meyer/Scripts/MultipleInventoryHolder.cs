@@ -42,7 +42,18 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
 	public GameObject weaponsPanel;
 
-	
+    public Button weaponsButton;
+
+    public Button potionsButton;
+
+    public Button armorButton;
+
+    public Button mapButton;
+
+    public Button questButton;
+
+
+
 
     public void Awake( ) {
 		WeaponAssetList = itemList.itemList;
@@ -61,6 +72,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	}
 	public void SwitchToPotionsTab( ) {
 		CloseAll();
+        AllWhite();
+        ChangeRed(potionsButton);
         List<GameObject> windows = new List<GameObject>();
 
 
@@ -75,6 +88,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
     public void SwitchToWeapons( ) {
 		CloseAll();
+        AllWhite();
+        ChangeRed(weaponsButton);
 		Time.timeScale = 0;
         List<GameObject> windows = new List<GameObject>();
 
@@ -93,6 +108,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
 	public void SwitchToQuest( ) {
 		CloseAll();
+        AllWhite();
+        ChangeRed(questButton);
 		Time.timeScale = 0;
         List<GameObject> windows = new List<GameObject>();
 
@@ -195,7 +212,9 @@ public class MultipleInventoryHolder : MonoBehaviour {
     }
     public void SwitchToArmor( ) {
 		CloseAll();
-		Time.timeScale = 0;
+        AllWhite();
+        ChangeRed(armorButton);
+        Time.timeScale = 0;
 		List <GameObject> windows = new List < GameObject >();
 
 		windows.Add(StaticManager.uiManager.armorGrid);
@@ -260,6 +279,8 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	public void SwitchToMap( ) {
 		CloseAll();
        Time.timeScale = 0;
+        AllWhite();
+        ChangeRed(mapButton);
         StaticManager.map.ShowMap();
 	}
 
@@ -381,5 +402,18 @@ public class MultipleInventoryHolder : MonoBehaviour {
 			SwitchInventory(StaticManager.tabManager.GetTab(StaticManager.Character));
 		}
 	}
-	
+
+    void AllWhite()
+    {
+        weaponsButton.GetComponentInChildren<Text>().color = Color.white;
+        potionsButton.GetComponentInChildren<Text>().color = Color.white;
+        armorButton.GetComponentInChildren<Text>().color = Color.white;
+        mapButton.GetComponentInChildren<Text>().color = Color.white;
+        questButton.GetComponentInChildren<Text>().color = Color.white;
+    }
+
+    void ChangeRed(Button button)
+    {
+        button.GetComponentInChildren<Text>().color = new Color(214.0f / 255.0f, 29.0f / 255.0f, 29.0f / 255.0f, 170.0f / 255.0f);
+    }
 }
