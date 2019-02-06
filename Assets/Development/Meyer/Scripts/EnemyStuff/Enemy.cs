@@ -22,16 +22,19 @@ namespace Kristal {
 
         public GameObject objectToDrop;
 
+        public float health;
+
 
         protected void Awake( ) {
             base.Awake( );
-
         }
 
         protected void Start( ) {
             StaticManager.RealTime.AllEnemies.Add( this );
             Nav = gameObject.GetComponent < EnemyNav >( );
 
+            base.stats.health = health;
+            base.stats.maxHealth = health;
             MaxCoinCount          = Random.Range( 1 , MaxCoinCount );
             attachedWeapon.Damage = damage;
             StaticManager.map.Enemies.Add(icon);
