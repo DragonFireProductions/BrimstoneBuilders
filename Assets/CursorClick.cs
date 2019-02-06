@@ -20,6 +20,7 @@ public class CursorClick : MonoBehaviour
 
     void PlaySound()
     {
+        audio.enabled = true;
         audio.Play();
     }
 }

@@ -34,6 +34,10 @@ MonoBehaviour:
   questWindow: {fileID: 0}
   currentQuest: {fileID: 0}
   questConfirmation: {fileID: 0}
+  NPCs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &4711551249155082963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48,6 +52,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drop: {fileID: 0}
   coinWorth: 0
+--- !u!114 &1774270277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6423185350099308623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8822eb961bb7f304cb1d44b726b42a14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8048184223656683088
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,11 +445,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7420574945825131943, guid: cacf431a78fdbc3498bc99e457aa3d86,
         type: 3}
-      propertyPath: pauseWindow
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7420574945825131943, guid: cacf431a78fdbc3498bc99e457aa3d86,
-        type: 3}
       propertyPath: PlayerImage
       value: 
       objectReference: {fileID: 0}
@@ -669,6 +680,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7420574945825131943, guid: cacf431a78fdbc3498bc99e457aa3d86,
         type: 3}
+      propertyPath: manager
+      value: 
+      objectReference: {fileID: 4267357748913432215}
+    - target: {fileID: 7420574945825131943, guid: cacf431a78fdbc3498bc99e457aa3d86,
+        type: 3}
       propertyPath: MessageWindow
       value: 
       objectReference: {fileID: 0}
@@ -731,6 +747,31 @@ PrefabInstance:
     - target: {fileID: 2096860554605315982, guid: cacf431a78fdbc3498bc99e457aa3d86,
         type: 3}
       propertyPath: mapCamera
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2096860554605315982, guid: cacf431a78fdbc3498bc99e457aa3d86,
+        type: 3}
+      propertyPath: weaponsButton
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2096860554605315982, guid: cacf431a78fdbc3498bc99e457aa3d86,
+        type: 3}
+      propertyPath: potionsButton
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2096860554605315982, guid: cacf431a78fdbc3498bc99e457aa3d86,
+        type: 3}
+      propertyPath: armorButton
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2096860554605315982, guid: cacf431a78fdbc3498bc99e457aa3d86,
+        type: 3}
+      propertyPath: mapButton
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2096860554605315982, guid: cacf431a78fdbc3498bc99e457aa3d86,
+        type: 3}
+      propertyPath: questButton
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1848325822883618442, guid: cacf431a78fdbc3498bc99e457aa3d86,
