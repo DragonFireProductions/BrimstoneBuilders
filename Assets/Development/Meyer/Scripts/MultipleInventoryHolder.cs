@@ -319,7 +319,7 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		}
 		inventory.character.inventoryUI.DeleteObject(selectedObj);
         SwitchInventory(tab);
-		SwitchToPotionsTab();
+		//SwitchToPotionsTab();
 
 
     }

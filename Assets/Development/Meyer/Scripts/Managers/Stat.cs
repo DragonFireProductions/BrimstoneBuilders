@@ -154,7 +154,12 @@ public class Stat : MonoBehaviour {
 
     public Stat baseStats;
     // Update is called once per frame
-    public void Update( ) { }
+    public void Update( ) {
+        if (health <= 0)
+        {
+            health = 0;
+        }
+    }
 
     //Handles the scaling of all characters based on Strength stat
     public void AdjustScale( float _strength ) {
