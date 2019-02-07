@@ -156,7 +156,6 @@ GameObject:
   - component: {fileID: 114244573792990640}
   - component: {fileID: 65688401946331236}
   - component: {fileID: 54981761031127012}
-  - component: {fileID: 692178427}
   - component: {fileID: 1973860638483375581}
   m_Layer: 0
   m_Name: BowTest
@@ -195,7 +194,7 @@ MonoBehaviour:
   item: {fileID: 0}
   stats: {fileID: 114244573792990640}
   AttachedCharacter: {fileID: 0}
-  objectName: Fire Bow
+  objectName: Bow of Flame
   icon: {fileID: 0}
   light: {fileID: 0}
   AnimationClass: {fileID: 0}
@@ -240,7 +239,7 @@ MonoBehaviour:
   reach: 0
   equipType: 0
   weaponType: 0
-  icon: {fileID: 2800000, guid: 8d1ad5e8d53d2764fbabf3f0ff3c3a9c, type: 3}
+  icon: {fileID: 2800000, guid: 17255f8a804c4c0489ba6e6cf40b6584, type: 3}
   isIndestructible: 0
   isStackable: 0
   destroyOnUse: 0
@@ -274,44 +273,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!108 &692178427
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1122163039750788}
-  m_Enabled: 1
-  serializedVersion: 8
-  m_Type: 2
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
-  m_SpotAngle: 30
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
 --- !u!82 &1973860638483375581
 AudioSource:
   m_ObjectHideFlags: 0
@@ -621,6 +582,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2631209572244632534}
   - component: {fileID: 8232366976177770906}
+  - component: {fileID: 462437363}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -680,3 +642,16 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &462437363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4508372787069332596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a4884691a553b24291de2d9f92208b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Intensity_Rate: 0

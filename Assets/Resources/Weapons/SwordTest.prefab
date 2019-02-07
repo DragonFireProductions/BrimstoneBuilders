@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 114663022468548556}
   - component: {fileID: 65856550346835302}
   - component: {fileID: 54889243142914454}
-  - component: {fileID: 684192801}
   - component: {fileID: 2908511911572569525}
   m_Layer: 0
   m_Name: SwordTest
@@ -31,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1479060257216030}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 77.31622, y: -0.788, z: -35.709206}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4676655126609012}
   m_Father: {fileID: 0}
@@ -52,14 +51,14 @@ MonoBehaviour:
   item: {fileID: 0}
   stats: {fileID: 114663022468548556}
   AttachedCharacter: {fileID: 0}
-  objectName: SwordTest
+  objectName: Relic Blade
   icon: {fileID: 0}
   light: {fileID: 0}
   AnimationClass: {fileID: 0}
   Damage: 0
   RunAwayOnUse: 0
   KnockBack: 0
-  type: 0
+  type: 1
   KnockBackAmount: 0
   leftHand: {fileID: 1832507824500688, guid: 0c267311f53dbbb4db4a64e3b5e70d47, type: 3}
   rightHand: {fileID: 1156042303773384, guid: d1c7cb8f81953f64da983c75665390c1, type: 3}
@@ -89,7 +88,7 @@ MonoBehaviour:
   reach: 0
   equipType: 0
   weaponType: 0
-  icon: {fileID: 2800000, guid: 184411e5cbfcef94d90c27171a6135d6, type: 3}
+  icon: {fileID: 2800000, guid: c3d80b29f0e967e4ebb4a577c6d40ea4, type: 3}
   isIndestructible: 0
   isStackable: 0
   destroyOnUse: 0
@@ -123,44 +122,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!108 &684192801
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1479060257216030}
-  m_Enabled: 1
-  serializedVersion: 8
-  m_Type: 2
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
-  m_SpotAngle: 30
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
 --- !u!82 &2908511911572569525
 AudioSource:
   m_ObjectHideFlags: 0
@@ -266,8 +227,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4676655126609012}
-  - component: {fileID: 33569010790933788}
   - component: {fileID: 23009117610192774}
+  - component: {fileID: 570330984}
+  - component: {fileID: 570330985}
   m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
@@ -283,7 +245,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1785487711844756}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.33, z: -0.09}
+  m_LocalPosition: {x: -0.000045776367, y: 2.329998, z: -0.09000015}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 8499396115466159287}
@@ -291,14 +253,6 @@ Transform:
   m_Father: {fileID: 4546680929208950}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &33569010790933788
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1785487711844756}
-  m_Mesh: {fileID: 4300000, guid: 62f6d6a862a6bec48b3253e5ee203567, type: 3}
 --- !u!23 &23009117610192774
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -316,7 +270,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 95be4df36eca6eb4b821dcab4acd4a1e, type: 2}
+  - {fileID: 2100000, guid: 532c7a2f80133ed41b42e2b7a36ecc44, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -336,6 +290,28 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!33 &570330984
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785487711844756}
+  m_Mesh: {fileID: 4300000, guid: 9bc555ffdea9ed34c9c941f9a764e5af, type: 3}
+--- !u!114 &570330985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785487711844756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1e8d699925be34f921d39c634828b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinWorth: 0
+  TurnSpeed: 5
 --- !u!1 &7185095669157943857
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,6 +394,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1833477925392398753}
   - component: {fileID: 3240304917720802400}
+  - component: {fileID: 1284870985}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -433,7 +410,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8283275493529520592}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.481, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4676655126609012}
@@ -477,6 +454,19 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &1284870985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8283275493529520592}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a4884691a553b24291de2d9f92208b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Intensity_Rate: 0
 --- !u!1 &8577902572174063521
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,7 +493,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8577902572174063521}
   m_LocalRotation: {x: -0, y: 0.5767798, z: -0, w: 0.8168997}
-  m_LocalPosition: {x: 0, y: 0, z: 0.045}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.536575, y: 0.5, z: 0.47258008}
   m_Children:
   - {fileID: 3233492130925128220}
