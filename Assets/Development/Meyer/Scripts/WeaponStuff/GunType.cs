@@ -64,7 +64,7 @@ public class GunType : WeaponObject {
     }
 
     public override void Use( ) {
-        base.Use( );
+        //base.Use( );
         Debug.Log( "Attacking" );
 
         if ( canFire ){
