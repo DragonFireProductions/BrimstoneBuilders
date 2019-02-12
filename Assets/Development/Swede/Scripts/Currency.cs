@@ -93,7 +93,7 @@ public class Currency : MonoBehaviour {
             newButton.transform.position = location.transform.position;
             StaticManager.inventories.behaviors.Add( newButton );
 
-            StaticManager.RealTime.Companions.Add( container.companion );
+            //StaticManager.RealTime.Companions.Add( container.companion );
             StaticManager.inventories.alllables.Add( container.companion.inventory );
             container.companion.gameObject.SetActive( true );
             container.companion.inventoryUI.sendToButton.gameObject.SetActive( true );
