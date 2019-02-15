@@ -60,6 +60,7 @@ public class LeaderNav : BaseNav
             {
                 if (hit.collider.gameObject.layer == 0)
                 {
+
                     SetState = state.MOVE;
                     if (character.enemy)
                     {
@@ -96,6 +97,7 @@ public class LeaderNav : BaseNav
                     character.enemy.projector.gameObject.SetActive(true);
                 }
             }
+
 
         }
 
@@ -169,7 +171,10 @@ public class LeaderNav : BaseNav
 
                 break;
             case state.MOVE:
-                Agent.SetDestination(hit.point);
+                if (hit.collider.tag != "CompanionButton")
+                {
+                    Agent.SetDestination(hit.point);
+                }
 
                 break;
             case state.ENEMY_CLICKED:
