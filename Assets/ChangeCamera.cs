@@ -8,6 +8,11 @@ public class ChangeCamera : MonoBehaviour
     [SerializeField] private bool UseCamera1;
     [SerializeField] private bool UseCamera2;
 
+
+    private void Start()
+    {
+        StaticManager.map.UseCamera = true;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")

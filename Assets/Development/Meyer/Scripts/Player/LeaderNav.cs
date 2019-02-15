@@ -8,14 +8,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LeaderNav : BaseNav {
+public class LeaderNav : BaseNav
+{
 
     private Collider[] colliders;
 
     private float count;
-    
 
-    [ HideInInspector ] public ParticleSystem enemySystem;
+
+    [HideInInspector] public ParticleSystem enemySystem;
 
     private RaycastHit hit;
 
@@ -23,49 +24,58 @@ public class LeaderNav : BaseNav {
 
     private LayerMask mask;
 
-    [ SerializeField ] private TextMeshProUGUI message;
+    [SerializeField] private TextMeshProUGUI message;
 
     private bool timerEnabled = false;
 
     private ShopContainer prev_container;
 
-    protected override void Start( ) {
+    protected override void Start()
+    {
         base.Start();
-        hit            = new RaycastHit( );
-        mask           = LayerMask.GetMask( "Enemy" );
+        hit = new RaycastHit();
+        mask = LayerMask.GetMask("Enemy");
     }
 
-    private void FixedUpdate( ) {
-        speed        = Mathf.Lerp( speed , ( transform.position - lastPosition ).magnitude / Time.deltaTime , 0.75f );
+    private void FixedUpdate()
+    {
+        speed = Mathf.Lerp(speed, (transform.position - lastPosition).magnitude / Time.deltaTime, 0.75f);
         lastPosition = transform.position;
     }
 
     public Vector3 clickpos;
 
     // Update is called once per frame
-    protected override void Update( ) {
+    protected override void Update()
+    {
         base.Update();
-        character.AnimationClass.animation.SetFloat( "Walk" , Agent.velocity.magnitude / Agent.speed );
+        character.AnimationClass.animation.SetFloat("Walk", Agent.velocity.magnitude / Agent.speed);
 
-        if ( Input.GetMouseButton( 0 ) && !StaticManager.UiInventory.ItemsInstance.windowIsOpen && !EventSystem.current.IsPointerOverGameObject( ) ){
-            l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );
+        if (Input.GetMouseButton(0) && !StaticManager.UiInventory.ItemsInstance.windowIsOpen && !EventSystem.current.IsPointerOverGameObject())
+        {
+            l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             int mask = 1 << 11;
             mask = ~mask;
-            if ( Physics.Raycast( l_ray , out hit, 1000, mask) ){
-                if ( hit.collider.gameObject.layer == 0 ){
+            if (Physics.Raycast(l_ray, out hit, 1000, mask))
+            {
+                if (hit.collider.gameObject.layer == 0)
+                {
                     SetState = state.MOVE;
-                    if ( character.enemy ){
-                        character.enemy.projector.gameObject.SetActive( false );
+                    if (character.enemy)
+                    {
+                        character.enemy.projector.gameObject.SetActive(false);
                     }
 
-                    StaticManager.particleManager.Play( ParticleManager.states.Click , hit.point );
+                    StaticManager.particleManager.Play(ParticleManager.states.Click, hit.point);
 
-                    if ( enemySystem ){
-                        Destroy( enemySystem.gameObject );
+                    if (enemySystem)
+                    {
+                        Destroy(enemySystem.gameObject);
                     }
                 }
 
-                if ( hit.collider.tag == "Enemy" ){
+                if (hit.collider.tag == "Enemy")
+                {
                     if (character.enemy)
                     {
                         character.enemy.projector.gameObject.SetActive(false);
@@ -89,79 +99,91 @@ public class LeaderNav : BaseNav {
 
         }
 
-        if ( Input.GetMouseButton( 1 ) && !Input.GetKey(KeyCode.LeftShift) ){
+        if (Input.GetMouseButtonDown(1) && !Input.GetKey(KeyCode.LeftShift))
+        {
             Agent.isStopped = true;
-            SetState        = state.FREEZE;
-             l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );
+            SetState = state.FREEZE;
+            l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             int _mask = 1 << 11;
             _mask = ~_mask;
-            if ( character.attachedWeapon is GunType && Physics.Raycast( l_ray , out hit, 1000, _mask ) ){
-                    character.attachedWeapon.Use( );
+            if (character.attachedWeapon is GunType && Physics.Raycast(l_ray, out hit, 1000, _mask))
+            {
+                character.transform.LookAt(hit.point);
+                character.attachedWeapon.Use();
             }
         }
 
-        if ( Input.GetMouseButtonDown( 0 ) ){
-             l_ray = Camera.main.ScreenPointToRay( Input.mousePosition );
-            if ( Physics.Raycast( l_ray , out hit ) ){
-                if ( hit.collider.tag == "ShopKeeper" && !StaticManager.UiInventory.ItemsInstance.windowIsOpen ) //Left Click
+        if (Input.GetMouseButtonDown(0))
+        {
+            l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(l_ray, out hit))
+            {
+                if (hit.collider.tag == "ShopKeeper" && !StaticManager.UiInventory.ItemsInstance.windowIsOpen) //Left Click
                 {
-                    StaticManager.UiInventory.ShowWindow( StaticManager.UiInventory.ItemsInstance.ShopUI.obj );
+                    StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.ShopUI.obj);
 
-                    if ( prev_container ){
+                    if (prev_container)
+                    {
                         prev_container.gameObject.SetActive(false);
                     }
 
-                    var a = hit.collider.gameObject.GetComponent < Shop >( );
+                    var a = hit.collider.gameObject.GetComponent<Shop>();
 
                     a.shopContainer.gameObject.SetActive(true);
 
                     prev_container = a.shopContainer;
-                    
 
-                    hit.collider.GetComponent < Shop >( ).shopContainer.gameObject.SetActive( true );
-                    StaticManager.currencyManager._shop = hit.collider.GetComponent < Shop >( );
-                   
-                    StaticManager.currencyManager.SwitchToBuy( );
-                    StaticManager.Instance.Freeze( );
+
+                    hit.collider.GetComponent<Shop>().shopContainer.gameObject.SetActive(true);
+                    StaticManager.currencyManager._shop = hit.collider.GetComponent<Shop>();
+
+                    StaticManager.currencyManager.SwitchToBuy();
+                    StaticManager.Instance.Freeze();
                 }
             }
         }
-        
-        if ( !StaticManager.RealTime.Attacking ){
-            colliders = Physics.OverlapSphere( transform.position , 10 , mask );
 
-            if ( colliders.Length > 0 ){
+        if (!StaticManager.RealTime.Attacking)
+        {
+            colliders = Physics.OverlapSphere(transform.position, 10, mask);
+
+            if (colliders.Length > 0)
+            {
                 StaticManager.RealTime.Attacking = true;
-                StartCoroutine( yield( ) );
+                StartCoroutine(yield());
             }
         }
 
-        if ( StaticManager.RealTime.Enemies.Count == 0 ){
+        if (StaticManager.RealTime.Enemies.Count == 0)
+        {
             StaticManager.RealTime.Attacking = false;
         }
 
-        switch ( State ){
+        switch (State)
+        {
             case state.ATTACKING:
 
-                
+
 
                 break;
 
                 break;
             case state.MOVE:
-                Agent.SetDestination( hit.point );
+                Agent.SetDestination(hit.point);
 
                 break;
             case state.ENEMY_CLICKED:
                 rotate1();
-                
-                if ( distance < 3 ){
-                     character.attachedWeapon.Use();
+
+                if (distance < 3)
+                {
+                    character.attachedWeapon.Use();
                 }
-                else{
+                else
+                {
                     SetState = state.MOVE;
                 }
-               
+
                 break;
             case state.IDLE:
 
@@ -179,40 +201,44 @@ public class LeaderNav : BaseNav {
     }
     public IEnumerator rotate(Vector3 pos)
     {
-        
-        Vector3 _pos = new Vector3(pos.x, transform.position.y, pos.z);
-            Quaternion targetRotation = Quaternion.LookRotation( transform.position - _pos);
 
-            while (transform.rotation != targetRotation)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
-                yield return new WaitForEndOfFrame();
-            }
+        Vector3 _pos = new Vector3(pos.x, transform.position.y, pos.z);
+        Quaternion targetRotation = Quaternion.LookRotation(transform.position - _pos);
+
+        while (transform.rotation != targetRotation)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
     }
 
-    public void rotate1( ) {
+    public void rotate1()
+    {
         Vector3 enemy = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
-       character.transform.LookAt(enemy);
+        character.transform.LookAt(enemy);
         character.attachedWeapon.Use();
     }
-    private IEnumerator show( ) {
+    private IEnumerator show()
+    {
         message.enabled = true;
 
-        yield return new WaitForSeconds( 2 );
+        yield return new WaitForSeconds(2);
 
         message.enabled = false;
     }
 
-    private IEnumerator yield( ) {
-        yield return new WaitForSeconds( 0.5f );
+    private IEnumerator yield()
+    {
+        yield return new WaitForSeconds(0.5f);
 
-        colliders = Physics.OverlapSphere( transform.position , 20 , mask );
+        colliders = Physics.OverlapSphere(transform.position, 20, mask);
 
-        foreach ( var l_collider in colliders ){
+        foreach (var l_collider in colliders)
+        {
             StaticManager.RealTime.Attacking = true;
-            StaticManager.RealTime.Enemies.Add( l_collider.gameObject.GetComponent < Enemy >( ) );
+            StaticManager.RealTime.Enemies.Add(l_collider.gameObject.GetComponent<Enemy>());
             StaticManager.RealTime.Attacking = true;
-            StaticManager.RealTime.SetAttackEnemies( );
+            StaticManager.RealTime.SetAttackEnemies();
             SetState = state.ATTACKING;
         }
     }

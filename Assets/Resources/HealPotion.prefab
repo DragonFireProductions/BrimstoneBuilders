@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2649873861289448496}
   - component: {fileID: 2649873861289448497}
   - component: {fileID: 2649873861289448500}
+  - component: {fileID: 3346360628990029291}
   m_Layer: 0
   m_Name: HealPotion
   m_TagString: PickUp
@@ -54,7 +55,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c4826b1a0e25ab94fb412875bc4d3b0b, type: 2}
+  - {fileID: 2100000, guid: 6b72752726f1c0a41b8d6ae25a33d19c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -106,7 +107,7 @@ MonoBehaviour:
   icon: {fileID: 0}
   light: {fileID: 0}
   hit_effect: {fileID: 19800000, guid: 921a3ff88856fe04ebc86b196fd8cc59, type: 3}
-  cast_effect: {fileID: 19800000, guid: 921a3ff88856fe04ebc86b196fd8cc59, type: 3}
+  cast_effect: {fileID: 0}
   PotionName: 
   HealAmount: 20
 --- !u!114 &2649873861289448497
@@ -151,6 +152,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3346360628990029291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2649873861289448511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a4884691a553b24291de2d9f92208b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Intensity_Rate: 0
 --- !u!1 &7896531761762033571
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,7 +206,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 0, g: 0.19324812, b: 0.67058825, a: 1}
+  m_Color: {r: 1, g: 0.0956518, b: 0, a: 1}
   m_Intensity: 4.86
   m_Range: 3.31
   m_SpotAngle: 30
@@ -275,11 +289,51 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 20500000, guid: 0f45b44f130ec26459b7e72dff324b3b, type: 3}
+      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 7767167445786032018}
+    - target: {fileID: 20500000, guid: 0f45b44f130ec26459b7e72dff324b3b, type: 3}
+      propertyPath: m_LODs.Array.data[1].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 7767167445786032016}
+    - target: {fileID: 20500000, guid: 0f45b44f130ec26459b7e72dff324b3b, type: 3}
+      propertyPath: m_LODs.Array.data[2].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 7767167445786032022}
+    - target: {fileID: 20500000, guid: 0f45b44f130ec26459b7e72dff324b3b, type: 3}
+      propertyPath: m_LODs.Array.data[3].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 7767167445786032020}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f45b44f130ec26459b7e72dff324b3b, type: 3}
 --- !u!4 &7767167445787800946 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 0f45b44f130ec26459b7e72dff324b3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 7767167445788192754}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7767167445786032018 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: 0f45b44f130ec26459b7e72dff324b3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 7767167445788192754}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7767167445786032016 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300002, guid: 0f45b44f130ec26459b7e72dff324b3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 7767167445788192754}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7767167445786032022 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300004, guid: 0f45b44f130ec26459b7e72dff324b3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 7767167445788192754}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7767167445786032020 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300006, guid: 0f45b44f130ec26459b7e72dff324b3b,
     type: 3}
   m_PrefabInstance: {fileID: 7767167445788192754}
   m_PrefabAsset: {fileID: 0}

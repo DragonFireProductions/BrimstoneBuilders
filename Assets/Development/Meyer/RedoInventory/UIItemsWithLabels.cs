@@ -50,7 +50,6 @@ public class UIItemsWithLabels : MonoBehaviour
     {
         for (int i = 0; i < Labels.Count; i++)
         {
-            Labels[i].labelText.text = stats[Labels[i].labelObject.name].ToString();
             
         }
     }
