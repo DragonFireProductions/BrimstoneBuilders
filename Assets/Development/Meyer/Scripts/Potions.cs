@@ -11,7 +11,15 @@ public abstract class Potions : BaseItems {
 
 	public string PotionName;
 
+    private AudioSource audio;
+
     public abstract void Cast(BaseCharacter companion = null );
+
+    protected override void Start()
+    {
+        audio = GetComponent<AudioSource>();
+        audio.playOnAwake = false;
+    }
     public override void Attach( ) {
        
         Cast(AttachedCharacter);
@@ -36,11 +44,12 @@ public abstract class Potions : BaseItems {
 	public void OnTriggerEnter(Collider collider ) {
         if (collider.tag == "Player"  && tag == "PickUp")
         {
+            audio.Play();
             StaticManager.Character.inventory.PickUp(this);
             this.GetComponent<BoxCollider>().enabled = false;
             AttachedCharacter = StaticManager.Character;
             AttachedCharacter.GetComponent<PlayerInventory>().potions.Add(this);
-            gameObject.SetActive(false);
+            Destroy(this.gameObject, audio.clip.length);
             StaticManager.uiManager.ShowNotification("Picked up potion", 2);
         }
     }

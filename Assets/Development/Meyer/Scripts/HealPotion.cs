@@ -10,6 +10,7 @@ public class HealPotion : Potions
     [SerializeField] public int HealAmount;
     public override void Cast(BaseCharacter enemy = null)
     {
+        StaticManager.audioManager.PlaySound("PotionCast");
         _hit_effect = Instantiate(this.hit_effect);
         _hit_effect.gameObject.transform.position = enemy.transform.position;
         _hit_effect.gameObject.transform.SetParent(enemy.transform);

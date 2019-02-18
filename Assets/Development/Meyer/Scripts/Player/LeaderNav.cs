@@ -171,10 +171,7 @@ public class LeaderNav : BaseNav
 
                 break;
             case state.MOVE:
-                if (hit.collider.tag != "CompanionButton")
-                {
                     Agent.SetDestination(hit.point);
-                }
 
                 break;
             case state.ENEMY_CLICKED:
