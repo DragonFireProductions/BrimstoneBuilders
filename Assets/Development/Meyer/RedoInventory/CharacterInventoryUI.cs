@@ -192,7 +192,8 @@ public class CharacterInventoryUI : MonoBehaviour {
         StaticManager.uiManager.magicBar.fillAmount = companion.magic.CurrentLevel - ( int )companion.magic.CurrentLevel;
     }
 
-    public void UpdateCharacter( UIItemsWithLabels instance ) {
+    public void UpdateCharacter
+        ( UIItemsWithLabels instance ) {
         for ( var i = 0 ; i < instance.Labels.Count ; i++ ){
             float  a = 0;
             string b;
