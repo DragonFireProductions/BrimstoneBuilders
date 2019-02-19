@@ -48,7 +48,7 @@ public abstract class Potions : BaseItems {
             StaticManager.Character.inventory.PickUp(this);
             this.GetComponent<BoxCollider>().enabled = false;
             AttachedCharacter = StaticManager.Character;
-            AttachedCharacter.GetComponent<PlayerInventory>().potions.Add(this);
+            //AttachedCharacter.GetComponent<PlayerInventory>().potions.Add(this);
             Destroy(this.gameObject, audio.clip.length);
             StaticManager.uiManager.ShowNotification("Picked up potion", 2);
         }

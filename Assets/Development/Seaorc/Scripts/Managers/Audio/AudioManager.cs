@@ -28,9 +28,9 @@ public class AudioManager : MonoBehaviour
         {
             GameObject GO = new GameObject(sound.GetName());
 
-            GO.transform.position = Camera.main.transform.position;
+            GO.transform.position = StaticManager.Character.transform.position;
 
-            GO.transform.SetParent(Camera.main.transform);
+            GO.transform.SetParent(StaticManager.Character.transform);
 
             sound.SetSource(GO.AddComponent<AudioSource>());
            

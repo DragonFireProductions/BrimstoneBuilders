@@ -27,8 +27,9 @@ public class HealPotion : Potions
             var e = enemy as Companion;
             StaticManager.UiInventory.RemoveMainInventory(this, e.inventory);
             e.inventory.potions.Remove(this);
-            e.inventory.potions.RemoveAll(item => item == null);
+            //e.inventory.potions.RemoveAll(item => item == null);
             e.inventoryUI.HealCount.text = e.inventory.potions.Count.ToString();
+            e.inventoryUI.currentHealth.text = e.stats.health.ToString();
         }
 
     }

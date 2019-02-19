@@ -233,6 +233,16 @@ public class CharacterInventoryUI : MonoBehaviour {
         companion.inventory.WeaponInventory.UpdateWeapon(item, weapon);
     }
     public void UpdatePotions( ) {
+        GameObject GO = GameObject.Find("PotionsUse (1)");
+        Button send = GO.GetComponentInChildren<Button>();
+        if (StaticManager.currencyManager.companions > 0)
+        {
+            send.interactable = true;
+        }
+        else
+        {
+            send.interactable = false;
+        }
         for ( var i = 0 ; i < potions.Count ; i++ ){
             for ( var j = 0 ; j < potions[ i ].Labels.Count ; j++ ){
                 var a = potions[ i ].item.stats[ potions[ i ].Labels[ j ].name ];
