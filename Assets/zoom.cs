@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class zoom : MonoBehaviour
 {
+
+    [SerializeField] private Transform camRig; 
+
     float minFOV = 15.0f;
     float maxFOV = 90.0f;
     float sensitivity = 10.0f;
@@ -16,6 +19,9 @@ public class zoom : MonoBehaviour
     [SerializeField] GameObject player;
 
     float default_zoom;
+    Vector3 Default_Cam;
+
+    private Transform StartPos;
 
     private float time = 0;
     // Start is called before the first frame update
@@ -23,6 +29,11 @@ public class zoom : MonoBehaviour
     {
         cam = GetComponent<Camera>();
         default_zoom = Camera.main.fieldOfView;
+        Default_Cam = Camera.main.transform.position;
+
+
+        StartPos.position = camRig.position;
+        StartPos.rotation = camRig.rotation;
     }
 
     // Update is called once per frame
@@ -55,7 +66,9 @@ public class zoom : MonoBehaviour
             {
                 for (int i = 0; i < 2; ++i)
                     snap_back();
-                Camera.main.fieldOfView = default_zoom;
+
+                //Camera.main.fieldOfView = default_zoom;
+                //Camera.main.transform.position = Default_Cam;
             }
 
         }
@@ -66,8 +79,8 @@ public class zoom : MonoBehaviour
        transform.position = StaticManager.Character.cam_pos.gameObject.transform.position;
        transform.rotation = StaticManager.Character.cam_pos.gameObject.transform.rotation;
 
-       gameObject.GetComponent<CameraController>().playercam.transform.position = StaticManager.Character.cam_pos.gameObject.transform.position;
-       gameObject.GetComponent<CameraController>().playercam.transform.rotation = StaticManager.Character.cam_pos.gameObject.transform.rotation;
+       gameObject.GetComponent<CameraController>().playercam.transform.position = transform.position;
+       gameObject.GetComponent<CameraController>().playercam.transform.rotation = transform.rotation;
        
     }
 }

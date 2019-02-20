@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2649873861289448497}
   - component: {fileID: 2649873861289448500}
   - component: {fileID: 3346360628990029291}
+  - component: {fileID: 2483455079206192643}
   m_Layer: 0
   m_Name: HealPotion
   m_TagString: PickUp
@@ -33,7 +34,6 @@ Transform:
   m_LocalPosition: {x: 19.3, y: 0.92, z: -65.2}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
-  - {fileID: 4149156558774992700}
   - {fileID: 7767167445787800946}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -165,44 +165,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Intensity_Rate: 0
---- !u!1 &7896531761762033571
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4149156558774992700}
-  - component: {fileID: 3374955162604886963}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4149156558774992700
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7896531761762033571}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2649873861289448510}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!108 &3374955162604886963
+--- !u!108 &2483455079206192643
 Light:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7896531761762033571}
+  m_GameObject: {fileID: 2649873861289448511}
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
@@ -275,7 +244,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0f45b44f130ec26459b7e72dff324b3b, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 0f45b44f130ec26459b7e72dff324b3b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

@@ -56,7 +56,7 @@ public class CompanionNav : BaseNav
         set
         {
             Agent.isStopped = false;
-              Agent.stoppingDistance = 3;
+              Agent.stoppingDistance = StaticManager.Character.agent.stoppingDistance;
             if (value == AggressionStates.BERZERK){
               
                 aggState = AggressionStates.BERZERK;
@@ -98,8 +98,6 @@ public class CompanionNav : BaseNav
         character.attackers.RemoveAll(item => item == null);
         enemiesToAttack.RemoveAll(item => item == null);
 
-
-        stoppingDistance = 4;
         switch (aggState)
         {
             case AggressionStates.PASSIVE:
@@ -148,7 +146,8 @@ public class CompanionNav : BaseNav
                             transform.LookAt(look);
                             useTimer += Time.deltaTime;
 
-                            if (useTimer > time){
+                            if (useTimer > time)
+                            {
                                 time = Random.Range( 2 , 7 );
                                 character.attachedWeapon.Use();
                                 useTimer = 0;

@@ -74,29 +74,53 @@ public class LeaderNav : BaseNav
                     }
                 }
 
-                if (hit.collider.tag == "Enemy")
-                {
-                    if (character.enemy)
-                    {
-                        character.enemy.projector.gameObject.SetActive(false);
-                    }
-                    character.enemy = hit.collider.GetComponent<Enemy>();
-                    if (character.attachedWeapon is GunType)
-                    {
-                        SetState = state.FREEZE;
-                        rotate1();
+                //if (hit.collider.tag == "Enemy")
+                //{
+                //    if (character.enemy)
+                //    {
+                //        character.enemy.projector.gameObject.SetActive(false);
+                //    }
+                //    character.enemy = hit.collider.GetComponent<Enemy>();
+                //    if (character.attachedWeapon is GunType)
+                //    {
+                //        SetState = state.FREEZE;
+                //        rotate1();
 
-                    }
-                    else
-                    {
-                        SetState = state.ENEMY_CLICKED;
-                    }
-                    Destroy(enemySystem);
+                //    }
+                //    else
+                //    {
+                //        SetState = state.ENEMY_CLICKED;
+                //    }
+                //    Destroy(enemySystem);
 
-                    character.enemy.projector.gameObject.SetActive(true);
-                }
+                //    character.enemy.projector.gameObject.SetActive(true);
+                //}
             }
 
+        }
+        else if(Input.GetMouseButton(1) && !StaticManager.UiInventory.ItemsInstance.windowIsOpen && !EventSystem.current.IsPointerOverGameObject())
+        {
+            if (hit.collider.tag == "Enemy")
+            {
+                if (character.enemy)
+                {
+                    character.enemy.projector.gameObject.SetActive(false);
+                }
+                character.enemy = hit.collider.GetComponent<Enemy>();
+                if (character.attachedWeapon is GunType)
+                {
+                    SetState = state.FREEZE;
+                    rotate1();
+
+                }
+                else
+                {
+                    SetState = state.ENEMY_CLICKED;
+                }
+                Destroy(enemySystem);
+
+                character.enemy.projector.gameObject.SetActive(true);
+            }
         }
 
         if (Input.GetMouseButtonDown(1) && !Input.GetKey(KeyCode.LeftShift))
