@@ -10,6 +10,7 @@ public class HealPotion : Potions
     [SerializeField] public int HealAmount;
     public override void Cast(BaseCharacter enemy = null)
     {
+        StaticManager.audioManager.PlaySound("PotionCast");
         _hit_effect = Instantiate(this.hit_effect);
         _hit_effect.gameObject.transform.position = enemy.transform.position;
         _hit_effect.gameObject.transform.SetParent(enemy.transform);
@@ -26,8 +27,9 @@ public class HealPotion : Potions
             var e = enemy as Companion;
             StaticManager.UiInventory.RemoveMainInventory(this, e.inventory);
             e.inventory.potions.Remove(this);
-            e.inventory.potions.RemoveAll(item => item == null);
+            //e.inventory.potions.RemoveAll(item => item == null);
             e.inventoryUI.HealCount.text = e.inventory.potions.Count.ToString();
+            e.inventoryUI.currentHealth.text = e.stats.health.ToString();
         }
 
     }

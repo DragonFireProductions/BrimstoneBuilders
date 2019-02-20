@@ -49,7 +49,7 @@ public class Sound
     public void PlaySound()
     {
         Source.volume = 1.0f;
-        Source.PlayOneShot(Source.clip, 0.7f);
+        Source.PlayOneShot(Source.clip, 1.0f);
         Debug.Log("Audio is playing");
     }
 

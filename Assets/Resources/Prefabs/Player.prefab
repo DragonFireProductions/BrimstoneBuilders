@@ -1931,6 +1931,7 @@ GameObject:
   - component: {fileID: 114239833086384634}
   - component: {fileID: 114863111788553358}
   - component: {fileID: 114441654795163554}
+  - component: {fileID: 6945159035169183843}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -2325,6 +2326,14 @@ MonoBehaviour:
   weapons: []
   inventoryObj: {fileID: 0}
   labels: []
+--- !u!81 &6945159035169183843
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320664990286734}
+  m_Enabled: 1
 --- !u!1 &1322383648038434
 GameObject:
   m_ObjectHideFlags: 0
@@ -9471,6 +9480,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: IconCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5374004888353748547, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
+        type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: eb5f6e2757c821940b69cf1456f7865a, type: 3}
     - target: {fileID: 1273390263847446084, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9576,11 +9590,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 5374004888353748547, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
-        type: 3}
-      propertyPath: m_Texture
-      value: 
-      objectReference: {fileID: 2800000, guid: eb5f6e2757c821940b69cf1456f7865a, type: 3}
     - target: {fileID: 1020615464733101051, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
         type: 3}
       propertyPath: m_SizeDelta.x

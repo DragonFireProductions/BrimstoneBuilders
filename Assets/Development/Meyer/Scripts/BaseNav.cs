@@ -110,6 +110,7 @@ public class BaseNav : MonoBehaviour {
     protected virtual void Start( ) {
         Agent.stoppingDistance = stoppingDistance;
         audio = gameObject.AddComponent<AudioSource>();
+        audio.spatialBlend = 1.0f;
     }
     void FixedUpdate()
     {

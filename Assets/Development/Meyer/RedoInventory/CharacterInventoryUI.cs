@@ -192,7 +192,8 @@ public class CharacterInventoryUI : MonoBehaviour {
         StaticManager.uiManager.magicBar.fillAmount = companion.magic.CurrentLevel - ( int )companion.magic.CurrentLevel;
     }
 
-    public void UpdateCharacter( UIItemsWithLabels instance ) {
+    public void UpdateCharacter
+        ( UIItemsWithLabels instance ) {
         for ( var i = 0 ; i < instance.Labels.Count ; i++ ){
             float  a = 0;
             string b;
@@ -233,6 +234,16 @@ public class CharacterInventoryUI : MonoBehaviour {
         companion.inventory.WeaponInventory.UpdateWeapon(item, weapon);
     }
     public void UpdatePotions( ) {
+        GameObject GO = GameObject.Find("PotionsUse (1)");
+        Button send = GO.GetComponentInChildren<Button>();
+        if (StaticManager.currencyManager.companions > 0)
+        {
+            send.interactable = true;
+        }
+        else
+        {
+            send.interactable = false;
+        }
         for ( var i = 0 ; i < potions.Count ; i++ ){
             for ( var j = 0 ; j < potions[ i ].Labels.Count ; j++ ){
                 var a = potions[ i ].item.stats[ potions[ i ].Labels[ j ].name ];

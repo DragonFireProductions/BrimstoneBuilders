@@ -10,6 +10,7 @@ public class Coin : MonoBehaviour
     public float TurnSpeed = 1;
     private bool turn;
 
+    private AudioSource audio;
     public void Start()
     {
         
@@ -21,6 +22,9 @@ public class Coin : MonoBehaviour
         }
         else
             turn = false;
+
+        audio = GetComponent<AudioSource>();
+        audio.playOnAwake = false;
     }
     public void Update()
     {
@@ -34,10 +38,11 @@ public class Coin : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player"){
+            audio.Play();
             StaticManager.uiManager.ShowNotification("Picked up coin", 2);
             StaticManager.Character.inventory.coinCount += coinWorth;
 
-            Destroy(this.gameObject);
+            Destroy(this.gameObject, audio.clip.length);
         }
     }
 }

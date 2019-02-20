@@ -15,25 +15,27 @@ public class CharacterWeaponsInventory : PlayerInventory
 
     public GameObject inventoryObj;
 
-    public List <GameObject> labels = new List < GameObject >();
+    public List<GameObject> labels = new List<GameObject>();
     // Use this for initialization
     void Start()
     {
 
     }
 
-    public void RemoveObject(WeaponObject item ) {
-       
-            for (var i = 0; i < weapons.Count; i++)
+    public void RemoveObject(WeaponObject item)
+    {
+
+        for (var i = 0; i < weapons.Count; i++)
+        {
+            if (weapons[i].item == item)
             {
-                if (weapons[i].item == item)
-                {
-                    weapons[i].obj.SetActive(false);
-                }
+                weapons[i].obj.SetActive(false);
             }
+        }
     }
 
-    public void DeleteObject(WeaponObject item ) {
+    public void DeleteObject(WeaponObject item)
+    {
         for (var i = 0; i < weapons.Count; i++)
         {
             if (weapons[i].item == item)
@@ -65,7 +67,16 @@ public class CharacterWeaponsInventory : PlayerInventory
     {
         for (int i = 0; i < item.Labels.Count; i++)
         {
-            item.Labels[i].labelText.text = weapon[item.Labels[i].name].ToString();
+            if (Object.ReferenceEquals(weapon[item.Labels[i].name].GetType(), typeof(float)))
+            {
+                int name = System.Convert.ToInt32(weapon[item.Labels[i].name]);
+                item.Labels[i].labelText.text = name.ToString();
+            }
+            else
+            {
+                item.Labels[i].labelText.text = weapon[item.Labels[i].name].ToString();
+            }
+
         }
     }
     public void EnableContainer(WeaponObject item)
@@ -79,7 +90,8 @@ public class CharacterWeaponsInventory : PlayerInventory
             }
         }
     }
-    public void Init( ) {
+    public void Init()
+    {
         inventoryObj = character.inventoryUI.CharacterInventory.transform.Find("WeaponsInventory").gameObject;
 
         inventoryObj.SetActive(true);
@@ -127,15 +139,17 @@ public class CharacterWeaponsInventory : PlayerInventory
 
     }
 
-    public void UpdateGrid( ) {
-        labels.RemoveAll( item => null == item );
+    public void UpdateGrid()
+    {
+        labels.RemoveAll(item => null == item);
         for (int i = 0; i < labels.Count; i++)
         {
             labels[i].gameObject.transform.position = StaticManager.uiManager.Grid[i].transform.position;
         }
     }
-    public void Attach(WeaponObject obj ) {
-        labels.Remove( obj.label );
+    public void Attach(WeaponObject obj)
+    {
+        labels.Remove(obj.label);
 
         for (int i = 0; i < labels.Count; i++)
         {
@@ -143,7 +157,8 @@ public class CharacterWeaponsInventory : PlayerInventory
         }
     }
 
-    public override void Close( ) {
+    public override void Close()
+    {
         inventoryObj.SetActive(false);
         StaticManager.uiManager.WeaponWindow.SetActive(false);
     }

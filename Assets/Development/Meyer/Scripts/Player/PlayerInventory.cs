@@ -49,8 +49,9 @@ public class PlayerInventory : MonoBehaviour {
     }
 
     public void PickUp( Potions _potions ) {
-        PickedUpPotions.Add(_potions);
-        _potions.gameObject.SetActive(false);
+        //PickedUpPotions.Add(_potions);
+        potions.Add(_potions);
+        //_potions.gameObject.SetActive(false);
         character.inventoryUI.HealCount.text = potions.Count.ToString();
     }
 

@@ -24,6 +24,7 @@ public class FloatingText : MonoBehaviour {
         audio.clip = clip;
         audio.spatialBlend = 1.0f;
         audio.rolloffMode = AudioRolloffMode.Linear;
+        audio.volume = 0.5f;
     }
 
 	public void SetDamage( string damage, Color color ) {

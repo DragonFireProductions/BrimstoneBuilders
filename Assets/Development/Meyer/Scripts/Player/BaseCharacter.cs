@@ -167,7 +167,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     public virtual void Damage( int _damage , BaseItems item ) {
         float randValue = Random.Range( 1 , 100 );
-
+        this.animator.Play("Hit");
         if ( randValue > 100 - item.AttachedCharacter.stats.luck ){
             var damage = _damage * 2;
             stats.Health -= damage;

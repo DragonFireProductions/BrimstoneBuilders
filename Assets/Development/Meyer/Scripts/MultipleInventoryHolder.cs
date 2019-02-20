@@ -309,15 +309,16 @@ public class MultipleInventoryHolder : MonoBehaviour {
 		}
 
 		if ( obj is Potions ){
-
-			cha.inventory.potions.Add(obj as Potions);
-			inventory.potions.Remove( obj as Potions );
+            cha.inventory.potions.Add(StaticManager.Character.inventory.potions[0]);
+            StaticManager.Character.inventory.potions.RemoveAt(0);
+            cha.inventoryUI.UpdatePotions();
+            inventory.character.inventoryUI.UpdatePotions();
 		}
 
 		if ( obj is ArmorItem){
 			inventory.armorInventory.PickUp(obj);
 		}
-		inventory.character.inventoryUI.DeleteObject(selectedObj);
+		//inventory.character.inventoryUI.DeleteObject(selectedObj);
         SwitchInventory(tab);
 		//SwitchToPotionsTab();
 
