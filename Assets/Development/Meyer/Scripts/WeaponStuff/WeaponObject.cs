@@ -150,8 +150,19 @@ public abstract class WeaponObject : BaseItems
     public void PickUp(BaseCharacter character ) {
         if (tag == "PickUp")
         {
-
+            WeaponObject weaponObject = this;
             StaticManager.uiManager.ShowNotification("Picked up weapon", 2);
+            if (!StaticManager.inventories.audio.isPlaying)
+            {
+                if (weaponObject is GunType)
+                {
+                    StaticManager.inventories.audio.PlayOneShot(StaticManager.inventories.clips[2], 1.0f);
+                }
+                else if (weaponObject is SwordType)
+                {
+                    StaticManager.inventories.audio.PlayOneShot(StaticManager.inventories.clips[1], 1.0f);
+                }
+            }
             if ( mesh ){
                  mesh.SetActive(false);
             }
@@ -249,6 +260,7 @@ public abstract class WeaponObject : BaseItems
             rightHand.layer = character.gameObject.layer;
 
             gameObject.layer = character.gameObject.layer;
+
         }
     }
     public void DamageCollider(Collider collider)

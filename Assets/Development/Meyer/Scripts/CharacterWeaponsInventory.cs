@@ -162,4 +162,10 @@ public class CharacterWeaponsInventory : PlayerInventory
         inventoryObj.SetActive(false);
         StaticManager.uiManager.WeaponWindow.SetActive(false);
     }
+    IEnumerator DelayDeactivate(float time, GameObject obj)
+    {
+        yield return new WaitForSeconds(time);
+        obj.SetActive(false);
+        
+    }
 }

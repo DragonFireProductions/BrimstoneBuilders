@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class SwordType : WeaponObject {
+public class SwordType : WeaponObject
+{
 
     private bool hit;
     public override void Use()
@@ -15,10 +16,9 @@ public class SwordType : WeaponObject {
 
         }
 
-        if ( AttachedCharacter ){
-        AttachedCharacter.AnimationClass.Play(AnimationClass.states.Attack);
-
-
+        if (AttachedCharacter)
+        {
+            AttachedCharacter.AnimationClass.Play(AnimationClass.states.Attack);
         }
 
     }
@@ -34,22 +34,25 @@ public class SwordType : WeaponObject {
         }
     }
 
-    public override void Deactivate( ) {
+    public override void Deactivate()
+    {
         //AttachedCharacter.leftHand.GetComponentInChildren < BoxCollider >( ).enabled = false;
     }
-    
-    public override void IncreaseSubClass( float amount ) {
-        
+
+    public override void IncreaseSubClass(float amount)
+    {
+
         base.IncreaseSubClass(amount);
         var character = AttachedCharacter as Companion;
         int level = (int)character.mele.CurrentLevel;
         character.mele.IncreaseLevel(amount);
         int currLevel = (int)character.mele.CurrentLevel;
         if (currLevel - level == 1)
-            InstatiateFloatingText.InstantiateFloatingText("MELE++",character, Color.green, new Vector3(1,1,1), 0.2f);
+            InstatiateFloatingText.InstantiateFloatingText("MELE++", character, Color.green, new Vector3(1, 1, 1), 0.2f);
     }
 
-    public override void AssignDamage( ) {
+    public override void AssignDamage()
+    {
         var a = AttachedCharacter as Companion;
         Damage = a.mele.CurrentLevel;
     }
