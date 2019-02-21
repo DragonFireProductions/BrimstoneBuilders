@@ -30,7 +30,7 @@ public class SwordType : WeaponObject
         audio.clip = clips[ind];
         if (!audio.isPlaying)
         {
-            audio.Play();
+            audio.PlayOneShot(audio.clip, 1.0f);
         }
     }
 

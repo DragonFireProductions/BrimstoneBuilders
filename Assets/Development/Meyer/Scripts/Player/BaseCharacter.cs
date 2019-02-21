@@ -56,10 +56,17 @@ public abstract class BaseCharacter : MonoBehaviour {
     public GameObject light;
 
     public float speed;
+
+    [HideInInspector] AudioSource audio;
+
+    public AudioClip[] clips;
     protected virtual void Awake( ) {
         obj       = gameObject;
         speed = GetComponent < NavMeshAgent >( ).speed;
         attackers = new List < BaseCharacter >( );
+        audio = gameObject.AddComponent<AudioSource>();
+        audio.playOnAwake = false;
+        audio.spatialBlend = 1.0f;
     }
 
     public virtual object this[ string propertyName ] {
@@ -166,8 +173,14 @@ public abstract class BaseCharacter : MonoBehaviour {
     }
 
     public virtual void Damage( int _damage , BaseItems item ) {
-        float randValue = Random.Range( 1 , 100 );
         this.animator.Play("Hit");
+        int ranIndex = Random.Range(0, 2);
+        this.audio.clip = clips[ranIndex];
+        if (!this.audio.isPlaying)
+        {
+            this.audio.PlayOneShot(this.audio.clip, 0.15f);
+        }
+        float randValue = Random.Range( 1 , 100 );
         if ( randValue > 100 - item.AttachedCharacter.stats.luck ){
             var damage = _damage * 2;
             stats.Health -= damage;

@@ -156,11 +156,11 @@ public abstract class WeaponObject : BaseItems
             {
                 if (weaponObject is GunType)
                 {
-                    StaticManager.inventories.audio.PlayOneShot(StaticManager.inventories.clips[2], 1.0f);
+                    StaticManager.inventories.audio.PlayOneShot(StaticManager.inventories.clips[2], 0.45f);
                 }
                 else if (weaponObject is SwordType)
                 {
-                    StaticManager.inventories.audio.PlayOneShot(StaticManager.inventories.clips[1], 1.0f);
+                    StaticManager.inventories.audio.PlayOneShot(StaticManager.inventories.clips[1], 0.45f);
                 }
             }
             if ( mesh ){
