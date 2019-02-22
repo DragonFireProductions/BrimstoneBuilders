@@ -82,7 +82,7 @@ public class GunType : WeaponObject {
         StartCoroutine( Fire( ) );
         if (!audio.isPlaying)
         {
-            audio.Play();
+            audio.PlayOneShot(audio.clip, 1.0f);
         }
     }
 

@@ -32,7 +32,7 @@ public class FloatingText : MonoBehaviour {
 		damageText.text = damage;
         if (damageText.color == Color.yellow)
         {
-            audio.Play();
+            audio.PlayOneShot(audio.clip, .25f);
         }
 	}
 

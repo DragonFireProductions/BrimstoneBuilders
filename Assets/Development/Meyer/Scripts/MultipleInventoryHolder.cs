@@ -52,13 +52,16 @@ public class MultipleInventoryHolder : MonoBehaviour {
 
     public Button questButton;
 
+    [HideInInspector] public AudioSource audio;
 
-
+    public AudioClip[] clips;
 
     public void Awake( ) {
 		WeaponAssetList = itemList.itemList;
 		alllables       = new List < PlayerInventory >( );
 		playerCam       = GameObject.Find( "PlayerCamera" ).GetComponent<Camera>();
+        audio = gameObject.AddComponent<AudioSource>();
+        audio.playOnAwake = false;
 	}
 
 	public void Start( ) {
