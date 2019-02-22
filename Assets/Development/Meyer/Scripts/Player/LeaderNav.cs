@@ -101,7 +101,7 @@ public class LeaderNav : BaseNav
 
         }
 
-        if (Input.GetMouseButtonDown(1) && !Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetMouseButton(1) && !Input.GetKey(KeyCode.LeftShift))
         {
             Agent.isStopped = true;
             SetState = state.FREEZE;
@@ -111,6 +111,10 @@ public class LeaderNav : BaseNav
             if (character.attachedWeapon is GunType && Physics.Raycast(l_ray, out hit, 1000, _mask))
             {
                 character.transform.LookAt(hit.point);
+                character.attachedWeapon.Use();
+            }
+            else if(character.attachedWeapon is SwordType)
+            {
                 character.attachedWeapon.Use();
             }
         }

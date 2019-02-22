@@ -18,6 +18,8 @@ public class GunType : WeaponObject {
 
     public Projectile projectile;
 
+    private Vector3 LockY;
+
     private GameObject[] bullets;
 
     [ SerializeField ] public float ReloadTime;
@@ -92,7 +94,11 @@ public class GunType : WeaponObject {
         proj.transform.rotation            = AttachedCharacter.bulletPosition.rotation;
 
         proj.gameObject.SetActive( true );
-        proj.GetComponent < Rigidbody >( ).AddForce( AttachedCharacter.transform.forward * proj.GetComponent < Projectile >( ).GetSpeed( ) , ForceMode.Impulse );
+
+        LockY = AttachedCharacter.transform.forward;
+        LockY.y = 0;
+
+        proj.GetComponent < Rigidbody >( ).AddForce( LockY * proj.GetComponent < Projectile >( ).GetSpeed( ) , ForceMode.Impulse );
         StartCoroutine( stopBullet(  4, proj ) );
         Ammo -= 1;
 

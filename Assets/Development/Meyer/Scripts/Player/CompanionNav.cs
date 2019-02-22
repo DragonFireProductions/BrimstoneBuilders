@@ -56,7 +56,7 @@ public class CompanionNav : BaseNav
         set
         {
             Agent.isStopped = false;
-              Agent.stoppingDistance = StaticManager.Character.agent.stoppingDistance;
+              //Agent.stoppingDistance = StaticManager.Character.agent.stoppingDistance;
             if (value == AggressionStates.BERZERK){
               
                 aggState = AggressionStates.BERZERK;

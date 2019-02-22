@@ -9,8 +9,9 @@ public class SunChanges : MonoBehaviour
     [SerializeField] private bool TurnTo_Dark;
     [SerializeField] private bool TurnTo_Light;
 
-    Camera SceneCamera;
-    Skybox sky;
+    public Material DaySkybox;
+    public Material NightSkybox;
+
     private Color CurrentColor;
 
     private Color Yellow;
@@ -30,8 +31,6 @@ public class SunChanges : MonoBehaviour
         Blue.g = 0.2803f;
         Blue.b = 0.3301f;
         Blue.a = 1;
-
-        SceneCamera = GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -47,13 +46,13 @@ public class SunChanges : MonoBehaviour
             if(TurnTo_Dark)
             {
                 StartCoroutine(ColorLerp(CurrentColor, Blue));
-                SceneCamera.GetComponent<Skybox>().enabled = false;
+                RenderSettings.skybox = NightSkybox;
             }
 
             if(TurnTo_Light)
             {
                 StartCoroutine(ColorLerp(CurrentColor, Yellow));
-                SceneCamera.GetComponent<Skybox>().enabled = true;
+                RenderSettings.skybox = DaySkybox;
             }
         }
     }

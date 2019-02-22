@@ -64,7 +64,6 @@ public class Quest : MonoBehaviour {
                 QuestInProgress.SetActive( true );
                 break;
             case state.QuestComplete:
-
                 break;
         }
     }
@@ -195,7 +194,12 @@ public class Quest : MonoBehaviour {
         this.CollidedWithItem(item);
     }
 
-    public virtual void Complete( ) { }
+    public virtual void Complete()
+    {
+        QuestAvalible.SetActive(false);
+        CollectionReady.SetActive(false);
+        QuestInProgress.SetActive(false);
+    }
 
     // Start is called before the first frame update
     public virtual void Start()

@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1231813403}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -42.2, y: 0, z: -50.3}
+  m_LocalPosition: {x: -54.66, y: 0, z: -2.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 917792888886236537}
@@ -121,9 +121,11 @@ MonoBehaviour:
   npc: {fileID: 917792888886236485}
   key: {fileID: 0}
   PickedUpKey: 0
-  QuestDialog: I need some help battling some enemys up ahead. Recover my gold for
+  QuestDialog: I need some help battling some enemies up ahead. Recover my gold for
     me and I will give you a key to advance!
-  KeyDropDialog: Thank you! Take this key and travel to the gate ahead! You may advance!
+  KeyDropDialog: Thank you! Take this key and travel to the Graveyard up ahead, I
+    heard some commotion there earlier. Perhaps a hero of your caliber can provide
+    assistance?
   Completed: 0
   loot: {fileID: 0}
   QuestAvalible: {fileID: 1880194563315522650}
@@ -137,18 +139,6 @@ MonoBehaviour:
       Damage: 0
       luck: 0
       weapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28, type: 3}
-      dropKey: 0
-    - enemy: {fileID: 1461857696286329037, guid: f46cbc0613a2d8c41a0d86fb92459856,
-        type: 3}
-      Damage: 0
-      luck: 0
-      weapon: {fileID: 1479060257216030, guid: b414c8be0453f434db849b0c75cc0a28, type: 3}
-      dropKey: 0
-    - enemy: {fileID: 1461857696286329037, guid: f46cbc0613a2d8c41a0d86fb92459856,
-        type: 3}
-      Damage: 0
-      luck: 0
-      weapon: {fileID: 1122163039750788, guid: 123df733c16d1f44b9cbd22b5d87c6aa, type: 3}
       dropKey: 1
     spawnRadius: 20
     prespawn: 0
@@ -299,7 +289,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 917792890153700120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 1.46, z: 5.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 917792888886236537}
@@ -370,7 +360,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 49b611e658efbf443b686a4036f74fe3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 34cdf5363613fea46a3e57ce4b21434a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -444,7 +434,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: f588d850485d0ae479d73cf3bd0b7b00, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7df23839e5f245146990ecaba9e1610c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -478,13 +468,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3012826833273147591}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0.689989}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6274927432234840300}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.5000634, y: 4.699951}
@@ -518,7 +508,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 5b1a64ea234fb2343b8d0686c51280de, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f8b6ab5e3f27b0b47bf89575eb9eb2bb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -607,10 +597,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 917792888886236537}
     m_Modifications:
-    - target: {fileID: 1677837311195470, guid: b96b40dce32a14240baddb1febbc6905, type: 3}
-      propertyPath: m_Name
-      value: SwordShieldRedKnight
-      objectReference: {fileID: 0}
     - target: {fileID: 4476616092495948, guid: b96b40dce32a14240baddb1febbc6905, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.40988922
@@ -666,6 +652,10 @@ PrefabInstance:
     - target: {fileID: 4476616092495948, guid: b96b40dce32a14240baddb1febbc6905, type: 3}
       propertyPath: m_LocalScale.z
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677837311195470, guid: b96b40dce32a14240baddb1febbc6905, type: 3}
+      propertyPath: m_Name
+      value: SwordShieldRedKnight
       objectReference: {fileID: 0}
     - target: {fileID: 95934646241901408, guid: b96b40dce32a14240baddb1febbc6905,
         type: 3}
@@ -18985,11 +18975,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 917792888886236537}
     m_Modifications:
-    - target: {fileID: 6188346990203889501, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
-        type: 3}
-      propertyPath: m_Name
-      value: IconCanvas
-      objectReference: {fileID: 0}
     - target: {fileID: 5374004888353748547, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
         type: 3}
       propertyPath: m_Texture
@@ -19099,6 +19084,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6188346990203889501, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
+        type: 3}
+      propertyPath: m_Name
+      value: IconCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 1020615464733101051, guid: 0cd91a5a4faa7184094c40c9ab9ca03c,
         type: 3}

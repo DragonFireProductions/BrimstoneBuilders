@@ -77,6 +77,7 @@ public class KillQuest : Quest {
                 key.gameObject.SetActive(true);
                 StaticManager.questManager.CompleteQuest(this, KeyDropDialog);
                 gameObject.GetComponent<Collider>().enabled = false;
+                GetComponentInChildren<Canvas>().enabled = false;
             }
             else if (( enemiesKilled == 0 && !Completed) || !accepted ){
                 StaticManager.questManager.currentQuest = this;

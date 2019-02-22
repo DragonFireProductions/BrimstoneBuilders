@@ -43,7 +43,7 @@ public class EscortQuest : Quest {
 
     public override void Complete( ) {
         base.Complete( );
-        StaticManager.uiManager.ShowMessage(KeyDropDialog, 10, false);
+        //StaticManager.uiManager.ShowMessage(KeyDropDialog, 10, false);
     }
 
     public void OnTriggerEnter(Collider collider)
@@ -53,7 +53,7 @@ public class EscortQuest : Quest {
             if (Completed)
             {
                 var key = Instantiate(winObject);
-                key.transform.position = transform.position + (transform.forward * 3);
+                key.transform.position = transform.position + (transform.right * 3);
                 key.gameObject.SetActive(true);
                 gameObject.GetComponent<Collider>().enabled = false;
                 StaticManager.questManager.CompleteQuest(this, KeyDropDialog);

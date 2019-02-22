@@ -10,7 +10,6 @@ public class HealPotion : Potions
     [SerializeField] public int HealAmount;
     public override void Cast(BaseCharacter enemy = null)
     {
-        StaticManager.audioManager.PlaySound("PotionCast");
         _hit_effect = Instantiate(this.hit_effect);
         _hit_effect.gameObject.transform.position = enemy.transform.position;
         _hit_effect.gameObject.transform.SetParent(enemy.transform);
@@ -31,7 +30,7 @@ public class HealPotion : Potions
             e.inventoryUI.HealCount.text = e.inventory.potions.Count.ToString();
             e.inventoryUI.currentHealth.text = e.stats.health.ToString();
         }
-
+        StaticManager.audioManager.PlaySound("PotionCast");
     }
 
     public override void IncreaseSubClass(float amount)
