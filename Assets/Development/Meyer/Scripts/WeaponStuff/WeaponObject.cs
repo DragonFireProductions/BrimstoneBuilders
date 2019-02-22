@@ -150,19 +150,7 @@ public abstract class WeaponObject : BaseItems
     public void PickUp(BaseCharacter character ) {
         if (tag == "PickUp")
         {
-            WeaponObject weaponObject = this;
             StaticManager.uiManager.ShowNotification("Picked up weapon", 2);
-            if (!StaticManager.inventories.audio.isPlaying)
-            {
-                if (weaponObject is GunType)
-                {
-                    StaticManager.inventories.audio.PlayOneShot(StaticManager.inventories.clips[2], 0.45f);
-                }
-                else if (weaponObject is SwordType)
-                {
-                    StaticManager.inventories.audio.PlayOneShot(StaticManager.inventories.clips[1], 0.45f);
-                }
-            }
             if ( mesh ){
                  mesh.SetActive(false);
             }
@@ -278,7 +266,19 @@ public abstract class WeaponObject : BaseItems
     protected virtual void OnTriggerEnter(Collider collider)
     {
         if ( collider.tag == "Player" ){
-             PickUp(collider.GetComponent<BaseCharacter>());
+            WeaponObject weaponObject = this;
+            if (!StaticManager.inventories.audio.isPlaying)
+            {
+                if (weaponObject is GunType)
+                {
+                    StaticManager.inventories.audio.PlayOneShot(StaticManager.inventories.clips[2], 0.25f);
+                }
+                else if (weaponObject is SwordType)
+                {
+                    StaticManager.inventories.audio.PlayOneShot(StaticManager.inventories.clips[1], 0.25f);
+                }
+            }
+            PickUp(collider.GetComponent<BaseCharacter>());
         }
        
     }

@@ -1,63 +1,83 @@
 ﻿using UnityEngine;
 
-public class AnimationClass : MonoBehaviour {
+public class AnimationClass : MonoBehaviour
+{
 
-    public enum states {
+    public enum states
+    {
 
-        AttackTrigger ,
+        AttackTrigger,
 
-        Idle ,
+        Idle,
 
-        Attack ,
+        Attack,
 
         Walk
 
     }
 
-    public enum WeaponType {
+    public enum WeaponType
+    {
 
-        Bow ,
+        Bow,
 
         Sword
 
     }
 
-    public enum weaponstates {
+    public enum weaponstates
+    {
 
         EnabledTrigger
 
     }
 
-    [ SerializeField ] public Animator animation;
+    [SerializeField] public Animator animation;
 
-    public void SwitchWeapon( WeaponObject switchTo ) {
-        if ( switchTo.type == SubClasses.Types.MELEE ){
-            animation.runtimeAnimatorController = ( RuntimeAnimatorController )Resources.Load( "Animations/SwordCharacter" , typeof( RuntimeAnimatorController ) );
+    public void SwitchWeapon(WeaponObject switchTo)
+    {
+        if (switchTo.type == SubClasses.Types.MELEE)
+        {
+            if (this.gameObject.layer != 10)
+            {
+                animation.runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load("Animations/SwordCharacter 1", typeof(RuntimeAnimatorController));
+            }
+            else
+            {
+                animation.runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load("Animations/SwordCharacter", typeof(RuntimeAnimatorController));
+
+            }
         }
-       
-        if ( switchTo.type == SubClasses.Types.RANGE ){
-            animation.runtimeAnimatorController = ( RuntimeAnimatorController )Resources.Load( "Animations/BowCharacter" , typeof( RuntimeAnimatorController ) );
+
+        if (switchTo.type == SubClasses.Types.RANGE)
+        {
+            animation.runtimeAnimatorController = (RuntimeAnimatorController)Resources.Load("Animations/BowCharacter", typeof(RuntimeAnimatorController));
         }
     }
 
-    public void Start( ) {
-        animation = gameObject.GetComponent < Animator >( );
+    public void Start()
+    {
+        animation = gameObject.GetComponent<Animator>();
     }
 
-    public void Play( states state ) {
-        animation.SetBool( state.ToString( ) , true );
+    public void Play(states state)
+    {
+        animation.SetBool(state.ToString(), true);
     }
 
-    public void Play( weaponstates state ) {
-        animation.SetBool( state.ToString( ) , true );
+    public void Play(weaponstates state)
+    {
+        animation.SetBool(state.ToString(), true);
     }
 
-    public void Stop( states state ) {
-        animation.SetBool( state.ToString( ) , false );
+    public void Stop(states state)
+    {
+        animation.SetBool(state.ToString(), false);
     }
 
-    public void Stop( weaponstates state ) {
-        animation.SetBool( state.ToString( ) , false );
+    public void Stop(weaponstates state)
+    {
+        animation.SetBool(state.ToString(), false);
     }
 
 }
