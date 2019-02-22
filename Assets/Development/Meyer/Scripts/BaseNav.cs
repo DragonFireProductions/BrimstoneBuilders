@@ -132,7 +132,7 @@ public class BaseNav : MonoBehaviour {
         audio.clip = clip;
         if (dist != 0 && !audio.isPlaying)
         {
-            audio.PlayOneShot(audio.clip, 0.1f);
+            audio.PlayOneShot(audio.clip, 0.25f);
         }
         switch ( State ){
             
