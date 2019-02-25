@@ -260,7 +260,14 @@ public abstract class WeaponObject : BaseItems
             {
                 return;
             }
-            collider.gameObject.GetComponent<BaseCharacter>().Damage((int)Damage, this);
+            if (AttachedCharacter.attachedWeapon is SwordType && AttachedCharacter.Nav.GetDistance() <= AttachedCharacter.Nav.battleDistance)
+            {
+                collider.gameObject.GetComponent<BaseCharacter>().Damage((int)Damage, this);
+            }
+            else if (AttachedCharacter.attachedWeapon is GunType)
+            {
+                collider.gameObject.GetComponent<BaseCharacter>().Damage((int)Damage, this);
+            }
         }
     }
     protected virtual void OnTriggerEnter(Collider collider)

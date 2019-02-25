@@ -56,6 +56,7 @@ public class BaseNav : MonoBehaviour {
 
     protected float distance;
 
+    public float GetDistance() { return distance; }
     public void RunAway( ) {
         SetState = state.IDLE;
         StartCoroutine( Run( ) );
@@ -134,12 +135,12 @@ public class BaseNav : MonoBehaviour {
         {
             audio.PlayOneShot(audio.clip, 0.25f);
         }
-        switch ( State ){
+        /*switch ( State ){
             
             default:
 
                 break;
-        }
+        }*/
     }
 
 }

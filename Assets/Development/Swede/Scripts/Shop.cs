@@ -81,9 +81,9 @@ public class Shop : MonoBehaviour
             companion.characterName = name;
             companion.stats.name = name;
             //companion.inventoryUI.CompanionSell.transform.localScale = new Vector3(1, 1, 1);
-            companion.mele.CurrentLevel = l_companion.Melee;
-            companion.magic.CurrentLevel = l_companion.Magic;
-            companion.range.CurrentLevel = l_companion.Range;
+            companion.inventoryUI.CompanionSell.companion.mele.CurrentLevel = l_companion.Melee;
+            companion.inventoryUI.CompanionSell.companion.magic.CurrentLevel= l_companion.Magic;
+            companion.inventoryUI.CompanionSell.companion.range.CurrentLevel = l_companion.Range;
             companion.cost = l_companion.cost;
             companion.inventoryUI.UpdateCharacter(companion.inventoryUI.CompanionSell.characterstats);
             companion.startWeapon = l_companion.weapon;

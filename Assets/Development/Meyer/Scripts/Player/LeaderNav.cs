@@ -50,7 +50,11 @@ public class LeaderNav : BaseNav
     {
         base.Update();
         character.AnimationClass.animation.SetFloat("Walk", Agent.velocity.magnitude / Agent.speed);
-
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            SetState = state.IDLE;
+            Agent.isStopped = true;
+        }
         if (Input.GetMouseButton(0) && !StaticManager.UiInventory.ItemsInstance.windowIsOpen && !EventSystem.current.IsPointerOverGameObject())
         {
             l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -58,9 +62,9 @@ public class LeaderNav : BaseNav
             mask = ~mask;
             if (Physics.Raycast(l_ray, out hit, 1000, mask))
             {
+                int layer = hit.collider.gameObject.layer;
                 if (hit.collider.gameObject.layer == 0)
                 {
-
                     SetState = state.MOVE;
                     if (character.enemy)
                     {
@@ -74,7 +78,10 @@ public class LeaderNav : BaseNav
                         Destroy(enemySystem.gameObject);
                     }
                 }
-
+                else
+                {
+                    Agent.isStopped = true;
+                }
                 if (hit.collider.tag == "Enemy")
                 {
                     if (character.enemy)
@@ -170,8 +177,6 @@ public class LeaderNav : BaseNav
             case state.ATTACKING:
 
 
-
-                break;
 
                 break;
             case state.MOVE:
