@@ -7,7 +7,7 @@ public class ShowOnPlay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.GetComponent<MeshRenderer>().enabled = true;
+        this.GetComponentInChildren<MeshRenderer>().enabled = true;
     }
 
     // Update is called once per frame

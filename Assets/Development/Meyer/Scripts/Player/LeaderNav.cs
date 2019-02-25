@@ -60,7 +60,6 @@ public class LeaderNav : BaseNav
             {
                 if (hit.collider.gameObject.layer == 0)
                 {
-
                     SetState = state.MOVE;
                     if (character.enemy)
                     {
@@ -104,7 +103,7 @@ public class LeaderNav : BaseNav
         if (Input.GetMouseButton(1) && !Input.GetKey(KeyCode.LeftShift))
         {
             Agent.isStopped = true;
-            SetState = state.FREEZE;
+            //SetState = state.FREEZE;
             l_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             int _mask = 1 << 11;
             _mask = ~_mask;

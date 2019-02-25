@@ -14,9 +14,11 @@ public class UIUpdate : MonoBehaviour
     public Text StaminaText;
 
     public Text CoinText;
+    public Text PotionText;
 
     private Stat Selected;
     private int Coins;
+    private int Potions;
 
     // Update is called once per frame
     void Update()
@@ -24,6 +26,8 @@ public class UIUpdate : MonoBehaviour
         Selected = StaticManager.Character.stats;
 
         Coins = StaticManager.Character.inventory.coinCount;
+
+        Potions = StaticManager.Character.inventory.potions.Count;
         //if (TurnBasedController.instance != null && TurnBasedController.instance._player.selectedAttacker!= null)
         //{
         //    Selected = TurnBasedController.instance._player.selectedAttacker.stats;
@@ -59,5 +63,10 @@ public class UIUpdate : MonoBehaviour
             CoinText.text = "0";
         else
             CoinText.text = Coins.ToString();
+
+        if(Potions == 0)
+            PotionText.text = "0";
+        else
+            PotionText.text = Potions.ToString();
     }
 }

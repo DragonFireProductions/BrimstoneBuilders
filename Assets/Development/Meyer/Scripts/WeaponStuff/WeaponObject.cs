@@ -139,7 +139,8 @@ public abstract class WeaponObject : BaseItems
         }
     }
 
-    public override void AssignDamage( ) {
+    public override void AssignDamage( )
+    {
         
     }
 
@@ -202,8 +203,14 @@ public abstract class WeaponObject : BaseItems
 
             gameObject.layer = character.gameObject.layer;
 
-            if ( type == SubClasses.Types.MELEE ){
-                Damage = a.mele.CurrentLevel;
+            if ( type == SubClasses.Types.MELEE )
+            {
+                if(this.name == "DevTools2.0")
+                {
+                    Damage = 10;
+                }
+                else
+                    Damage = a.mele.CurrentLevel;
             }
 
             else if ( type == SubClasses.Types.RANGE ){
