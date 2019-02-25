@@ -174,12 +174,6 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     public virtual void Damage( int _damage , BaseItems item ) {
         this.animator.Play("Hit");
-        int ranIndex = Random.Range(0, 2);
-        this.audio.clip = clips[ranIndex];
-        if (!this.audio.isPlaying)
-        {
-            this.audio.PlayOneShot(this.audio.clip, 0.15f);
-        }
         float randValue = Random.Range( 1 , 100 );
         if ( randValue > 100 - item.AttachedCharacter.stats.luck ){
             var damage = _damage * 2;
@@ -198,6 +192,12 @@ public abstract class BaseCharacter : MonoBehaviour {
         
         if ( stats.health <= 0 && this is Character){
             StaticManager.uiManager.GameOverWindow.SetActive(true);
+        }
+        int ranIndex = Random.Range(0, 2);
+        this.audio.clip = clips[ranIndex];
+        if (!this.audio.isPlaying)
+        {
+            this.audio.PlayOneShot(this.audio.clip, 0.3f);
         }
     }
 
