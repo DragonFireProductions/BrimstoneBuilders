@@ -63,7 +63,7 @@ public class LeaderNav : BaseNav
             if (Physics.Raycast(l_ray, out hit, 1000, mask))
             {
                 int layer = hit.collider.gameObject.layer;
-                if (hit.collider.gameObject.layer == 0)
+                if (hit.collider.gameObject.layer == 0 || hit.collider.gameObject.layer == 15)
                 {
                     SetState = state.MOVE;
                     if (character.enemy)

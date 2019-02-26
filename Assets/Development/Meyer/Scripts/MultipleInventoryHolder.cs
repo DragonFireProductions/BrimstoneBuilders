@@ -336,7 +336,11 @@ public class MultipleInventoryHolder : MonoBehaviour {
 	}
     public void Use( ) {
         selectedObj.Attach();
-	}
+        if (!StaticManager.inventories.audio.isPlaying)
+        {
+            StaticManager.inventories.audio.PlayOneShot(StaticManager.inventories.clips[3], 1.0f);
+        }
+    }
 	public PlayerInventory GetInventory(string parentName ) {
 		alllables.RemoveAll( item => item == null );
 		foreach ( var l_playerInventory in alllables ){
