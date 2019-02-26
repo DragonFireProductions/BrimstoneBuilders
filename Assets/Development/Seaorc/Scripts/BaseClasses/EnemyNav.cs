@@ -141,7 +141,7 @@ public class EnemyNav : BaseNav {
                         transform.LookAt(look);
                   
 
-                    if ( distance < battleDistance ){
+                    if ( distance <= battleDistance ){
                         character.attachedWeapon.Use( );
                     }
                 }

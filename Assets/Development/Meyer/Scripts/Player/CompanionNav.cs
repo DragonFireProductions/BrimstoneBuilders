@@ -165,7 +165,7 @@ public class CompanionNav : BaseNav
                                 return;
                             }
 
-                            if (distance < battleDistance)
+                            if (distance <= battleDistance)
                             {
                                 character.AnimationClass.Play(AnimationClass.states.Attack);
                                 Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
@@ -230,7 +230,7 @@ public class CompanionNav : BaseNav
                             Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
                             transform.LookAt(look);
 
-                            if (distance < battleDistance)
+                            if (distance <= battleDistance)
                             {
                                 character.AnimationClass.Play(AnimationClass.states.Attack);
                             }
@@ -295,7 +295,7 @@ public class CompanionNav : BaseNav
                             Vector3 look = new Vector3(character.enemy.transform.position.x, transform.position.y, character.enemy.transform.position.z);
                             transform.LookAt(look);
 
-                            if ( distance < battleDistance ){
+                            if ( distance <= battleDistance ){
                                 character.AnimationClass.Play(AnimationClass.states.Attack);
                             }
                             

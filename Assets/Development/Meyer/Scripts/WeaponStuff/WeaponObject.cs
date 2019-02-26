@@ -37,9 +37,10 @@ public abstract class WeaponObject : BaseItems
     public AudioSource audio;
 
     public AudioClip[] clips;
-    protected override void Start() {
+    protected override void Start()
+    {
         base.Start();
-        AnimationClass = gameObject.GetComponent < AnimationClass >( );
+        AnimationClass = gameObject.GetComponent<AnimationClass>();
         item = this.gameObject;
         audio = gameObject.GetComponent<AudioSource>();
     }
@@ -51,28 +52,33 @@ public abstract class WeaponObject : BaseItems
             {
                 return this.GetType().GetField(propertyName).GetValue(this);
             }
-            else if (base[propertyName] != null){
-                return base[ propertyName ];
+            else if (base[propertyName] != null)
+            {
+                return base[propertyName];
             }
-            else{
+            else
+            {
                 return null;
             }
         }
         set { this.GetType().GetField(propertyName).SetValue(this, value); }
     }
 
-    public virtual void Activate( ) {
+    public virtual void Activate()
+    {
 
     }
     public virtual void Deactivate()
     {
 
     }
-    public override void Attach( ) {
-        if ( AttachedCharacter.attachedWeapon ){
+    public override void Attach()
+    {
+        if (AttachedCharacter.attachedWeapon)
+        {
 
-            AttachedCharacter.attachedWeapon.leftHand.SetActive( false );
-            AttachedCharacter.attachedWeapon.rightHand.SetActive( false );
+            AttachedCharacter.attachedWeapon.leftHand.SetActive(false);
+            AttachedCharacter.attachedWeapon.rightHand.SetActive(false);
         }
         leftHand.SetActive(true);
         rightHand.SetActive(true);
@@ -98,15 +104,17 @@ public abstract class WeaponObject : BaseItems
 
         mesh.SetActive(false);
 
-        if ( AttachedCharacter is Companion ){
+        if (AttachedCharacter is Companion)
+        {
             var a = AttachedCharacter as Companion;
             a.inventory.WeaponInventory.Attach(this);
 
-            if ( prev_attached ){
+            if (prev_attached)
+            {
                 a.inventory.WeaponInventory.labels.Add(prev_attached.label);
                 a.inventory.WeaponInventory.UpdateGrid();
             }
-           
+
         }
     }
     public void Attach(Enemy enemy)
@@ -132,35 +140,40 @@ public abstract class WeaponObject : BaseItems
 
 
     }
-    public override void IncreaseSubClass(float amount ) {
-        if ( Damage <= 10 ){
-        Damage += amount;
+    public override void IncreaseSubClass(float amount)
+    {
+        if (Damage <= 10)
+        {
+            Damage += amount;
         }
     }
 
-    public override void AssignDamage( )
+    public override void AssignDamage()
     {
-        
+
     }
 
-    public override void Use( ) {
+    public override void Use()
+    {
         //StaticManager.audioManager.PlaySound(stats.clip.name.ToString());
     }
 
-    public void PickUp(BaseCharacter character ) {
+    public void PickUp(BaseCharacter character)
+    {
         if (tag == "PickUp")
         {
             StaticManager.uiManager.ShowNotification("Picked up weapon", 2);
-            if ( mesh ){
-                 mesh.SetActive(false);
+            if (mesh)
+            {
+                mesh.SetActive(false);
             }
 
             var a = character as Companion;
             a.inventory.WeaponInventory.PickUp(this);
             this.GetComponent<BoxCollider>().enabled = false;
             AttachedCharacter = a;
-            leftHand = Instantiate( leftHand );
-            rightHand = Instantiate( rightHand );
+            leftHand = Instantiate(leftHand);
+            rightHand = Instantiate(rightHand);
 
             leftHand.transform.position = AttachedCharacter.leftHand.transform.position;
             rightHand.transform.position = AttachedCharacter.rightHand.transform.position;
@@ -174,12 +187,14 @@ public abstract class WeaponObject : BaseItems
             leftHand.transform.SetParent(AttachedCharacter.leftHand.transform, true);
             rightHand.transform.SetParent(AttachedCharacter.rightHand.transform, true);
 
-            if ( leftHand.GetComponent<WeaponCollision>() ){
-                leftHand.GetComponent < WeaponCollision >( ).obj = this;
+            if (leftHand.GetComponent<WeaponCollision>())
+            {
+                leftHand.GetComponent<WeaponCollision>().obj = this;
             }
 
-            if ( rightHand.GetComponent<WeaponCollision>() ){
-                rightHand.GetComponent < WeaponCollision >( ).obj = this;
+            if (rightHand.GetComponent<WeaponCollision>())
+            {
+                rightHand.GetComponent<WeaponCollision>().obj = this;
             }
 
             leftHand.SetActive(false);
@@ -190,9 +205,9 @@ public abstract class WeaponObject : BaseItems
 
             gameObject.layer = character.gameObject.layer;
 
-            if ( type == SubClasses.Types.MELEE )
+            if (type == SubClasses.Types.MELEE)
             {
-                if(this.name == "DevTools2.0")
+                if (this.name == "DevTools2.0")
                 {
                     Damage = 10;
                 }
@@ -200,11 +215,13 @@ public abstract class WeaponObject : BaseItems
                     Damage = a.mele.CurrentLevel;
             }
 
-            else if ( type == SubClasses.Types.RANGE ){
+            else if (type == SubClasses.Types.RANGE)
+            {
                 Damage = a.range.CurrentLevel;
             }
 
-           else if ( type == SubClasses.Types.MAGIC ){
+            else if (type == SubClasses.Types.MAGIC)
+            {
                 Damage = a.range.CurrentLevel;
             }
 
@@ -219,7 +236,7 @@ public abstract class WeaponObject : BaseItems
             {
                 mesh.SetActive(false);
             }
-            
+
             this.GetComponent<BoxCollider>().enabled = false;
             AttachedCharacter = character;
             leftHand = Instantiate(leftHand);
@@ -266,7 +283,7 @@ public abstract class WeaponObject : BaseItems
             {
                 return;
             }
-            if (AttachedCharacter.attachedWeapon is SwordType && AttachedCharacter.Nav.GetDistance() <= AttachedCharacter.Nav.battleDistance)
+            if (AttachedCharacter.attachedWeapon is SwordType || AttachedCharacter.Nav.GetDistance() <= AttachedCharacter.Nav.battleDistance)
             {
                 collider.gameObject.GetComponent<BaseCharacter>().Damage((int)Damage, this);
             }
@@ -278,7 +295,8 @@ public abstract class WeaponObject : BaseItems
     }
     protected virtual void OnTriggerEnter(Collider collider)
     {
-        if ( collider.tag == "Player" ){
+        if (collider.tag == "Player")
+        {
             WeaponObject weaponObject = this;
             if (!StaticManager.inventories.audio.isPlaying)
             {
@@ -293,7 +311,7 @@ public abstract class WeaponObject : BaseItems
             }
             PickUp(collider.GetComponent<BaseCharacter>());
         }
-       
+
     }
 
 }
