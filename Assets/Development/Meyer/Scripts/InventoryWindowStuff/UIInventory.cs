@@ -172,6 +172,10 @@ public class UIInventory : MonoBehaviour
             }
             else
             {
+                if (!StaticManager.inventories.audio.isPlaying)
+                {
+                    StaticManager.inventories.audio.PlayOneShot(StaticManager.inventories.clips[3], 1.0f);
+                }
                 StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PauseUI);
             }
         }
