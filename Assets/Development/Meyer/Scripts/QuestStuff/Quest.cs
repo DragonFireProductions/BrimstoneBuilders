@@ -55,15 +55,18 @@ public class Quest : MonoBehaviour {
         QuestInProgress.SetActive( false );
         switch ( state ){
             case state.CollectionReady:
-                   CollectionReady.SetActive(true);
+                CollectionReady.SetActive(true);
                 break;
             case state.QuestAvailble:
-          QuestAvalible.SetActive(true);
+                QuestAvalible.SetActive(true);
                 break;
             case state.QuestInProgress:
                 QuestInProgress.SetActive( true );
                 break;
             case state.QuestComplete:
+                CollectionReady.SetActive(false);
+                QuestInProgress.SetActive(false);
+                QuestAvalible.SetActive(false);
                 break;
         }
     }
@@ -184,12 +187,12 @@ public class Quest : MonoBehaviour {
         keyContainer.GetComponent<KeyItemContainer>().labels.Labels[0].labelText.text = item.gameObject.name;
         item.keyItem = keyContainer.GetComponent < KeyItemContainer >( );
 
-        StaticManager.uiManager.ShowMessage("You have found a " + item.gameObject.name, 5, false);
-
+        StaticManager.uiManager.ShowMessage("You have found " + item.gameObject.name, 3, false);
+        CollectionReady.SetActive(true);
     }
     public virtual void CollidedWithKey(QuestItem item) {
 
-        StaticManager.uiManager.ShowMessage(item.needToCollMessage, 10, false);
+        StaticManager.uiManager.ShowMessage(item.needToCollMessage, 4, true);
         PickedUpKey = true;
         this.CollidedWithItem(item);
     }
