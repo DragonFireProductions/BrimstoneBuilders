@@ -25,11 +25,14 @@ public class SwordType : WeaponObject
 
     public override void Activate()
     {
-        int ind = Random.Range(0, clips.Length - 1);
-        DamageCollider(AttachedCharacter.enemy.GetComponent<Collider>());
-        audio.clip = clips[ind];
+        if (AttachedCharacter.enemy)
+        {
+            DamageCollider(AttachedCharacter.enemy.GetComponent<Collider>());
+        }
         if (!audio.isPlaying)
         {
+            int ind = Random.Range(0, clips.Length - 1);
+            audio.clip = clips[ind];
             audio.PlayOneShot(audio.clip, 1.0f);
         }
     }

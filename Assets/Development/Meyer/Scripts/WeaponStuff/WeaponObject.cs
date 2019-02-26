@@ -108,7 +108,6 @@ public abstract class WeaponObject : BaseItems
             }
            
         }
-
     }
     public void Attach(Enemy enemy)
     {

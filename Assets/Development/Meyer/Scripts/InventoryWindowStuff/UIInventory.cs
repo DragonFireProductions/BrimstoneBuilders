@@ -18,45 +18,49 @@ public class UIInventory : MonoBehaviour
     private bool showWindow;
 
 
-    public struct Stats {
+    public struct Stats
+    {
 
-       public TextMeshProUGUI Obj;
+        public TextMeshProUGUI Obj;
 
-       public string Name;
+        public string Name;
 
     }
-    
 
-    
+
+
 
     private Vector3 pos;
 
     [HideInInspector] public bool isMouseOver = false;
 
-    [ HideInInspector ] public bool mouse = false;
+    [HideInInspector] public bool mouse = false;
     private Vector3 pos2;
 
 
-    public List < GameObject > BackpackSlots;
+    public List<GameObject> BackpackSlots;
 
     public bool Dragging = false;
 
-   
+
 
     // Use this for initialization
-    public void Awake( ) {
-        
+    public void Awake()
+    {
+
         ItemsInstance = gameObject.GetComponent<UIItems>();
         ItemsInstance.Initalize();
         BackDrop.SetActive(false);
     }
-    
-    public void ShowNotification(string _message, float _time ) {
+
+    public void ShowNotification(string _message, float _time)
+    {
         ItemsInstance.DialogueUI.GetComponentInChildren<TextMeshProUGUI>().text = _message;
-        StartCoroutine( ShowNotification( _time ) );
+        StartCoroutine(ShowNotification(_time));
     }
 
-    private IEnumerator ShowNotification( float _time ) {
+    private IEnumerator ShowNotification(float _time)
+    {
         yield return new WaitForSeconds(_time);
         ItemsInstance.DialogueUI.GetComponentInChildren<TextMeshProUGUI>().text = "";
 
@@ -64,7 +68,8 @@ public class UIInventory : MonoBehaviour
 
 
     private bool active = false;
-    public void ToggleShow(GameObject _obj ) {
+    public void ToggleShow(GameObject _obj)
+    {
         active = !_obj.activeSelf;
         _obj.SetActive(active);
     }
@@ -73,8 +78,10 @@ public class UIInventory : MonoBehaviour
         _obj.SetActive(false);
     }
 
-    public bool Show {
-        get {
+    public bool Show
+    {
+        get
+        {
             showWindow = !showWindow;
 
             return showWindow;
@@ -82,15 +89,15 @@ public class UIInventory : MonoBehaviour
         set { showWindow = value; }
     }
 
-   
+
     public void RemoveMainInventory(WeaponObject _item, PlayerInventory inventory)
     {
         for (var l_i = 0; l_i < inventory.Slots.Count; l_i++)
         {
-            if ( inventory.Slots[l_i].obj.name  == _item.stats.objectName + "Slot")
+            if (inventory.Slots[l_i].obj.name == _item.stats.objectName + "Slot")
             {
-                var l_slot =  inventory.Slots[l_i].obj;
-                 inventory.Slots.RemoveAt(l_i);
+                var l_slot = inventory.Slots[l_i].obj;
+                inventory.Slots.RemoveAt(l_i);
                 Destroy(l_slot);
             }
         }
@@ -103,13 +110,14 @@ public class UIInventory : MonoBehaviour
             {
                 var l_slot = inventory.PotionSlots[l_i].obj;
                 inventory.PotionSlots.RemoveAt(l_i);
-                inventory.potions.Remove( _item );
+                inventory.potions.Remove(_item);
                 Destroy(l_slot);
             }
         }
     }
 
-    public void SelectItem( WeaponObject obj ) {
+    public void SelectItem(WeaponObject obj)
+    {
         SelectedItem = obj;
         SelectedItem.gameObject.SetActive(true);
         Dragging = true;
@@ -123,11 +131,13 @@ public class UIInventory : MonoBehaviour
     public Vector3 Offset;
 
     public Vector3 ScreenPoint;
-    
 
-    void Update () {
-        if ( Dragging /*&& Input.GetMouseButton(0)*/){
-            SelectedItem.GetComponent < BoxCollider >( ).enabled = true;
+
+    void Update()
+    {
+        if (Dragging /*&& Input.GetMouseButton(0)*/)
+        {
+            SelectedItem.GetComponent<BoxCollider>().enabled = true;
             var l_x = StaticManager.Character.gameObject.transform.position.x;
             var l_worldPoint = Camera.main.WorldToScreenPoint(Input.mousePosition);
             l_worldPoint.x = StaticManager.Character.gameObject.transform.position.x;
@@ -143,8 +153,8 @@ public class UIInventory : MonoBehaviour
 
             var l_distanceToScreen = Camera.main.WorldToScreenPoint(SelectedItem.transform.position).z;
             var l_curPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, l_distanceToScreen));
-            l_curPosition.x = Mathf.Clamp( l_curPosition.x , StaticManager.Character.gameObject.transform.position.x ,StaticManager.Character.gameObject.transform.position.x );
-            l_curPosition.z = Mathf.Clamp( l_curPosition.z ,StaticManager.Character.gameObject.transform.position.z ,StaticManager.Character.gameObject.transform.position.z);
+            l_curPosition.x = Mathf.Clamp(l_curPosition.x, StaticManager.Character.gameObject.transform.position.x, StaticManager.Character.gameObject.transform.position.x);
+            l_curPosition.z = Mathf.Clamp(l_curPosition.z, StaticManager.Character.gameObject.transform.position.z, StaticManager.Character.gameObject.transform.position.z);
             SelectedItem.transform.position = l_curPosition;
 
         }
@@ -162,26 +172,40 @@ public class UIInventory : MonoBehaviour
             }
             else
             {
+                if (!StaticManager.inventories.audio.isPlaying)
+                {
+                    StaticManager.inventories.audio.PlayOneShot(StaticManager.inventories.clips[3], 1.0f);
+                }
                 StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PauseUI);
             }
         }
 
     }
 
-    public void CloseWindow( GameObject item = null )
+    public void CloseWindow(GameObject item = null)
     {
-        if ( item == null ){
+        if (!StaticManager.inventories.audio.isPlaying)
+        {
+            StaticManager.inventories.audio.PlayOneShot(StaticManager.inventories.clips[3], 1.0f);
+        }
+        if (item == null)
+        {
             var window = ItemsInstance.openedWindow[ItemsInstance.openedWindow.Count - 1];
 
-            foreach ( var l_gameObject in window ){
+            foreach (var l_gameObject in window)
+            {
                 l_gameObject.SetActive(false);
             }
             ItemsInstance.openedWindow.RemoveAt(ItemsInstance.openedWindow.Count - 1);
         }
-        else{
-            for ( int i = 0 ; i < ItemsInstance.openedWindow.Count ; i++ ){
-                for ( int j = 0 ; j <  ItemsInstance.openedWindow[i].Count; j++ ){
-                    if ( ItemsInstance.openedWindow[i][j] == item ){
+        else
+        {
+            for (int i = 0; i < ItemsInstance.openedWindow.Count; i++)
+            {
+                for (int j = 0; j < ItemsInstance.openedWindow[i].Count; j++)
+                {
+                    if (ItemsInstance.openedWindow[i][j] == item)
+                    {
                         ItemsInstance.openedWindow.RemoveAt(i);
 
                         break;
@@ -190,17 +214,21 @@ public class UIInventory : MonoBehaviour
             }
             item.SetActive(false);
         }
-        if ( ItemsInstance.openedWindow.Count == 0 ){
+        if (ItemsInstance.openedWindow.Count == 0)
+        {
             ItemsInstance.windowIsOpen = false;
             Time.timeScale = 1;
             BackDrop.SetActive(false);
         }
-        
+
     }
 
-    public void CloseAll( ) {
-        for ( int i = 0 ; i < ItemsInstance.openedWindow.Count ; i++ ){
-            for ( int j = 0 ; j < ItemsInstance.openedWindow[i].Count ; j++ ){
+    public void CloseAll()
+    {
+        for (int i = 0; i < ItemsInstance.openedWindow.Count; i++)
+        {
+            for (int j = 0; j < ItemsInstance.openedWindow[i].Count; j++)
+            {
                 ItemsInstance.openedWindow[i][j].gameObject.SetActive(false);
             }
         }
@@ -210,33 +238,38 @@ public class UIInventory : MonoBehaviour
         BackDrop.SetActive(false);
 
     }
-    public void OnMouseOver( ) {
+    public void OnMouseOver()
+    {
         mouse = true;
     }
 
-    public void OnMouseExit( ) {
+    public void OnMouseExit()
+    {
         mouse = false;
     }
 
     public void ShowWindow(GameObject item)
     {
-        if ( !item.activeSelf ){
+        if (!item.activeSelf)
+        {
             item.SetActive(true);
             ItemsInstance.windowIsOpen = item;
-            List <GameObject> list = new List < GameObject >();
+            List<GameObject> list = new List<GameObject>();
             list.Add(item);
             ItemsInstance.openedWindow.Add(list);
             Time.timeScale = 0.0f;
             BackDrop.SetActive(true);
         }
-        
+
 
     }
 
-    public void ShowWindow( List < GameObject > list ) {
-        
-        foreach ( var l_gameObject in list ){
-             l_gameObject.SetActive(true);
+    public void ShowWindow(List<GameObject> list)
+    {
+
+        foreach (var l_gameObject in list)
+        {
+            l_gameObject.SetActive(true);
             ItemsInstance.windowIsOpen = l_gameObject;
         }
         ItemsInstance.openedWindow.Add(list);
