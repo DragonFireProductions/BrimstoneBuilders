@@ -33,7 +33,7 @@ public abstract class BaseCharacter : MonoBehaviour {
 
     [ HideInInspector ] public BaseCharacter enemy;
 
-    [ HideInInspector ] public List < BaseCharacter > attackers;
+    /*[ HideInInspector ]*/ public List < BaseCharacter > attackers;
 
     public GameObject canvas;
 
@@ -195,7 +195,7 @@ public abstract class BaseCharacter : MonoBehaviour {
         }
         int ranIndex = Random.Range(0, 2);
         this.audio.clip = clips[ranIndex];
-        if (this.audio)
+        if (this.audio.clip != null)
         {
             if (!this.audio.isPlaying)
             {
