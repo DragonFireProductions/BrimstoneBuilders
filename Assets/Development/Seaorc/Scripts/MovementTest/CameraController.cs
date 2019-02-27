@@ -68,10 +68,10 @@ public class CameraController : MonoBehaviour {
     private void Update( ) {
         timer += Time.deltaTime;
 
-        if ( Input.GetKeyDown( KeyCode.Tab ) ){
-            isColony = !isColony;
-            switched = true;
-        }
+        //if ( Input.GetKeyDown( KeyCode.Tab ) ){
+        //    isColony = !isColony;
+        //    switched = true;
+        //}
 
         if ( isColony && switched ){
             switched = false;

@@ -24,6 +24,7 @@ public class MainMenu : MonoBehaviour
         StaticManager.map.mapCamera2.enabled = false;
 
         MainCamera.enabled = false;
+        StaticManager.KeyboardInput = false;
 
 
         //MenuManager.audio.PlayMusic("Theme");
@@ -39,6 +40,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
+        StaticManager.KeyboardInput = true;
         ShowGameCamera();
         TimelineObject.enabled = false;
 

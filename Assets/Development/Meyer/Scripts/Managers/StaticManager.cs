@@ -45,7 +45,8 @@ public class StaticManager : MonoBehaviour
     public static QuestManager questManager;
 
     public static RandomName name;
-    
+
+    public static bool KeyboardInput = true;
 
     public bool unlimitedPotions = false;
 

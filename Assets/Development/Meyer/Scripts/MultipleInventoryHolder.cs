@@ -380,90 +380,95 @@ public class MultipleInventoryHolder : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        if (StaticManager.KeyboardInput == true)
         {
-            if (!audio.isPlaying)
+
+            if (Input.GetKeyDown(KeyCode.I))
             {
-                audio.PlayOneShot(clips[3], 1.0f);
+                if (!audio.isPlaying)
+                {
+                    audio.PlayOneShot(clips[3], 1.0f);
+                }
+
+                if (StaticManager.uiManager.playerUI.gameObject.activeSelf)
+                {
+                    StaticManager.inventories.CloseAll();
+
+                }
+                else
+                {
+                    StaticManager.inventories.prevPos = StaticManager.Character.transform.position;
+                    StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PlayerUI);
+                    inventory.character.inventoryUI.UpdateItem();
+                    StaticManager.inventories.SwitchInventory(StaticManager.Character.inventoryUI.tab);
+                    StaticManager.inventories.inventory.character.projector.gameObject.SetActive(false);
+                    StaticManager.inventories.SwitchToWeapons();
+                }
+
             }
 
-            if (StaticManager.uiManager.playerUI.gameObject.activeSelf)
+            if (Input.GetKeyDown(KeyCode.M))
             {
-                StaticManager.inventories.CloseAll();
+                if (!audio.isPlaying)
+                {
+                    audio.PlayOneShot(clips[3], 1.0f);
+                }
 
-            }
-            else
-            {
-                StaticManager.inventories.prevPos = StaticManager.Character.transform.position;
-                StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PlayerUI);
-                inventory.character.inventoryUI.UpdateItem();
-                StaticManager.inventories.SwitchInventory(StaticManager.Character.inventoryUI.tab);
-                StaticManager.inventories.inventory.character.projector.gameObject.SetActive(false);
-                StaticManager.inventories.SwitchToWeapons();
-            }
+                if (StaticManager.map.UseCamera == true)
+                {
+                    StaticManager.map.mapCamera.enabled = true;
+                    StaticManager.map.mapCamera1.enabled = false;
+                    StaticManager.map.mapCamera2.enabled = false;
+                }
+                else if (StaticManager.map.UseCamera1 == true)
+                {
+                    StaticManager.map.mapCamera.enabled = false;
+                    StaticManager.map.mapCamera1.enabled = true;
+                    StaticManager.map.mapCamera2.enabled = false;
+                }
+                else if (StaticManager.map.UseCamera2 == true)
+                {
+                    StaticManager.map.mapCamera.enabled = false;
+                    StaticManager.map.mapCamera1.enabled = false;
+                    StaticManager.map.mapCamera2.enabled = true;
+                }
 
-        }
+                ////    ._.    ////
 
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            if (!audio.isPlaying)
-            {
-                audio.PlayOneShot(clips[3], 1.0f);
-            }
-
-            if(StaticManager.map.UseCamera == true)
-            {
-                StaticManager.map.mapCamera.enabled = true;
-                StaticManager.map.mapCamera1.enabled = false;
-                StaticManager.map.mapCamera2.enabled = false;
-            }
-            else if(StaticManager.map.UseCamera1 == true)
-            {
-                StaticManager.map.mapCamera.enabled = false;
-                StaticManager.map.mapCamera1.enabled = true;
-                StaticManager.map.mapCamera2.enabled = false;
-            }
-            else if (StaticManager.map.UseCamera2 == true)
-            {
-                StaticManager.map.mapCamera.enabled = false;
-                StaticManager.map.mapCamera1.enabled = false;
-                StaticManager.map.mapCamera2.enabled = true;
+                if (StaticManager.map.map.activeSelf)
+                {
+                    StaticManager.inventories.CloseAll();
+                    StaticManager.map.mapCamera.enabled = false;
+                    StaticManager.map.mapCamera1.enabled = false;
+                    StaticManager.map.mapCamera2.enabled = false;
+                }
+                else
+                {
+                    StaticManager.inventories.SwitchToMap();
+                }
             }
 
-            ////    ._.    ////
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                if (!audio.isPlaying)
+                {
+                    audio.PlayOneShot(clips[3], 1.0f);
+                }
 
-            if (StaticManager.map.map.activeSelf)
-            {
-                StaticManager.inventories.CloseAll();
-                StaticManager.map.mapCamera.enabled = false;
-                StaticManager.map.mapCamera1.enabled = false;
-                StaticManager.map.mapCamera2.enabled = false;
+                if (StaticManager.questManager.questWindow.activeSelf)
+                {
+                    StaticManager.inventories.CloseAll();
+                }
+                else
+                {
+                    StaticManager.inventories.SwitchToQuest();
+                }
             }
-            else
-            {
-                StaticManager.inventories.SwitchToMap();
-            }
-        }
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            if (!audio.isPlaying)
+            if (Input.GetKeyDown(KeyCode.H) && StaticManager.Character.inventory.potions.Count > 0)
             {
-                audio.PlayOneShot(clips[3], 1.0f);
+                StaticManager.Character.inventory.potions[0].Cast(StaticManager.Character);
             }
-            if (StaticManager.questManager.questWindow.activeSelf)
-            {
-                StaticManager.inventories.CloseAll();
-            }
-            else
-            {
-                StaticManager.inventories.SwitchToQuest();
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.H) && StaticManager.Character.inventory.potions.Count > 0)
-        {
-            StaticManager.Character.inventory.potions[0].Cast(StaticManager.Character);
         }
     }
     public void Destroy(PlayerInventory inventory)

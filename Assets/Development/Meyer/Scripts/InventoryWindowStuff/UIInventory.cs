@@ -159,27 +159,32 @@ public class UIInventory : MonoBehaviour
 
         }
 
-        if (Input.GetMouseButtonUp(0) && Dragging)
+        if (StaticManager.KeyboardInput == true)
         {
-            Dragging = false;
-            SelectedItem.gameObject.SetActive(false);
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (StaticManager.UiInventory.ItemsInstance.openedWindow.Count > 0)
-            {
-                StaticManager.UiInventory.CloseWindow();
-            }
-            else
-            {
-                if (!StaticManager.inventories.audio.isPlaying)
-                {
-                    StaticManager.inventories.audio.PlayOneShot(StaticManager.inventories.clips[3], 1.0f);
-                }
-                StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PauseUI);
-            }
-        }
 
+            if (Input.GetMouseButtonUp(0) && Dragging)
+            {
+                Dragging = false;
+                SelectedItem.gameObject.SetActive(false);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (StaticManager.UiInventory.ItemsInstance.openedWindow.Count > 0)
+                {
+                    StaticManager.UiInventory.CloseWindow();
+                }
+                else
+                {
+                    if (!StaticManager.inventories.audio.isPlaying)
+                    {
+                        StaticManager.inventories.audio.PlayOneShot(StaticManager.inventories.clips[3], 1.0f);
+                    }
+
+                    StaticManager.UiInventory.ShowWindow(StaticManager.UiInventory.ItemsInstance.PauseUI);
+                }
+            }
+        }
     }
 
     public void CloseWindow(GameObject item = null)
