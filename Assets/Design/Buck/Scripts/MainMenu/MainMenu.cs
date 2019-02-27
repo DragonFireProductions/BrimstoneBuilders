@@ -13,8 +13,19 @@ public class MainMenu : MonoBehaviour
  
     public GameObject ThisMenu;
 
-    void Start () {
-        
+    void Start ()
+    {
+        StaticManager.map.UseCamera = true;
+        StaticManager.map.UseCamera1 = false;
+        StaticManager.map.UseCamera2 = false;
+
+        StaticManager.map.mapCamera.enabled = false;
+        StaticManager.map.mapCamera1.enabled = false;
+        StaticManager.map.mapCamera2.enabled = false;
+
+        MainCamera.enabled = false;
+
+
         //MenuManager.audio.PlayMusic("Theme");
 
         //cam = Camera.main;
@@ -51,5 +62,9 @@ public class MainMenu : MonoBehaviour
     {
         MainCamera.enabled = true;
         MenuCamera.enabled = false;
+
+        StaticManager.map.UseCamera = true;
+        StaticManager.map.UseCamera1 = false;
+        StaticManager.map.UseCamera2 = false;
     }
 }

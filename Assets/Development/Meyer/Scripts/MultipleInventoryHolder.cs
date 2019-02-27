@@ -410,9 +410,34 @@ public class MultipleInventoryHolder : MonoBehaviour
             {
                 audio.PlayOneShot(clips[3], 1.0f);
             }
+
+            if(StaticManager.map.UseCamera == true)
+            {
+                StaticManager.map.mapCamera.enabled = true;
+                StaticManager.map.mapCamera1.enabled = false;
+                StaticManager.map.mapCamera2.enabled = false;
+            }
+            else if(StaticManager.map.UseCamera1 == true)
+            {
+                StaticManager.map.mapCamera.enabled = false;
+                StaticManager.map.mapCamera1.enabled = true;
+                StaticManager.map.mapCamera2.enabled = false;
+            }
+            else if (StaticManager.map.UseCamera2 == true)
+            {
+                StaticManager.map.mapCamera.enabled = false;
+                StaticManager.map.mapCamera1.enabled = false;
+                StaticManager.map.mapCamera2.enabled = true;
+            }
+
+            ////    ._.    ////
+
             if (StaticManager.map.map.activeSelf)
             {
                 StaticManager.inventories.CloseAll();
+                StaticManager.map.mapCamera.enabled = false;
+                StaticManager.map.mapCamera1.enabled = false;
+                StaticManager.map.mapCamera2.enabled = false;
             }
             else
             {

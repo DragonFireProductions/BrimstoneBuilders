@@ -114,6 +114,13 @@ public class KeyQuest : Quest
                 key.quest = this;
                 list.Add(key);
                 Accept();
+
+                QuestInProgress.SetActive(false);
+                QuestAvalible.SetActive(false);
+                CollectionReady.SetActive(false);
+
+                GetComponentInChildren<Canvas>().enabled = false;
+                gameObject.GetComponent<Collider>().enabled = false;
             }
             else if ( pickedUp.Count == 0 && ui == null){
                  StaticManager.questManager.currentQuest = this;

@@ -57,13 +57,22 @@ public class EscortQuest : Quest {
                 key.gameObject.SetActive(true);
                 gameObject.GetComponent<Collider>().enabled = false;
                 StaticManager.questManager.CompleteQuest(this, KeyDropDialog);
-
-
+                
                 if (StaticManager.RealTime.Companions.Contains(GetComponent<EscortNPC>()))
                 {
                     StaticManager.RealTime.Companions.Remove(GetComponent<EscortNPC>());
                     Destroy(GetComponent<EscortNPC>());
                 }
+
+                QuestInProgress.SetActive(false);
+                QuestAvalible.SetActive(false);
+                CollectionReady.SetActive(false);
+
+                this.GetComponent<BreakRuins>().EscortDone = true;
+
+                GetComponentInChildren<Canvas>().enabled = false;
+                gameObject.GetComponent<Collider>().enabled = false;
+
             }
             else if (!accepted){
                  StaticManager.questManager.currentQuest = this;

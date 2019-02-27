@@ -5,24 +5,26 @@ using UnityEngine;
 public class VillageKillDone : MonoBehaviour
 {
     public bool VillageKillQuestDone;
+    private bool done;
     [SerializeField] GameObject NPCs;
 
     void Start()
     {
         VillageKillQuestDone = false;
-
+        done = false;
     }
     
     void Update()
     {
-        if(VillageKillQuestDone)
+        if(VillageKillQuestDone && done == false)
         {
             ActivateNPCs();
+            done = true;
         }
     }
 
     public void ActivateNPCs()
     {
-        NPCs.GetComponentInChildren<GameObject>().SetActive(true);
+        NPCs.SetActive(true);
     }
 }
