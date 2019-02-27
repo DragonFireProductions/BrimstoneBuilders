@@ -56,7 +56,7 @@ public class BaseNav : MonoBehaviour {
 
     protected float distance;
 
-    public float GetDistance() { return distance; }
+    public float GetDistance() { return dist; }
     public void RunAway( ) {
         SetState = state.IDLE;
         StartCoroutine( Run( ) );
