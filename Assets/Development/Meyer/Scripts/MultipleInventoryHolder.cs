@@ -317,7 +317,8 @@ public class MultipleInventoryHolder : MonoBehaviour
         if (obj is WeaponObject)
         {
             var a = obj as WeaponObject;
-            a.PickUp(cha);
+            //a.PickUp(cha);
+            cha.inventory.WeaponInventory.PickUp(obj);
             cha.inventory.WeaponInventory.UpdateGrid();
             inventory.character.inventory.WeaponInventory.RemoveObject(a);
             inventory.character.inventory.WeaponInventory.DeleteObject(a);
