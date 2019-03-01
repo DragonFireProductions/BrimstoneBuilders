@@ -109,7 +109,7 @@ public class StaticManager : MonoBehaviour
     }
 
     public void ReloadLevel(GameObject obj ) {
-        SceneManager.LoadScene( 1 );
+        SceneManager.LoadScene( 0 );
         UnFreeze(obj);
     }
 

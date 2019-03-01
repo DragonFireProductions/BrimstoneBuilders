@@ -9,6 +9,8 @@ public class Shop : MonoBehaviour
 {
     [SerializeField] public int companionPrice;
     [SerializeField] public int resaleWorth;
+
+    [SerializeField] public Transform CompanionSpawnLocation;
     
 
     public GameObject icon;
@@ -61,7 +63,7 @@ public class Shop : MonoBehaviour
         
         foreach (var l_companion in companions){
             ShopCompanions++;
-            var companion = Instantiate( l_companion.companion );
+            var companion = Instantiate( l_companion.companion);
 
             shopCompanions.Add(l_companion.companion.inventoryUI.CompanionSell);
 

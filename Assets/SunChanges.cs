@@ -17,6 +17,9 @@ public class SunChanges : MonoBehaviour
     private Color Yellow;
     private Color Blue;
 
+    public bool DesertFlameQuestLink;
+    private bool HitOnce;
+
     //Color_Yellow = FFF4D6;
     //Color_Blue = 0096B8;
 
@@ -31,25 +34,33 @@ public class SunChanges : MonoBehaviour
         Blue.g = 0.2803f;
         Blue.b = 0.3301f;
         Blue.a = 1;
+
+        DesertFlameQuestLink = false;
+        HitOnce = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         CurrentColor = GameSun.color;
+
+        if(DesertFlameQuestLink && HitOnce == false)
+        {
+            DesertQuestChange();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            if(TurnTo_Dark)
+            if (TurnTo_Dark)
             {
                 StartCoroutine(ColorLerp(CurrentColor, Blue));
                 RenderSettings.skybox = NightSkybox;
             }
 
-            if(TurnTo_Light)
+            if (TurnTo_Light)
             {
                 StartCoroutine(ColorLerp(CurrentColor, Yellow));
                 RenderSettings.skybox = DaySkybox;
@@ -79,5 +90,12 @@ public class SunChanges : MonoBehaviour
             GameSun.color = CurrentColor;
             yield return new WaitForSeconds(1);
         }
+    }
+
+    public void DesertQuestChange()
+    {
+        StartCoroutine(ColorLerp(CurrentColor, Blue));
+        RenderSettings.skybox = NightSkybox;
+        HitOnce = true;
     }
 }

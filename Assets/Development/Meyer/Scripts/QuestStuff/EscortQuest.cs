@@ -69,6 +69,8 @@ public class EscortQuest : Quest {
                 CollectionReady.SetActive(false);
 
                 this.GetComponent<BreakRuins>().EscortDone = true;
+                this.GetComponent<FlameOn>().EscortDone = true;
+                this.GetComponent<SunChanges>().DesertFlameQuestLink = true;
 
                 GetComponentInChildren<Canvas>().enabled = false;
                 gameObject.GetComponent<Collider>().enabled = false;

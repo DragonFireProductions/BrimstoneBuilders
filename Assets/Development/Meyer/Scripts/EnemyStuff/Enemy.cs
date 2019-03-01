@@ -24,6 +24,8 @@ namespace Kristal {
 
         public float health;
 
+        public GameObject DestroyEffect;
+
 
         protected void Awake( ) {
             base.Awake( );
@@ -61,11 +63,10 @@ namespace Kristal {
                     
                         StaticManager.drop.Drop_Loot(this);
                     StaticManager.RealTime.Enemies.Remove(this);
+                    Instantiate(DestroyEffect, transform.position, transform.rotation);
                     Destroy(gameObject);
                 }
             }
-
-            
         }
 
     }
